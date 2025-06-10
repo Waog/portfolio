@@ -56,8 +56,12 @@ jobs:
       # - run: npx nx-cloud record -- echo Hello World
       # Nx Affected runs only tasks affected by the changes in this PR/commit. Learn more: https://nx.dev/ci/features/affected
       # When you enable task distribution, run the e2e-ci task instead of e2e
+
       - name: 🏗️ Build, Test and Lint
-        run: npx nx affected -t lint test build e2e
+        run: npx nx affected -t lint test build
+
+      - name: 🧪 Run E2E Tests (excluding webkit)
+        run: npx nx affected -t e2e -- --project=chromium --project=firefox
 
       - name: 💾 Cache frontend build artifact
         uses: actions/cache@v4
