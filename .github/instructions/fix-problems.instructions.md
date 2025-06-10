@@ -1,0 +1,1 @@
+Go through all Errors in the VSCode Problems view and fix them one by one. For each, make the minimal change required to resolve the problem, following the existing code style. In case there are no Errors, go through the warnings instead. In case there are no warnings, go through the Infos instead.
