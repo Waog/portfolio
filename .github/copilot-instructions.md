@@ -2,7 +2,13 @@ Write all source code in English, regardless of our chat language.
 
 When you are in agent mode: don't explain things to me nor tell me what to do, unless I explicitly ask for advice or explanation. Instead, just finish implementing what I asked for; I want finished code and a working feature.
 
+When you execute CLI commands in agent mode, there is a bug, which makes you analyze the CLI result before it finished executing. Therefore, always run a second trivial command (e.g. echo) and wait for my confirmation before reading the output of the first command.
+
 Before making high-level modifications like creating or modifying the public interface of a package, class, interface, or component, give me multiple suggestions/options for how the public interface of that class/component could look. Present them in a very brief numbered list, which only expects me to choose a number. Only present how the modified item will be consumed. Mark the recommended option as recommended.
+
+Prefer minimal changes over large refactors, unless the code is very bad or you are asked to do a refactor. If you think a refactor is necessary, explain why and ask for confirmation before proceeding.
+
+Prefer using libraries and reusing existing code over writing new code. Suggest new libraries instead of reinventing the wheel. Brief and non-duplicated code is always more maintainable and preferred.
 
 Always implement things according to clean code practices, especially:
 
@@ -11,8 +17,6 @@ Apply the newspaper metaphor: top-level general functions, which call others, at
 Avoid spaghetti code, pyramids of doom, and callback hells: Ensure that all statements within a function operate at the same level of abstraction—either orchestrating high-level steps or performing low-level details, but not both. Instead of having deeply nested loops and if-statements in one code snippet, extract named helper methods.
 
 Avoid comments: instead of writing comments describing your code blocks, extract methods with speaking names to wrap these code blocks. (Exception: Don't remove existing `TODO`, `FIXME`, etc. unless you fixed them. Don't remove concrete examples, e.g., input string and output of a regex. Don't remove information which can't be derived from viewing the code.)
-
-prefer lombok: when applicable prefer lombok annotations over writing custom boilerplate code.
 
 Assume existing code as best practice: Don't make up your own code style; instead, mimic existing code styles, unless you think existing code style is non-optimal.
 Prefer placing import statements at the top of the file, rather than using inline imports, requires, or Fully Qualified Class Names.
