@@ -1,0 +1,36 @@
+name: Publish to GitHub Pages
+
+on:
+  workflow_call:
+
+jobs:
+  publish-to-gh-pages:
+    name: Publish to GitHub Pages
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+    steps:
+      - name: 💾 Restore frontend build artifact
+        uses: actions/cache@v4
+        with:
+          path: dist/apps/frontend/browser
+          key: ${{ runner.os }}-frontend-build-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-frontend-build-
+          fail-on-cache-miss: true
+
+      - name: 📄 Setup GitHub Pages
+        uses: actions/configure-pages@v4
+
+      - name: 📦 Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist/apps/frontend/browser
+
+      - name: 🚀 Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
