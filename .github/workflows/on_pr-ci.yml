@@ -1,0 +1,23 @@
+name: PR CI Pipeline
+
+on: [pull_request]
+
+permissions:
+  actions: read
+  contents: read
+
+jobs:
+  install-npm-deps:
+    uses: ./.github/workflows/install-npm-deps.yml
+
+  install-playwright:
+    needs: install-npm-deps
+    uses: ./.github/workflows/install-playwright.yml
+
+  commitlint:
+    needs: install-npm-deps
+    uses: ./.github/workflows/commitlint-since-pr-base.yml
+
+  build-and-test:
+    needs: [install-npm-deps, install-playwright]
+    uses: ./.github/workflows/build-test.yml
