@@ -49,9 +49,6 @@ jobs:
             ${{ runner.os }}-playwright-
           fail-on-cache-miss: true
 
-      - name: 🎭 Install Playwright system dependencies (hopefully re-using cache)
-        run: npx playwright install --with-deps --only-shell
-
       - name: 🔧 Set Nx SHAs
         uses: nrwl/nx-set-shas@v4
 
