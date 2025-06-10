@@ -1,15 +1,4 @@
 {
-  "nxConsole.generateAiAgentRules": true,
-  "git.inputValidation": true,
-  "git.inputValidationSubjectLength": 100,
-  "git.inputValidationLength": 100,
-  "commit-message-editor.staticTemplate": [
-    "feat: Short description",
-    "",
-    "Message body",
-    "",
-    "Message footer"
-  ],
   "commit-message-editor.dynamicTemplate": [
     "{type}{scope}: {emoji} {description}",
     "",
@@ -17,165 +6,183 @@
     "",
     "{breaking_change}{footer}"
   ],
+  "commit-message-editor.staticTemplate": [
+    "feat: Short description",
+    "",
+    "Message body",
+    "",
+    "Message footer"
+  ],
   "commit-message-editor.tokens": [
     {
+      "description": "Type of changes",
       "label": "Type",
       "name": "type",
-      "type": "enum",
       "options": [
         {
-          "label": "fix",
-          "description": "A bug fix"
+          "description": "A bug fix",
+          "label": "fix"
         },
         {
-          "label": "feat",
-          "description": "A new feature"
+          "description": "A new feature",
+          "label": "feat"
         },
         {
           "label": "---",
           "value": ""
         },
         {
-          "label": "build",
-          "description": "Changes that affect the build system or external dependencies (example scopes: gulp, broccoli, npm)"
+          "description": "Changes that affect the build system or external dependencies (example scopes: gulp, broccoli, npm)",
+          "label": "build"
         },
         {
-          "label": "chore",
-          "description": "Updating grunt tasks etc; no production code change"
+          "description": "Updating grunt tasks etc; no production code change",
+          "label": "chore"
         },
         {
-          "label": "ci",
-          "description": "Changes to our CI configuration files and scripts (example scopes: Travis, Circle, BrowserStack, SauceLabs)"
+          "description": "Changes to our CI configuration files and scripts (example scopes: Travis, Circle, BrowserStack, SauceLabs)",
+          "label": "ci"
         },
         {
-          "label": "docs",
-          "description": "Documentation only changes"
+          "description": "Documentation only changes",
+          "label": "docs"
         },
         {
-          "label": "perf",
-          "description": "A code change that improves performance"
+          "description": "A code change that improves performance",
+          "label": "perf"
         },
         {
-          "label": "refactor",
-          "description": "A code change that neither fixes a bug nor adds a feature"
+          "description": "A code change that neither fixes a bug nor adds a feature",
+          "label": "refactor"
         },
         {
           "label": "revert"
         },
         {
-          "label": "style",
-          "description": "Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc)"
+          "description": "Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc)",
+          "label": "style"
         },
         {
-          "label": "test",
-          "description": "Adding missing tests or correcting existing tests"
+          "description": "Adding missing tests or correcting existing tests",
+          "label": "test"
         }
       ],
-      "description": "Type of changes"
+      "type": "enum"
     },
     {
+      "description": "A scope may be provided to a commit’s type, to provide additional contextual information and is contained within parenthesis, e.g., \"feat(parser): add ability to parse arrays\".",
       "label": "Scope",
       "name": "scope",
-      "type": "enum",
-      "description": "A scope may be provided to a commit’s type, to provide additional contextual information and is contained within parenthesis, e.g., \"feat(parser): add ability to parse arrays\".",
-      "prefix": "(",
-      "suffix": ")",
       "options": [
         {
+          "description": "",
           "label": "frontend",
-          "value": "frontend",
-          "description": ""
+          "value": "frontend"
         },
         {
+          "description": "",
           "label": "backend",
-          "value": "backend",
-          "description": ""
+          "value": "backend"
         },
         {
+          "description": "",
           "label": "infrastructure",
-          "value": "infrastructure",
-          "description": ""
+          "value": "infrastructure"
         },
         {
+          "description": "",
           "label": "root",
-          "value": "root",
-          "description": ""
+          "value": "root"
         },
         {
+          "description": "",
           "label": "multiple",
-          "value": "multiple",
-          "description": ""
+          "value": "multiple"
         }
-      ]
+      ],
+      "prefix": "(",
+      "suffix": ")",
+      "type": "enum"
     },
     {
       "label": "Emoji",
       "name": "emoji",
-      "type": "enum",
       "options": [
         {
+          "description": "",
           "label": "🪲 bugfix",
-          "value": "🪲",
-          "description": ""
+          "value": "🪲"
         },
         {
+          "description": "",
           "label": "♻️ refactor",
-          "value": "♻️",
-          "description": ""
+          "value": "♻️"
         },
         {
+          "description": "",
           "label": "✨ add feature",
-          "value": "✨",
-          "description": ""
+          "value": "✨"
         },
         {
+          "description": "",
           "label": "🗑️ remove feature",
-          "value": "🗑️",
-          "description": ""
+          "value": "🗑️"
         },
         {
+          "description": "",
           "label": "📦 build process, CI/CD",
-          "value": "📦",
-          "description": ""
+          "value": "📦"
         },
         {
+          "description": "",
           "label": "🚧 WIP - squash later",
-          "value": "🚧",
-          "description": ""
+          "value": "🚧"
         }
-      ]
+      ],
+      "type": "enum"
     },
     {
-      "label": "Short description",
-      "name": "description",
       "description": "Short description in the subject line.",
-      "type": "text",
-      "multiline": false
+      "label": "Short description",
+      "multiline": false,
+      "name": "description",
+      "type": "text"
     },
     {
-      "label": "Body",
-      "name": "body",
       "description": "Optional body",
-      "type": "text",
-      "multiline": true,
+      "label": "Body",
       "lines": 5,
-      "maxLines": 10
+      "maxLines": 10,
+      "multiline": true,
+      "name": "body",
+      "type": "text"
     },
     {
+      "default": false,
       "label": "Breaking change",
       "name": "breaking_change",
       "type": "boolean",
-      "value": "BREAKING CHANGE: ",
-      "default": false
+      "value": "BREAKING CHANGE: "
     },
     {
-      "label": "Footer",
-      "name": "footer",
       "description": "Optional footer",
-      "type": "text",
-      "multiline": true
+      "label": "Footer",
+      "multiline": true,
+      "name": "footer",
+      "type": "text"
     }
   ],
   "commit-message-editor.view.defaultView": "form",
-  "commit-message-editor.view.visibleViews": "form"
+  "commit-message-editor.view.visibleViews": "form",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "eslint.useFlatConfig": true,
+  "eslint.validate": ["javascript", "typescript", "html"],
+  "git.inputValidation": true,
+  "git.inputValidationLength": 100,
+  "git.inputValidationSubjectLength": 100,
+  "nxConsole.generateAiAgentRules": true
 }
