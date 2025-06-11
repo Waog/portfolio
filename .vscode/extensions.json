@@ -5,6 +5,7 @@
     "dbaeumer.vscode-eslint",
     "editorconfig.editorconfig",
     "ms-playwright.playwright",
-    "adam-bender.commit-message-editor"
+    "adam-bender.commit-message-editor",
+    "streetsidesoftware.code-spell-checker"
   ]
 }
