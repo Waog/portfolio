@@ -71,5 +71,5 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-frontend-build-
 
-      - name: 🏗️ Build frontend for production (for deployment)
-        run: npx nx build frontend --configuration=production
+      - name: 🏗️ Build and pre-render (SSG) frontend for production (for deployment)
+        run: npx nx prerender frontend --configuration=production

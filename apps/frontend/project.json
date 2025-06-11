@@ -88,7 +88,18 @@
         "buildTarget": "frontend:build",
         "port": 4200,
         "spa": true
-      }
+      },
+      "configurations": {
+        "build": {
+          "buildTarget": "frontend:build"
+        },
+        "prerender": {
+          "buildTarget": "frontend:prerender",
+          "staticFilePath": "dist/apps/frontend/browser",
+          "spa": false
+        }
+      },
+      "defaultConfiguration": "build"
     },
     "server": {
       "dependsOn": ["build"],
