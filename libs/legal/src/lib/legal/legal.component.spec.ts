@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+
 import { LegalComponent } from './legal.component';
 
 describe('LegalComponent', () => {

@@ -10,8 +10,6 @@ export class LanguageService {
   private languageSubject = new BehaviorSubject<Language>(Language.En);
   language$ = this.languageSubject.asObservable();
 
-  constructor() {}
-
   setLanguage(language: Language): void {
     this.languageSubject.next(language);
   }
