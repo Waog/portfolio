@@ -6,6 +6,7 @@
     "editorconfig.editorconfig",
     "ms-playwright.playwright",
     "adam-bender.commit-message-editor",
-    "streetsidesoftware.code-spell-checker"
+    "streetsidesoftware.code-spell-checker",
+    "firsttris.vscode-jest-runner"
   ]
 }

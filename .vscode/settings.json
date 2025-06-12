@@ -188,5 +188,5 @@
   "git.inputValidationLength": 100,
   "git.inputValidationSubjectLength": 100,
   "nxConsole.generateAiAgentRules": true,
-  "cSpell.words": ["prerender"]
+  "cSpell.words": ["noreferrer", "prerender"]
 }
