@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 
 @Component({
-  selector: 'lib-imprint',
+  selector: 'legal-imprint',
   standalone: true,
   imports: [CommonModule, MatCardModule],
   templateUrl: './imprint.component.html',
