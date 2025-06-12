@@ -178,7 +178,7 @@
     "source.fixAll.eslint": "explicit",
     "source.fixAll": "never",
     "source.fixAll.sortJSON": "never",
-    "source.organizeImports": "never"
+    "source.organizeImports": "explicit"
   },
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
