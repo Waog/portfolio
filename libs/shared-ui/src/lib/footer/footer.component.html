@@ -1,0 +1,37 @@
+<footer class="footer">
+  <mat-toolbar class="footer-toolbar">
+    <div class="footer-content">
+      <div class="footer-section">
+        <a routerLink="/" class="footer-brand-link">
+          <span class="footer-title">Oliver Stadie IT GmbH</span>
+          <span class="footer-separator">|</span>
+          <span class="footer-subtitle">Professional IT Solutions</span>
+        </a>
+      </div>
+
+      <div class="footer-section">
+        <span class="footer-links-title">Legal:</span>
+        <nav class="footer-links">
+          <a mat-button routerLink="/legal/imprint" class="footer-link">
+            <mat-icon>business</mat-icon>
+            Imprint
+          </a>
+          <a mat-button routerLink="/legal/privacy-policy" class="footer-link">
+            <mat-icon>privacy_tip</mat-icon>
+            Privacy
+          </a>
+          <a mat-button routerLink="/legal/cookie-policy" class="footer-link">
+            <mat-icon>cookie</mat-icon>
+            Cookies
+          </a>
+        </nav>
+      </div>
+
+      <div class="footer-section footer-copyright">
+        <span class="copyright-text">
+          © {{ currentYear }} Oliver Stadie IT GmbH
+        </span>
+      </div>
+    </div>
+  </mat-toolbar>
+</footer>

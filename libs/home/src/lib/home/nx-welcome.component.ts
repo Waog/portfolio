@@ -10,7 +10,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
 @Component({
-  selector: 'app-nx-welcome',
+  selector: 'lib-nx-welcome',
   imports: [
     CommonModule,
     MatCardModule,
@@ -372,6 +372,7 @@ nx g &#64;nx/angular:component ui/src/lib/button</pre>
         background-color: #374151;
         border-radius: 0.25rem;
         color: #e5e7eb;
+        // cSpell:disable-next-line
         font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
           'Liberation Mono', 'Courier New', monospace;
         overflow: auto;

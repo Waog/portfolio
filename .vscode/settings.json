@@ -178,7 +178,7 @@
     "source.fixAll.eslint": "explicit",
     "source.fixAll": "never",
     "source.fixAll.sortJSON": "never",
-    "source.organizeImports": "never"
+    "source.organizeImports": "explicit"
   },
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
@@ -188,5 +188,5 @@
   "git.inputValidationLength": 100,
   "git.inputValidationSubjectLength": 100,
   "nxConsole.generateAiAgentRules": true,
-  "cSpell.words": ["prerender"]
+  "cSpell.words": ["domcontentloaded", "noreferrer", "prerender"]
 }

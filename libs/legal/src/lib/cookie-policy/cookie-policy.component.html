@@ -1,0 +1,190 @@
+<!-- cSpell:disable -->
+<mat-card>
+  <mat-card-header>
+    <div class="header-container">
+      <legal-language-switch></legal-language-switch>
+      <mat-card-title
+        *ngIf="(languageService.language$ | async) === Language.En"
+        >Cookie Policy</mat-card-title
+      >
+      <mat-card-title
+        *ngIf="(languageService.language$ | async) === Language.De"
+        >Cookie-Richtlinie</mat-card-title
+      >
+    </div>
+  </mat-card-header>
+  <mat-card-content>
+    <div *ngIf="(languageService.language$ | async) === Language.En">
+      <h3>Cookie Policy</h3>
+      <p>Last updated: June 12, 2025</p>
+
+      <h4>1. What are Cookies?</h4>
+      <p>
+        Cookies are small text files that are stored on your computer or mobile
+        device by your web browser when you visit a website. They are widely
+        used to make websites work or work more efficiently, as well as to
+        provide information to the owners of the site.
+      </p>
+
+      <h4>2. How We Use Cookies</h4>
+      <p>
+        <strong>This website currently does not use cookies.</strong>
+      </p>
+      <p>
+        If we decide to use cookies in the future, this policy will be updated
+        accordingly. Potential future uses of cookies may include:
+      </p>
+      <ul>
+        <li>
+          <strong>Essential Cookies:</strong> Necessary for the basic
+          functionality of the website. These would be used without requiring
+          your prior consent but will be clearly communicated.
+        </li>
+        <li>
+          <strong>Performance and Analytics Cookies:</strong> To collect
+          information about how visitors use our website, for instance, which
+          pages visitors go to most often.
+        </li>
+        <li>
+          <strong>Functionality Cookies:</strong> To remember choices you make
+          (such as your user name, language, or the region you are in) and
+          provide enhanced, more personal features.
+        </li>
+      </ul>
+      <p>
+        Should we introduce cookies, we will seek your explicit consent for any
+        non-essential cookies in accordance with applicable laws (e.g., GDPR,
+        ePrivacy Directive).
+      </p>
+
+      <h4>3. Managing Cookies</h4>
+      <p>
+        If cookies are introduced in the future, you will be able to manage
+        and/or delete cookies as you wish. Most web browsers allow some control
+        of most cookies through the browser settings. To find out more about
+        cookies, including how to see what cookies have been set and how to
+        manage and delete them, visit
+        <a
+          href="https://www.aboutcookies.org"
+          target="_blank"
+          rel="noopener noreferrer"
+          >www.aboutcookies.org</a
+        >
+        or
+        <a
+          href="https://www.allaboutcookies.org"
+          target="_blank"
+          rel="noopener noreferrer"
+          >www.allaboutcookies.org</a
+        >.
+      </p>
+      <p>
+        Please note that if you choose to disable cookies that may be used in
+        the future, some parts of this website may not function properly.
+      </p>
+
+      <h4>4. Changes to This Cookie Policy</h4>
+      <p>
+        We may update this Cookie Policy from time to time. We will notify you
+        of any significant changes by posting the new Cookie Policy on this page
+        and updating the "Last updated" date.
+      </p>
+
+      <h4>5. Contact Us</h4>
+      <p>
+        If you have any questions about this Cookie Policy, please contact us:
+        oliverstadie+it&#64;gmail.com
+      </p>
+    </div>
+
+    <div *ngIf="(languageService.language$ | async) === Language.De">
+      <h3>Cookie-Richtlinie</h3>
+      <p>Zuletzt aktualisiert: 12. Juni 2025</p>
+
+      <h4>1. Was sind Cookies?</h4>
+      <p>
+        Cookies sind kleine Textdateien, die von Ihrem Webbrowser auf Ihrem
+        Computer oder Mobilgerät gespeichert werden, wenn Sie eine Website
+        besuchen. Sie werden häufig verwendet, um Websites funktionsfähig zu
+        machen oder effizienter zu gestalten sowie um den Betreibern der Website
+        Informationen bereitzustellen.
+      </p>
+
+      <h4>2. Wie wir Cookies verwenden</h4>
+      <p>
+        <strong>Diese Website verwendet derzeit keine Cookies.</strong>
+      </p>
+      <p>
+        Sollten wir uns entscheiden, zukünftig Cookies zu verwenden, wird diese
+        Richtlinie entsprechend aktualisiert. Mögliche zukünftige
+        Verwendungszwecke von Cookies können umfassen:
+      </p>
+      <ul>
+        <li>
+          <strong>Essentielle Cookies:</strong> Notwendig für die grundlegende
+          Funktionalität der Website. Diese würden ohne Ihre vorherige
+          Einwilligung verwendet, aber klar kommuniziert.
+        </li>
+        <li>
+          <strong>Leistungs- und Analyse-Cookies:</strong> Um Informationen
+          darüber zu sammeln, wie Besucher unsere Website nutzen, z. B. welche
+          Seiten Besucher am häufigsten aufrufen.
+        </li>
+        <li>
+          <strong>Funktionalitäts-Cookies:</strong> Um sich an von Ihnen
+          getroffene Auswahlen zu erinnern (wie Ihren Benutzernamen, Ihre
+          Sprache oder die Region, in der Sie sich befinden) und erweiterte,
+          persönlichere Funktionen bereitzustellen.
+        </li>
+      </ul>
+      <p>
+        Sollten wir Cookies einführen, werden wir Ihre ausdrückliche
+        Einwilligung für alle nicht-essentiellen Cookies gemäß den geltenden
+        Gesetzen (z. B. DSGVO, ePrivacy-Richtlinie) einholen.
+      </p>
+
+      <h4>3. Cookies verwalten</h4>
+      <p>
+        Sollten zukünftig Cookies eingeführt werden, können Sie Cookies nach
+        Wunsch verwalten und/oder löschen. Die meisten Webbrowser ermöglichen
+        eine gewisse Kontrolle über die meisten Cookies über die
+        Browsereinstellungen. Um mehr über Cookies zu erfahren, einschließlich
+        wie Sie sehen können, welche Cookies gesetzt wurden und wie Sie diese
+        verwalten und löschen können, besuchen Sie
+        <a
+          href="https://www.aboutcookies.org"
+          target="_blank"
+          rel="noopener noreferrer"
+          >www.aboutcookies.org</a
+        >
+        oder
+        <a
+          href="https://www.allaboutcookies.org"
+          target="_blank"
+          rel="noopener noreferrer"
+          >www.allaboutcookies.org</a
+        >
+        (externe Links, möglicherweise nur auf Englisch verfügbar).
+      </p>
+      <p>
+        Bitte beachten Sie, dass einige Teile dieser Website möglicherweise
+        nicht ordnungsgemäß funktionieren, wenn Sie sich entscheiden, Cookies zu
+        deaktivieren, die zukünftig verwendet werden könnten.
+      </p>
+
+      <h4>4. Änderungen dieser Cookie-Richtlinie</h4>
+      <p>
+        Wir können diese Cookie-Richtlinie von Zeit zu Zeit aktualisieren. Wir
+        werden Sie über wesentliche Änderungen informieren, indem wir die neue
+        Cookie-Richtlinie auf dieser Seite veröffentlichen und das Datum
+        "Zuletzt aktualisiert" aktualisieren.
+      </p>
+
+      <h4>5. Kontakt</h4>
+      <p>
+        Bei Fragen zu dieser Cookie-Richtlinie kontaktieren Sie uns bitte:
+        oliverstadie+it&#64;gmail.com
+      </p>
+    </div>
+  </mat-card-content>
+</mat-card>

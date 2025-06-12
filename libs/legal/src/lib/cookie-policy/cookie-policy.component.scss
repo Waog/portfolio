@@ -1,0 +1,47 @@
+mat-card {
+  max-width: 800px;
+  margin: 20px auto;
+}
+
+.header-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  gap: 8px;
+}
+
+mat-card-title {
+  margin: 0;
+}
+
+h3 {
+  margin-top: 25px;
+  margin-bottom: 15px;
+  color: #1976d2;
+}
+
+h4 {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  color: #666;
+}
+
+p,
+li {
+  margin-bottom: 10px;
+  line-height: 1.6;
+}
+
+ul {
+  margin-left: 20px;
+}
+
+a {
+  color: #1976d2;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
