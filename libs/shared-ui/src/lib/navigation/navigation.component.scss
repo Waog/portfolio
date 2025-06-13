@@ -120,7 +120,6 @@
         gap: 4px;
       }
     }
-
     .contact-item {
       display: flex;
       align-items: center;
@@ -128,10 +127,25 @@
       font-size: 10px;
       color: #666;
       min-width: 0; // Allow shrinking
+      text-decoration: none;
 
       @include desktop-up {
         font-size: 12px;
         gap: 8px;
+      }
+
+      &:hover {
+        text-decoration: none;
+        color: inherit;
+      }
+
+      &:visited {
+        color: inherit;
+      }
+
+      &:focus {
+        outline: 1px solid rgba(0, 0, 0, 0.12);
+        outline-offset: 2px;
       }
 
       .contact-icon {
