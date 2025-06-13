@@ -1,0 +1,84 @@
+<mat-toolbar class="navigation-toolbar">
+  <div class="nav-content">
+    <!-- Logo/Brand Section -->
+    <div class="nav-brand">
+      <a routerLink="/" class="brand-link">
+        <div class="brand-text">
+          <div class="brand-name">Oliver Stadie</div>
+          <div class="brand-subtitle">Portfolio</div>
+        </div>
+      </a>
+    </div>
+
+    <!-- Navigation Items - Desktop -->
+    <div class="nav-items-desktop">
+      <button mat-button disabled class="nav-item">Projects</button>
+      <button mat-button disabled class="nav-item">Skills</button>
+      <button mat-button disabled class="nav-item">About me</button>
+      <button mat-button disabled class="nav-item">Contact</button>
+    </div>
+    <!-- Action Button and Contact Info -->
+    <div class="nav-actions-contact">
+      <!-- CV Button - Desktop Only -->
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="downloadCV()"
+        disabled
+        class="cv-button cv-button-desktop"
+      >
+        <mat-icon>download</mat-icon>
+        CV as PDF
+      </button>
+
+      <!-- Contact Info - Always Visible -->
+      <div class="contact-info">
+        <div class="contact-item">
+          <mat-icon class="contact-icon">email</mat-icon>
+          <span class="contact-text">oliver.stadie+it&#64;gmail.com</span>
+        </div>
+        <div class="contact-item">
+          <mat-icon class="contact-icon">phone</mat-icon>
+          <span class="contact-text">+49 1520 28 25 986</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div class="nav-mobile">
+      <button
+        mat-icon-button
+        [matMenuTriggerFor]="mobileMenu"
+        class="mobile-menu-button"
+      >
+        <mat-icon>menu</mat-icon>
+      </button>
+
+      <mat-menu #mobileMenu="matMenu" class="mobile-menu">
+        <button mat-menu-item disabled>
+          <mat-icon>work</mat-icon>
+          <span>Projects</span>
+        </button>
+        <button mat-menu-item disabled>
+          <mat-icon>star</mat-icon>
+          <span>Skills</span>
+        </button>
+        <button mat-menu-item disabled>
+          <mat-icon>person</mat-icon>
+          <span>About me</span>
+        </button>
+        <button mat-menu-item disabled>
+          <mat-icon>contact_mail</mat-icon>
+          <span>Contact</span>
+        </button>
+
+        <mat-divider></mat-divider>
+
+        <button mat-menu-item (click)="downloadCV()" disabled>
+          <mat-icon>download</mat-icon>
+          <span>CV as PDF</span>
+        </button>
+      </mat-menu>
+    </div>
+  </div>
+</mat-toolbar>
