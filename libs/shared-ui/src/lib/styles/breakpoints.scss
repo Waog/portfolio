@@ -1,0 +1,17 @@
+// Responsive breakpoints following Angular Material CDK defaults
+// These match the standard Angular Material breakpoint values
+
+$breakpoint-mobile: 768px;
+
+// Mixins for responsive design
+@mixin mobile-only {
+  @media (max-width: #{$breakpoint-mobile - 1px}) {
+    @content;
+  }
+}
+
+@mixin desktop-up {
+  @media (min-width: #{$breakpoint-mobile}) {
+    @content;
+  }
+}
