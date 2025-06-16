@@ -1,6 +1,6 @@
 import { Project } from '../models/project';
 
-export const SAMPLE_PROJECTS: Project[] = [
+export const ALL_PROJECTS: Project[] = [
   {
     id: 'insurance-claims-portal',
     title: 'Customer Portal for Insurance Claims',
