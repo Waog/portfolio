@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 
-import { Technology } from '../models/project';
 import {
   MatchType,
   TechnologyMatchingCriteria,
@@ -29,14 +28,14 @@ export class ProjectItemTechnologyMatchingService {
     return 'none';
   }
 
-  addMatchType(technology: Technology): TechnologyWithMatch {
+  addMatchType(technologyName: string): TechnologyWithMatch {
     return {
-      ...technology,
-      matchType: this.getMatchType(technology.name),
+      name: technologyName,
+      matchType: this.getMatchType(technologyName),
     };
   }
 
-  addMatchTypes(technologies: Technology[]): TechnologyWithMatch[] {
+  addMatchTypes(technologies: string[]): TechnologyWithMatch[] {
     return technologies.map(tech => this.addMatchType(tech));
   }
 }

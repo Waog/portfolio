@@ -1,8 +1,7 @@
-import { Technology } from '../models/project';
-
 export type MatchType = 'full' | 'indirect' | 'none';
 
-export interface TechnologyWithMatch extends Technology {
+export interface TechnologyWithMatch {
+  name: string;
   matchType: MatchType;
 }
 

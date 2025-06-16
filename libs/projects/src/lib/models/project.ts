@@ -1,7 +1,3 @@
-export interface Technology {
-  name: string;
-}
-
 export interface Project {
   id: string;
   title: string;
@@ -11,7 +7,7 @@ export interface Project {
   fullDescription: string;
   features: string[];
   highlights: string[];
-  technologies: Technology[];
+  technologies: string[];
   role: string;
   team: string;
   fromTo: string;
