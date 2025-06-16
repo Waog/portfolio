@@ -1,9 +1,9 @@
 <mat-card class="project-card">
   <mat-card-header>
     <div class="header-content">
-      <mat-card-title>Customer Portal for Insurance Claims</mat-card-title>
+      <mat-card-title>{{ project().title }}</mat-card-title>
       <mat-chip color="accent" highlighted class="project-type-chip">
-        Progressive Web App (PWA)
+        {{ project().projectType }}
       </mat-chip>
     </div>
   </mat-card-header>
@@ -12,12 +12,8 @@
     <div *ngIf="!showExpandedContent" class="compact-content">
       <div class="compact-description">
         <p>
-          Insurance claims portal with digital submission, document management,
-          and real-time tracking.
-          <span class="key-achievements">
-            40% faster processing • WCAG 2.1 AA compliant • 95+ Lighthouse
-            score</span
-          >
+          {{ project().compactDescription }}
+          <span class="key-achievements"> {{ project().keyAchievements }}</span>
         </p>
       </div>
 
@@ -38,11 +34,7 @@
     <div *ngIf="showExpandedContent" class="expanded-content">
       <div class="description-section">
         <p>
-          Developed a comprehensive customer portal enabling policyholders to
-          report insurance claims digitally. The application streamlined the
-          claims process with guided forms, document upload functionality, and
-          real-time status tracking, reducing processing time by 40% and
-          improving customer satisfaction.
+          {{ project().fullDescription }}
         </p>
       </div>
 
@@ -52,25 +44,9 @@
           Key Features
         </h4>
         <mat-list dense>
-          <mat-list-item>
+          <mat-list-item *ngFor="let feature of project().features">
             <mat-icon matListItemIcon color="primary">check</mat-icon>
-            <div matListItemTitle>Digital Claims Submission</div>
-          </mat-list-item>
-          <mat-list-item>
-            <mat-icon matListItemIcon color="primary">check</mat-icon>
-            <div matListItemTitle>Document Upload & Management</div>
-          </mat-list-item>
-          <mat-list-item>
-            <mat-icon matListItemIcon color="primary">check</mat-icon>
-            <div matListItemTitle>Real-time Status Tracking</div>
-          </mat-list-item>
-          <mat-list-item>
-            <mat-icon matListItemIcon color="primary">check</mat-icon>
-            <div matListItemTitle>Push Notifications</div>
-          </mat-list-item>
-          <mat-list-item>
-            <mat-icon matListItemIcon color="primary">check</mat-icon>
-            <div matListItemTitle>Offline Capability</div>
+            <div matListItemTitle>{{ feature }}</div>
           </mat-list-item>
         </mat-list>
       </div>
@@ -81,22 +57,10 @@
           Highlights
         </h4>
         <mat-list dense>
-          <mat-list-item>
+          <mat-list-item *ngFor="let highlight of project().highlights">
             <mat-icon matListItemIcon color="accent">star</mat-icon>
             <div matListItemTitle>
-              Led frontend architecture decisions for PWA implementation
-            </div>
-          </mat-list-item>
-          <mat-list-item>
-            <mat-icon matListItemIcon color="accent">star</mat-icon>
-            <div matListItemTitle>
-              Implemented accessibility standards (WCAG 2.1 AA)
-            </div>
-          </mat-list-item>
-          <mat-list-item>
-            <mat-icon matListItemIcon color="accent">star</mat-icon>
-            <div matListItemTitle>
-              Optimized performance achieving 95+ Lighthouse scores
+              {{ highlight }}
             </div>
           </mat-list-item>
         </mat-list>
@@ -121,31 +85,45 @@
       <div class="meta-tile">
         <mat-icon>person</mat-icon>
         <div class="tile-content">
-          <div class="primary-text">Frontend Developer</div>
-          <div class="secondary-text">5-person Scrum team</div>
+          <div class="primary-text">{{ project().metadata.role.primary }}</div>
+          <div class="secondary-text">
+            {{ project().metadata.role.secondary }}
+          </div>
         </div>
       </div>
 
       <div class="meta-tile">
         <mat-icon>schedule</mat-icon>
         <div class="tile-content">
-          <div class="primary-text">08/2022 – 03/2023</div>
-          <div class="secondary-text">8 months</div>
+          <div class="primary-text">
+            {{ project().metadata.duration.primary }}
+          </div>
+          <div class="secondary-text">
+            {{ project().metadata.duration.secondary }}
+          </div>
         </div>
       </div>
       <div class="meta-tile">
         <mat-icon>location_on</mat-icon>
         <div class="tile-content">
-          <div class="primary-text">Hybrid</div>
-          <div class="secondary-text">Munich</div>
+          <div class="primary-text">
+            {{ project().metadata.location.primary }}
+          </div>
+          <div class="secondary-text">
+            {{ project().metadata.location.secondary }}
+          </div>
         </div>
       </div>
 
       <div class="meta-tile">
         <mat-icon>business</mat-icon>
         <div class="tile-content">
-          <div class="primary-text">Allianz SE</div>
-          <div class="secondary-text">Insurance</div>
+          <div class="primary-text">
+            {{ project().metadata.company.primary }}
+          </div>
+          <div class="secondary-text">
+            {{ project().metadata.company.secondary }}
+          </div>
         </div>
       </div>
     </div>

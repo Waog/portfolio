@@ -1,11 +1,15 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
+
+import { Project } from '../models/project';
+import { ProjectItemTechnologyMatchingService } from './project-item-technology-matching.service';
+import { TechnologyWithMatch } from './technology-matching.types';
 
 @Component({
   selector: 'lib-project-item',
@@ -22,45 +26,20 @@ import { MatListModule } from '@angular/material/list';
   styleUrl: './project-item.component.scss',
 })
 export class ProjectItemComponent {
+  private technologyMatchingService = inject(
+    ProjectItemTechnologyMatchingService
+  );
+
+  project = input.required<Project>();
+
   showAllTechnologies = false;
-  showExpandedContent = false; // New toggle for main content
+  showExpandedContent = false;
 
-  technologies = [
-    // Full matches (first 3)
-    { name: 'Angular', matchType: 'full' },
-    { name: 'TypeScript', matchType: 'full' },
-    { name: 'SCSS', matchType: 'full' },
-
-    // Indirect matches (next 4)
-    { name: 'RxJS', matchType: 'indirect' },
-    { name: 'Angular Material', matchType: 'indirect' },
-    { name: 'Jest', matchType: 'indirect' },
-    { name: 'Cypress', matchType: 'indirect' },
-
-    // Non-matched (rest)
-    { name: 'PWA', matchType: 'none' },
-    { name: 'Azure DevOps', matchType: 'none' },
-    { name: 'Docker', matchType: 'none' },
-    { name: 'Node.js', matchType: 'none' },
-    { name: 'Express.js', matchType: 'none' },
-    { name: 'PostgreSQL', matchType: 'none' },
-    { name: 'REST API', matchType: 'none' },
-    { name: 'GraphQL', matchType: 'none' },
-    { name: 'Webpack', matchType: 'none' },
-    { name: 'ESLint', matchType: 'none' },
-    { name: 'Prettier', matchType: 'none' },
-    { name: 'Git', matchType: 'none' },
-    { name: 'GitHub Actions', matchType: 'none' },
-    { name: 'Jira', matchType: 'none' },
-    { name: 'Figma', matchType: 'none' },
-    { name: 'VS Code', matchType: 'none' },
-    { name: 'Chrome DevTools', matchType: 'none' },
-    { name: 'Postman', matchType: 'none' },
-    { name: 'Lighthouse', matchType: 'none' },
-    { name: 'Accessibility', matchType: 'none' },
-    { name: 'Performance', matchType: 'none' },
-    { name: 'SEO', matchType: 'none' },
-  ];
+  get technologies(): TechnologyWithMatch[] {
+    return this.technologyMatchingService.addMatchTypes(
+      this.project().technologies
+    );
+  }
 
   get visibleTechnologies() {
     if (this.showAllTechnologies) {

@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 
+import { SAMPLE_PROJECTS } from '../data/sample-project.data';
+import { Project } from '../models/project';
 import { ProjectItemComponent } from '../project-item/project-item.component';
 
 @Component({
@@ -9,4 +11,10 @@ import { ProjectItemComponent } from '../project-item/project-item.component';
   templateUrl: './projects.component.html',
   styleUrl: './projects.component.scss',
 })
-export class ProjectsComponent {}
+export class ProjectsComponent {
+  projects = SAMPLE_PROJECTS;
+
+  trackByProjectId(index: number, project: Project): string {
+    return project.id;
+  }
+}
