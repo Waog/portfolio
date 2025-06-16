@@ -1,32 +1,193 @@
-<div class="project-item">
-  <div class="project-header">
-    <h3>E-Commerce Platform</h3>
-    <span class="project-type">Full-Stack Web Application</span>
-  </div>
-
-  <div class="project-description">
-    <p>
-      Developed a modern e-commerce platform with Angular frontend, Node.js
-      backend, and PostgreSQL database. Features include user authentication,
-      product catalog, shopping cart, payment integration, and admin dashboard.
-    </p>
-  </div>
-
-  <div class="project-technologies">
-    <span class="tech-tag">Angular</span>
-    <span class="tech-tag">Node.js</span>
-    <span class="tech-tag">Express.js</span>
-    <span class="tech-tag">PostgreSQL</span>
-    <span class="tech-tag">TypeScript</span>
-    <span class="tech-tag">REST API</span>
-  </div>
-
-  <div class="project-details">
-    <div class="detail-item"><strong>Duration:</strong> 3 months</div>
-    <div class="detail-item"><strong>Team Size:</strong> Solo project</div>
-    <div class="detail-item">
-      <strong>Key Features:</strong> Payment gateway, Real-time inventory, Admin
-      panel
+<mat-card class="project-card">
+  <mat-card-header>
+    <div class="header-content">
+      <mat-card-title>Customer Portal for Insurance Claims</mat-card-title>
+      <mat-chip color="accent" highlighted class="project-type-chip">
+        Progressive Web App (PWA)
+      </mat-chip>
     </div>
-  </div>
-</div>
+  </mat-card-header>
+  <mat-card-content>
+    <!-- Compact Content (Collapsed State) -->
+    <div *ngIf="!showExpandedContent" class="compact-content">
+      <div class="compact-description">
+        <p>
+          Insurance claims portal with digital submission, document management,
+          and real-time tracking.
+          <span class="key-achievements">
+            40% faster processing • WCAG 2.1 AA compliant • 95+ Lighthouse
+            score</span
+          >
+        </p>
+      </div>
+
+      <div class="content-toggle">
+        <button
+          mat-button
+          color="primary"
+          (click)="toggleContent()"
+          class="expand-button"
+        >
+          <mat-icon>expand_more</mat-icon>
+          Show Details
+        </button>
+      </div>
+    </div>
+
+    <!-- Expanded Content (Full State) -->
+    <div *ngIf="showExpandedContent" class="expanded-content">
+      <div class="description-section">
+        <p>
+          Developed a comprehensive customer portal enabling policyholders to
+          report insurance claims digitally. The application streamlined the
+          claims process with guided forms, document upload functionality, and
+          real-time status tracking, reducing processing time by 40% and
+          improving customer satisfaction.
+        </p>
+      </div>
+
+      <div class="features-section">
+        <h4>
+          <mat-icon>check_circle</mat-icon>
+          Key Features
+        </h4>
+        <mat-list dense>
+          <mat-list-item>
+            <mat-icon matListItemIcon color="primary">check</mat-icon>
+            <div matListItemTitle>Digital Claims Submission</div>
+          </mat-list-item>
+          <mat-list-item>
+            <mat-icon matListItemIcon color="primary">check</mat-icon>
+            <div matListItemTitle>Document Upload & Management</div>
+          </mat-list-item>
+          <mat-list-item>
+            <mat-icon matListItemIcon color="primary">check</mat-icon>
+            <div matListItemTitle>Real-time Status Tracking</div>
+          </mat-list-item>
+          <mat-list-item>
+            <mat-icon matListItemIcon color="primary">check</mat-icon>
+            <div matListItemTitle>Push Notifications</div>
+          </mat-list-item>
+          <mat-list-item>
+            <mat-icon matListItemIcon color="primary">check</mat-icon>
+            <div matListItemTitle>Offline Capability</div>
+          </mat-list-item>
+        </mat-list>
+      </div>
+
+      <div class="highlights-section">
+        <h4>
+          <mat-icon>star</mat-icon>
+          Highlights
+        </h4>
+        <mat-list dense>
+          <mat-list-item>
+            <mat-icon matListItemIcon color="accent">star</mat-icon>
+            <div matListItemTitle>
+              Led frontend architecture decisions for PWA implementation
+            </div>
+          </mat-list-item>
+          <mat-list-item>
+            <mat-icon matListItemIcon color="accent">star</mat-icon>
+            <div matListItemTitle>
+              Implemented accessibility standards (WCAG 2.1 AA)
+            </div>
+          </mat-list-item>
+          <mat-list-item>
+            <mat-icon matListItemIcon color="accent">star</mat-icon>
+            <div matListItemTitle>
+              Optimized performance achieving 95+ Lighthouse scores
+            </div>
+          </mat-list-item>
+        </mat-list>
+      </div>
+
+      <div class="content-toggle">
+        <button
+          mat-button
+          color="primary"
+          (click)="toggleContent()"
+          class="collapse-button"
+        >
+          <mat-icon>expand_less</mat-icon>
+          Show Less
+        </button>
+      </div>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <div class="meta-tiles">
+      <div class="meta-tile">
+        <mat-icon>person</mat-icon>
+        <div class="tile-content">
+          <div class="primary-text">Frontend Developer</div>
+          <div class="secondary-text">5-person Scrum team</div>
+        </div>
+      </div>
+
+      <div class="meta-tile">
+        <mat-icon>schedule</mat-icon>
+        <div class="tile-content">
+          <div class="primary-text">08/2022 – 03/2023</div>
+          <div class="secondary-text">8 months</div>
+        </div>
+      </div>
+      <div class="meta-tile">
+        <mat-icon>location_on</mat-icon>
+        <div class="tile-content">
+          <div class="primary-text">Hybrid</div>
+          <div class="secondary-text">Munich</div>
+        </div>
+      </div>
+
+      <div class="meta-tile">
+        <mat-icon>business</mat-icon>
+        <div class="tile-content">
+          <div class="primary-text">Allianz SE</div>
+          <div class="secondary-text">Insurance</div>
+        </div>
+      </div>
+    </div>
+
+    <mat-divider></mat-divider>
+    <div class="technologies-section">
+      <div class="technologies-wrapper">
+        <mat-chip-set>
+          <mat-chip
+            *ngFor="let tech of visibleTechnologies"
+            [class]="'match-' + tech.matchType"
+          >
+            <mat-icon *ngIf="tech.matchType === 'full'" matChipAvatar
+              >star</mat-icon
+            >
+            <mat-icon *ngIf="tech.matchType === 'indirect'" matChipAvatar
+              >star_border</mat-icon
+            >
+            {{ tech.name }}
+          </mat-chip>
+
+          <button
+            *ngIf="hiddenTechnologiesCount > 0 && !showAllTechnologies"
+            mat-button
+            (click)="toggleTechnologies()"
+            class="inline-toggle-button"
+          >
+            show {{ hiddenTechnologiesCount }} more...
+          </button>
+        </mat-chip-set>
+        <div class="technologies-toggle" *ngIf="showAllTechnologies">
+          <button
+            mat-button
+            color="primary"
+            (click)="toggleTechnologies()"
+            class="toggle-button"
+          >
+            <mat-icon>expand_less</mat-icon>
+            Show Less
+          </button>
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>
