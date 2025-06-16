@@ -2,25 +2,6 @@ export interface Technology {
   name: string;
 }
 
-export interface ProjectMetadata {
-  role: {
-    primary: string;
-    secondary: string;
-  };
-  duration: {
-    primary: string;
-    secondary: string;
-  };
-  location: {
-    primary: string;
-    secondary: string;
-  };
-  company: {
-    primary: string;
-    secondary: string;
-  };
-}
-
 export interface Project {
   id: string;
   title: string;
@@ -31,5 +12,12 @@ export interface Project {
   features: string[];
   highlights: string[];
   technologies: Technology[];
-  metadata: ProjectMetadata;
+  role: string;
+  team: string;
+  fromTo: string;
+  duration: string;
+  location: string;
+  workMode: string;
+  company: string;
+  industry: string;
 }

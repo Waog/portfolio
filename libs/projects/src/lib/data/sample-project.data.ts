@@ -54,24 +54,14 @@ export const SAMPLE_PROJECTS: Project[] = [
       { name: 'Performance' },
       { name: 'SEO' },
     ],
-    metadata: {
-      role: {
-        primary: 'Frontend Developer',
-        secondary: '5-person Scrum team',
-      },
-      duration: {
-        primary: '08/2022 – 03/2023',
-        secondary: '8 months',
-      },
-      location: {
-        primary: 'Hybrid',
-        secondary: 'Munich',
-      },
-      company: {
-        primary: 'Allianz SE',
-        secondary: 'Insurance',
-      },
-    },
+    role: 'Frontend Developer',
+    team: '5-person Scrum team',
+    fromTo: '08/2022 – 03/2023',
+    duration: '8 months',
+    location: 'Munich',
+    workMode: 'Hybrid',
+    company: 'Allianz SE',
+    industry: 'Insurance',
   },
   {
     id: 'ecommerce-platform',
@@ -127,23 +117,13 @@ export const SAMPLE_PROJECTS: Project[] = [
       { name: 'Confluence' },
       { name: 'Figma' },
     ],
-    metadata: {
-      role: {
-        primary: 'Full-Stack Developer',
-        secondary: '8-person cross-functional team',
-      },
-      duration: {
-        primary: '04/2021 – 07/2022',
-        secondary: '1 year 4 months',
-      },
-      location: {
-        primary: 'Remote',
-        secondary: 'Global team',
-      },
-      company: {
-        primary: 'TechCommerce Inc.',
-        secondary: 'E-commerce Solutions',
-      },
-    },
+    role: 'Full-Stack Developer',
+    team: '8-person cross-functional team',
+    fromTo: '04/2021 – 07/2022',
+    duration: '1 year 4 months',
+    location: 'Global team',
+    workMode: 'Remote',
+    company: 'TechCommerce Inc.',
+    industry: 'E-commerce Solutions',
   },
 ];

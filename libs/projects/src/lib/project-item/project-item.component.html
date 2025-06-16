@@ -85,45 +85,31 @@
       <div class="meta-tile">
         <mat-icon>person</mat-icon>
         <div class="tile-content">
-          <div class="primary-text">{{ project().metadata.role.primary }}</div>
-          <div class="secondary-text">
-            {{ project().metadata.role.secondary }}
-          </div>
+          <div class="primary-text">{{ project().role }}</div>
+          <div class="secondary-text">{{ project().team }}</div>
         </div>
       </div>
 
       <div class="meta-tile">
         <mat-icon>schedule</mat-icon>
         <div class="tile-content">
-          <div class="primary-text">
-            {{ project().metadata.duration.primary }}
-          </div>
-          <div class="secondary-text">
-            {{ project().metadata.duration.secondary }}
-          </div>
+          <div class="primary-text">{{ project().fromTo }}</div>
+          <div class="secondary-text">{{ project().duration }}</div>
         </div>
       </div>
       <div class="meta-tile">
         <mat-icon>location_on</mat-icon>
         <div class="tile-content">
-          <div class="primary-text">
-            {{ project().metadata.location.primary }}
-          </div>
-          <div class="secondary-text">
-            {{ project().metadata.location.secondary }}
-          </div>
+          <div class="primary-text">{{ project().workMode }}</div>
+          <div class="secondary-text">{{ project().location }}</div>
         </div>
       </div>
 
       <div class="meta-tile">
         <mat-icon>business</mat-icon>
         <div class="tile-content">
-          <div class="primary-text">
-            {{ project().metadata.company.primary }}
-          </div>
-          <div class="secondary-text">
-            {{ project().metadata.company.secondary }}
-          </div>
+          <div class="primary-text">{{ project().company }}</div>
+          <div class="secondary-text">{{ project().industry }}</div>
         </div>
       </div>
     </div>
