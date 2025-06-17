@@ -1,23 +1,23 @@
 <mat-card class="project-card">
   <mat-card-header>
-    <div class="header-content">
+    <header class="header-content">
       <mat-card-title>{{ project().title }}</mat-card-title>
       <mat-chip color="accent" highlighted class="project-type-chip">
         {{ project().projectType }}
       </mat-chip>
-    </div>
+    </header>
   </mat-card-header>
   <mat-card-content>
     <!-- Compact Content (Collapsed State) -->
-    <div *ngIf="!showExpandedContent" class="compact-content">
-      <div class="compact-description">
+    <section *ngIf="!showExpandedContent" class="compact-content">
+      <article class="compact-description">
         <p>
           {{ project().compactDescription }}
           <span class="key-achievements"> {{ project().keyAchievements }}</span>
         </p>
-      </div>
+      </article>
 
-      <div class="content-toggle">
+      <nav class="content-toggle">
         <button
           mat-button
           color="primary"
@@ -27,18 +27,18 @@
           <mat-icon>expand_more</mat-icon>
           Show Details
         </button>
-      </div>
-    </div>
+      </nav>
+    </section>
 
     <!-- Expanded Content (Full State) -->
-    <div *ngIf="showExpandedContent" class="expanded-content">
-      <div class="description-section">
+    <section *ngIf="showExpandedContent" class="expanded-content">
+      <article class="description-section">
         <p>
           {{ project().fullDescription }}
         </p>
-      </div>
+      </article>
 
-      <div class="features-section">
+      <section class="features-section">
         <h4>
           <mat-icon>check_circle</mat-icon>
           Key Features
@@ -49,9 +49,9 @@
             <div matListItemTitle>{{ feature }}</div>
           </mat-list-item>
         </mat-list>
-      </div>
+      </section>
 
-      <div class="highlights-section">
+      <section class="highlights-section">
         <h4>
           <mat-icon>star</mat-icon>
           Highlights
@@ -64,9 +64,9 @@
             </div>
           </mat-list-item>
         </mat-list>
-      </div>
+      </section>
 
-      <div class="content-toggle">
+      <nav class="content-toggle">
         <button
           mat-button
           color="primary"
@@ -76,46 +76,46 @@
           <mat-icon>expand_less</mat-icon>
           Show Less
         </button>
-      </div>
-    </div>
+      </nav>
+    </section>
 
     <mat-divider></mat-divider>
 
-    <div class="meta-tiles">
-      <div class="meta-tile">
+    <aside class="meta-tiles">
+      <section class="meta-tile">
         <mat-icon>person</mat-icon>
         <div class="tile-content">
           <div class="primary-text">{{ project().role }}</div>
           <div class="secondary-text">{{ project().team }}</div>
         </div>
-      </div>
+      </section>
 
-      <div class="meta-tile">
+      <section class="meta-tile">
         <mat-icon>schedule</mat-icon>
         <div class="tile-content">
           <div class="primary-text">{{ project().fromTo }}</div>
           <div class="secondary-text">{{ project().duration }}</div>
         </div>
-      </div>
-      <div class="meta-tile">
+      </section>
+      <section class="meta-tile">
         <mat-icon>location_on</mat-icon>
         <div class="tile-content">
           <div class="primary-text">{{ project().workMode }}</div>
           <div class="secondary-text">{{ project().location }}</div>
         </div>
-      </div>
+      </section>
 
-      <div class="meta-tile">
+      <section class="meta-tile">
         <mat-icon>business</mat-icon>
         <div class="tile-content">
           <div class="primary-text">{{ project().company }}</div>
           <div class="secondary-text">{{ project().industry }}</div>
         </div>
-      </div>
-    </div>
+      </section>
+    </aside>
 
     <mat-divider></mat-divider>
-    <div class="technologies-section">
+    <footer class="technologies-section">
       <div class="technologies-wrapper">
         <mat-chip-set>
           <mat-chip
@@ -140,7 +140,7 @@
             show {{ hiddenTechnologiesCount }} more...
           </button>
         </mat-chip-set>
-        <div class="technologies-toggle" *ngIf="showAllTechnologies">
+        <nav class="technologies-toggle" *ngIf="showAllTechnologies">
           <button
             mat-button
             color="primary"
@@ -150,8 +150,8 @@
             <mat-icon>expand_less</mat-icon>
             Show Less
           </button>
-        </div>
+        </nav>
       </div>
-    </div>
+    </footer>
   </mat-card-content>
 </mat-card>

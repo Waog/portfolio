@@ -1,15 +1,15 @@
-<div class="projects-container">
-  <div class="projects-header">
+<section class="projects-container">
+  <header class="projects-header">
     <h2>My Projects</h2>
     <p>
       Here are some of the key projects I've worked on as a Full-Stack Developer
     </p>
-  </div>
-  <div class="projects-list">
+  </header>
+  <main class="projects-list">
     <lib-project-item
       *ngFor="let project of projects; trackBy: trackByProjectId"
       [project]="project"
     >
     </lib-project-item>
-  </div>
-</div>
+  </main>
+</section>
