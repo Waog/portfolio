@@ -1,12 +1,23 @@
 import { TestBed } from '@angular/core/testing';
+import { Router } from '@angular/router';
 
 import { SearchTagService } from './search-tag.service';
 
 describe('SearchTagService', () => {
   let service: SearchTagService;
+  let mockRouter: Partial<Router>;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    mockRouter = {
+      url: '/',
+      navigate: jest.fn(),
+      parseUrl: jest.fn().mockReturnValue({ queryParams: {} }),
+    };
+
+    TestBed.configureTestingModule({
+      providers: [{ provide: Router, useValue: mockRouter }],
+    });
+
     service = TestBed.inject(SearchTagService);
   });
 
