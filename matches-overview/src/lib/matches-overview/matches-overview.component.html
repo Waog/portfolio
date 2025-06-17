@@ -1,0 +1,32 @@
+@if (tagMatches.length > 0) {
+<div class="matches-overview-container">
+  <h3 class="matches-headline">Search Results</h3>
+
+  <div class="matches-overview">
+    @for (tagMatch of tagMatches; track tagMatch.tag) {
+    <div class="match-row">
+      <span class="search-term">{{ tagMatch.tag }}:</span>
+
+      <div class="match-results">
+        @if (tagMatch.matches.fullMatches > 0) {
+        <span class="result-item full-match">
+          {{ tagMatch.matches.fullMatches }} matching project{{
+            tagMatch.matches.fullMatches !== 1 ? 's' : ''
+          }}
+        </span>
+        } @if (tagMatch.matches.partialMatches > 0) {
+        <span class="result-item partial-match">
+          {{ tagMatch.matches.partialMatches }} partially matching project{{
+            tagMatch.matches.partialMatches !== 1 ? 's' : ''
+          }}
+        </span>
+        } @if (tagMatch.matches.fullMatches === 0 &&
+        tagMatch.matches.partialMatches === 0) {
+        <span class="result-item no-match">no matching projects</span>
+        }
+      </div>
+    </div>
+    }
+  </div>
+</div>
+}
