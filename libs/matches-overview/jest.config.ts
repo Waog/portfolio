@@ -1,8 +1,8 @@
 export default {
-  displayName: 'tag-input',
-  preset: '../jest.preset.js',
+  displayName: 'matches-overview',
+  preset: '../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
-  coverageDirectory: '../coverage/tag-input',
+  coverageDirectory: '../../coverage/libs/matches-overview',
   transform: {
     '^.+\\.(ts|mjs|js|html)$': [
       'jest-preset-angular',
