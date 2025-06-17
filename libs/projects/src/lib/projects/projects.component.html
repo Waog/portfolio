@@ -28,6 +28,8 @@
   <main class="projects-list">
     @if (topProjects.length > 0) {
     <h3>All Projects</h3>
+    } @else {
+    <h3>My Projects</h3>
     }
     <lib-project-item
       *ngFor="let project of projects; trackBy: trackByProjectId"
