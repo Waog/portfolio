@@ -1,11 +1,14 @@
 import { CommonModule } from '@angular/common';
-import { Component, input, output } from '@angular/core';
+import { Component, inject, OnDestroy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { Subject, takeUntil } from 'rxjs';
+
+import { SearchTagService } from './search-tag.service';
 
 @Component({
   selector: 'lib-tag-input',
@@ -21,25 +24,37 @@ import { MatInputModule } from '@angular/material/input';
   templateUrl: './tag-input.component.html',
   styleUrl: './tag-input.component.scss',
 })
-export class TagInputComponent {
-  placeholder = input<string>('Add search term, e.g. "Angular"');
-  tags = input<string[]>([]);
-  tagsChange = output<string[]>();
+export class TagInputComponent implements OnDestroy {
+  private searchTagService = inject(SearchTagService);
+  private destroy$ = new Subject<void>();
 
+  placeholder = 'Add search term, e.g. "Angular"';
   currentInput = '';
+  tags: string[] = [];
+
+  constructor() {
+    // Subscribe to tag changes from the service
+    this.searchTagService.tags$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(tags => {
+        this.tags = tags;
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 
   addTag(): void {
-    const trimmedInput = this.currentInput.trim();
-    if (trimmedInput && !this.tags().includes(trimmedInput)) {
-      const updatedTags = [...this.tags(), trimmedInput];
-      this.tagsChange.emit(updatedTags);
+    if (this.currentInput.trim()) {
+      this.searchTagService.addTag(this.currentInput);
       this.currentInput = '';
     }
   }
 
   removeTag(tagToRemove: string): void {
-    const updatedTags = this.tags().filter(tag => tag !== tagToRemove);
-    this.tagsChange.emit(updatedTags);
+    this.searchTagService.removeTag(tagToRemove);
   }
 
   onKeyDown(event: KeyboardEvent): void {

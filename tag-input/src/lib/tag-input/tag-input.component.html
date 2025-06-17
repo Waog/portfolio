@@ -1,12 +1,12 @@
 <div class="tag-input-container">
   <div class="tag-input-wrapper">
     <mat-form-field appearance="outline" class="full-width primary-field">
-      <mat-label>{{ placeholder() }}</mat-label>
+      <mat-label>{{ placeholder }}</mat-label>
       <input
         matInput
         [(ngModel)]="currentInput"
         (keydown)="onKeyDown($event)"
-        [placeholder]="placeholder()"
+        [placeholder]="placeholder"
       />
       <button
         mat-button
@@ -22,9 +22,9 @@
       </button>
     </mat-form-field>
 
-    <mat-chip-set *ngIf="tags().length > 0" class="tag-list">
+    <mat-chip-set *ngIf="tags.length > 0" class="tag-list">
       <mat-chip
-        *ngFor="let tag of tags()"
+        *ngFor="let tag of tags"
         [removable]="true"
         (removed)="removeTag(tag)"
         class="search-tag"
