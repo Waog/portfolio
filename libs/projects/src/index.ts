@@ -4,3 +4,4 @@ export * from './lib/project-item/project-item.component';
 export * from './lib/project-item/technology-matching.service';
 export * from './lib/project-item/technology-matching.types';
 export * from './lib/projects/projects.component';
+export * from './lib/services/top-projects.service';
