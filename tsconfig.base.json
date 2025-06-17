@@ -18,7 +18,8 @@
       "@portfolio/home": ["libs/home/src/index.ts"],
       "@portfolio/legal": ["libs/legal/src/index.ts"],
       "@portfolio/projects": ["libs/projects/src/index.ts"],
-      "@portfolio/shared-ui": ["libs/shared-ui/src/index.ts"]
+      "@portfolio/shared-ui": ["libs/shared-ui/src/index.ts"],
+      "@portfolio/tag-input": ["tag-input/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

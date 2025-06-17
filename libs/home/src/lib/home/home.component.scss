@@ -1,0 +1,26 @@
+.home-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+
+  // Ensure left alignment for all child components
+  text-align: left;
+
+  // Layout structure for child components
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem; // Space between tag-input and projects
+}
+
+// Remove individual component paddings since we handle it globally
+lib-tag-input,
+lib-projects {
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .home-container {
+    padding: 1rem 0.5rem;
+    gap: 1rem; // Reduced gap on mobile
+  }
+}

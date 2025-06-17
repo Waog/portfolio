@@ -4,8 +4,3 @@ export interface TechnologyWithMatch {
   name: string;
   matchType: MatchType;
 }
-
-export interface TechnologyMatchingCriteria {
-  fullMatches: string[];
-  indirectMatches: string[];
-}

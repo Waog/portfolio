@@ -1,28 +1,35 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
+import { SearchTagService } from '@portfolio/tag-input';
 
-import {
-  MatchType,
-  TechnologyMatchingCriteria,
-  TechnologyWithMatch,
-} from './technology-matching.types';
+import { MatchType, TechnologyWithMatch } from './technology-matching.types';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProjectItemTechnologyMatchingService {
-  // Hard-coded matching criteria for now - this could be made configurable later
-  private readonly matchingCriteria: TechnologyMatchingCriteria = {
-    fullMatches: ['Angular', 'TypeScript', 'SCSS'],
-    indirectMatches: ['RxJS', 'Angular Material', 'Jest', 'Cypress'],
-  };
+  private searchTagService = inject(SearchTagService);
 
   getMatchType(technologyName: string): MatchType {
-    if (this.matchingCriteria.fullMatches.includes(technologyName)) {
-      return 'full';
+    const searchTags = this.searchTagService.currentTags;
+    const techLower = technologyName.toLowerCase();
+
+    // Check for full matches (exact string match, case insensitive)
+    for (const tag of searchTags) {
+      const tagLower = tag.toLowerCase();
+
+      if (techLower === tagLower) {
+        return 'full';
+      }
     }
 
-    if (this.matchingCriteria.indirectMatches.includes(technologyName)) {
-      return 'indirect';
+    // Check for indirect matches (substring match in either direction)
+    for (const tag of searchTags) {
+      const tagLower = tag.toLowerCase();
+
+      // Check if search term is contained in tech name OR tech name is contained in search term
+      if (techLower.includes(tagLower) || tagLower.includes(techLower)) {
+        return 'indirect';
+      }
     }
 
     return 'none';

@@ -1,7 +1,6 @@
 .projects-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem 1rem;
+  // Removed global spacing - now handled by parent home component
+  width: 100%;
 }
 
 .projects-header {
@@ -31,10 +30,6 @@
 }
 
 @media (max-width: 768px) {
-  .projects-container {
-    padding: 1rem 0.5rem;
-  }
-
   .projects-header {
     margin-bottom: 2rem;
 
