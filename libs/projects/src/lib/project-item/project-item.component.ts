@@ -31,6 +31,7 @@ export class ProjectItemComponent {
   );
 
   project = input.required<Project>();
+  isTopProject = input<boolean>(false);
 
   showAllTechnologies = false;
   showExpandedContent = false;
