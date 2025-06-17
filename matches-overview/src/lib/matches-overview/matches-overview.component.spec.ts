@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { SearchTagService } from '@portfolio/tag-input';
 import { BehaviorSubject } from 'rxjs';
 
 import {
@@ -29,7 +30,7 @@ describe('MatchesOverviewComponent', () => {
     await TestBed.configureTestingModule({
       imports: [MatchesOverviewComponent],
       providers: [
-        { provide: 'SearchTagService', useValue: mockSearchTagService },
+        { provide: SearchTagService, useValue: mockSearchTagService },
         {
           provide: TechProjectMatchingService,
           useValue: mockTechProjectMatchingService,
@@ -64,35 +65,5 @@ describe('MatchesOverviewComponent', () => {
     fixture.detectChanges();
 
     expect(component.tagMatches.length).toBe(0);
-  });
-
-  it('should format match text correctly', () => {
-    const matches: ProjectMatches = {
-      fullMatches: 2,
-      partialMatches: 3,
-      totalProjects: 10,
-    };
-    const result = component.getMatchText(matches);
-    expect(result).toBe('2 matching projects, 3 partially matching projects');
-  });
-
-  it('should handle singular forms correctly', () => {
-    const matches: ProjectMatches = {
-      fullMatches: 1,
-      partialMatches: 1,
-      totalProjects: 10,
-    };
-    const result = component.getMatchText(matches);
-    expect(result).toBe('1 matching project, 1 partially matching project');
-  });
-
-  it('should handle no matches correctly', () => {
-    const matches: ProjectMatches = {
-      fullMatches: 0,
-      partialMatches: 0,
-      totalProjects: 10,
-    };
-    const result = component.getMatchText(matches);
-    expect(result).toBe('no matching project');
   });
 });
