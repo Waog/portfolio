@@ -1,0 +1,109 @@
+.tag-input-container {
+  // Removed global spacing - now handled by parent home component
+  width: 100%;
+
+  // Ensure left alignment within the container
+  text-align: left;
+}
+
+.tag-input-wrapper {
+  width: 100%;
+  // Ensure all content is left-aligned
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.full-width {
+  width: 100%;
+
+  &.primary-field {
+    // Make the input field more prominent
+    ::ng-deep .mat-mdc-form-field-outline {
+      color: #1976d2 !important;
+    }
+
+    ::ng-deep .mat-mdc-form-field-outline-thick {
+      color: #1976d2 !important;
+      border-width: 3px !important;
+    }
+
+    ::ng-deep .mat-mdc-floating-label {
+      color: #1976d2 !important;
+    }
+
+    ::ng-deep .mat-mdc-form-field.mat-focused .mat-mdc-floating-label {
+      color: #1976d2 !important;
+    }
+
+    ::ng-deep .mat-mdc-input-element {
+      color: #333 !important;
+    }
+  }
+
+  .add-button {
+    font-size: 14px;
+    min-width: 60px;
+    padding: 0 12px;
+    text-transform: none;
+    font-weight: 500;
+
+    // Proper styling for suffix button
+    &:not([disabled]) {
+      color: #1976d2 !important;
+    }
+
+    &:hover:not([disabled]) {
+      background-color: rgba(25, 118, 210, 0.04) !important;
+    }
+  }
+}
+
+.tag-list {
+  margin-top: 4px; // Further reduced spacing from 8px to 4px
+  width: 100%;
+  // Ensure tags are left-aligned
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: flex-start;
+
+  // Override Angular Material's default negative margin on the chips container
+  ::ng-deep .mdc-evolution-chip-set__chips {
+    margin-left: 0 !important;
+  }
+
+  .search-tag {
+    // Style like the green full-match tags from project component
+    background-color: #e8f5e8 !important;
+    color: #2e7d32 !important;
+    border: 1px solid #a5d6a7 !important;
+    font-weight: 500;
+    margin: 2px 4px 2px 0; // Proper margins that don't overlap container
+
+    &:hover {
+      background-color: #c8e6c9 !important;
+    }
+
+    // Style the remove icon
+    mat-icon[matChipRemove] {
+      color: #2e7d32 !important;
+
+      &:hover {
+        background-color: rgba(46, 125, 50, 0.1) !important;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .full-width .add-button {
+    font-size: 12px;
+    min-width: 50px;
+    padding: 0 8px;
+  }
+
+  .tag-list {
+    margin-top: 2px; // Even less spacing on mobile
+  }
+}
