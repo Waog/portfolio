@@ -1,0 +1,21 @@
+.matches-overview {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.match-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.tag-label {
+  font-weight: 500;
+  color: var(--text-primary, #333);
+}
+
+.match-info {
+  color: var(--text-secondary, #666);
+  font-size: 0.9em;
+}

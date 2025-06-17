@@ -1,1 +1,10 @@
-<p>MatchesOverview works!</p>
+@if (tagMatches.length > 0) {
+<div class="matches-overview">
+  @for (tagMatch of tagMatches; track tagMatch.tag) {
+  <div class="match-row">
+    <span class="tag-label">{{ tagMatch.tag }}:</span>
+    <span class="match-info">[{{ getMatchText(tagMatch.matches) }}]</span>
+  </div>
+  }
+</div>
+}

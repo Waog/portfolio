@@ -1,6 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { SearchTagService } from '@portfolio/tag-input';
 
+import { TechnologyMatchingService } from './technology-matching.service';
 import { MatchType, TechnologyWithMatch } from './technology-matching.types';
 
 @Injectable({
@@ -8,31 +9,14 @@ import { MatchType, TechnologyWithMatch } from './technology-matching.types';
 })
 export class ProjectItemTechnologyMatchingService {
   private searchTagService = inject(SearchTagService);
+  private technologyMatchingService = inject(TechnologyMatchingService);
 
   getMatchType(technologyName: string): MatchType {
     const searchTags = this.searchTagService.currentTags;
-    const techLower = technologyName.toLowerCase();
-
-    // Check for full matches (exact string match, case insensitive)
-    for (const tag of searchTags) {
-      const tagLower = tag.toLowerCase();
-
-      if (techLower === tagLower) {
-        return 'full';
-      }
-    }
-
-    // Check for indirect matches (substring match in either direction)
-    for (const tag of searchTags) {
-      const tagLower = tag.toLowerCase();
-
-      // Check if search term is contained in tech name OR tech name is contained in search term
-      if (techLower.includes(tagLower) || tagLower.includes(techLower)) {
-        return 'indirect';
-      }
-    }
-
-    return 'none';
+    return this.technologyMatchingService.getBestMatchType(
+      technologyName,
+      searchTags
+    );
   }
 
   addMatchType(technologyName: string): TechnologyWithMatch {
