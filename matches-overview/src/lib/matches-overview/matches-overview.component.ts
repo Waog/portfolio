@@ -45,30 +45,4 @@ export class MatchesOverviewComponent implements OnInit, OnDestroy {
       matches: this.techProjectMatchingService.getProjectMatchesForTag(tag),
     }));
   }
-
-  getMatchText(matches: ProjectMatches): string {
-    const parts: string[] = [];
-
-    if (matches.fullMatches > 0) {
-      parts.push(
-        `${matches.fullMatches} matching project${
-          matches.fullMatches !== 1 ? 's' : ''
-        }`
-      );
-    }
-
-    if (matches.partialMatches > 0) {
-      parts.push(
-        `${matches.partialMatches} partially matching project${
-          matches.partialMatches !== 1 ? 's' : ''
-        }`
-      );
-    }
-
-    if (parts.length === 0) {
-      return 'no matching project';
-    }
-
-    return parts.join(', ');
-  }
 }
