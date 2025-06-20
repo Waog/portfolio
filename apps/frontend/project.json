@@ -158,6 +158,55 @@
         }
       },
       "defaultConfiguration": "production"
+    },
+    "storybook": {
+      "executor": "@storybook/angular:start-storybook",
+      "options": {
+        "port": 4000,
+        "configDir": "apps/frontend/.storybook",
+        "browserTarget": "frontend:build",
+        "compodoc": false
+      },
+      "configurations": {
+        "ci": {
+          "quiet": true
+        }
+      }
+    },
+    "build-storybook": {
+      "executor": "@storybook/angular:build-storybook",
+      "outputs": ["{options.outputDir}"],
+      "options": {
+        "outputDir": "dist/storybook/frontend",
+        "configDir": "apps/frontend/.storybook",
+        "browserTarget": "frontend:build",
+        "compodoc": false
+      },
+      "configurations": {
+        "ci": {
+          "quiet": true
+        }
+      }
+    },
+    "test-storybook": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "test-storybook -c apps/frontend/.storybook --url=http://localhost:4000"
+      }
+    },
+    "static-storybook": {
+      "executor": "@nx/web:file-server",
+      "dependsOn": ["build-storybook"],
+      "options": {
+        "buildTarget": "frontend:build-storybook",
+        "staticFilePath": "dist/storybook/frontend",
+        "spa": true
+      },
+      "configurations": {
+        "ci": {
+          "buildTarget": "frontend:build-storybook:ci"
+        }
+      }
     }
   }
 }
