@@ -1,6 +1,7 @@
 import { provideRouter } from '@angular/router';
 import type { Meta, StoryObj } from '@storybook/angular';
 import { applicationConfig, moduleMetadata } from '@storybook/angular';
+import { userEvent, within } from '@storybook/testing-library';
 import { BehaviorSubject } from 'rxjs';
 
 import { SearchTagService } from './search-tag.service';
@@ -193,6 +194,41 @@ export const WithManyTags: Story = {
       description: {
         story:
           'Shows the component with many tags to test layout and wrapping behavior.',
+      },
+    },
+  },
+};
+
+export const WithFocusedInput: Story = {
+  decorators: [
+    moduleMetadata({
+      providers: [
+        {
+          provide: SearchTagService,
+          useFactory: () => {
+            const service = new MockSearchTagService();
+            service.initializeWithTags(['Angular', 'TypeScript']);
+            return service;
+          },
+        },
+      ],
+    }),
+  ],
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const input = canvas.getByPlaceholderText(/add search term/i);
+
+    // Focus the input field
+    await userEvent.click(input);
+
+    // Type some text without submitting
+    await userEvent.type(input, 'React', { delay: 100 });
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Shows the component with the input field focused and containing text that hasn't been submitted yet.",
       },
     },
   },
