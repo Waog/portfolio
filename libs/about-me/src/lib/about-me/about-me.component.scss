@@ -1,3 +1,5 @@
+@use '../../../../shared-ui/src/lib/styles/breakpoints.scss' as breakpoints;
+
 .about-me-container {
   width: 100%;
   margin-top: 2rem;
@@ -142,13 +144,29 @@
       font-size: 1rem;
       color: #2c3e50;
       font-weight: 500;
-
       a {
         color: #3498db;
         text-decoration: none;
-
         &:hover {
           text-decoration: underline;
+        }
+        &.external-link {
+          display: inline;
+          align-items: baseline;
+
+          .link-icon {
+            font-size: 1rem;
+            width: 1rem;
+            height: 1rem;
+            display: none; // Hide on desktop by default
+            transition: opacity 0.2s ease;
+            vertical-align: text-bottom;
+            margin-left: 0.25rem;
+
+            @include breakpoints.mobile-only {
+              display: inline; // Show only on mobile, inline with text
+            }
+          }
         }
       }
     }
@@ -197,14 +215,31 @@
       font-weight: 600;
       color: #2c3e50;
       margin-bottom: 0.5rem;
-
       a {
         color: #2c3e50;
         text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
 
         &:hover {
           color: #3498db;
           text-decoration: underline;
+        }
+        &.external-link {
+          .link-icon {
+            font-size: 1rem;
+            width: 1rem;
+            height: 1rem;
+            display: none; // Hide on desktop by default
+            transition: opacity 0.2s ease;
+            vertical-align: text-bottom;
+            margin-left: 0.25rem;
+
+            @include breakpoints.mobile-only {
+              display: inline; // Show only on mobile, inline with text
+            }
+          }
         }
       }
     }
@@ -261,7 +296,7 @@
 }
 
 // Responsive Design
-@media (max-width: 768px) {
+@include breakpoints.mobile-only {
   .content-grid {
     grid-template-columns: 1fr;
     gap: 1rem;

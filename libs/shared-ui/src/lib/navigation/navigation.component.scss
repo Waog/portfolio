@@ -1,4 +1,4 @@
-@import '../styles/breakpoints.scss';
+@use '../styles/breakpoints.scss' as breakpoints;
 
 .navigation-toolbar {
   position: fixed;
@@ -21,7 +21,7 @@
     gap: 16px;
     min-width: 0; // Allow content to shrink
 
-    @include desktop-up {
+    @include breakpoints.desktop-up {
       padding: 0 32px;
       gap: 24px; // Reduced gap to save space
     }
@@ -65,7 +65,7 @@
     display: none;
     gap: 8px;
 
-    @include desktop-up {
+    @include breakpoints.desktop-up {
       display: flex;
     }
 
@@ -83,7 +83,7 @@
     min-width: 0; // Allow shrinking
     flex-shrink: 1;
 
-    @include desktop-up {
+    @include breakpoints.desktop-up {
       flex-direction: row;
       align-items: center;
       gap: 24px;
@@ -93,7 +93,7 @@
       display: none; // Hide on mobile
       flex-shrink: 0; // Don't shrink the button
 
-      @include desktop-up {
+      @include breakpoints.desktop-up {
         display: flex; // Show on desktop
         align-items: center;
         gap: 8px;
@@ -116,7 +116,7 @@
       min-width: 0; // Allow shrinking
       flex-shrink: 1;
 
-      @include desktop-up {
+      @include breakpoints.desktop-up {
         gap: 4px;
       }
     }
@@ -129,7 +129,7 @@
       min-width: 0; // Allow shrinking
       text-decoration: none;
 
-      @include desktop-up {
+      @include breakpoints.desktop-up {
         font-size: 12px;
         gap: 8px;
       }
@@ -147,14 +147,13 @@
         outline: 1px solid rgba(0, 0, 0, 0.12);
         outline-offset: 2px;
       }
-
       .contact-icon {
         font-size: 14px;
         width: 14px;
         height: 14px;
         flex-shrink: 0; // Keep icon size
 
-        @include desktop-up {
+        @include breakpoints.desktop-up {
           font-size: 16px;
           width: 16px;
           height: 16px;
@@ -169,12 +168,11 @@
       }
     }
   }
-
   // Mobile Menu
   .nav-mobile {
     display: flex;
 
-    @include desktop-up {
+    @include breakpoints.desktop-up {
       display: none;
     }
 
