@@ -1,4 +1,3 @@
-import { SHARED_VIEWPORT_CONFIG } from '@portfolio/shared-ui';
 import type { Preview } from '@storybook/angular';
 
 const preview: Preview = {
@@ -9,7 +8,25 @@ const preview: Preview = {
         date: /Date$/,
       },
     },
-    viewport: SHARED_VIEWPORT_CONFIG,
+    viewport: {
+      viewports: {
+        mobile: {
+          name: 'Mobile',
+          styles: {
+            width: '375px',
+            height: '667px',
+          },
+        },
+        desktop: {
+          name: 'Desktop',
+          styles: {
+            width: '100%',
+            height: '100%',
+          },
+        },
+      },
+      defaultViewport: 'desktop',
+    },
   },
 };
 
