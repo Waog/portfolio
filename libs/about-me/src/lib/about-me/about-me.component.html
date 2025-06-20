@@ -1,1 +1,167 @@
-<p>AboutMe works!</p>
+<section class="about-me-container">
+  <mat-card class="about-me-card">
+    <!-- Hero Section with large photo and main info -->
+    <mat-card-header class="hero-header">
+      <div class="hero-content">
+        <div class="hero-image">
+          <img
+            src="/assets/oli-profile.jpg"
+            alt="Oliver Stadie Profile Photo"
+          />
+        </div>
+        <div class="hero-info">
+          <mat-card-title class="name">Oliver Stadie</mat-card-title>
+          <mat-card-subtitle class="location"
+            >Berlin • Germany</mat-card-subtitle
+          >
+          <mat-chip color="primary" highlighted class="role-chip">
+            Full-Stack Web Developer
+          </mat-chip>
+          <p class="hero-summary">
+            Well-organized, broad-minded, passionate and responsible IT
+            professional. Focus on aligning technical solutions with business
+            objectives.
+          </p>
+        </div>
+      </div>
+    </mat-card-header>
+
+    <mat-card-content class="main-content">
+      <!-- Two-column layout for better space utilization -->
+      <div class="content-grid">
+        <!-- Left Column -->
+        <div class="left-column">
+          <!-- Personal Info Card -->
+          <mat-card class="info-card">
+            <mat-card-header>
+              <mat-card-title class="section-title">
+                <mat-icon>person</mat-icon>
+                Personal Information
+              </mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <div class="info-item">
+                <mat-icon class="info-icon">cake</mat-icon>
+                <div class="info-details">
+                  <div class="info-label">Born</div>
+                  <div class="info-value">1984 ({{ currentAge }} years)</div>
+                </div>
+              </div>
+
+              <div class="info-item">
+                <mat-icon class="info-icon">language</mat-icon>
+                <div class="info-details">
+                  <div class="info-label">Languages</div>
+                  <div class="language-list">
+                    <span class="language-item native">German</span>
+                    <span class="language-item fluent">English</span>
+                    <span class="language-item basic">Chinese</span>
+                  </div>
+                </div>
+              </div>
+            </mat-card-content>
+          </mat-card>
+
+          <!-- Activities Card -->
+          <mat-card class="info-card">
+            <mat-card-header>
+              <mat-card-title class="section-title">
+                <mat-icon>volunteer_activism</mat-icon>
+                Community & Writing
+              </mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <div class="info-item">
+                <mat-icon class="info-icon">group</mat-icon>
+                <div class="info-details">
+                  <div class="info-label">Meetup Organizer</div>
+                  <div class="info-value">
+                    <a
+                      href="https://www.meetup.com/Software-Architecture-and-Design-Berlin/"
+                      target="_blank"
+                      rel="noopener"
+                    >
+                      Founder & Organizer of Software Architecture and Design
+                      Berlin with 600+ Members
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="info-item">
+                <mat-icon class="info-icon">article</mat-icon>
+                <div class="info-details">
+                  <div class="info-label">Tech Blogger</div>
+                  <div class="info-value">
+                    <a
+                      href="https://waog.wordpress.com/category/software-development-2/"
+                      target="_blank"
+                      rel="noopener"
+                    >
+                      Blogging about Software Architecture and Design
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </div>
+
+        <!-- Right Column -->
+        <div class="right-column">
+          <!-- Education Card - Emphasized -->
+          <mat-card class="info-card education-card">
+            <mat-card-header>
+              <mat-card-title class="section-title">
+                <mat-icon>school</mat-icon>
+                Education
+              </mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <div class="education-main">
+                <div class="degree-title">
+                  <a
+                    href="/assets/oliver-stadie-diplom-certificate.pdf"
+                    target="_blank"
+                    rel="noopener"
+                  >
+                    Diplom Degree in Computer Science
+                  </a>
+                </div>
+                <div class="university">Humboldt Universität zu Berlin</div>
+                <div class="duration">2006 - 2015</div>
+              </div>
+              <div class="education-details">
+                <div class="grade-highlight">
+                  <mat-icon class="grade-icon">star</mat-icon>
+                  <span class="grade-text">Grade: Very Good</span>
+                </div>
+                <div class="subsidiary">
+                  Subsidiary Field: Engineering Science
+                </div>
+              </div>
+            </mat-card-content>
+          </mat-card>
+
+          <!-- Professional Summary Card -->
+          <mat-card class="info-card">
+            <mat-card-header>
+              <mat-card-title class="section-title">
+                <mat-icon>work</mat-icon>
+                Professional Focus
+              </mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <p class="professional-text">
+                Experienced in planning, designing, implementing, testing,
+                deploying and maintaining web applications with various
+                technology stacks. See portfolio above for detailed project
+                information and technical expertise.
+              </p>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</section>
