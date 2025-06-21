@@ -22,6 +22,9 @@
             "input": "apps/frontend/public"
           }
         ],
+        "stylePreprocessorOptions": {
+          "includePaths": ["libs/util/shared-styles/src/lib"]
+        },
         "styles": [
           "@angular/material/prebuilt-themes/azure-blue.css",
           "apps/frontend/src/styles.scss"
@@ -111,7 +114,10 @@
         "outputPath": "dist/apps/frontend/server",
         "main": "apps/frontend/src/server.ts",
         "tsConfig": "apps/frontend/tsconfig.server.json",
-        "inlineStyleLanguage": "scss"
+        "inlineStyleLanguage": "scss",
+        "stylePreprocessorOptions": {
+          "includePaths": ["libs/util/shared-styles/src/lib"]
+        }
       },
       "configurations": {
         "production": {
