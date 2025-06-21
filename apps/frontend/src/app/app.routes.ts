@@ -7,7 +7,8 @@ export const appRoutes: Route[] = [
   },
   {
     path: 'legal',
-    loadChildren: () => import('@portfolio/legal').then(m => m.legalRoutes),
+    loadChildren: () =>
+      import('@portfolio/page-legal').then(m => m.legalRoutes),
   },
   { path: '**', redirectTo: '', pathMatch: 'full' },
 ];

@@ -16,11 +16,11 @@
     "baseUrl": ".",
     "paths": {
       "@portfolio/about-me": ["libs/feature/about-me/src/index.ts"],
-      "@portfolio/legal": ["libs/legal/src/index.ts"],
       "@portfolio/matches-overview": [
         "libs/feature/matches-overview/src/index.ts"
       ],
       "@portfolio/page-home": ["libs/feature/page-home/src/index.ts"],
+      "@portfolio/page-legal": ["libs/feature/page-legal/src/index.ts"],
       "@portfolio/project-list": ["libs/feature/project-list/src/index.ts"],
       "@portfolio/shared-ui": ["libs/shared-ui/src/index.ts"],
       "@portfolio/tag-input": ["libs/feature/tag-input/src/index.ts"]

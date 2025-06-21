@@ -1,8 +1,8 @@
 export default {
-  displayName: 'legal',
-  preset: '../../jest.preset.js',
+  displayName: 'page-legal',
+  preset: '../../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
-  coverageDirectory: '../../coverage/libs/legal',
+  coverageDirectory: '../../../coverage/libs/feature/page-legal',
   transform: {
     '^.+\\.(ts|mjs|js|html)$': [
       'jest-preset-angular',
