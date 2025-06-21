@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { SearchTagService } from '@portfolio/tag-input';
+import { SearchTagService } from '@portfolio/search-tags';
 import { Subject, takeUntil } from 'rxjs';
 
 import { ALL_PROJECTS } from '../data/projects.data';

@@ -4,7 +4,7 @@ import {
   Project,
   TechnologyMatchingService,
 } from '@portfolio/project-list';
-import { SearchTagService } from '@portfolio/tag-input';
+import { SearchTagService } from '@portfolio/search-tags';
 
 export interface ProjectMatches {
   fullMatches: number;

@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { SearchTagService } from '@portfolio/tag-input';
+import { SearchTagService } from '@portfolio/search-tags';
 import { BehaviorSubject } from 'rxjs';
 
 import {

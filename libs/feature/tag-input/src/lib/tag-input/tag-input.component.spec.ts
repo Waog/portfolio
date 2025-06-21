@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
+import { SearchTagService } from '@portfolio/search-tags';
 import { of } from 'rxjs';
 
-import { SearchTagService } from './search-tag.service';
 import { TagInputComponent } from './tag-input.component';
 
 describe('TagInputComponent', () => {

@@ -1,10 +1,10 @@
 import { provideRouter } from '@angular/router';
+import { SearchTagService } from '@portfolio/search-tags';
 import type { Meta, StoryObj } from '@storybook/angular';
 import { applicationConfig, moduleMetadata } from '@storybook/angular';
 import { userEvent, within } from '@storybook/testing-library';
 import { BehaviorSubject } from 'rxjs';
 
-import { SearchTagService } from './search-tag.service';
 import { TagInputComponent } from './tag-input.component';
 
 // Mock service for Storybook

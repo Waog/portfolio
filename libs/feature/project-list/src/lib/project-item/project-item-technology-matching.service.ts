@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { SearchTagService } from '@portfolio/tag-input';
+import { SearchTagService } from '@portfolio/search-tags';
 
 import { TechnologyMatchingService } from './technology-matching.service';
 import { MatchType, TechnologyWithMatch } from './technology-matching.types';

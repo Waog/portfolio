@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { SearchTagService } from '@portfolio/tag-input';
+import { SearchTagService } from '@portfolio/search-tags';
 import { of } from 'rxjs';
 
 import { ProjectItemTechnologyMatchingService } from './project-item-technology-matching.service';

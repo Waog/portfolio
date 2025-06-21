@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { SearchTagService } from '@portfolio/tag-input';
+import { SearchTagService } from '@portfolio/search-tags';
 
 import { ALL_PROJECTS } from '../data/projects.data';
 import { Project } from '../models/project';
