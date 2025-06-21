@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { AboutMeComponent } from '@portfolio/about-me';
 import { MatchesOverviewComponent } from '@portfolio/matches-overview';
-import { ProjectsComponent } from '@portfolio/projects';
+import { ProjectsComponent } from '@portfolio/project-list';
 import { TagInputComponent } from '@portfolio/tag-input';
 
 @Component({

@@ -21,7 +21,7 @@
       "@portfolio/matches-overview": [
         "libs/feature/matches-overview/src/index.ts"
       ],
-      "@portfolio/projects": ["libs/projects/src/index.ts"],
+      "@portfolio/project-list": ["libs/feature/project-list/src/index.ts"],
       "@portfolio/shared-ui": ["libs/shared-ui/src/index.ts"],
       "@portfolio/tag-input": ["libs/tag-input/src/index.ts"]
     }

@@ -3,7 +3,7 @@ import {
   ALL_PROJECTS,
   Project,
   TechnologyMatchingService,
-} from '@portfolio/projects';
+} from '@portfolio/project-list';
 import { SearchTagService } from '@portfolio/tag-input';
 
 export interface ProjectMatches {
