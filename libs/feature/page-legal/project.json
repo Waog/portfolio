@@ -4,7 +4,7 @@
   "sourceRoot": "libs/feature/page-legal/src",
   "prefix": "legal",
   "projectType": "library",
-  "tags": [],
+  "tags": ["layer:feature", "type:top-level"],
   "targets": {
     "test": {
       "executor": "@nx/jest:jest",
