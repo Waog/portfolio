@@ -1,5 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+
+export type ChipColor = 'green' | 'yellow' | 'red';
 
 @Component({
   selector: 'lib-color-chip',
@@ -7,4 +9,7 @@ import { Component } from '@angular/core';
   templateUrl: './color-chip.component.html',
   styleUrl: './color-chip.component.scss',
 })
-export class ColorChipComponent {}
+export class ColorChipComponent {
+  @Input() text = '';
+  @Input() color: ChipColor = 'green';
+}

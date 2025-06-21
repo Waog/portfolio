@@ -1,0 +1,30 @@
+:host {
+  display: inline-block;
+}
+
+.color-chip {
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border: 1px solid;
+  display: inline-block;
+
+  &.color-chip-green {
+    background-color: #e8f5e8;
+    color: #2e7d32;
+    border-color: #a5d6a7;
+  }
+
+  &.color-chip-yellow {
+    background-color: #fff8e1;
+    color: #f57f17;
+    border-color: #ffcc02;
+  }
+
+  &.color-chip-red {
+    background-color: #ffebee;
+    color: #c62828;
+    border-color: #ef9a9a;
+  }
+}
