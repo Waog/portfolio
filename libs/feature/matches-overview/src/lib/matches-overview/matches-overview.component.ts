@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { ColorChipComponent } from '@portfolio/color-chip';
 import { SearchTagService } from '@portfolio/search-tags';
 import { Subject, takeUntil } from 'rxjs';
 
@@ -15,7 +16,7 @@ interface TagMatchInfo {
 
 @Component({
   selector: 'lib-matches-overview',
-  imports: [CommonModule],
+  imports: [CommonModule, ColorChipComponent],
   templateUrl: './matches-overview.component.html',
   styleUrl: './matches-overview.component.scss',
 })

@@ -9,20 +9,29 @@
 
       <div class="match-results">
         @if (tagMatch.matches.fullMatches > 0) {
-        <span class="result-item full-match">
-          {{ tagMatch.matches.fullMatches }} matching project{{
-            tagMatch.matches.fullMatches !== 1 ? 's' : ''
-          }}
-        </span>
+        <lib-color-chip
+          [text]="
+            tagMatch.matches.fullMatches +
+            ' matching project' +
+            (tagMatch.matches.fullMatches !== 1 ? 's' : '')
+          "
+          color="green"
+        >
+        </lib-color-chip>
         } @if (tagMatch.matches.partialMatches > 0) {
-        <span class="result-item partial-match">
-          {{ tagMatch.matches.partialMatches }} partially matching project{{
-            tagMatch.matches.partialMatches !== 1 ? 's' : ''
-          }}
-        </span>
+        <lib-color-chip
+          [text]="
+            tagMatch.matches.partialMatches +
+            ' partially matching project' +
+            (tagMatch.matches.partialMatches !== 1 ? 's' : '')
+          "
+          color="yellow"
+        >
+        </lib-color-chip>
         } @if (tagMatch.matches.fullMatches === 0 &&
         tagMatch.matches.partialMatches === 0) {
-        <span class="result-item no-match">no matching projects</span>
+        <lib-color-chip text="no matching projects" color="red">
+        </lib-color-chip>
         }
       </div>
     </div>
