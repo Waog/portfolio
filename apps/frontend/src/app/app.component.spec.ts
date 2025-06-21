@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { RouterModule } from '@angular/router';
-import { FooterComponent } from '@portfolio/shared-ui';
+import { FooterComponent } from '@portfolio/footer';
 
 import { AppComponent } from './app.component';
 
