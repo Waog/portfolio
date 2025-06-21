@@ -1,7 +1,7 @@
 {
   "name": "tag-input",
-  "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/tag-input/src",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/feature/tag-input/src",
   "prefix": "lib",
   "projectType": "library",
   "tags": [],
@@ -10,7 +10,7 @@
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "libs/tag-input/jest.config.ts"
+        "jestConfig": "libs/feature/tag-input/jest.config.ts"
       }
     },
     "lint": {

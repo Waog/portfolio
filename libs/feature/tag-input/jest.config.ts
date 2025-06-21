@@ -1,8 +1,8 @@
 export default {
   displayName: 'tag-input',
-  preset: '../../jest.preset.js',
+  preset: '../../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
-  coverageDirectory: '../../coverage/libs/tag-input',
+  coverageDirectory: '../../../coverage/libs/feature/tag-input',
   transform: {
     '^.+\\.(ts|mjs|js|html)$': [
       'jest-preset-angular',

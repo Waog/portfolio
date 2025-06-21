@@ -23,7 +23,7 @@
       ],
       "@portfolio/project-list": ["libs/feature/project-list/src/index.ts"],
       "@portfolio/shared-ui": ["libs/shared-ui/src/index.ts"],
-      "@portfolio/tag-input": ["libs/tag-input/src/index.ts"]
+      "@portfolio/tag-input": ["libs/feature/tag-input/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
