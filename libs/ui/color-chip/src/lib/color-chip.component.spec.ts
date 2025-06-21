@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+
 import { ColorChipComponent } from './color-chip.component';
 
 describe('ColorChipComponent', () => {
