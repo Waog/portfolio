@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { FooterComponent, NavigationComponent } from '@portfolio/shared-ui';
+import { FooterComponent } from '@portfolio/footer';
+import { NavigationComponent } from '@portfolio/navigation';
 
 @Component({
   imports: [RouterModule, FooterComponent, NavigationComponent],

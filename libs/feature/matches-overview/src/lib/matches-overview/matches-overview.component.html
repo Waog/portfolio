@@ -1,0 +1,41 @@
+@if (tagMatches.length > 0) {
+<div class="matches-overview-container">
+  <h3 class="matches-headline">Search Results</h3>
+
+  <div class="matches-overview">
+    @for (tagMatch of tagMatches; track tagMatch.tag) {
+    <div class="match-row">
+      <span class="search-term">{{ tagMatch.tag }}:</span>
+
+      <div class="match-results">
+        @if (tagMatch.matches.fullMatches > 0) {
+        <lib-color-chip
+          [text]="
+            tagMatch.matches.fullMatches +
+            ' matching project' +
+            (tagMatch.matches.fullMatches !== 1 ? 's' : '')
+          "
+          color="green"
+        >
+        </lib-color-chip>
+        } @if (tagMatch.matches.partialMatches > 0) {
+        <lib-color-chip
+          [text]="
+            tagMatch.matches.partialMatches +
+            ' partially matching project' +
+            (tagMatch.matches.partialMatches !== 1 ? 's' : '')
+          "
+          color="yellow"
+        >
+        </lib-color-chip>
+        } @if (tagMatch.matches.fullMatches === 0 &&
+        tagMatch.matches.partialMatches === 0) {
+        <lib-color-chip text="no matching projects" color="red">
+        </lib-color-chip>
+        }
+      </div>
+    </div>
+    }
+  </div>
+</div>
+}

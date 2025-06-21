@@ -1,0 +1,183 @@
+@use 'breakpoints' as breakpoints;
+
+.navigation-toolbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 0;
+  min-height: 80px;
+  .nav-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 16px;
+    gap: 16px;
+    min-width: 0; // Allow content to shrink
+
+    @include breakpoints.desktop-up {
+      padding: 0 32px;
+      gap: 24px; // Reduced gap to save space
+    }
+  }
+
+  // Brand/Logo Section
+  .nav-brand {
+    flex-shrink: 0;
+
+    .brand-link {
+      text-decoration: none;
+      color: inherit;
+
+      &:hover {
+        text-decoration: none;
+      }
+    }
+
+    .brand-text {
+      .brand-name {
+        font-size: 18px;
+        font-weight: 600;
+        line-height: 1.2;
+        margin: 0;
+        color: #333;
+      }
+
+      .brand-subtitle {
+        font-size: 12px;
+        font-weight: 400;
+        line-height: 1;
+        margin: 0;
+        color: #666;
+        margin-top: 2px;
+      }
+    }
+  }
+
+  // Desktop Navigation Items
+  .nav-items-desktop {
+    display: none;
+    gap: 8px;
+
+    @include breakpoints.desktop-up {
+      display: flex;
+    }
+
+    .nav-item {
+      min-width: auto;
+      padding: 8px 16px;
+      font-weight: 500;
+    }
+  } // Action Button and Contact Info
+  .nav-actions-contact {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+    min-width: 0; // Allow shrinking
+    flex-shrink: 1;
+
+    @include breakpoints.desktop-up {
+      flex-direction: row;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .cv-button-desktop {
+      display: none; // Hide on mobile
+      flex-shrink: 0; // Don't shrink the button
+
+      @include breakpoints.desktop-up {
+        display: flex; // Show on desktop
+        align-items: center;
+        gap: 8px;
+        padding: 8px 16px;
+        font-weight: 500;
+        font-size: 14px;
+
+        mat-icon {
+          font-size: 18px;
+          width: 18px;
+          height: 18px;
+        }
+      }
+    }
+
+    .contact-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 0; // Allow shrinking
+      flex-shrink: 1;
+
+      @include breakpoints.desktop-up {
+        gap: 4px;
+      }
+    }
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 10px;
+      color: #666;
+      min-width: 0; // Allow shrinking
+      text-decoration: none;
+
+      @include breakpoints.desktop-up {
+        font-size: 12px;
+        gap: 8px;
+      }
+
+      &:hover {
+        text-decoration: none;
+        color: inherit;
+      }
+
+      &:visited {
+        color: inherit;
+      }
+
+      &:focus {
+        outline: 1px solid rgba(0, 0, 0, 0.12);
+        outline-offset: 2px;
+      }
+      .contact-icon {
+        font-size: 14px;
+        width: 14px;
+        height: 14px;
+        flex-shrink: 0; // Keep icon size
+
+        @include breakpoints.desktop-up {
+          font-size: 16px;
+          width: 16px;
+          height: 16px;
+        }
+      }
+
+      .contact-text {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        min-width: 0; // Allow shrinking
+      }
+    }
+  }
+  // Mobile Menu
+  .nav-mobile {
+    display: flex;
+
+    @include breakpoints.desktop-up {
+      display: none;
+    }
+
+    .mobile-menu-button {
+      padding: 8px;
+    }
+  }
+}
