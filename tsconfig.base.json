@@ -19,6 +19,7 @@
       "@portfolio/matches-overview": [
         "libs/feature/matches-overview/src/index.ts"
       ],
+      "@portfolio/navigation": ["libs/feature/navigation/src/index.ts"],
       "@portfolio/page-home": ["libs/feature/page-home/src/index.ts"],
       "@portfolio/page-legal": ["libs/feature/page-legal/src/index.ts"],
       "@portfolio/project-list": ["libs/feature/project-list/src/index.ts"],
