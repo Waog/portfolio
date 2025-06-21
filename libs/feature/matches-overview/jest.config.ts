@@ -1,8 +1,8 @@
 export default {
   displayName: 'matches-overview',
-  preset: '../../jest.preset.js',
+  preset: '../../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
-  coverageDirectory: '../../coverage/libs/matches-overview',
+  coverageDirectory: '../../../coverage/libs/feature/matches-overview',
   transform: {
     '^.+\\.(ts|mjs|js|html)$': [
       'jest-preset-angular',

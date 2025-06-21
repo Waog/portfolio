@@ -18,7 +18,9 @@
       "@portfolio/about-me": ["libs/feature/about-me/src/index.ts"],
       "@portfolio/home": ["libs/home/src/index.ts"],
       "@portfolio/legal": ["libs/legal/src/index.ts"],
-      "@portfolio/matches-overview": ["libs/matches-overview/src/index.ts"],
+      "@portfolio/matches-overview": [
+        "libs/feature/matches-overview/src/index.ts"
+      ],
       "@portfolio/projects": ["libs/projects/src/index.ts"],
       "@portfolio/shared-ui": ["libs/shared-ui/src/index.ts"],
       "@portfolio/tag-input": ["libs/tag-input/src/index.ts"]
