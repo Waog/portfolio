@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 
 import { ColorChipComponent } from './color-chip.component';
+import { createPermutationStory } from './permutation-utils.stories';
 
 const meta: Meta<ColorChipComponent> = {
   title: 'UI/ColorChip',
@@ -98,70 +99,7 @@ type Story = StoryObj<ColorChipComponent>;
 
 export const Default: Story = {};
 
-export const AllPermutations: Story = {
-  render: args => {
-    const variants = ['green', 'yellow', 'red'] as const;
-    const spacings = ['small', 'medium', 'large'] as const;
-    const icons = [undefined, 'star'] as const;
-    const closeButtonStates = [false, true] as const;
-    const permutations: Array<{
-      color: (typeof variants)[number];
-      spacing: (typeof spacings)[number];
-      icon: (typeof icons)[number];
-      showCloseButton: (typeof closeButtonStates)[number];
-    }> = [];
-
-    type Permutation = (typeof permutations)[number];
-
-    variants.forEach(color =>
-      spacings.forEach(spacing =>
-        icons.forEach(icon =>
-          closeButtonStates.forEach(showCloseButton => {
-            permutations.push({ color, spacing, icon, showCloseButton });
-          })
-        )
-      )
-    );
-
-    return {
-      props: {
-        ...args,
-        permutations,
-        closeClick: () => {
-          console.log('Close clicked');
-          return args.closeClick ? args.closeClick() : undefined;
-        },
-        getPermutationText: (perm: Permutation) =>
-          `${perm.color}-${perm.spacing}${perm.icon ? '-' + perm.icon : ''}${
-            perm.showCloseButton ? '-close' : ''
-          }`,
-        trackByPermutation: (index: number, perm: Permutation) =>
-          `${perm.color}-${perm.spacing}-${perm.icon}-${perm.showCloseButton}`,
-      },
-      template: `
-        <div style="display: grid; gap: 0.5rem; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); max-height: 80vh; overflow-y: auto;">
-          <lib-color-chip
-            *ngFor="let perm of permutations; trackBy: trackByPermutation"
-            [text]="getPermutationText(perm)"
-            [color]="perm.color"
-            [spacing]="perm.spacing"
-            [icon]="perm.icon"
-            [showCloseButton]="perm.showCloseButton"
-            (closeClick)="closeClick()">
-          </lib-color-chip>
-        </div>
-      `,
-      moduleMetadata: {
-        imports: [ColorChipComponent],
-      },
-    };
-  },
-  parameters: {
-    docs: {
-      description: {
-        story:
-          'All possible permutations of the color chip component properties displayed dynamically.',
-      },
-    },
-  },
-};
+export const AllPermutations: Story = createPermutationStory({
+  meta,
+  excludeProps: ['text', 'closeClick'],
+});
