@@ -1,1 +1,34 @@
-<p>ColorChipList works!</p>
+<div class="color-chip-list">
+  <div class="chip-container">
+    <lib-color-chip
+      *ngFor="let item of visibleItems; trackBy: trackByItem"
+      [text]="item.text"
+      [color]="item.color"
+      [icon]="item.icon"
+      spacing="large"
+      class="chip-item"
+    >
+    </lib-color-chip>
+
+    <button
+      *ngIf="hiddenItemsCount > 0 && !showAllItems"
+      mat-button
+      (click)="toggleItems()"
+      class="inline-toggle-button"
+    >
+      show {{ hiddenItemsCount }} more...
+    </button>
+  </div>
+
+  <nav class="toggle-section" *ngIf="shouldShowLessButton">
+    <button
+      mat-button
+      color="primary"
+      (click)="toggleItems()"
+      class="toggle-button"
+    >
+      <mat-icon>expand_less</mat-icon>
+      Show Less
+    </button>
+  </nav>
+</div>

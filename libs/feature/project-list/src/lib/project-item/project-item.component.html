@@ -116,38 +116,12 @@
 
     <mat-divider></mat-divider>
     <footer class="technologies-section">
-      <div class="technologies-wrapper">
-        <div class="chip-container">
-          <lib-color-chip
-            *ngFor="let tech of visibleTechnologies"
-            [text]="tech.name"
-            [color]="getChipColor(tech.matchType)"
-            [icon]="getChipIcon(tech.matchType)"
-            spacing="large"
-          >
-          </lib-color-chip>
-
-          <button
-            *ngIf="hiddenTechnologiesCount > 0 && !showAllTechnologies"
-            mat-button
-            (click)="toggleTechnologies()"
-            class="inline-toggle-button"
-          >
-            show {{ hiddenTechnologiesCount }} more...
-          </button>
-        </div>
-        <nav class="technologies-toggle" *ngIf="showAllTechnologies">
-          <button
-            mat-button
-            color="primary"
-            (click)="toggleTechnologies()"
-            class="toggle-button"
-          >
-            <mat-icon>expand_less</mat-icon>
-            Show Less
-          </button>
-        </nav>
-      </div>
+      <lib-color-chip-list
+        [greenItems]="greenTechnologies"
+        [yellowItems]="yellowTechnologies"
+        [grayItems]="grayTechnologies"
+      >
+      </lib-color-chip-list>
     </footer>
   </mat-card-content>
 </mat-card>

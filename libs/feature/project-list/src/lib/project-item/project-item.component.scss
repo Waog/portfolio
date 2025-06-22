@@ -51,50 +51,6 @@
 
 .technologies-section {
   margin-top: 1.5rem;
-
-  .technologies-wrapper {
-    .chip-container {
-      gap: 0.5rem;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-    }
-  }
-
-  .inline-toggle-button {
-    background: none !important;
-    border: none !important;
-    box-shadow: none !important;
-    color: #666 !important;
-    font-size: 0.875rem !important;
-    text-transform: none !important;
-    padding: 6px 12px !important;
-    margin-left: 8px !important;
-    text-decoration: none !important;
-    min-height: auto !important;
-
-    &:hover {
-      background-color: rgba(0, 0, 0, 0.04) !important;
-      text-decoration: none !important;
-    }
-  }
-
-  .technologies-toggle {
-    margin-top: 0.75rem;
-    text-align: center;
-
-    .toggle-button {
-      font-size: 0.875rem;
-      text-transform: none;
-
-      mat-icon {
-        margin-right: 0.25rem;
-        font-size: 1rem;
-        width: 1rem;
-        height: 1rem;
-      }
-    }
-  }
 }
 
 .meta-tiles {

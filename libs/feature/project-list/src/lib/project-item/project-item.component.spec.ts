@@ -43,39 +43,41 @@ describe('ProjectItemComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  describe('getChipColor', () => {
-    it('should return green for full match', () => {
-      expect(component.getChipColor('full')).toBe('green');
+  describe('technology categorization', () => {
+    beforeEach(() => {
+      // Mock the technology matching service
+      const mockTechnologies = [
+        { name: 'React', matchType: 'full' as const },
+        { name: 'Angular', matchType: 'full' as const },
+        { name: 'TypeScript', matchType: 'indirect' as const },
+        { name: 'CSS', matchType: 'none' as const },
+        { name: 'HTML', matchType: 'none' as const },
+      ];
+
+      jest
+        .spyOn(component['technologyMatchingService'], 'addMatchTypes')
+        .mockReturnValue(mockTechnologies);
     });
 
-    it('should return yellow for indirect match', () => {
-      expect(component.getChipColor('indirect')).toBe('yellow');
+    describe('greenTechnologies', () => {
+      it('should return technologies with full match', () => {
+        const greenTechs = component.greenTechnologies;
+        expect(greenTechs).toEqual(['React', 'Angular']);
+      });
     });
 
-    it('should return gray for no match', () => {
-      expect(component.getChipColor('none')).toBe('gray');
+    describe('yellowTechnologies', () => {
+      it('should return technologies with indirect match', () => {
+        const yellowTechs = component.yellowTechnologies;
+        expect(yellowTechs).toEqual(['TypeScript']);
+      });
     });
 
-    it('should return gray for unknown match type', () => {
-      expect(component.getChipColor('unknown')).toBe('gray');
-    });
-  });
-
-  describe('getChipIcon', () => {
-    it('should return star for full match', () => {
-      expect(component.getChipIcon('full')).toBe('star');
-    });
-
-    it('should return star_border for indirect match', () => {
-      expect(component.getChipIcon('indirect')).toBe('star_border');
-    });
-
-    it('should return undefined for no match', () => {
-      expect(component.getChipIcon('none')).toBeUndefined();
-    });
-
-    it('should return undefined for unknown match type', () => {
-      expect(component.getChipIcon('unknown')).toBeUndefined();
+    describe('grayTechnologies', () => {
+      it('should return technologies with no match', () => {
+        const grayTechs = component.grayTechnologies;
+        expect(grayTechs).toEqual(['CSS', 'HTML']);
+      });
     });
   });
 });
