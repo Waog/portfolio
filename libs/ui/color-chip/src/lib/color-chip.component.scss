@@ -3,12 +3,25 @@
 }
 
 .color-chip {
-  padding: 0.25rem 0.5rem;
   border-radius: 4px;
   font-size: 0.875rem;
   font-weight: 500;
   border: 1px solid;
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+
+  &.color-chip-spacing-small {
+    padding: 0.125rem 0.25rem;
+  }
+
+  &.color-chip-spacing-medium {
+    padding: 0.25rem 0.5rem;
+  }
+
+  &.color-chip-spacing-large {
+    padding: 0.375rem 0.75rem;
+  }
 
   &.color-chip-green {
     background-color: #e8f5e8;
@@ -26,5 +39,47 @@
     background-color: #ffebee;
     color: #c62828;
     border-color: #ef9a9a;
+  }
+
+  .chip-icon {
+    font-size: 1rem;
+    width: 1rem;
+    height: 1rem;
+    line-height: 1;
+  }
+
+  .chip-text {
+    flex: 1;
+  }
+  .chip-close-button {
+    width: 1.5rem;
+    height: 1.5rem;
+    line-height: 1;
+    margin-left: 0.125rem;
+    margin-right: -0.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: auto;
+    padding: 0;
+
+    ::ng-deep .mat-mdc-button-touch-target {
+      display: none;
+    }
+
+    ::ng-deep .mdc-button__label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    mat-icon {
+      font-size: 1rem;
+      width: 1rem;
+      height: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
   }
 }
