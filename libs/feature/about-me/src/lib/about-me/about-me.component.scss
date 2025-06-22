@@ -178,31 +178,6 @@
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
-
-  .language-item {
-    padding: 0.25rem 0.75rem;
-    border-radius: 16px;
-    font-size: 0.875rem;
-    font-weight: 500;
-
-    &.native {
-      background-color: #e8f5e8;
-      color: #2e7d32;
-      border: 1px solid #a5d6a7;
-    }
-
-    &.fluent {
-      background-color: #e8f5e8;
-      color: #2e7d32;
-      border: 1px solid #a5d6a7;
-    }
-
-    &.basic {
-      background-color: #ffebee;
-      color: #c62828;
-      border: 1px solid #ef9a9a;
-    }
-  }
 }
 
 // Education Card - Special Emphasis
