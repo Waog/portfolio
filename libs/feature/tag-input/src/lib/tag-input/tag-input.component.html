@@ -21,17 +21,15 @@
         Add
       </button>
     </mat-form-field>
-
-    <mat-chip-set *ngIf="tags.length > 0" class="tag-list">
-      <mat-chip
+    <div *ngIf="tags.length > 0" class="tag-list">
+      <lib-color-chip
         *ngFor="let tag of tags"
-        [removable]="true"
-        (removed)="removeTag(tag)"
+        [text]="tag"
+        color="green"
+        [showCloseButton]="true"
+        (closeClick)="removeTag(tag)"
         class="search-tag"
-      >
-        {{ tag }}
-        <mat-icon matChipRemove>cancel</mat-icon>
-      </mat-chip>
-    </mat-chip-set>
+      ></lib-color-chip>
+    </div>
   </div>
 </div>
