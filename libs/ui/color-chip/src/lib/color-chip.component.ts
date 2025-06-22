@@ -3,7 +3,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 
-export type ChipColor = 'green' | 'yellow' | 'red';
+export type ChipColor = 'green' | 'yellow' | 'red' | 'gray';
 export type ChipSpacing = 'small' | 'medium' | 'large';
 
 @Component({

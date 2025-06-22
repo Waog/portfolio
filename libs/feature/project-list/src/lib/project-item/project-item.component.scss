@@ -33,8 +33,7 @@
 }
 
 .features-section,
-.highlights-section,
-.technologies-section {
+.highlights-section {
   margin-bottom: 1.5rem;
 
   h4 {
@@ -54,64 +53,14 @@
   margin-top: 1.5rem;
 
   .technologies-wrapper {
-    mat-chip-set {
+    .chip-container {
       gap: 0.5rem;
       display: flex;
       flex-wrap: wrap;
       align-items: center;
     }
-  } // Different visual states for technology matches
-  .match-full {
-    background-color: #e8f5e8 !important; // Subtle green background
-    color: #2e7d32 !important; // Dark green text
-    border: 1px solid #a5d6a7 !important;
-    font-weight: 500;
-
-    mat-icon[matChipAvatar] {
-      background-color: transparent !important; // Remove background circle
-      color: #2e7d32 !important;
-      font-size: 16px !important;
-      width: 16px !important;
-      height: 16px !important;
-      margin-right: -10px !important;
-    }
-
-    &:hover {
-      background-color: #c8e6c9 !important;
-    }
   }
 
-  .match-indirect {
-    background-color: #fff8e1 !important; // Subtle yellow background
-    color: #f57f17 !important; // Orange-yellow text
-    border: 1px solid #ffcc02 !important;
-    font-weight: 500;
-
-    mat-icon[matChipAvatar] {
-      background-color: transparent !important; // Remove background circle
-      color: #f57f17 !important;
-      font-size: 16px !important;
-      width: 16px !important;
-      height: 16px !important;
-      margin-right: -10px !important;
-    }
-
-    &:hover {
-      background-color: #fff3c4 !important;
-    }
-  }
-
-  .match-none {
-    background-color: #f8f8f8 !important; // Very light gray
-    color: #bbb !important; // Much more muted text
-    border: 1px solid #e8e8e8 !important;
-    opacity: 0.7; // Additional visual de-emphasis
-
-    &:hover {
-      background-color: #f0f0f0 !important;
-      opacity: 0.8;
-    }
-  }
   .inline-toggle-button {
     background: none !important;
     border: none !important;
@@ -121,12 +70,12 @@
     text-transform: none !important;
     padding: 6px 12px !important;
     margin-left: 8px !important;
-    text-decoration: none !important; // Remove underline
+    text-decoration: none !important;
     min-height: auto !important;
 
     &:hover {
       background-color: rgba(0, 0, 0, 0.04) !important;
-      text-decoration: none !important; // Remove underline on hover too
+      text-decoration: none !important;
     }
   }
 
@@ -143,20 +92,6 @@
         font-size: 1rem;
         width: 1rem;
         height: 1rem;
-      }
-    }
-  }
-
-  // Ensure proper alignment within chips
-  mat-chip {
-    display: inline-flex !important;
-    align-items: center !important;
-
-    &.match-full,
-    &.match-indirect {
-      .star-icon {
-        margin-top: 0 !important;
-        margin-bottom: 0 !important;
       }
     }
   }

@@ -6,6 +6,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
+import { ChipColor, ColorChipComponent } from '@portfolio/color-chip';
 
 import { Project } from '../models/project';
 import { ProjectItemTechnologyMatchingService } from './project-item-technology-matching.service';
@@ -21,6 +22,7 @@ import { TechnologyWithMatch } from './technology-matching.types';
     MatDividerModule,
     MatIconModule,
     MatListModule,
+    ColorChipComponent,
   ],
   templateUrl: './project-item.component.html',
   styleUrl: './project-item.component.scss',
@@ -80,8 +82,31 @@ export class ProjectItemComponent {
   toggleTechnologies() {
     this.showAllTechnologies = !this.showAllTechnologies;
   }
-
   toggleContent() {
     this.showExpandedContent = !this.showExpandedContent;
+  }
+
+  getChipColor(matchType: string): ChipColor {
+    switch (matchType) {
+      case 'full':
+        return 'green';
+      case 'indirect':
+        return 'yellow';
+      case 'none':
+        return 'gray';
+      default:
+        return 'gray';
+    }
+  }
+
+  getChipIcon(matchType: string): string | undefined {
+    switch (matchType) {
+      case 'full':
+        return 'star';
+      case 'indirect':
+        return 'star_border';
+      default:
+        return undefined;
+    }
   }
 }

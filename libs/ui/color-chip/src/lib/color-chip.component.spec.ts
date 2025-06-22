@@ -36,6 +36,14 @@ describe('ColorChipComponent', () => {
     expect(chipElement.classList).toContain('color-chip-yellow');
   });
 
+  it('should apply gray color class', () => {
+    component.color = 'gray';
+    fixture.detectChanges();
+
+    const chipElement = fixture.nativeElement.querySelector('.color-chip');
+    expect(chipElement.classList).toContain('color-chip-gray');
+  });
+
   it('should apply correct spacing class', () => {
     component.spacing = 'large';
     fixture.detectChanges();

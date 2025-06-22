@@ -10,12 +10,13 @@ const meta: Meta<ColorChipComponent> = {
   argTypes: {
     color: {
       control: 'select',
-      options: [undefined, 'green', 'yellow', 'red'],
+      options: [undefined, 'green', 'yellow', 'red', 'gray'],
       mapping: {
         undefined: undefined,
         green: 'green',
         yellow: 'yellow',
         red: 'red',
+        gray: 'gray',
       },
       table: {
         type: { summary: 'ChipColor' },

@@ -53,6 +53,22 @@
     }
   }
 
+  &.color-chip-gray {
+    background-color: #f0f0f0;
+    color: #666;
+    border-color: #d0d0d0;
+    opacity: 0.85;
+
+    .chip-close-button mat-icon {
+      color: #666;
+    }
+
+    &:hover {
+      background-color: #e8e8e8;
+      opacity: 0.95;
+    }
+  }
+
   .chip-icon {
     font-size: 1rem;
     width: 1rem;

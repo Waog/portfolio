@@ -117,19 +117,15 @@
     <mat-divider></mat-divider>
     <footer class="technologies-section">
       <div class="technologies-wrapper">
-        <mat-chip-set>
-          <mat-chip
+        <div class="chip-container">
+          <lib-color-chip
             *ngFor="let tech of visibleTechnologies"
-            [class]="'match-' + tech.matchType"
+            [text]="tech.name"
+            [color]="getChipColor(tech.matchType)"
+            [icon]="getChipIcon(tech.matchType)"
+            spacing="large"
           >
-            <mat-icon *ngIf="tech.matchType === 'full'" matChipAvatar
-              >star</mat-icon
-            >
-            <mat-icon *ngIf="tech.matchType === 'indirect'" matChipAvatar
-              >star_border</mat-icon
-            >
-            {{ tech.name }}
-          </mat-chip>
+          </lib-color-chip>
 
           <button
             *ngIf="hiddenTechnologiesCount > 0 && !showAllTechnologies"
@@ -139,7 +135,7 @@
           >
             show {{ hiddenTechnologiesCount }} more...
           </button>
-        </mat-chip-set>
+        </div>
         <nav class="technologies-toggle" *ngIf="showAllTechnologies">
           <button
             mat-button

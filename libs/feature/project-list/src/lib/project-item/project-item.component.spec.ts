@@ -39,8 +39,43 @@ describe('ProjectItemComponent', () => {
     fixture.componentRef.setInput('project', mockProject);
     fixture.detectChanges();
   });
-
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  describe('getChipColor', () => {
+    it('should return green for full match', () => {
+      expect(component.getChipColor('full')).toBe('green');
+    });
+
+    it('should return yellow for indirect match', () => {
+      expect(component.getChipColor('indirect')).toBe('yellow');
+    });
+
+    it('should return gray for no match', () => {
+      expect(component.getChipColor('none')).toBe('gray');
+    });
+
+    it('should return gray for unknown match type', () => {
+      expect(component.getChipColor('unknown')).toBe('gray');
+    });
+  });
+
+  describe('getChipIcon', () => {
+    it('should return star for full match', () => {
+      expect(component.getChipIcon('full')).toBe('star');
+    });
+
+    it('should return star_border for indirect match', () => {
+      expect(component.getChipIcon('indirect')).toBe('star_border');
+    });
+
+    it('should return undefined for no match', () => {
+      expect(component.getChipIcon('none')).toBeUndefined();
+    });
+
+    it('should return undefined for unknown match type', () => {
+      expect(component.getChipIcon('unknown')).toBeUndefined();
+    });
   });
 });
