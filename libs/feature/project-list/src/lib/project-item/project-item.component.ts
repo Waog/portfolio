@@ -7,10 +7,9 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { ColorChipListComponent } from '@portfolio/color-chip-list';
+import { Project, TechnologyWithMatch } from '@portfolio/projects';
 
-import { Project } from '../models/project';
 import { ProjectItemTechnologyMatchingService } from './project-item-technology-matching.service';
-import { TechnologyWithMatch } from './technology-matching.types';
 
 @Component({
   selector: 'lib-project-item',

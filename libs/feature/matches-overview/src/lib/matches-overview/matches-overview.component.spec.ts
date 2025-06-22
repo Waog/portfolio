@@ -1,11 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { SearchTagService } from '@portfolio/search-tags';
-import { BehaviorSubject } from 'rxjs';
-
 import {
   ProjectMatches,
   TechProjectMatchingService,
-} from '../services/tech-project-matching.service';
+} from '@portfolio/projects';
+import { SearchTagService } from '@portfolio/search-tags';
+import { BehaviorSubject } from 'rxjs';
+
 import { MatchesOverviewComponent } from './matches-overview.component';
 
 // Mock SearchTagService

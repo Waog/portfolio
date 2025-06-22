@@ -1,8 +1,10 @@
 import { inject, Injectable } from '@angular/core';
+import {
+  MatchType,
+  TechnologyMatchingService,
+  TechnologyWithMatch,
+} from '@portfolio/projects';
 import { SearchTagService } from '@portfolio/search-tags';
-
-import { TechnologyMatchingService } from './technology-matching.service';
-import { MatchType, TechnologyWithMatch } from './technology-matching.types';
 
 @Injectable({
   providedIn: 'root',

@@ -1,13 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { ColorChipComponent } from '@portfolio/color-chip';
-import { SearchTagService } from '@portfolio/search-tags';
-import { Subject, takeUntil } from 'rxjs';
-
 import {
   ProjectMatches,
   TechProjectMatchingService,
-} from '../services/tech-project-matching.service';
+} from '@portfolio/projects';
+import { SearchTagService } from '@portfolio/search-tags';
+import { Subject, takeUntil } from 'rxjs';
 
 interface TagMatchInfo {
   tag: string;

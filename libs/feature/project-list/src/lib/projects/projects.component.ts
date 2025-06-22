@@ -2,13 +2,11 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { ALL_PROJECTS, Project, TopProjectsService } from '@portfolio/projects';
 import { SearchTagService } from '@portfolio/search-tags';
 import { Subject, takeUntil } from 'rxjs';
 
-import { ALL_PROJECTS } from '../data/projects.data';
-import { Project } from '../models/project';
 import { ProjectItemComponent } from '../project-item/project-item.component';
-import { TopProjectsService } from '../services/top-projects.service';
 
 @Component({
   selector: 'lib-projects',

@@ -1,10 +1,9 @@
+import { MatchType, Project, TechnologyWithMatch } from '@portfolio/projects';
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
 
-import { Project } from '../models/project';
 import { ProjectItemComponent } from './project-item.component';
 import { ProjectItemTechnologyMatchingService } from './project-item-technology-matching.service';
-import { MatchType, TechnologyWithMatch } from './technology-matching.types';
 
 class MockProjectItemTechnologyMatchingService {
   addMatchTypes(technologies: string[]): TechnologyWithMatch[] {

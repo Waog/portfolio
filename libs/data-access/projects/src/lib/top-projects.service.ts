@@ -1,9 +1,9 @@
 import { inject, Injectable } from '@angular/core';
 import { SearchTagService } from '@portfolio/search-tags';
 
-import { ALL_PROJECTS } from '../data/projects.data';
-import { Project } from '../models/project';
-import { TechnologyMatchingService } from '../project-item/technology-matching.service';
+import { Project } from './project';
+import { ALL_PROJECTS } from './projects.data';
+import { TechnologyMatchingService } from './technology-matching.service';
 
 export interface ProjectScore {
   project: Project;

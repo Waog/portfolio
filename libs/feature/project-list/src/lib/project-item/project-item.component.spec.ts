@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { Project } from '@portfolio/projects';
 
-import { Project } from '../models/project';
 import { ProjectItemComponent } from './project-item.component';
 
 describe('ProjectItemComponent', () => {
