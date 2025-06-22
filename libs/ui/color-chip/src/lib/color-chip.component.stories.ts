@@ -31,16 +31,7 @@ const meta: Meta<ColorChipComponent> = {
     },
     icon: {
       control: 'select',
-      options: [
-        undefined,
-        'star',
-        'check_circle',
-        'warning',
-        'error',
-        'info',
-        'label',
-        'filter_list',
-      ],
+      options: [undefined, 'star', 'check_circle'],
       mapping: {
         undefined: undefined,
         star: 'star',
@@ -101,5 +92,15 @@ export const Default: Story = {};
 
 export const AllPermutations: Story = createPermutationStory({
   meta,
-  excludeProps: ['text', 'closeClick'],
+  splitProperty: 'color',
+  excludeUndefined: ['color', 'showCloseButton', 'spacing'],
+  // includeUndefined: ['showCloseButton'],
+  columnOrder: ['icon', 'showCloseButton', 'spacing'],
+  displayConfig: { alignment: 'center-left' },
+  textGenerators: {
+    text: {
+      mode: 'constant',
+      constantText: 'Hello World',
+    },
+  },
 });
