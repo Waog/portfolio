@@ -82,7 +82,7 @@ describe('ColorChipComponent', () => {
   });
 
   it('should emit closeClick when close button is clicked', () => {
-    spyOn(component.closeClick, 'emit');
+    jest.spyOn(component.closeClick, 'emit');
     component.showCloseButton = true;
     fixture.detectChanges();
 
