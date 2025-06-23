@@ -5,7 +5,7 @@ import { Project } from './project';
 import { ALL_PROJECTS } from './projects.data';
 import { TechnologyMatchingService } from './technology-matching.service';
 
-export interface ProjectScore {
+interface ProjectScore {
   project: Project;
   fullMatches: number;
   indirectMatches: number;

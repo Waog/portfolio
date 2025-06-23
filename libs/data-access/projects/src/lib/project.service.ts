@@ -3,6 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { Project } from './project';
 import { ALL_PROJECTS } from './projects.data';
 import { TechnologyMatchingService } from './technology-matching.service';
+import { TopProjectsService } from './top-projects.service';
 
 export interface ProjectFilterConfig {
   isFullMatchFor?: string;
@@ -14,6 +15,7 @@ export interface ProjectFilterConfig {
 })
 export class ProjectService {
   private technologyMatchingService = inject(TechnologyMatchingService);
+  private topProjectsService = inject(TopProjectsService);
 
   getAll(): Project[] {
     return ALL_PROJECTS;
@@ -44,5 +46,9 @@ export class ProjectService {
           JSON.stringify(filterConfig)
       );
     }
+  }
+
+  getTopProjects(): Project[] {
+    return this.topProjectsService.getTopProjects();
   }
 }
