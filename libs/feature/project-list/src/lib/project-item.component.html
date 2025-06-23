@@ -116,12 +116,7 @@
 
     <mat-divider></mat-divider>
     <footer class="technologies-section">
-      <lib-color-chip-list
-        [greenItems]="greenTechnologies"
-        [yellowItems]="yellowTechnologies"
-        [grayItems]="grayTechnologies"
-      >
-      </lib-color-chip-list>
+      <lib-keyword-list [keywords]="project().technologies"> </lib-keyword-list>
     </footer>
   </mat-card-content>
 </mat-card>
