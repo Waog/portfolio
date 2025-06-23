@@ -10,7 +10,7 @@ import {
 import { SearchTagService } from '@portfolio/search-tags';
 import { Subject, takeUntil } from 'rxjs';
 
-import { ProjectItemComponent } from './project-item/project-item.component';
+import { ProjectItemComponent } from './project-item.component';
 
 @Component({
   selector: 'lib-project-list',
