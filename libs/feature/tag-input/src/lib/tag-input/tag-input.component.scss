@@ -67,33 +67,7 @@
   flex-wrap: wrap;
   align-items: flex-start;
   justify-content: flex-start;
-
-  // Override Angular Material's default negative margin on the chips container
-  ::ng-deep .mdc-evolution-chip-set__chips {
-    margin-left: 0 !important;
-  }
-
-  .search-tag {
-    // Style like the green full-match tags from project component
-    background-color: #e8f5e8 !important;
-    color: #2e7d32 !important;
-    border: 1px solid #a5d6a7 !important;
-    font-weight: 500;
-    margin: 2px 4px 2px 0; // Proper margins that don't overlap container
-
-    &:hover {
-      background-color: #c8e6c9 !important;
-    }
-
-    // Style the remove icon
-    mat-icon[matChipRemove] {
-      color: #2e7d32 !important;
-
-      &:hover {
-        background-color: rgba(46, 125, 50, 0.1) !important;
-      }
-    }
-  }
+  gap: 4px; // Add gap between color chips
 }
 
 @media (max-width: 768px) {

@@ -1,0 +1,122 @@
+<mat-card class="project-card" [class.top-project]="isTopProject()">
+  <mat-card-header>
+    <header class="header-content">
+      <mat-card-title>{{ project().title }}</mat-card-title>
+      <mat-chip color="accent" highlighted class="project-type-chip">
+        {{ project().projectType }}
+      </mat-chip>
+    </header>
+  </mat-card-header>
+  <mat-card-content>
+    <!-- Compact Content (Collapsed State) -->
+    <section *ngIf="!showExpandedContent" class="compact-content">
+      <article class="compact-description">
+        <p>
+          {{ project().compactDescription }}
+          <span class="key-achievements"> {{ project().keyAchievements }}</span>
+        </p>
+      </article>
+
+      <nav class="content-toggle">
+        <button
+          mat-button
+          color="primary"
+          (click)="toggleContent()"
+          class="expand-button"
+        >
+          <mat-icon>expand_more</mat-icon>
+          Show Details
+        </button>
+      </nav>
+    </section>
+
+    <!-- Expanded Content (Full State) -->
+    <section *ngIf="showExpandedContent" class="expanded-content">
+      <article class="description-section">
+        <p>
+          {{ project().fullDescription }}
+        </p>
+      </article>
+
+      <section class="features-section">
+        <h4>
+          <mat-icon>check_circle</mat-icon>
+          Key Features
+        </h4>
+        <mat-list dense>
+          <mat-list-item *ngFor="let feature of project().features">
+            <mat-icon matListItemIcon color="primary">check</mat-icon>
+            <div matListItemTitle>{{ feature }}</div>
+          </mat-list-item>
+        </mat-list>
+      </section>
+
+      <section class="highlights-section">
+        <h4>
+          <mat-icon>star</mat-icon>
+          Highlights
+        </h4>
+        <mat-list dense>
+          <mat-list-item *ngFor="let highlight of project().highlights">
+            <mat-icon matListItemIcon color="accent">star</mat-icon>
+            <div matListItemTitle>
+              {{ highlight }}
+            </div>
+          </mat-list-item>
+        </mat-list>
+      </section>
+
+      <nav class="content-toggle">
+        <button
+          mat-button
+          color="primary"
+          (click)="toggleContent()"
+          class="collapse-button"
+        >
+          <mat-icon>expand_less</mat-icon>
+          Show Less
+        </button>
+      </nav>
+    </section>
+
+    <mat-divider></mat-divider>
+
+    <aside class="meta-tiles">
+      <section class="meta-tile">
+        <mat-icon>person</mat-icon>
+        <div class="tile-content">
+          <div class="primary-text">{{ project().role }}</div>
+          <div class="secondary-text">{{ project().team }}</div>
+        </div>
+      </section>
+
+      <section class="meta-tile">
+        <mat-icon>schedule</mat-icon>
+        <div class="tile-content">
+          <div class="primary-text">{{ project().fromTo }}</div>
+          <div class="secondary-text">{{ project().duration }}</div>
+        </div>
+      </section>
+      <section class="meta-tile">
+        <mat-icon>location_on</mat-icon>
+        <div class="tile-content">
+          <div class="primary-text">{{ project().workMode }}</div>
+          <div class="secondary-text">{{ project().location }}</div>
+        </div>
+      </section>
+
+      <section class="meta-tile">
+        <mat-icon>business</mat-icon>
+        <div class="tile-content">
+          <div class="primary-text">{{ project().company }}</div>
+          <div class="secondary-text">{{ project().industry }}</div>
+        </div>
+      </section>
+    </aside>
+
+    <mat-divider></mat-divider>
+    <footer class="technologies-section">
+      <lib-keyword-list [keywords]="project().technologies"> </lib-keyword-list>
+    </footer>
+  </mat-card-content>
+</mat-card>

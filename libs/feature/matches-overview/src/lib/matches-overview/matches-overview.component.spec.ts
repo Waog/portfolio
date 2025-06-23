@@ -1,11 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ProjectService } from '@portfolio/projects';
 import { SearchTagService } from '@portfolio/search-tags';
 import { BehaviorSubject } from 'rxjs';
 
-import {
-  ProjectMatches,
-  TechProjectMatchingService,
-} from '../services/tech-project-matching.service';
 import { MatchesOverviewComponent } from './matches-overview.component';
 
 // Mock SearchTagService
@@ -13,13 +10,9 @@ const mockSearchTagService = {
   tags$: new BehaviorSubject<string[]>([]),
 };
 
-// Mock TechProjectMatchingService
-const mockTechProjectMatchingService = {
-  getProjectMatchesForTag: jest.fn().mockReturnValue({
-    fullMatches: 1,
-    partialMatches: 1,
-    totalProjects: 10,
-  } as ProjectMatches),
+// Mock ProjectService
+const mockProjectService = {
+  getBy: jest.fn().mockReturnValue([]),
 };
 
 describe('MatchesOverviewComponent', () => {
@@ -31,10 +24,7 @@ describe('MatchesOverviewComponent', () => {
       imports: [MatchesOverviewComponent],
       providers: [
         { provide: SearchTagService, useValue: mockSearchTagService },
-        {
-          provide: TechProjectMatchingService,
-          useValue: mockTechProjectMatchingService,
-        },
+        { provide: ProjectService, useValue: mockProjectService },
       ],
     }).compileComponents();
 
@@ -48,16 +38,40 @@ describe('MatchesOverviewComponent', () => {
   });
 
   it('should display matches overview when tags are present', () => {
+    // Mock the getBy method to return different arrays for full and partial matches
+    mockProjectService.getBy
+      .mockReturnValueOnce([{}, {}]) // 2 full matches for 'Angular'
+      .mockReturnValueOnce([{}]) // 1 partial match for 'Angular'
+      .mockReturnValueOnce([{}, {}, {}]) // 3 full matches for 'TypeScript'
+      .mockReturnValueOnce([{}, {}]); // 2 partial matches for 'TypeScript'
+
     mockSearchTagService.tags$.next(['Angular', 'TypeScript']);
     fixture.detectChanges();
 
     expect(component.tagMatches.length).toBe(2);
-    expect(
-      mockTechProjectMatchingService.getProjectMatchesForTag
-    ).toHaveBeenCalledWith('Angular');
-    expect(
-      mockTechProjectMatchingService.getProjectMatchesForTag
-    ).toHaveBeenCalledWith('TypeScript');
+    expect(mockProjectService.getBy).toHaveBeenCalledWith({
+      isFullMatchFor: 'Angular',
+    });
+    expect(mockProjectService.getBy).toHaveBeenCalledWith({
+      isPartialFor: 'Angular',
+    });
+    expect(mockProjectService.getBy).toHaveBeenCalledWith({
+      isFullMatchFor: 'TypeScript',
+    });
+    expect(mockProjectService.getBy).toHaveBeenCalledWith({
+      isPartialFor: 'TypeScript',
+    });
+
+    expect(component.tagMatches[0]).toEqual({
+      tag: 'Angular',
+      fullMatches: 2,
+      partialMatches: 1,
+    });
+    expect(component.tagMatches[1]).toEqual({
+      tag: 'TypeScript',
+      fullMatches: 3,
+      partialMatches: 2,
+    });
   });
 
   it('should not display anything when no tags are present', () => {

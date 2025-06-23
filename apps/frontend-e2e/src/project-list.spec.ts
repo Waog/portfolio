@@ -38,23 +38,11 @@ test.describe('Project List Page', () => {
         .filter({ hasText: /Oliver Stadie IT GmbH/i })
     ).toBeVisible();
   });
-
   test('displays technology chips', async ({ page }) => {
     await page.goto('/');
 
-    expect(
-      await page
-        .locator('mat-chip')
-        .filter({ hasText: /TypeScript/ })
-        .count()
-    ).toBeGreaterThan(0);
-
-    expect(
-      await page
-        .locator('mat-chip')
-        .filter({ hasText: /Angular/ })
-        .count()
-    ).toBeGreaterThan(0);
+    await expect(page.getByText('TypeScript').first()).toBeVisible();
+    await expect(page.getByText('Angular').first()).toBeVisible();
   });
 
   test('shows top matching projects when search tags are active', async ({

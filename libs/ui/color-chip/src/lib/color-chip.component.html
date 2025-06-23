@@ -1,2 +1,19 @@
 <!-- TODO: use angular material mat-chip if possible -->
-<span [class]="'color-chip color-chip-' + color">{{ text }}</span>
+<span
+  [class]="'color-chip color-chip-' + color + ' color-chip-spacing-' + spacing"
+>
+  @if (icon) {
+  <mat-icon class="chip-icon">{{ icon }}</mat-icon>
+  }
+  <span class="chip-text">{{ text }}</span>
+  @if (showCloseButton) {
+  <button
+    mat-icon-button
+    class="chip-close-button"
+    (click)="onCloseClick()"
+    type="button"
+  >
+    <mat-icon>close</mat-icon>
+  </button>
+  }
+</span>

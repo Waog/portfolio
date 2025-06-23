@@ -6,6 +6,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
+import { ColorChipComponent } from '@portfolio/color-chip';
 
 @Component({
   selector: 'lib-about-me',
@@ -17,6 +18,7 @@ import { MatListModule } from '@angular/material/list';
     MatListModule,
     MatDividerModule,
     MatButtonModule,
+    ColorChipComponent,
   ],
   templateUrl: './about-me.component.html',
   styleUrl: './about-me.component.scss',

@@ -1,0 +1,42 @@
+<section class="projects-container">
+  <!-- Top matching projects section -->
+  @if (topProjects.length > 0) {
+  <section class="top-projects-section">
+    <h3>Top Matching Projects</h3>
+    <lib-project-item
+      *ngFor="let project of topProjects; trackBy: trackByProjectId"
+      [project]="project"
+      [isTopProject]="true"
+    >
+    </lib-project-item>
+  </section>
+  }
+  <!-- All projects section -->
+  @if (topProjects.length > 0) {
+  <section class="all-projects-toggle">
+    <button
+      mat-button
+      color="primary"
+      (click)="toggleAllProjects()"
+      class="toggle-button"
+    >
+      <mat-icon>{{ showAllProjects ? 'expand_less' : 'expand_more' }}</mat-icon>
+      {{ showAllProjects ? 'Hide All Projects' : 'Show All Projects' }}
+    </button>
+  </section>
+  } @if (showAllProjects || topProjects.length === 0) {
+  <main class="projects-list">
+    @if (topProjects.length > 0) {
+    <h3>All Projects</h3>
+    } @else {
+    <h3>My Projects</h3>
+    }
+    <lib-project-item
+      *ngFor="let project of projectService.getAll(); trackBy: trackByProjectId"
+      [project]="project"
+      [isTopProject]="isTopProject(project)"
+    >
+    </lib-project-item>
+  </main>
+  }
+</section>

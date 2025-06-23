@@ -1,17 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { ColorChipComponent } from '@portfolio/color-chip';
+import { ProjectService } from '@portfolio/projects';
 import { SearchTagService } from '@portfolio/search-tags';
 import { Subject, takeUntil } from 'rxjs';
 
-import {
-  ProjectMatches,
-  TechProjectMatchingService,
-} from '../services/tech-project-matching.service';
-
 interface TagMatchInfo {
   tag: string;
-  matches: ProjectMatches;
+  fullMatches: number;
+  partialMatches: number;
 }
 
 @Component({
@@ -22,7 +19,7 @@ interface TagMatchInfo {
 })
 export class MatchesOverviewComponent implements OnInit, OnDestroy {
   private searchTagService = inject(SearchTagService);
-  private techProjectMatchingService = inject(TechProjectMatchingService);
+  private projectService = inject(ProjectService);
   private destroy$ = new Subject<void>();
 
   tagMatches: TagMatchInfo[] = [];
@@ -43,7 +40,8 @@ export class MatchesOverviewComponent implements OnInit, OnDestroy {
   private updateTagMatches(tags: string[]): void {
     this.tagMatches = tags.map(tag => ({
       tag,
-      matches: this.techProjectMatchingService.getProjectMatchesForTag(tag),
+      fullMatches: this.projectService.getBy({ isFullMatchFor: tag }).length,
+      partialMatches: this.projectService.getBy({ isPartialFor: tag }).length,
     }));
   }
 }

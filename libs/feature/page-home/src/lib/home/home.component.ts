@@ -2,17 +2,19 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { AboutMeComponent } from '@portfolio/about-me';
 import { MatchesOverviewComponent } from '@portfolio/matches-overview';
-import { ProjectsComponent } from '@portfolio/project-list';
+import { ProjectListComponent } from '@portfolio/project-list';
+import { SkillSectionComponent } from '@portfolio/skill-section';
 import { TagInputComponent } from '@portfolio/tag-input';
 
 @Component({
   selector: 'lib-home',
   imports: [
     CommonModule,
-    ProjectsComponent,
+    ProjectListComponent,
     TagInputComponent,
     MatchesOverviewComponent,
     AboutMeComponent,
+    SkillSectionComponent,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',

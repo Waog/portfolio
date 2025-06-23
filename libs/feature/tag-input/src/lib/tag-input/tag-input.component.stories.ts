@@ -37,7 +37,8 @@ class MockSearchTagService {
 
 const meta: Meta<TagInputComponent> = {
   component: TagInputComponent,
-  title: 'Tag Input/TagInputComponent',
+  title: 'Feature/Tag Input',
+  tags: ['autodocs'],
   decorators: [
     moduleMetadata({
       providers: [
