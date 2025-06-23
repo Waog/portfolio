@@ -10,15 +10,15 @@ import {
 import { SearchTagService } from '@portfolio/search-tags';
 import { Subject, takeUntil } from 'rxjs';
 
-import { ProjectItemComponent } from '../project-item/project-item.component';
+import { ProjectItemComponent } from './project-item/project-item.component';
 
 @Component({
-  selector: 'lib-projects',
+  selector: 'lib-project-list',
   imports: [CommonModule, ProjectItemComponent, MatButtonModule, MatIconModule],
-  templateUrl: './projects.component.html',
-  styleUrl: './projects.component.scss',
+  templateUrl: './project-list.component.html',
+  styleUrl: './project-list.component.scss',
 })
-export class ProjectsComponent implements OnInit, OnDestroy {
+export class ProjectListComponent implements OnInit, OnDestroy {
   public projectService = inject(ProjectService);
   private searchTagService = inject(SearchTagService);
   private topProjectsService = inject(TopProjectsService);
