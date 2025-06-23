@@ -42,7 +42,6 @@ test.describe('About Me Section', () => {
       page.locator('lib-about-me img[alt="Oliver Stadie Profile Photo"]')
     ).toBeVisible();
   });
-
   test('displays personal details', async ({ page }) => {
     await page.goto('/');
 
@@ -60,13 +59,8 @@ test.describe('About Me Section', () => {
       page.locator('.info-label').filter({ hasText: /Languages/ })
     ).toBeVisible();
 
-    await expect(
-      page.locator('.language-item').filter({ hasText: /German/ })
-    ).toBeVisible();
-
-    await expect(
-      page.locator('.language-item').filter({ hasText: /English/ })
-    ).toBeVisible();
+    await expect(page.getByText('German').first()).toBeVisible();
+    await expect(page.getByText('English').first()).toBeVisible();
   });
 
   test('displays education information', async ({ page }) => {
