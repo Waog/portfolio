@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { AboutMeComponent } from '@portfolio/about-me';
 import { MatchesOverviewComponent } from '@portfolio/matches-overview';
 import { ProjectListComponent } from '@portfolio/project-list';
+import { SkillSectionComponent } from '@portfolio/skill-section';
 import { TagInputComponent } from '@portfolio/tag-input';
 
 @Component({
@@ -13,6 +14,7 @@ import { TagInputComponent } from '@portfolio/tag-input';
     TagInputComponent,
     MatchesOverviewComponent,
     AboutMeComponent,
+    SkillSectionComponent,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
