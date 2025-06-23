@@ -7,9 +7,16 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { ColorChipListComponent } from '@portfolio/color-chip-list';
-import { Project, TechnologyWithMatch } from '@portfolio/projects';
+import {
+  MatchType,
+  Project,
+  TechnologyMatchingService,
+} from '@portfolio/projects';
 
-import { ProjectItemTechnologyMatchingService } from './project-item-technology-matching.service';
+interface TechnologyWithMatch {
+  name: string;
+  matchType: MatchType;
+}
 
 @Component({
   selector: 'lib-project-item',
@@ -27,9 +34,7 @@ import { ProjectItemTechnologyMatchingService } from './project-item-technology-
   styleUrl: './project-item.component.scss',
 })
 export class ProjectItemComponent {
-  private technologyMatchingService = inject(
-    ProjectItemTechnologyMatchingService
-  );
+  private technologyMatchingService = inject(TechnologyMatchingService);
 
   project = input.required<Project>();
   isTopProject = input<boolean>(false);
@@ -37,9 +42,10 @@ export class ProjectItemComponent {
   showExpandedContent = false;
 
   get technologies(): TechnologyWithMatch[] {
-    return this.technologyMatchingService.addMatchTypes(
-      this.project().technologies
-    );
+    return this.project().technologies.map(tech => ({
+      name: tech,
+      matchType: this.technologyMatchingService.getBestMatchType(tech),
+    }));
   }
 
   get greenTechnologies(): string[] {

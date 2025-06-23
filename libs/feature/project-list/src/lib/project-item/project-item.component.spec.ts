@@ -1,11 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Project } from '@portfolio/projects';
+import { Project, TechnologyMatchingService } from '@portfolio/projects';
+import { SearchTagService } from '@portfolio/search-tags';
+import { BehaviorSubject } from 'rxjs';
 
 import { ProjectItemComponent } from './project-item.component';
 
 describe('ProjectItemComponent', () => {
   let component: ProjectItemComponent;
   let fixture: ComponentFixture<ProjectItemComponent>;
+  let mockTechnologyMatchingService: jest.Mocked<TechnologyMatchingService>;
+
+  // Mock SearchTagService
+  const mockSearchTagService = {
+    tags$: new BehaviorSubject<string[]>([]),
+    currentTags: [],
+  };
 
   const mockProject: Project = {
     id: 'test-project',
@@ -28,12 +37,27 @@ describe('ProjectItemComponent', () => {
   };
 
   beforeEach(async () => {
+    const mockTechnologyMatchingServiceObj = {
+      getBestMatchType: jest.fn(),
+      getMatchType: jest.fn(),
+    };
+
     await TestBed.configureTestingModule({
       imports: [ProjectItemComponent],
+      providers: [
+        { provide: SearchTagService, useValue: mockSearchTagService },
+        {
+          provide: TechnologyMatchingService,
+          useValue: mockTechnologyMatchingServiceObj,
+        },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ProjectItemComponent);
     component = fixture.componentInstance;
+    mockTechnologyMatchingService = TestBed.inject(
+      TechnologyMatchingService
+    ) as jest.Mocked<TechnologyMatchingService>;
 
     // Set the required input before detectChanges
     fixture.componentRef.setInput('project', mockProject);
@@ -43,26 +67,57 @@ describe('ProjectItemComponent', () => {
     expect(component).toBeTruthy();
   });
 
+  describe('technologies getter', () => {
+    it('should return technologies with match types', () => {
+      // Mock the getBestMatchType method
+      mockTechnologyMatchingService.getBestMatchType.mockImplementation(
+        (tech: string) => {
+          switch (tech) {
+            case 'Angular':
+              return 'full';
+            case 'TypeScript':
+              return 'indirect';
+            default:
+              return 'none';
+          }
+        }
+      );
+
+      const technologies = component.technologies;
+      expect(technologies).toEqual([
+        { name: 'Angular', matchType: 'full' },
+        { name: 'TypeScript', matchType: 'indirect' },
+      ]);
+      expect(
+        mockTechnologyMatchingService.getBestMatchType
+      ).toHaveBeenCalledWith('Angular');
+      expect(
+        mockTechnologyMatchingService.getBestMatchType
+      ).toHaveBeenCalledWith('TypeScript');
+    });
+  });
+
   describe('technology categorization', () => {
     beforeEach(() => {
-      // Mock the technology matching service
-      const mockTechnologies = [
-        { name: 'React', matchType: 'full' as const },
-        { name: 'Angular', matchType: 'full' as const },
-        { name: 'TypeScript', matchType: 'indirect' as const },
-        { name: 'CSS', matchType: 'none' as const },
-        { name: 'HTML', matchType: 'none' as const },
-      ];
-
-      jest
-        .spyOn(component['technologyMatchingService'], 'addMatchTypes')
-        .mockReturnValue(mockTechnologies);
+      // Mock the getBestMatchType method for each technology
+      mockTechnologyMatchingService.getBestMatchType.mockImplementation(
+        (tech: string) => {
+          switch (tech) {
+            case 'Angular':
+              return 'full';
+            case 'TypeScript':
+              return 'indirect';
+            default:
+              return 'none';
+          }
+        }
+      );
     });
 
     describe('greenTechnologies', () => {
       it('should return technologies with full match', () => {
         const greenTechs = component.greenTechnologies;
-        expect(greenTechs).toEqual(['React', 'Angular']);
+        expect(greenTechs).toEqual(['Angular']);
       });
     });
 
@@ -76,7 +131,7 @@ describe('ProjectItemComponent', () => {
     describe('grayTechnologies', () => {
       it('should return technologies with no match', () => {
         const grayTechs = component.grayTechnologies;
-        expect(grayTechs).toEqual(['CSS', 'HTML']);
+        expect(grayTechs).toEqual([]);
       });
     });
   });
