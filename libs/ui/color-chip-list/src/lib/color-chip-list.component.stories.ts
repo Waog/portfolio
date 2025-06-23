@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/angular';
 import { ColorChipListComponent } from './color-chip-list.component';
 
 const meta: Meta<ColorChipListComponent> = {
-  title: 'UI/ColorChipList',
+  title: 'UI/Color Chip/Color Chip List',
   component: ColorChipListComponent,
   tags: ['autodocs'],
   argTypes: {

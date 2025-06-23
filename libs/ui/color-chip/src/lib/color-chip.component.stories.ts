@@ -4,7 +4,7 @@ import { ColorChipComponent } from './color-chip.component';
 import { createPermutationStory } from './permutation-utils.stories';
 
 const meta: Meta<ColorChipComponent> = {
-  title: 'UI/ColorChip',
+  title: 'UI/Color Chip/Color Chip',
   component: ColorChipComponent,
   tags: ['autodocs'],
   argTypes: {

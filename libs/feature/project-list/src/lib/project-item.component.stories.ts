@@ -72,7 +72,7 @@ class MockTechnologyMatchingService {
 }
 
 const meta: Meta<ProjectItemComponent> = {
-  title: 'Feature/ProjectItem',
+  title: 'Feature/Project Item',
   component: ProjectItemComponent,
   tags: ['autodocs'],
   decorators: [
