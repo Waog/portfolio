@@ -2,7 +2,11 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { ALL_PROJECTS, Project, TopProjectsService } from '@portfolio/projects';
+import {
+  Project,
+  ProjectService,
+  TopProjectsService,
+} from '@portfolio/projects';
 import { SearchTagService } from '@portfolio/search-tags';
 import { Subject, takeUntil } from 'rxjs';
 
@@ -15,11 +19,11 @@ import { ProjectItemComponent } from '../project-item/project-item.component';
   styleUrl: './projects.component.scss',
 })
 export class ProjectsComponent implements OnInit, OnDestroy {
+  public projectService = inject(ProjectService);
   private searchTagService = inject(SearchTagService);
   private topProjectsService = inject(TopProjectsService);
   private destroy$ = new Subject<void>();
 
-  projects = ALL_PROJECTS;
   topProjects: Project[] = [];
   showAllProjects = false;
 

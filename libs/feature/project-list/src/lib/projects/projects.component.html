@@ -32,7 +32,7 @@
     <h3>My Projects</h3>
     }
     <lib-project-item
-      *ngFor="let project of projects; trackBy: trackByProjectId"
+      *ngFor="let project of projectService.getAll(); trackBy: trackByProjectId"
       [project]="project"
       [isTopProject]="isTopProject(project)"
     >

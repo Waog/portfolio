@@ -1,5 +1,5 @@
 export * from './lib/project';
-export * from './lib/projects.data';
+export * from './lib/project.service';
 export * from './lib/tech-project-matching.service';
 export * from './lib/technology-matching.service';
 export * from './lib/technology-matching.types';
