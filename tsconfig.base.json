@@ -18,6 +18,9 @@
       "@portfolio/about-me": ["libs/feature/about-me/src/index.ts"],
       "@portfolio/color-chip": ["libs/ui/color-chip/src/index.ts"],
       "@portfolio/color-chip-list": ["libs/ui/color-chip-list/src/index.ts"],
+      "@portfolio/contact-section": [
+        "libs/feature/contact-section/src/index.ts"
+      ],
       "@portfolio/footer": ["libs/feature/footer/src/index.ts"],
       "@portfolio/keyword-list": ["libs/feature/keyword-list/src/index.ts"],
       "@portfolio/matches-overview": [
