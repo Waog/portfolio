@@ -1,1 +1,44 @@
-<p>ContactSection works!</p>
+<mat-card class="contact-section">
+  <mat-card-header>
+    <mat-card-title>
+      <mat-icon>contact_mail</mat-icon>
+      Contact Me
+    </mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    <div class="contact-item">
+      <div class="contact-row">
+        <mat-icon class="contact-icon">email</mat-icon>
+        <a href="mailto:oliver.stadie+it@gmail.com" class="contact-text"
+          >oliver.stadie+it&#64;gmail.com</a
+        >
+        <button
+          mat-icon-button
+          class="copy-button"
+          (click)="copyToClipboard('oliver.stadie+it@gmail.com')"
+          matTooltip="Copy email"
+        >
+          <mat-icon>content_copy</mat-icon>
+        </button>
+      </div>
+    </div>
+
+    <div class="contact-item">
+      <div class="contact-row">
+        <mat-icon class="contact-icon">phone</mat-icon>
+        <a href="tel:+4915202825986" class="contact-text"
+          >+49 (1520) 28 25 986</a
+        >
+        <button
+          mat-icon-button
+          class="copy-button"
+          (click)="copyToClipboard('+4915202825986')"
+          matTooltip="Copy phone number"
+        >
+          <mat-icon>content_copy</mat-icon>
+        </button>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>
