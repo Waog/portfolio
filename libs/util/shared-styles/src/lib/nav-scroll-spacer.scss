@@ -1,0 +1,6 @@
+$nav-height: 80px;
+
+@mixin nav-scroll-spacer() {
+  padding-top: $nav-height;
+  margin-top: -$nav-height;
+}

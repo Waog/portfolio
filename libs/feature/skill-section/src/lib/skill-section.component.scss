@@ -1,4 +1,9 @@
 @use 'breakpoints' as breakpoints;
+@use 'nav-scroll-spacer' as *;
+
+#skills {
+  @include nav-scroll-spacer();
+}
 
 .skills-card {
   margin: 1.5rem 0;

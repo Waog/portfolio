@@ -12,10 +12,18 @@
 
     <!-- Navigation Items - Desktop -->
     <div class="nav-items-desktop">
-      <button mat-button disabled class="nav-item">Projects</button>
-      <button mat-button disabled class="nav-item">Skills</button>
-      <button mat-button disabled class="nav-item">About me</button>
-      <button mat-button disabled class="nav-item">Contact</button>
+      <a mat-button class="nav-item" routerLink="/" [fragment]="'projects'">
+        Projects
+      </a>
+      <a mat-button class="nav-item" routerLink="/" [fragment]="'skills'">
+        Skills
+      </a>
+      <a mat-button class="nav-item" routerLink="/" [fragment]="'about-me'">
+        About me
+      </a>
+      <a mat-button class="nav-item" routerLink="/" [fragment]="'contact'">
+        Contact
+      </a>
     </div>
     <!-- Action Button and Contact Info -->
     <div class="nav-actions-contact">
@@ -58,22 +66,22 @@
       </button>
 
       <mat-menu #mobileMenu="matMenu" class="mobile-menu">
-        <button mat-menu-item disabled>
+        <a mat-menu-item routerLink="/" [fragment]="'projects'">
           <mat-icon>work</mat-icon>
           <span>Projects</span>
-        </button>
-        <button mat-menu-item disabled>
+        </a>
+        <a mat-menu-item routerLink="/" [fragment]="'skills'">
           <mat-icon>star</mat-icon>
           <span>Skills</span>
-        </button>
-        <button mat-menu-item disabled>
+        </a>
+        <a mat-menu-item routerLink="/" [fragment]="'about-me'">
           <mat-icon>person</mat-icon>
           <span>About me</span>
-        </button>
-        <button mat-menu-item disabled>
+        </a>
+        <a mat-menu-item routerLink="/" [fragment]="'contact'">
           <mat-icon>contact_mail</mat-icon>
           <span>Contact</span>
-        </button>
+        </a>
 
         <mat-divider></mat-divider>
 

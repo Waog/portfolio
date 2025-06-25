@@ -1,8 +1,9 @@
 @use 'breakpoints' as breakpoints;
+@use 'nav-scroll-spacer' as *;
 
 .about-me-container {
+  @include nav-scroll-spacer();
   width: 100%;
-  margin-top: 2rem;
 }
 
 .about-me-card {
