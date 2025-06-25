@@ -1,23 +1,25 @@
-<mat-card class="skills-card">
-  <mat-card-header>
-    <mat-card-title>
-      <mat-icon>code</mat-icon>
-      Skills
-    </mat-card-title>
-  </mat-card-header>
+<div id="skills">
+  <mat-card class="skills-card">
+    <mat-card-header>
+      <mat-card-title>
+        <mat-icon>code</mat-icon>
+        Skills
+      </mat-card-title>
+    </mat-card-header>
 
-  <mat-card-content>
-    <div class="skills-container">
-      <div *ngFor="let category of skillCategories" class="skill-category">
-        <div class="skill-category-content">
-          <div class="category-title">
-            <h3>{{ category.title }}</h3>
-          </div>
-          <div class="category-keywords">
-            <lib-keyword-list [keywords]="category.keywords" />
+    <mat-card-content>
+      <div class="skills-container">
+        <div *ngFor="let category of skillCategories" class="skill-category">
+          <div class="skill-category-content">
+            <div class="category-title">
+              <h3>{{ category.title }}</h3>
+            </div>
+            <div class="category-keywords">
+              <lib-keyword-list [keywords]="category.keywords" />
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </mat-card-content>
-</mat-card>
+    </mat-card-content>
+  </mat-card>
+</div>

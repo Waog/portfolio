@@ -1,5 +1,7 @@
+@use 'nav-scroll-spacer' as *;
+
 .projects-container {
-  // Removed global spacing - now handled by parent home component
+  @include nav-scroll-spacer();
   width: 100%;
 }
 
