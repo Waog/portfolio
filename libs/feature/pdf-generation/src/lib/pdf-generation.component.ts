@@ -9,7 +9,16 @@ import { MatIconModule } from '@angular/material/icon';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 
-(pdfMake as any).vfs = pdfFonts;
+interface PdfMakeWithVfs {
+  vfs: { [key: string]: string };
+  createPdf: typeof pdfMake.createPdf;
+}
+
+const pdfMakeWithVfs = pdfMake as unknown as PdfMakeWithVfs;
+
+pdfMakeWithVfs.vfs = (
+  pdfFonts as unknown as { vfs: { [key: string]: string } }
+).vfs;
 
 @Component({
   selector: 'lib-pdf-generation',
@@ -25,19 +34,46 @@ export class PdfGenerationComponent implements AfterViewInit {
     this.generateAndViewInIframe();
   }
 
+  private getFonts() {
+    return {
+      Roboto: {
+        normal: this.toAbsoluteUrl('/assets/fonts/Roboto-Regular.ttf'),
+        bold: this.toAbsoluteUrl('/assets/fonts/Roboto-Medium.ttf'),
+        italics: this.toAbsoluteUrl('/assets/fonts/Roboto-Italic.ttf'),
+        bolditalics: this.toAbsoluteUrl('/assets/fonts/Roboto-BoldItalic.ttf'),
+      },
+      NotoColorEmoji: {
+        normal: this.toAbsoluteUrl('/assets/fonts/NotoColorEmoji-Regular.ttf'),
+        bold: this.toAbsoluteUrl('/assets/fonts/NotoColorEmoji-Regular.ttf'),
+        italics: this.toAbsoluteUrl('/assets/fonts/NotoColorEmoji-Regular.ttf'),
+        bolditalics: this.toAbsoluteUrl(
+          '/assets/fonts/NotoColorEmoji-Regular.ttf'
+        ),
+      },
+    };
+  }
+
+  private toAbsoluteUrl(relativeUrl: string): string {
+    return new URL(relativeUrl, window.location.origin).toString();
+  }
+
   public async generateAndDownload(): Promise<void> {
-    pdfMake.createPdf(await this.getDocDefinition()).download('cv.pdf');
+    pdfMakeWithVfs
+      .createPdf(await this.getDocDefinition(), undefined, this.getFonts())
+      .download('cv.pdf');
   }
 
   public async generateAndViewInIframe(): Promise<void> {
     this.showPdfIFrame = true;
-    pdfMake.createPdf(await this.getDocDefinition()).getBlob(blob => {
-      const iframe = document.getElementById('pdfFrame') as HTMLIFrameElement;
-      if (iframe) {
-        const url = URL.createObjectURL(blob);
-        iframe.src = url;
-      }
-    });
+    pdfMakeWithVfs
+      .createPdf(await this.getDocDefinition(), undefined, this.getFonts())
+      .getBlob((blob: Blob) => {
+        const iframe = document.getElementById('pdfFrame') as HTMLIFrameElement;
+        if (iframe) {
+          const url = URL.createObjectURL(blob);
+          iframe.src = url;
+        }
+      });
   }
 
   private async getDocDefinition() {
@@ -81,9 +117,9 @@ export class PdfGenerationComponent implements AfterViewInit {
                   text: [
                     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ',
                     {
-                      text: 'Click here',
+                      text: 'Click here', // Correct Unicode heavy arrow symbol
                       link: 'https://waog-test.de/?searchTags=Angular,AWS',
-                      color: '#1a73e8',
+                      color: '#1a73e8', // RGB equivalent color
                     },
                     ` or don't`,
                   ],
@@ -101,7 +137,10 @@ export class PdfGenerationComponent implements AfterViewInit {
           },
         },
       ],
-      // pageSize: PageS,
+      defaultStyle: {
+        font: 'Roboto',
+        fallback: 'NotoColorEmoji', // Add fallback for emojis
+      },
       pageMargins: [0, 0, 0, 0] as [number, number, number, number], // Ensure exactly four elements
     };
   }
