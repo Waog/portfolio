@@ -1,5 +1,8 @@
 This should not be Visible
 
-<div #pdfContent>
-  <lib-pdf-content />
-</div>
+<iframe
+  *ngIf="showPdfIFrame"
+  id="pdfFrame"
+  width="100%"
+  height="600px"
+></iframe>
