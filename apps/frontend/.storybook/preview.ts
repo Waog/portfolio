@@ -24,6 +24,13 @@ const preview: Preview = {
             height: '100%',
           },
         },
+        dinA4: {
+          name: 'DIN A4',
+          styles: {
+            width: '210mm',
+            height: '297mm',
+          },
+        },
       },
       defaultViewport: 'desktop',
     },

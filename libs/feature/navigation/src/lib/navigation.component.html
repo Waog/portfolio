@@ -84,11 +84,13 @@
 
         <mat-divider></mat-divider>
 
-        <button mat-menu-item (click)="downloadCV()" disabled>
+        <button mat-menu-item (click)="downloadCV()">
           <mat-icon>download</mat-icon>
           <span>CV as PDF</span>
         </button>
       </mat-menu>
     </div>
   </div>
+
+  <lib-pdf-generation />
 </mat-toolbar>

@@ -14,6 +14,8 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
     "paths": {
       "@portfolio/about-me": ["libs/feature/about-me/src/index.ts"],
       "@portfolio/color-chip": ["libs/ui/color-chip/src/index.ts"],

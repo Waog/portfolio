@@ -188,5 +188,11 @@
   "git.inputValidationLength": 100,
   "git.inputValidationSubjectLength": 100,
   "nxConsole.generateAiAgentRules": true,
-  "cSpell.words": ["autodocs", "domcontentloaded", "noreferrer", "prerender"]
+  "cSpell.words": [
+    "autodocs",
+    "domcontentloaded",
+    "noreferrer",
+    "pdfmake",
+    "prerender"
+  ]
 }
