@@ -29,6 +29,7 @@
       "@portfolio/navigation": ["libs/feature/navigation/src/index.ts"],
       "@portfolio/page-home": ["libs/feature/page-home/src/index.ts"],
       "@portfolio/page-legal": ["libs/feature/page-legal/src/index.ts"],
+      "@portfolio/pdf-generation": ["libs/feature/pdf-generation/src/index.ts"],
       "@portfolio/project-list": ["libs/feature/project-list/src/index.ts"],
       "@portfolio/projects": ["libs/data-access/projects/src/index.ts"],
       "@portfolio/search-tags": ["libs/data-access/search-tags/src/index.ts"],
