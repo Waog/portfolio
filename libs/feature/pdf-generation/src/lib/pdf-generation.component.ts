@@ -45,31 +45,64 @@ export class PdfGenerationComponent implements AfterViewInit {
       content: [
         {
           table: {
-            widths: [200],
-            heights: [200],
+            widths: ['*', 150],
             body: [
               [
                 {
                   text: 'My centered text',
-                  alignment: 'center' as const,
+                  alignment: 'center',
                   color: 'black',
-                  fillColor: 'lightblue',
                   fontSize: 16,
                   margin: [0, 85, 0, 0],
-                  border: [true, true, true, true],
-                  borderColor: ['gray', 'gray', 'gray', 'gray'],
+                },
+                {
+                  image: await this.generateBase64FromAsset(
+                    '/assets/oli-profile.jpg'
+                  ),
+                  width: 150,
+                  height: 150,
+                  alignment: 'right',
                 },
               ],
             ],
           },
+          layout: {
+            fillColor: (rowIndex: number) =>
+              rowIndex === 0 ? 'lightblue' : null,
+            defaultBorder: false, // Remove borders
+          },
         },
         {
-          image: await this.generateBase64FromAsset('/assets/oli-profile.jpg'),
-          width: 150,
-          height: 150,
-          alignment: 'center' as const,
+          table: {
+            widths: ['*'],
+            body: [
+              [
+                {
+                  text: [
+                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ',
+                    {
+                      text: 'Click here',
+                      link: 'https://waog-test.de/?searchTags=Angular,AWS',
+                      color: '#1a73e8',
+                    },
+                    ` or don't`,
+                  ],
+                  color: 'white',
+                  fontSize: 12,
+                  alignment: 'center',
+                },
+              ],
+            ],
+          },
+          layout: {
+            fillColor: (rowIndex: number) =>
+              rowIndex === 0 ? 'darkgray' : null,
+            defaultBorder: false, // Remove borders
+          },
         },
       ],
+      // pageSize: PageS,
+      pageMargins: [0, 0, 0, 0] as [number, number, number, number], // Ensure exactly four elements
     };
   }
 
