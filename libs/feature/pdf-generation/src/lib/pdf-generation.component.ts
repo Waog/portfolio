@@ -21,44 +21,66 @@ import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 export class PdfGenerationComponent implements AfterViewInit {
   showPdfIFrame = false;
 
-  docDefinition = {
-    content: [
-      {
-        table: {
-          widths: [200],
-          heights: [200],
-          body: [
-            [
-              {
-                text: 'My centered text',
-                alignment: 'center',
-                color: 'black',
-                fillColor: 'lightblue',
-                fontSize: 16,
-                margin: [0, 85, 0, 0],
-                border: [true, true, true, true],
-                borderColor: ['gray', 'gray', 'gray', 'gray'],
-              },
-            ],
-          ],
-        },
-      },
-    ],
-  };
-
   ngAfterViewInit(): void {
     this.generateAndViewInIframe();
   }
 
-  generateAndDownload(): void {
-    pdfMake.createPdf(this.docDefinition).download('cv.pdf');
+  public async generateAndDownload(): Promise<void> {
+    pdfMake.createPdf(await this.getDocDefinition()).download('cv.pdf');
   }
-  generateAndViewInIframe(): void {
+
+  public async generateAndViewInIframe(): Promise<void> {
     this.showPdfIFrame = true;
-    pdfMake.createPdf(this.docDefinition).getBlob(blob => {
-      const url = URL.createObjectURL(blob);
+    pdfMake.createPdf(await this.getDocDefinition()).getBlob(blob => {
       const iframe = document.getElementById('pdfFrame') as HTMLIFrameElement;
-      iframe.src = url;
+      if (iframe) {
+        const url = URL.createObjectURL(blob);
+        iframe.src = url;
+      }
+    });
+  }
+
+  private async getDocDefinition() {
+    return {
+      content: [
+        {
+          table: {
+            widths: [200],
+            heights: [200],
+            body: [
+              [
+                {
+                  text: 'My centered text',
+                  alignment: 'center' as const,
+                  color: 'black',
+                  fillColor: 'lightblue',
+                  fontSize: 16,
+                  margin: [0, 85, 0, 0],
+                  border: [true, true, true, true],
+                  borderColor: ['gray', 'gray', 'gray', 'gray'],
+                },
+              ],
+            ],
+          },
+        },
+        {
+          image: await this.generateBase64FromAsset('/assets/oli-profile.jpg'),
+          width: 150,
+          height: 150,
+          alignment: 'center' as const,
+        },
+      ],
+    };
+  }
+
+  private async generateBase64FromAsset(assetPath: string): Promise<string> {
+    const response = await fetch(assetPath);
+    const blob = await response.blob();
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onloadend = () => resolve(reader.result as string);
+      reader.onerror = reject;
+      reader.readAsDataURL(blob);
     });
   }
 }
