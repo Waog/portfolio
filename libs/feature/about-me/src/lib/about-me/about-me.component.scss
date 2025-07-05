@@ -1,5 +1,6 @@
 @use 'breakpoints' as breakpoints;
 @use 'nav-scroll-spacer' as *;
+@use 'spacing' as spacing;
 
 .about-me-container {
   @include nav-scroll-spacer();
@@ -8,19 +9,19 @@
 
 .about-me-card {
   width: 100%;
-  margin-bottom: 1.5rem;
+  margin-bottom: spacing.lg();
   overflow: visible;
 }
 
 // Hero Section
 .hero-header {
   background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-  padding: 2rem;
+  padding: spacing.xl();
 
   .hero-content {
     display: flex;
     align-items: center;
-    gap: 2rem;
+    gap: spacing.xl();
     max-width: 100%;
 
     .hero-image {
@@ -43,20 +44,20 @@
       .name {
         font-size: 2.5rem;
         font-weight: 600;
-        margin: 0 0 0.5rem 0;
+        margin: 0 0 spacing.sm() 0;
         color: #2c3e50;
       }
 
       .location {
         font-size: 1.2rem;
         color: #7f8c8d;
-        margin: 0 0 1rem 0;
+        margin: 0 0 spacing.md() 0;
       }
 
       .role-chip {
-        margin: 0 0 1rem 0;
+        margin: 0 0 spacing.md() 0;
         font-size: 1rem;
-        padding: 0.5rem 1rem;
+        padding: spacing.sm() spacing.md();
       }
 
       .hero-summary {
@@ -72,19 +73,19 @@
 
 // Main Content Grid
 .main-content {
-  padding: 2rem;
+  padding: spacing.xl();
 }
 
 .content-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 2rem;
+  gap: spacing.xl();
 
   .left-column,
   .right-column {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: spacing.lg();
   }
 }
 
@@ -94,12 +95,12 @@
   border-radius: 8px;
 
   mat-card-header {
-    padding: 1.5rem 1.5rem 1rem 1.5rem;
+    padding: spacing.lg() spacing.lg() spacing.md() spacing.lg();
 
     .section-title {
       display: flex;
       align-items: center;
-      gap: 0.75rem;
+      gap: spacing.sm();
       font-size: 1.25rem;
       font-weight: 500;
       color: #2c3e50;
@@ -112,7 +113,7 @@
   }
 
   mat-card-content {
-    padding: 0 1.5rem 1.5rem 1.5rem;
+    padding: 0 spacing.lg() spacing.lg() spacing.lg();
   }
 }
 
@@ -120,8 +121,8 @@
 .info-item {
   display: flex;
   align-items: flex-start;
-  gap: 1rem;
-  margin-bottom: 1.5rem;
+  gap: spacing.md();
+  margin-bottom: spacing.lg();
 
   &:last-child {
     margin-bottom: 0;
@@ -139,7 +140,7 @@
     .info-label {
       font-size: 0.875rem;
       color: #7f8c8d;
-      margin-bottom: 0.25rem;
+      margin-bottom: spacing.xs();
     }
     .info-value {
       font-size: 1rem;
@@ -162,7 +163,7 @@
             display: none; // Hide on desktop by default
             transition: opacity 0.2s ease;
             vertical-align: text-bottom;
-            margin-left: 0.25rem;
+            margin-left: spacing.xs();
 
             @include breakpoints.mobile-only {
               display: inline; // Show only on mobile, inline with text
@@ -178,25 +179,25 @@
 .language-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: spacing.xs();
 }
 
 // Education Card - Special Emphasis
 .education-card {
   .education-main {
-    margin-bottom: 1.5rem;
+    margin-bottom: spacing.lg();
 
     .degree-title {
       font-size: 1.25rem;
       font-weight: 600;
       color: #2c3e50;
-      margin-bottom: 0.5rem;
+      margin-bottom: spacing.sm();
       a {
         color: #2c3e50;
         text-decoration: none;
         display: inline-flex;
         align-items: center;
-        gap: 0.5rem;
+        gap: spacing.sm();
 
         &:hover {
           color: #3498db;
@@ -210,7 +211,7 @@
             display: none; // Hide on desktop by default
             transition: opacity 0.2s ease;
             vertical-align: text-bottom;
-            margin-left: 0.25rem;
+            margin-left: spacing.xs();
 
             @include breakpoints.mobile-only {
               display: inline; // Show only on mobile, inline with text
@@ -224,7 +225,7 @@
       font-size: 1rem;
       color: #3498db;
       font-weight: 500;
-      margin-bottom: 0.25rem;
+      margin-bottom: spacing.xs();
     }
 
     .duration {
@@ -237,9 +238,9 @@
     .grade-highlight {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
-      margin-bottom: 0.75rem;
-      padding: 0.75rem;
+      gap: spacing.sm();
+      margin-bottom: spacing.md();
+      padding: spacing.md();
       background-color: #f8f9fa;
       border-radius: 6px;
       border-left: 3px solid #28a745;
@@ -275,16 +276,16 @@
 @include breakpoints.mobile-only {
   .content-grid {
     grid-template-columns: 1fr;
-    gap: 1rem;
+    gap: spacing.md();
   }
 
   .hero-header {
-    padding: 1.5rem;
+    padding: spacing.lg();
 
     .hero-content {
       flex-direction: column;
       text-align: center;
-      gap: 1.5rem;
+      gap: spacing.lg();
 
       .hero-info .name {
         font-size: 2rem;
@@ -293,14 +294,14 @@
   }
 
   .main-content {
-    padding: 1rem;
+    padding: spacing.md();
   }
 
   .info-card {
     mat-card-header,
     mat-card-content {
-      padding-left: 1rem;
-      padding-right: 1rem;
+      padding-left: spacing.md();
+      padding-right: spacing.md();
     }
   }
 }
@@ -326,6 +327,6 @@
   }
 
   .about-me-container {
-    margin-top: 1rem;
+    margin-top: spacing.md();
   }
 }
