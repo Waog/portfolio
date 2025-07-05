@@ -47,6 +47,7 @@
         display: flex;
         align-items: center;
         gap: spacing.lg(); // Increase space between name and role chip
+        margin-bottom: spacing.sm();
       }
 
       .name {
@@ -68,9 +69,49 @@
       }
 
       .location {
-        font-size: 1.2rem;
-        color: #7f8c8d;
-        margin: spacing.sm() 0 0 0;
+        display: flex;
+        gap: spacing.md();
+        align-items: center;
+        margin-bottom: spacing.sm();
+
+        .location-item {
+          display: flex;
+          align-items: center;
+          gap: spacing.xs();
+
+          a,
+          span,
+          mat-icon {
+            font-size: 1.2rem;
+            line-height: 1.2rem;
+            color: #7f8c8d;
+            margin: 0;
+            text-decoration: none;
+
+            @media print {
+              font-size: 1rem;
+              line-height: 1rem;
+            }
+          }
+
+          mat-icon {
+            width: 1.2rem;
+            height: 1.2rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            @media print {
+              width: 1rem;
+              height: 1rem;
+            }
+          }
+
+          a {
+            &:hover {
+              text-decoration: underline;
+            }
+          }
+        }
       }
 
       .hero-summary {

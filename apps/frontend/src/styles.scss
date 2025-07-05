@@ -16,19 +16,19 @@ body {
 
 .screen-only {
   @media print {
-    display: none;
+    display: none !important;
   }
 }
 
 .print-only {
   @media screen {
-    display: none;
+    display: none !important;
   }
 }
 
 .no-page-break {
   @media print {
-    display: block;
+    display: block !important;
     page-break-inside: avoid;
     break-inside: avoid;
   }
