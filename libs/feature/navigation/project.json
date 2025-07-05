@@ -5,6 +5,7 @@
   "prefix": "lib",
   "projectType": "library",
   "tags": ["layer:feature", "type:top-level"],
+  "implicitDependencies": ["shared-styles"],
   "targets": {
     "test": {
       "executor": "@nx/jest:jest",
