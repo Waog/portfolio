@@ -1,4 +1,4 @@
-$navigation-height: 80px;
+@use 'nav-scroll-spacer' as nav-scroll-spacer;
 
 .app-container {
   display: flex;
@@ -10,5 +10,5 @@ $navigation-height: 80px;
   flex: 1;
   display: flex;
   flex-direction: column;
-  padding-top: $navigation-height;
+  padding-top: nav-scroll-spacer.$nav-height;
 }

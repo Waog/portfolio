@@ -1,13 +1,8 @@
+@use 'spacing' as spacing;
 @use 'breakpoints' as breakpoints;
 
 .home-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 2rem 1rem;
-}
-
-@include breakpoints.mobile-only {
-  .home-container {
-    padding: 1rem 0.5rem;
-  }
+  padding: spacing.lg() spacing.md();
 }
