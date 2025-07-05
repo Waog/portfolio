@@ -157,17 +157,13 @@
           align-items: baseline;
 
           .link-icon {
-            font-size: 1rem;
-            width: 1rem;
-            height: 1rem;
-            display: none; // Hide on desktop by default
-            transition: opacity 0.2s ease;
+            display: inline;
             vertical-align: text-bottom;
             margin-left: spacing.xs();
-
-            @include breakpoints.mobile-only {
-              display: inline; // Show only on mobile, inline with text
-            }
+            transition: opacity 0.2s ease;
+            font-size: 1em; // Match the font size of the link text
+            width: 1em;
+            height: 1em;
           }
         }
       }
@@ -205,17 +201,13 @@
         }
         &.external-link {
           .link-icon {
+            display: inline; // Ensure visibility for all links
+            vertical-align: text-bottom;
+            margin-left: spacing.xs();
+            transition: opacity 0.2s ease;
             font-size: 1rem;
             width: 1rem;
             height: 1rem;
-            display: none; // Hide on desktop by default
-            transition: opacity 0.2s ease;
-            vertical-align: text-bottom;
-            margin-left: spacing.xs();
-
-            @include breakpoints.mobile-only {
-              display: inline; // Show only on mobile, inline with text
-            }
           }
         }
       }
