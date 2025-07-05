@@ -2,6 +2,8 @@
 @use 'nav-scroll-spacer' as *;
 @use 'spacing' as spacing;
 
+@use '@angular/material' as mat;
+
 .about-me-container {
   @include nav-scroll-spacer();
   width: 100%;
@@ -41,23 +43,34 @@
       flex: 1;
       min-width: 0;
 
+      .name-and-role {
+        display: flex;
+        align-items: center;
+        gap: spacing.lg(); // Increase space between name and role chip
+      }
+
       .name {
         font-size: 2.5rem;
         font-weight: 600;
-        margin: 0 0 spacing.sm() 0;
+        margin: 0;
         color: #2c3e50;
+      }
+
+      .role-chip {
+        font-size: 1rem;
+        padding: spacing.sm() spacing.md();
+
+        @include mat.chips-overrides(
+          (
+            elevated-selected-container-color: #e7ecf3,
+          )
+        );
       }
 
       .location {
         font-size: 1.2rem;
         color: #7f8c8d;
-        margin: 0 0 spacing.md() 0;
-      }
-
-      .role-chip {
-        margin: 0 0 spacing.md() 0;
-        font-size: 1rem;
-        padding: spacing.sm() spacing.md();
+        margin: spacing.sm() 0 0 0;
       }
 
       .hero-summary {
@@ -290,10 +303,21 @@
   }
 
   .info-card {
-    mat-card-header,
-    mat-card-content {
+    mat-card_header,
+    mat-card_content {
       padding-left: spacing.md();
       padding-right: spacing.md();
+    }
+  }
+
+  .hero-info {
+    .name-and-role {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .role-chip {
+      margin-top: spacing.sm();
     }
   }
 }
