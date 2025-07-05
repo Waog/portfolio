@@ -10,5 +10,7 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  padding-top: nav-scroll-spacer.$nav-height;
+  @media screen {
+    padding-top: nav-scroll-spacer.$nav-height;
+  }
 }

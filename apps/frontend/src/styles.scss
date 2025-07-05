@@ -13,3 +13,23 @@ body {
   margin: 0;
   font-family: Roboto, 'Helvetica Neue', sans-serif;
 }
+
+.screen-only {
+  @media print {
+    display: none;
+  }
+}
+
+.print-only {
+  @media screen {
+    display: none;
+  }
+}
+
+.no-page-break {
+  @media print {
+    display: block;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+}

@@ -2,7 +2,9 @@
 @use 'breakpoints' as breakpoints;
 
 .home-container {
-  max-width: 1200px;
   margin: 0 auto;
-  padding: spacing.lg() spacing.md();
+  @media screen {
+    max-width: 1200px;
+    padding: spacing.lg() spacing.md();
+  }
 }
