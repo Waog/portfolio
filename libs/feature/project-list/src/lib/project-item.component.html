@@ -1,4 +1,7 @@
-<mat-card class="project-card" [class.top-project]="isTopProject()">
+<mat-card
+  class="project-card no-page-break"
+  [class.top-project]="isTopProject()"
+>
   <mat-card-header>
     <header class="header-content">
       <mat-card-title>{{ project().title }}</mat-card-title>

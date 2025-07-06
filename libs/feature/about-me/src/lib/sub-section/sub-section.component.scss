@@ -1,0 +1,36 @@
+@use 'spacing' as spacing;
+
+.info-card {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+
+  mat-card-header {
+    padding: spacing.lg() spacing.lg() spacing.md() spacing.lg();
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: spacing.sm();
+      font-size: 1.25rem;
+      font-weight: 500;
+      color: #2c3e50;
+      margin: 0;
+
+      ::ng-deep mat-icon {
+        color: #3498db;
+      }
+    }
+  }
+
+  mat-card-content {
+    padding: 0 spacing.lg() spacing.lg() spacing.lg();
+  }
+}
+
+@media print {
+  .info-card {
+    box-shadow: none;
+    border-radius: 0;
+    background-color: inherit;
+  }
+}

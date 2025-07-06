@@ -1,0 +1,41 @@
+@use 'spacing' as spacing;
+
+// Personal Information specific styles
+.info-item {
+  display: flex;
+  align-items: flex-start;
+  gap: spacing.md();
+  margin-bottom: spacing.md();
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  .info-icon {
+    color: #3498db;
+    margin-top: 0.2rem;
+    flex-shrink: 0;
+  }
+
+  .info-details {
+    flex: 1;
+
+    .info-label {
+      font-size: 0.875rem;
+      color: #7f8c8d;
+      margin-bottom: spacing.xs();
+    }
+    .info-value {
+      font-size: 1rem;
+      color: #2c3e50;
+      font-weight: 500;
+    }
+  }
+}
+
+// Language styling
+.language-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: spacing.xs();
+}

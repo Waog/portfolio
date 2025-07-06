@@ -1,0 +1,198 @@
+@use 'breakpoints' as breakpoints;
+@use 'spacing' as spacing;
+
+@use '@angular/material' as mat;
+
+// Host element to ensure full width
+:host {
+  display: block;
+  width: 100%;
+}
+
+// Hero Section
+.hero-header {
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  padding: spacing.xl();
+  width: 100%;
+  box-sizing: border-box;
+
+  .hero-content {
+    display: flex;
+    align-items: center;
+    gap: spacing.xl();
+    max-width: 100%;
+
+    .hero-image {
+      flex-shrink: 0;
+
+      img {
+        width: 8rem;
+        height: 8rem;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 4px solid white;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+      }
+    }
+
+    .hero-info {
+      flex: 1;
+      min-width: 0;
+
+      .name-and-role {
+        display: flex;
+        align-items: center;
+        gap: spacing.lg();
+        margin-bottom: spacing.md();
+
+        @include breakpoints.mobile-only {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: spacing.sm();
+        }
+      }
+
+      .name {
+        font-size: 2.5rem;
+        font-weight: 600;
+        color: #2c3e50;
+        margin: 0;
+        line-height: 1.2;
+
+        @include breakpoints.mobile-only {
+          font-size: 2rem;
+        }
+
+        @media (max-width: 480px) {
+          font-size: 1.75rem;
+        }
+      }
+
+      .role-chip {
+        font-size: 1rem;
+        padding: spacing.sm() spacing.md();
+
+        @include mat.chips-overrides(
+          (
+            elevated-selected-container-color: #e7ecf3,
+          )
+        );
+
+        @include breakpoints.mobile-only {
+          margin-top: spacing.sm();
+        }
+      }
+
+      .location {
+        display: flex;
+        gap: spacing.md();
+        align-items: center;
+        margin-bottom: spacing.sm();
+
+        .location-item {
+          display: flex;
+          align-items: center;
+          gap: spacing.xs();
+
+          a,
+          span,
+          mat-icon {
+            font-size: 1.2rem;
+            line-height: 1.2rem;
+            color: #7f8c8d;
+            margin: 0;
+            text-decoration: none;
+
+            @media print {
+              font-size: 1rem;
+              line-height: 1rem;
+            }
+          }
+
+          mat-icon {
+            width: 1.2rem;
+            height: 1.2rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            @media print {
+              width: 1rem;
+              height: 1rem;
+            }
+          }
+
+          a {
+            &:hover {
+              text-decoration: underline;
+            }
+          }
+        }
+
+        .print-only {
+          display: none;
+
+          @media print {
+            display: flex;
+          }
+        }
+      }
+
+      .hero-summary {
+        font-size: 1.1rem;
+        line-height: 1.3rem;
+        color: #34495e;
+        margin: 0;
+        font-weight: 400;
+      }
+    }
+  }
+}
+
+// Responsive Design
+@include breakpoints.mobile-only {
+  .hero-header {
+    padding: spacing.lg();
+
+    .hero-content {
+      flex-direction: column;
+      text-align: center;
+      gap: spacing.lg();
+
+      .hero-info .name {
+        font-size: 2rem;
+      }
+    }
+  }
+
+  .hero-info {
+    .name-and-role {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .role-chip {
+      margin-top: spacing.sm();
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-content .hero-image img {
+    width: 6rem;
+    height: 6rem;
+  }
+
+  .hero-info {
+    .name {
+      font-size: 1.75rem;
+    }
+
+    .location {
+      font-size: 1rem;
+    }
+
+    .hero-summary {
+      font-size: 1rem;
+    }
+  }
+}

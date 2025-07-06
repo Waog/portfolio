@@ -1,0 +1,112 @@
+@use './breakpoints' as bp;
+
+// Material Design 3-compliant spacing values using a 4dp grid system.
+//
+// Use these spacing constants consistently to create predictable and visually clean layouts.
+// The values are aligned with typical UI element relationships in MD3.
+//
+// Usage example:
+// declare the css custom properties globally:
+// once in global apps\frontend\src\styles.scss:
+// ```scss
+// @use 'spacing' as spacing;
+//
+// @include spacing.spacing-variables;
+// ```
+//
+// Then use the spacing functions in any component:
+// ```scss
+// @use 'spacing' as spacing;
+//
+// .my-component {
+//   padding: spacing.md();
+//   margin-bottom: spacing.lg();
+//   gap: spacing.sm();
+// }
+// ```
+//
+// Available spacing functions: xs(), sm(), md(), lg(), xl()
+// All functions automatically adapt to screen size and print context.
+
+@mixin spacing-variables {
+  :root {
+    --spacing-xs: 4px;
+    --spacing-sm: 8px;
+    --spacing-md: 16px;
+    --spacing-lg: 24px;
+    --spacing-xl: 32px;
+  }
+
+  @include bp.mobile-only {
+    :root {
+      --spacing-xs: 2px;
+      --spacing-sm: 6px;
+      --spacing-md: 12px;
+      --spacing-lg: 20px;
+      --spacing-xl: 28px;
+    }
+  }
+
+  @media print {
+    :root {
+      --spacing-xs: 3px;
+      --spacing-sm: 7px;
+      --spacing-md: 14px;
+      --spacing-lg: 21px;
+      --spacing-xl: 30px;
+    }
+  }
+}
+
+// Used for tight spacing between closely related elements.
+// Examples:
+// - Between two lines of related text (e.g., title + subtitle)
+// - Between an icon and its adjacent label inside a button
+// - Between helper text and input fields
+// - Between small chips or tags in a horizontal row
+@function xs() {
+  @return var(--spacing-xs);
+}
+
+// Used for small spacing between grouped elements.
+// Examples:
+// - Between input field and label
+// - Between form fields in a group
+// - Between a button and its descriptive text
+// - Between list items in a dense list
+@function sm() {
+  @return var(--spacing-sm);
+}
+
+// Default spacing for most layout elements.
+// Examples:
+// - Padding inside cards and sections
+// - Between primary UI elements (e.g., button rows, content blocks)
+// - Between paragraphs or distinct content rows
+// - Between icon buttons and headers in toolbars
+@function md() {
+  @return var(--spacing-md);
+}
+
+// Used for visually separating distinct content sections.
+// Examples:
+// - Vertical spacing between two cards
+// - Between grouped content sections on a screen
+// - Between large content blocks like lists and footers
+// - Above or below an image block in an article
+// - Between a section heading (e.g., "Your Stories") and its associated list or content
+// - List headers and the list body
+// - Cards and their surrounding elements
+@function lg() {
+  @return var(--spacing-lg);
+}
+
+// Used for structural layout spacing and major visual breaks.
+// Examples:
+// - Padding from screen edge (horizontal or vertical)
+// - Top margin before page titles
+// - Spacing between full-width layout sections
+// - Large empty space between unrelated blocks
+@function xl() {
+  @return var(--spacing-xl);
+}

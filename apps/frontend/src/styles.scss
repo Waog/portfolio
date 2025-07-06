@@ -1,5 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
 
+@use 'spacing' as spacing;
+
+@include spacing.spacing-variables;
+
 html,
 body {
   height: 100%;
@@ -8,4 +12,24 @@ body {
 body {
   margin: 0;
   font-family: Roboto, 'Helvetica Neue', sans-serif;
+}
+
+.screen-only {
+  @media print {
+    display: none !important;
+  }
+}
+
+.print-only {
+  @media screen {
+    display: none !important;
+  }
+}
+
+.no-page-break {
+  @media print {
+    display: block !important;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
 }
