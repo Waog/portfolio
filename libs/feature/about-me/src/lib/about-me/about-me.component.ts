@@ -6,9 +6,9 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
-import { ColorChipComponent } from '@portfolio/color-chip';
 
 import { HeroContentComponent } from '../hero-content/hero-content.component';
+import { PersonalInformationComponent } from '../personal-information/personal-information.component';
 import { SubSectionComponent } from '../sub-section/sub-section.component';
 
 @Component({
@@ -21,27 +21,11 @@ import { SubSectionComponent } from '../sub-section/sub-section.component';
     MatListModule,
     MatDividerModule,
     MatButtonModule,
-    ColorChipComponent,
     HeroContentComponent,
+    PersonalInformationComponent,
     SubSectionComponent,
   ],
   templateUrl: './about-me.component.html',
   styleUrl: './about-me.component.scss',
 })
-export class AboutMeComponent {
-  get currentAge(): number {
-    const today = new Date();
-    const birthDate = new Date(1984, 10, 14); // Month is 0-indexed, so 10 = November
-    let age = today.getFullYear() - birthDate.getFullYear();
-    const monthDiff = today.getMonth() - birthDate.getMonth();
-
-    if (
-      monthDiff < 0 ||
-      (monthDiff === 0 && today.getDate() < birthDate.getDate())
-    ) {
-      age--;
-    }
-
-    return age;
-  }
-}
+export class AboutMeComponent {}

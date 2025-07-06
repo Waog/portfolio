@@ -33,7 +33,7 @@
   }
 }
 
-// Personal Information
+// Common styles for info items in remaining sections
 .info-item {
   display: flex;
   align-items: flex-start;
@@ -85,13 +85,6 @@
       }
     }
   }
-}
-
-// Language styling
-.language-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: spacing.xs();
 }
 
 // Education Card - Special Emphasis

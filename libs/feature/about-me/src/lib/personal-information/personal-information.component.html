@@ -1,0 +1,36 @@
+<lib-sub-section>
+  <mat-icon slot="icon">person</mat-icon>
+  <span slot="title">Personal Information</span>
+  <div slot="content">
+    <div class="info-item">
+      <mat-icon class="info-icon">cake</mat-icon>
+      <div class="info-details">
+        <div class="info-label">Born</div>
+        <div class="info-value">1984 ({{ currentAge }} years)</div>
+      </div>
+    </div>
+    <div class="info-item">
+      <mat-icon class="info-icon">language</mat-icon>
+      <div class="info-details">
+        <div class="info-label">Languages</div>
+        <div class="language-list">
+          <lib-color-chip
+            text="German"
+            color="green"
+            spacing="small"
+          ></lib-color-chip>
+          <lib-color-chip
+            text="English"
+            color="green"
+            spacing="small"
+          ></lib-color-chip>
+          <lib-color-chip
+            text="Chinese"
+            color="red"
+            spacing="small"
+          ></lib-color-chip>
+        </div>
+      </div>
+    </div>
+  </div>
+</lib-sub-section>
