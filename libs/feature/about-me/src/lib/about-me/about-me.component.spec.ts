@@ -28,9 +28,7 @@ describe('AboutMeComponent', () => {
     expect(compiled.querySelector('lib-personal-information')).toBeTruthy();
     expect(compiled.querySelector('lib-community-writing')).toBeTruthy();
     expect(compiled.querySelector('lib-education')).toBeTruthy();
-
-    // Check remaining sections
-    expect(compiled.textContent).toContain('Professional Focus');
+    expect(compiled.querySelector('lib-professional-focus')).toBeTruthy();
   });
 
   it('should have proper grid layout', () => {
