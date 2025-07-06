@@ -1,0 +1,55 @@
+@use 'spacing' as spacing;
+
+// Community & Writing specific styles
+.info-item {
+  display: flex;
+  align-items: flex-start;
+  gap: spacing.md();
+  margin-bottom: spacing.lg();
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  .info-icon {
+    color: #3498db;
+    margin-top: 0.2rem;
+    flex-shrink: 0;
+  }
+
+  .info-details {
+    flex: 1;
+
+    .info-label {
+      font-size: 0.875rem;
+      color: #7f8c8d;
+      margin-bottom: spacing.xs();
+    }
+    .info-value {
+      font-size: 1rem;
+      color: #2c3e50;
+      font-weight: 500;
+      a {
+        color: #3498db;
+        text-decoration: none;
+        &:hover {
+          text-decoration: underline;
+        }
+        &.external-link {
+          display: inline;
+          align-items: baseline;
+
+          .link-icon {
+            display: inline;
+            vertical-align: text-bottom;
+            margin-left: spacing.xs();
+            transition: opacity 0.2s ease;
+            font-size: 1em;
+            width: 1em;
+            height: 1em;
+          }
+        }
+      }
+    }
+  }
+}
