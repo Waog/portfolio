@@ -15,7 +15,7 @@ describe('SectionHeaderComponent', () => {
 
     fixture = TestBed.createComponent(SectionHeaderComponent);
     component = fixture.componentInstance;
-    component.text = 'Test Header'; // Required input
+    fixture.componentRef.setInput('text', 'Test Header');
     fixture.detectChanges();
   });
 
@@ -34,7 +34,7 @@ describe('SectionHeaderComponent', () => {
   });
 
   it('should show star icon when highlighted', () => {
-    component.highlight = true;
+    fixture.componentRef.setInput('highlight', true);
     fixture.detectChanges();
 
     const compiled = fixture.nativeElement;
@@ -44,7 +44,7 @@ describe('SectionHeaderComponent', () => {
   });
 
   it('should apply highlighted class when highlight is true', () => {
-    component.highlight = true;
+    fixture.componentRef.setInput('highlight', true);
     fixture.detectChanges();
 
     const compiled = fixture.nativeElement;
@@ -54,7 +54,7 @@ describe('SectionHeaderComponent', () => {
   });
 
   it('should not apply highlighted class when highlight is false', () => {
-    component.highlight = false;
+    fixture.componentRef.setInput('highlight', false);
     fixture.detectChanges();
 
     const compiled = fixture.nativeElement;
