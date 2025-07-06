@@ -4,7 +4,7 @@ import { HeroContentComponent } from './hero-content.component';
 
 const meta: Meta<HeroContentComponent> = {
   component: HeroContentComponent,
-  title: 'Feature/Hero Content',
+  title: 'Feature/About Me/Hero Content',
   tags: ['autodocs'],
   parameters: {
     docs: {

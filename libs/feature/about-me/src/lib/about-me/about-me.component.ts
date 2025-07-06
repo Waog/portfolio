@@ -9,6 +9,7 @@ import { MatListModule } from '@angular/material/list';
 import { ColorChipComponent } from '@portfolio/color-chip';
 
 import { HeroContentComponent } from '../hero-content/hero-content.component';
+import { SubSectionComponent } from '../sub-section/sub-section.component';
 
 @Component({
   selector: 'lib-about-me',
@@ -22,6 +23,7 @@ import { HeroContentComponent } from '../hero-content/hero-content.component';
     MatButtonModule,
     ColorChipComponent,
     HeroContentComponent,
+    SubSectionComponent,
   ],
   templateUrl: './about-me.component.html',
   styleUrl: './about-me.component.scss',

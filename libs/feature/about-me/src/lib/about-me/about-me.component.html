@@ -8,14 +8,10 @@
         <!-- Left Column -->
         <div class="left-column">
           <!-- Personal Info Card -->
-          <mat-card class="info-card">
-            <mat-card-header>
-              <mat-card-title class="section-title">
-                <mat-icon>person</mat-icon>
-                Personal Information
-              </mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
+          <lib-sub-section>
+            <mat-icon slot="icon">person</mat-icon>
+            <span slot="title">Personal Information</span>
+            <div slot="content">
               <div class="info-item">
                 <mat-icon class="info-icon">cake</mat-icon>
                 <div class="info-details">
@@ -46,18 +42,14 @@
                   </div>
                 </div>
               </div>
-            </mat-card-content>
-          </mat-card>
+            </div>
+          </lib-sub-section>
 
           <!-- Activities Card -->
-          <mat-card class="info-card">
-            <mat-card-header>
-              <mat-card-title class="section-title">
-                <mat-icon>volunteer_activism</mat-icon>
-                Community & Writing
-              </mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
+          <lib-sub-section>
+            <mat-icon slot="icon">volunteer_activism</mat-icon>
+            <span slot="title">Community & Writing</span>
+            <div slot="content">
               <div class="info-item">
                 <mat-icon class="info-icon">group</mat-icon>
                 <div class="info-details">
@@ -94,21 +86,17 @@
                   </div>
                 </div>
               </div>
-            </mat-card-content>
-          </mat-card>
+            </div>
+          </lib-sub-section>
         </div>
 
         <!-- Right Column -->
         <div class="right-column">
           <!-- Education Card - Emphasized -->
-          <mat-card class="info-card education-card">
-            <mat-card-header>
-              <mat-card-title class="section-title">
-                <mat-icon>school</mat-icon>
-                Education
-              </mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
+          <lib-sub-section class="education-card">
+            <mat-icon slot="icon">school</mat-icon>
+            <span slot="title">Education</span>
+            <div slot="content">
               <div class="education-main">
                 <div class="degree-title">
                   <a
@@ -133,26 +121,22 @@
                   Subsidiary Field: Engineering Science
                 </div>
               </div>
-            </mat-card-content>
-          </mat-card>
+            </div>
+          </lib-sub-section>
 
           <!-- Professional Summary Card -->
-          <mat-card class="info-card">
-            <mat-card-header>
-              <mat-card-title class="section-title">
-                <mat-icon>work</mat-icon>
-                Professional Focus
-              </mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
+          <lib-sub-section>
+            <mat-icon slot="icon">work</mat-icon>
+            <span slot="title">Professional Focus</span>
+            <div slot="content">
               <p class="professional-text">
                 Experienced in planning, designing, implementing, testing,
                 deploying and maintaining web applications with various
                 technology stacks. See portfolio above for detailed project
                 information and technical expertise.
               </p>
-            </mat-card-content>
-          </mat-card>
+            </div>
+          </lib-sub-section>
         </div>
       </div>
     </mat-card-content>
