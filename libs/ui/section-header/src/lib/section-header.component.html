@@ -1,1 +1,4 @@
-<p>SectionHeader works!</p>
+<div class="container mat-headline-medium" [class.highlighted]="highlight()">
+  <mat-icon class="star-icon" *ngIf="highlight">star</mat-icon>
+  <h2>{{ text() }}</h2>
+</div>

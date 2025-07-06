@@ -1,8 +1,8 @@
 @if (tagMatches.length > 0) {
-<div class="matches-overview-container">
-  <h3 class="matches-headline">Search Results</h3>
+<div class="container">
+  <lib-section-header text="Keyword Overview" highlight />
 
-  <div class="matches-overview">
+  <div class="body">
     @for (tagMatch of tagMatches; track tagMatch.tag) {
     <div class="match-row">
       <span class="search-term">{{ tagMatch.tag }}:</span>
