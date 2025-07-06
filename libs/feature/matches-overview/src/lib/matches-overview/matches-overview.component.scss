@@ -1,6 +1,12 @@
+@use 'spacing' as spacing;
+
 .container {
   display: flex;
   flex-direction: column;
+
+  @media print {
+    padding-left: spacing.lg();
+  }
 
   .body {
     display: flex;
