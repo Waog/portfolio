@@ -1,6 +1,5 @@
 @use 'spacing' as spacing;
 
-// Education specific styles
 .education-card {
   .education-main {
     margin-bottom: spacing.lg();
@@ -75,6 +74,25 @@
       font-size: 0.875rem;
       color: #7f8c8d;
       font-style: italic;
+    }
+  }
+}
+
+@media print {
+  .education-card {
+    .education-main {
+      margin-bottom: spacing.sm();
+    }
+
+    .education-details {
+      .grade-highlight {
+        gap: 0;
+        margin-bottom: spacing.md();
+        padding: spacing.sm();
+        // background-color: transparent;
+        // border-radius: 0;
+        border-left: none;
+      }
     }
   }
 }

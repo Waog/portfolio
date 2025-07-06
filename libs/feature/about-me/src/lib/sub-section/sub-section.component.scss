@@ -26,3 +26,11 @@
     padding: 0 spacing.lg() spacing.lg() spacing.lg();
   }
 }
+
+@media print {
+  .info-card {
+    box-shadow: none;
+    border-radius: 0;
+    background-color: inherit;
+  }
+}

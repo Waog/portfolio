@@ -2,8 +2,6 @@
 @use 'nav-scroll-spacer' as *;
 @use 'spacing' as spacing;
 
-@use '@angular/material' as mat;
-
 .about-me-container {
   @include nav-scroll-spacer();
   width: 100%;
@@ -15,7 +13,6 @@
   overflow: visible;
 }
 
-// Main Content Grid
 .main-content {
   padding: spacing.xl();
 }
@@ -23,30 +20,42 @@
 .content-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: spacing.xl();
+  gap: spacing.md();
+  height: 100%;
 
   .left-column,
   .right-column {
     display: flex;
     flex-direction: column;
-    gap: spacing.lg();
+    gap: spacing.md();
+    justify-content: space-between;
+    flex-grow: 1;
   }
 }
 
-// Responsive Design
 @include breakpoints.mobile-only {
   .content-grid {
     grid-template-columns: 1fr;
-    gap: spacing.md();
-  }
-
-  .main-content {
-    padding: spacing.md();
   }
 }
 
-@media (max-width: 480px) {
-  .about-me-container {
-    margin-top: spacing.md();
+@media print {
+  .about-me-card {
+    box-shadow: none;
+    border-radius: 0;
+  }
+
+  .main-content {
+    padding: 0;
+    padding-bottom: 0 !important;
+  }
+
+  .content-grid {
+    gap: 0;
+
+    .left-column,
+    .right-column {
+      gap: 0;
+    }
   }
 }

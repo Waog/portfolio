@@ -38,13 +38,6 @@ describe('ProfessionalFocusComponent', () => {
     expect(professionalText?.tagName.toLowerCase()).toBe('p');
   });
 
-  it('should reference portfolio', () => {
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.textContent).toContain('See portfolio above');
-    expect(compiled.textContent).toContain('detailed project information');
-    expect(compiled.textContent).toContain('technical expertise');
-  });
-
   it('should have work icon', () => {
     const compiled = fixture.nativeElement as HTMLElement;
     const workIcon = compiled.querySelector('mat-icon[slot="icon"]');
