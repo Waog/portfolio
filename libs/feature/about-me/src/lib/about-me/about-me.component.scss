@@ -15,116 +15,6 @@
   overflow: visible;
 }
 
-// Hero Section
-.hero-header {
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-  padding: spacing.xl();
-
-  .hero-content {
-    display: flex;
-    align-items: center;
-    gap: spacing.xl();
-    max-width: 100%;
-
-    .hero-image {
-      flex-shrink: 0;
-
-      img {
-        width: 8rem;
-        height: 8rem;
-        border-radius: 50%;
-        object-fit: cover;
-        border: 4px solid white;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-      }
-    }
-
-    .hero-info {
-      flex: 1;
-      min-width: 0;
-
-      .name-and-role {
-        display: flex;
-        align-items: center;
-        gap: spacing.lg(); // Increase space between name and role chip
-        margin-bottom: spacing.sm();
-      }
-
-      .name {
-        font-size: 2.5rem;
-        font-weight: 600;
-        margin: 0;
-        color: #2c3e50;
-      }
-
-      .role-chip {
-        font-size: 1rem;
-        padding: spacing.sm() spacing.md();
-
-        @include mat.chips-overrides(
-          (
-            elevated-selected-container-color: #e7ecf3,
-          )
-        );
-      }
-
-      .location {
-        display: flex;
-        gap: spacing.md();
-        align-items: center;
-        margin-bottom: spacing.sm();
-
-        .location-item {
-          display: flex;
-          align-items: center;
-          gap: spacing.xs();
-
-          a,
-          span,
-          mat-icon {
-            font-size: 1.2rem;
-            line-height: 1.2rem;
-            color: #7f8c8d;
-            margin: 0;
-            text-decoration: none;
-
-            @media print {
-              font-size: 1rem;
-              line-height: 1rem;
-            }
-          }
-
-          mat-icon {
-            width: 1.2rem;
-            height: 1.2rem;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            @media print {
-              width: 1rem;
-              height: 1rem;
-            }
-          }
-
-          a {
-            &:hover {
-              text-decoration: underline;
-            }
-          }
-        }
-      }
-
-      .hero-summary {
-        font-size: 1.1rem;
-        line-height: 1.3rem;
-        color: #34495e;
-        margin: 0;
-        font-weight: 400;
-      }
-    }
-  }
-}
-
 // Main Content Grid
 .main-content {
   padding: spacing.xl();
@@ -325,20 +215,6 @@
     gap: spacing.md();
   }
 
-  .hero-header {
-    padding: spacing.lg();
-
-    .hero-content {
-      flex-direction: column;
-      text-align: center;
-      gap: spacing.lg();
-
-      .hero-info .name {
-        font-size: 2rem;
-      }
-    }
-  }
-
   .main-content {
     padding: spacing.md();
   }
@@ -350,39 +226,9 @@
       padding-right: spacing.md();
     }
   }
-
-  .hero-info {
-    .name-and-role {
-      flex-direction: column;
-      align-items: flex-start;
-    }
-
-    .role-chip {
-      margin-top: spacing.sm();
-    }
-  }
 }
 
 @media (max-width: 480px) {
-  .hero-content .hero-image img {
-    width: 6rem;
-    height: 6rem;
-  }
-
-  .hero-info {
-    .name {
-      font-size: 1.75rem;
-    }
-
-    .location {
-      font-size: 1rem;
-    }
-
-    .hero-summary {
-      font-size: 1rem;
-    }
-  }
-
   .about-me-container {
     margin-top: spacing.md();
   }

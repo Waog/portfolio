@@ -8,6 +8,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { ColorChipComponent } from '@portfolio/color-chip';
 
+import { HeroContentComponent } from '../hero-content/hero-content.component';
+
 @Component({
   selector: 'lib-about-me',
   imports: [
@@ -19,6 +21,7 @@ import { ColorChipComponent } from '@portfolio/color-chip';
     MatDividerModule,
     MatButtonModule,
     ColorChipComponent,
+    HeroContentComponent,
   ],
   templateUrl: './about-me.component.html',
   styleUrl: './about-me.component.scss',
