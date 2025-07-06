@@ -1,32 +1,28 @@
 import type { Meta, StoryObj } from '@storybook/angular';
+import { moduleMetadata } from '@storybook/angular';
 
 import { AboutMeComponent } from './about-me.component';
+import { MediaWrapperComponent } from './media-wrapper.component.stories';
 
 const meta: Meta<AboutMeComponent> = {
   component: AboutMeComponent,
   title: 'Feature/About Me',
   tags: ['autodocs'],
-  parameters: {
-    docs: {
-      description: {
-        component:
-          'A comprehensive about me component displaying personal information, skills, education, and experience in a professional card layout.',
-      },
-    },
-  },
+  decorators: [
+    moduleMetadata({
+      imports: [MediaWrapperComponent],
+    }),
+  ],
 };
 
 export default meta;
 type Story = StoryObj<AboutMeComponent>;
 
 export const Default: Story = {
-  args: {},
-  parameters: {
-    docs: {
-      description: {
-        story:
-          'The complete about me profile card with all personal information, skills, and professional details.',
-      },
-    },
-  },
+  render: (args, { globals }) => ({
+    template:
+      globals['viewport'] === 'dinA4'
+        ? `<lib-media-wrapper [media]="'print'"><lib-about-me /></lib-media-wrapper>`
+        : `<lib-about-me />`,
+  }),
 };

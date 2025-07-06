@@ -2,6 +2,7 @@ import type { Preview } from '@storybook/angular';
 
 const preview: Preview = {
   parameters: {
+    layout: 'fullscreen',
     controls: {
       matchers: {
         color: /(background|color)$/i,
@@ -22,6 +23,13 @@ const preview: Preview = {
           styles: {
             width: '100%',
             height: '100%',
+          },
+        },
+        dinA4: {
+          name: 'DIN A4',
+          styles: {
+            width: '210mm',
+            height: '297mm',
           },
         },
       },
