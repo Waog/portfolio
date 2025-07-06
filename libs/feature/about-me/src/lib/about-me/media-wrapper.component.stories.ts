@@ -39,7 +39,7 @@ export class MediaWrapperComponent implements AfterViewInit {
         if (rule.constructor.name === 'CSSMediaRule') {
           const mediaRule = rule as CSSMediaRule;
           const condition =
-            (mediaRule as any).conditionText || mediaRule.media.mediaText;
+            mediaRule.conditionText || mediaRule.media.mediaText;
           if (condition.includes('screen')) {
             screenRules.push(mediaRule);
           } else if (condition.includes('print')) {
@@ -64,7 +64,9 @@ export class MediaWrapperComponent implements AfterViewInit {
     for (const rule of rules) {
       try {
         rule.media.mediaText = replacement;
-      } catch {}
+      } catch (err) {
+        console.error('Failed to set media text:', err);
+      }
     }
   }
 }
