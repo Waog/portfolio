@@ -89,12 +89,11 @@ test.describe('About Me Section', () => {
 });
 
 async function getAboutMeSection(page: Page): Promise<Locator> {
-  const contactSection = page
-    // NOTE: there are two about-me sections in the DOM, one for screen and one for print
-    .locator('.screen-only')
-    .getByText(/Oliver Stadie.*Personal Information.*Community & Writing/s);
-  await expect(contactSection).toBeVisible();
-  return contactSection;
+  const aboutMeSection = page.getByText(
+    /Oliver Stadie.*Personal Information.*Community & Writing/s
+  );
+  await expect(aboutMeSection).toBeVisible();
+  return aboutMeSection;
 }
 
 async function getSubSection(

@@ -2,9 +2,17 @@
 @use 'breakpoints' as breakpoints;
 
 .home-container {
+  display: flex;
+  flex-direction: column;
   margin: 0 auto;
   @media screen {
     max-width: 1200px;
     padding: spacing.lg() spacing.md();
+  }
+}
+
+@media print {
+  lib-about-me {
+    order: -1;
   }
 }
