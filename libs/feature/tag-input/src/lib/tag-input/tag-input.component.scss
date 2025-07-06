@@ -1,9 +1,19 @@
+@use 'spacing' as spacing;
+
 .tag-input-container {
   // Removed global spacing - now handled by parent home component
   width: 100%;
 
   // Ensure left alignment within the container
   text-align: left;
+
+  margin-bottom: spacing.lg();
+}
+
+mat-form-field {
+  // NOTE: angular material automatically adds some spacer DOM element below the form field
+  // This is to counteract that spacer a little bit
+  margin-bottom: -10px;
 }
 
 .tag-input-wrapper {
@@ -60,7 +70,6 @@
 }
 
 .tag-list {
-  margin-top: 4px; // Further reduced spacing from 8px to 4px
   width: 100%;
   // Ensure tags are left-aligned
   display: flex;

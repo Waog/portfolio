@@ -1,38 +1,33 @@
 @if (tagMatches.length > 0) {
-<div class="matches-overview-container">
-  <h3 class="matches-headline">Search Results</h3>
+<div class="container">
+  <lib-section-header text="Experience by Keywords" highlight />
 
-  <div class="matches-overview">
+  <div class="grid">
     @for (tagMatch of tagMatches; track tagMatch.tag) {
-    <div class="match-row">
-      <span class="search-term">{{ tagMatch.tag }}:</span>
+    <span class="search-term">{{ tagMatch.tag }}:</span>
 
-      <div class="match-results">
-        @if (tagMatch.fullMatches > 0) {
-        <lib-color-chip
-          [text]="
-            tagMatch.fullMatches +
-            ' matching project' +
-            (tagMatch.fullMatches !== 1 ? 's' : '')
-          "
-          color="green"
-        >
-        </lib-color-chip>
-        } @if (tagMatch.partialMatches > 0) {
-        <lib-color-chip
-          [text]="
-            tagMatch.partialMatches +
-            ' partially matching project' +
-            (tagMatch.partialMatches !== 1 ? 's' : '')
-          "
-          color="yellow"
-        >
-        </lib-color-chip>
-        } @if (tagMatch.fullMatches === 0 && tagMatch.partialMatches === 0) {
-        <lib-color-chip text="no matching projects" color="red">
-        </lib-color-chip>
-        }
-      </div>
+    <div class="match-results">
+      @if (tagMatch.fullMatches > 0) {
+      <lib-color-chip
+        [text]="
+          tagMatch.fullMatches +
+          ' project' +
+          (tagMatch.fullMatches !== 1 ? 's' : '')
+        "
+        color="green"
+      />
+      } @if (tagMatch.partialMatches > 0) {
+      <lib-color-chip
+        [text]="
+          tagMatch.partialMatches +
+          ' related project' +
+          (tagMatch.partialMatches !== 1 ? 's' : '')
+        "
+        color="yellow"
+      />
+      } @if (tagMatch.fullMatches === 0 && tagMatch.partialMatches === 0) {
+      <lib-color-chip text="no related projects" color="red" />
+      }
     </div>
     }
   </div>

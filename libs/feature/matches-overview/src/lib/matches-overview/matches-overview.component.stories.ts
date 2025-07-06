@@ -54,6 +54,7 @@ class MockProjectService {
         TypeScript: ['Angular', 'Vue'],
         JavaScript: ['React'],
         'Node.js': ['Express'],
+        'Vue.js': ['Vue'],
       };
 
       const relatedTechs = partialMatches[isPartialFor] || [];
@@ -142,6 +143,7 @@ export const WithManyTags: Story = {
               'TypeScript',
               'React',
               'Rust',
+              'Vue.js',
               'JavaScript',
               'Node.js',
               'Express',
