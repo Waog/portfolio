@@ -24,14 +24,12 @@ describe('AboutMeComponent', () => {
     const compiled = fixture.nativeElement as HTMLElement;
 
     // Check hero content
-    expect(compiled.querySelector('lib-hero-content')).toBeTruthy();
-
-    // Check extracted components
+    expect(compiled.querySelector('lib-hero-content')).toBeTruthy(); // Check extracted components
     expect(compiled.querySelector('lib-personal-information')).toBeTruthy();
     expect(compiled.querySelector('lib-community-writing')).toBeTruthy();
+    expect(compiled.querySelector('lib-education')).toBeTruthy();
 
     // Check remaining sections
-    expect(compiled.textContent).toContain('Education');
     expect(compiled.textContent).toContain('Professional Focus');
   });
 
