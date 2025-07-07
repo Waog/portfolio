@@ -7,7 +7,7 @@ import {
   ColorChipInputs,
 } from './color-chip-dimensions.service';
 
-const TOLERANCE = 2;
+const TOLERANCE = -2;
 
 const meta: Meta<ColorChipComponent> = {
   title: 'UI/Color Chip/Dimensions Service Tests',
