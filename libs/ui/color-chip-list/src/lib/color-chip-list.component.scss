@@ -1,67 +1,16 @@
-.color-chip-list {
-  .chip-container {
-    gap: 0.5rem;
+@use 'spacing' as spacing;
+
+.container {
+  display: grid;
+  gap: spacing.sm();
+  grid-template-columns: 1fr max-content;
+  align-items: center;
+
+  .chip-column {
+    // background-color: yellow;
     display: flex;
     flex-wrap: wrap;
+    gap: 0.5rem;
     align-items: center;
-  }
-
-  .chip-item {
-    transition: all 0.2s ease-in-out;
-    transform-origin: center;
-
-    &:hover {
-      transform: translateY(-1px) scale(1.02);
-    }
-  }
-  .inline-toggle-button {
-    background: none;
-    border: none;
-    box-shadow: none;
-    color: #666;
-    font-size: 0.875rem;
-    text-transform: none;
-    padding: 6px 12px;
-    margin-left: 8px;
-    text-decoration: none;
-    min-height: auto;
-    transition: all 0.3s ease-in-out;
-    border-radius: 4px;
-
-    &:hover {
-      background-color: rgba(0, 0, 0, 0.04);
-      transform: translateY(-1px);
-      color: #333;
-    }
-
-    &:active {
-      transform: translateY(0);
-    }
-  }
-  .toggle-section {
-    margin-top: 0.75rem;
-    text-align: center;
-
-    .toggle-button {
-      font-size: 0.875rem;
-      text-transform: none;
-      transition: all 0.3s ease-in-out;
-
-      &:hover {
-        transform: translateY(-1px);
-      }
-
-      &:active {
-        transform: translateY(0);
-      }
-
-      mat-icon {
-        margin-right: 0.25rem;
-        font-size: 1rem;
-        width: 1rem;
-        height: 1rem;
-        transition: transform 0.2s ease-in-out;
-      }
-    }
   }
 }

@@ -1,59 +1,40 @@
 @use 'breakpoints' as breakpoints;
 @use 'nav-scroll-spacer' as *;
+@use 'spacing' as spacing;
 
 #skills {
   @include nav-scroll-spacer();
 }
 
-.skills-card {
-  margin: 1.5rem 0;
-
-  mat-card-title {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-
-    mat-icon {
-      color: var(--mat-primary-500);
-    }
-  }
-}
-
-.skills-container {
+.container {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem; // Slightly increased gap for visual separation
-}
+  margin-bottom: spacing.lg();
 
-.skill-category {
-  // Add subtle visual separation between categories
-  &:not(:last-child) {
-    padding-bottom: 0.5rem;
-    border-bottom: 1px solid var(--mat-outline-variant, rgba(0, 0, 0, 0.06));
+  @media print {
+    padding-left: spacing.lg();
+    padding-right: spacing.lg();
   }
 
-  .skill-category-content {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    padding: 0.25rem 0;
+  .grid {
+    display: grid;
+    gap: spacing.md();
+    grid-template-columns: max-content 1fr;
+    align-items: center;
 
-    @include breakpoints.desktop-up {
-      display: grid;
-      grid-template-columns: 160px 1fr;
-      gap: 1.5rem;
-      align-items: start;
-      padding: 0.375rem 0;
+    .skill-category {
+      max-width: 20vw;
+      font-weight: 500;
+      color: var(--text-primary, #333);
+      word-wrap: break-word;
     }
-  }
-}
 
-.category-title {
-  h3 {
-    margin: 0;
-    font-weight: 500;
-    font-size: 1rem;
-    color: var(--mat-on-surface);
-    line-height: 1.25;
+    @include breakpoints.mobile-only {
+      grid-template-columns: 1fr;
+
+      .skill-category {
+        max-width: 90vw;
+      }
+    }
   }
 }

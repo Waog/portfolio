@@ -1,34 +1,34 @@
-<div class="color-chip-list">
-  <div class="chip-container">
+<div class="container" #container>
+  <div class="chip-column" #chipColumn>
+    @for ( item of visibleItems; track item.text) {
     <lib-color-chip
-      *ngFor="let item of visibleItems; trackBy: trackByItem"
       [text]="item.text"
       [color]="item.color"
       [icon]="item.icon"
       spacing="large"
       class="chip-item"
-    >
-    </lib-color-chip>
-
-    <button
-      *ngIf="hiddenItemsCount > 0 && !showAllItems"
-      mat-button
-      (click)="toggleItems()"
-      class="inline-toggle-button"
-    >
-      show {{ hiddenItemsCount }} more...
-    </button>
+    />
+    }
   </div>
 
-  <nav class="toggle-section" *ngIf="shouldShowLessButton">
+  <div class="toggle-button-column" #toggleColumn>
+    @if (showToggleButtons) {
     <button
       mat-button
-      color="primary"
+      color="basic"
       (click)="toggleItems()"
       class="toggle-button"
     >
-      <mat-icon>expand_less</mat-icon>
-      Show Less
+      <mat-icon class="screen-only">{{
+        hiddenItemsCount > 0 ? 'expand_more' : 'expand_less'
+      }}</mat-icon>
+      <span class="screen-only">show</span><span class="print-only">+ </span>
+      {{
+        visibleItems.length < allItems.length
+          ? hiddenItemsCount + ' more'
+          : 'less'
+      }}
     </button>
-  </nav>
+    }
+  </div>
 </div>

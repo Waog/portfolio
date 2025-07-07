@@ -3,6 +3,7 @@ import { Component, inject } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { KeywordListComponent } from '@portfolio/keyword-list';
+import { SectionHeaderComponent } from '@portfolio/section-header';
 
 import {
   type SkillCategory,
@@ -11,7 +12,13 @@ import {
 
 @Component({
   selector: 'lib-skill-section',
-  imports: [CommonModule, MatCardModule, MatIconModule, KeywordListComponent],
+  imports: [
+    CommonModule,
+    MatCardModule,
+    MatIconModule,
+    KeywordListComponent,
+    SectionHeaderComponent,
+  ],
   templateUrl: './skill-section.component.html',
   styleUrl: './skill-section.component.scss',
 })
