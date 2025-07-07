@@ -69,6 +69,24 @@ jobs:
       - name: 🧪 Run E2E Tests (excluding webkit)
         run: npx nx affected -t e2e -- --project=chromium --project=firefox
 
+      - name: 📚 Install wait-on for Storybook tests
+        run: npm install --no-save wait-on
+
+      - name: 📖 Test Storybook
+        run: |
+          # Start static Storybook server in background on port 6006
+          npx nx static-storybook frontend --configuration=ci --port=6006 &
+          STORYBOOK_PID=$!
+
+          # Wait for Storybook to be ready
+          npx wait-on http://localhost:6006 --timeout 60000
+
+          # Run Storybook tests
+          npx nx test-storybook frontend --url=http://localhost:6006
+
+          # Stop Storybook server
+          kill $STORYBOOK_PID || true
+
       - name: 💾 Cache frontend build artifact
         uses: actions/cache@v4
         with:
