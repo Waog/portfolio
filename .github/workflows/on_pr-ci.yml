@@ -35,9 +35,9 @@ jobs:
     uses: ./.github/workflows/e2e.yml
 
   test-storybook:
-    needs: install-npm-deps
+    needs: install-playwright
     uses: ./.github/workflows/test-storybook.yml
 
   build-prerender-ssg:
-    needs: [build, test, lint, e2e, test-storybook]
+    needs: install-npm-deps
     uses: ./.github/workflows/build-prerender-ssg.yml
