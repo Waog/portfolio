@@ -1,8 +1,22 @@
 <div class="home-container">
-  <lib-tag-input class="screen-only"></lib-tag-input>
-  <lib-matches-overview class="no-page-break"></lib-matches-overview>
-  <lib-project-list></lib-project-list>
-  <lib-skill-section class="no-page-break"></lib-skill-section>
-  <lib-about-me class="no-page-break"></lib-about-me>
-  <lib-contact-section class="screen-only"></lib-contact-section>
+  <lib-section class="tag-input screen-only">
+    <lib-tag-input />
+  </lib-section>
+  @if ((searchTagService.tags$ | async)?.length) {
+  <lib-section class="matches-overview no-page-break">
+    <lib-matches-overview />
+  </lib-section>
+  }
+  <lib-section class="project-list">
+    <lib-project-list />
+  </lib-section>
+  <lib-section class="skill-section">
+    <lib-skill-section />
+  </lib-section>
+  <lib-section fullWidth noVerticalPadding class="about-me no-page-break">
+    <lib-about-me />
+  </lib-section>
+  <lib-section class="contact-section screen-only">
+    <lib-contact-section />
+  </lib-section>
 </div>

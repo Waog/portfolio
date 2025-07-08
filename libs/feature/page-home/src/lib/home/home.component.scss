@@ -4,21 +4,16 @@
 .home-container {
   display: flex;
   flex-direction: column;
-  margin: 0 auto;
-  @media screen {
-    max-width: 1200px;
-    padding: spacing.lg() spacing.md();
-  }
 }
 
 @media print {
-  lib-about-me {
+  .about-me {
     order: -3;
   }
-  lib-matches-overview {
+  .matches-overview {
     order: -2;
   }
-  lib-skill-section {
+  .skill-section {
     order: -1;
   }
 }
