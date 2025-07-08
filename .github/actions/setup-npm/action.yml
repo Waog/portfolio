@@ -1,0 +1,30 @@
+name: 'Setup NPM Environment'
+description: 'Common Node.js and npm setup steps'
+
+inputs:
+  node-version:
+    description: 'Node.js version to use'
+    required: false
+    default: '20'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: 🔄 Checkout repository (with history)
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: 🟢 Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ inputs.node-version }}
+
+    - name: 💾 Restore Cached npm dependencies
+      uses: actions/cache@v4
+      with:
+        path: node_modules
+        key: ${{ runner.os }}-npm-deps-${{ hashFiles('package-lock.json', '.github/workflows/install-npm-deps.yml') }}
+        restore-keys: |
+          ${{ runner.os }}-npm-deps-
+        fail-on-cache-miss: true

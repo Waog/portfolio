@@ -1,0 +1,34 @@
+name: Build and Prerender SSG
+
+on:
+  workflow_call:
+    inputs:
+      commit:
+        description: 'The commit to checkout'
+        required: false
+        type: string
+
+env:
+  NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
+
+jobs:
+  build-prerender-ssg:
+    name: Build and Prerender SSG
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🔄 Checkout repository
+        uses: actions/checkout@v4
+
+      - name: 🔁 Setup Nx environment
+        uses: ./.github/actions/setup-nx
+
+      - name: 🏗️ Build and pre-render (SSG) frontend for production (for deployment)
+        run: npx nx prerender frontend --configuration=production
+
+      - name: 💾 Cache frontend build artifact
+        uses: actions/cache@v4
+        with:
+          path: dist/apps/frontend/browser
+          key: ${{ runner.os }}-frontend-build-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-frontend-build-

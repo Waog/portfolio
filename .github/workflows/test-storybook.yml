@@ -1,0 +1,44 @@
+name: Test Storybook
+
+on:
+  workflow_call:
+    inputs:
+      commit:
+        description: 'The commit to checkout'
+        required: false
+        type: string
+
+env:
+  NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
+
+jobs:
+  test-storybook:
+    name: Test Storybook
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🔄 Checkout repository
+        uses: actions/checkout@v4
+
+      - name: 🔁 Setup Nx environment
+        uses: ./.github/actions/setup-nx
+
+      - name: 🎭 Setup Playwright environment
+        uses: ./.github/actions/setup-playwright
+
+      - name: 📚 Install wait-on for Storybook tests
+        run: npm install --no-save wait-on
+
+      - name: 📖 Test Storybook
+        run: |
+          # Start static Storybook server in background on port 6006
+          npx nx static-storybook frontend --configuration=ci --port=6006 &
+          STORYBOOK_PID=$!
+
+          # Wait for Storybook to be ready
+          npx wait-on http://localhost:6006 --timeout 60000
+
+          # Run Storybook tests
+          npx nx test-storybook frontend --url=http://localhost:6006
+
+          # Stop Storybook server
+          kill $STORYBOOK_PID || true

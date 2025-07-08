@@ -18,6 +18,26 @@ jobs:
     needs: install-npm-deps
     uses: ./.github/workflows/commitlint-since-pr-base.yml
 
-  build-and-test:
-    needs: [install-npm-deps, install-playwright]
-    uses: ./.github/workflows/build-test.yml
+  build:
+    needs: install-npm-deps
+    uses: ./.github/workflows/build.yml
+
+  test:
+    needs: install-npm-deps
+    uses: ./.github/workflows/test.yml
+
+  lint:
+    needs: install-npm-deps
+    uses: ./.github/workflows/lint.yml
+
+  e2e:
+    needs: install-playwright
+    uses: ./.github/workflows/e2e.yml
+
+  test-storybook:
+    needs: install-playwright
+    uses: ./.github/workflows/test-storybook.yml
+
+  build-prerender-ssg:
+    needs: install-npm-deps
+    uses: ./.github/workflows/build-prerender-ssg.yml

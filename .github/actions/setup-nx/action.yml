@@ -1,0 +1,19 @@
+name: 'Setup Nx Environment'
+description: 'Common setup steps for Nx workspace CI jobs'
+
+inputs:
+  node-version:
+    description: 'Node.js version to use'
+    required: false
+    default: '20'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: 🔁 Setup NPM environment
+      uses: ./.github/actions/setup-npm
+      with:
+        node-version: ${{ inputs.node-version }}
+
+    - name: 🔧 Set Nx SHAs
+      uses: nrwl/nx-set-shas@v4

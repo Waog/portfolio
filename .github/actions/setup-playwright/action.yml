@@ -1,0 +1,21 @@
+name: 'Setup Playwright Environment'
+description: 'Setup Playwright browsers cache for E2E testing'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: 🔍 Get installed Playwright version
+      id: playwright-version
+      run: |
+        $version = (npm list @playwright/test --depth=0 --json | ConvertFrom-Json).dependencies.'@playwright/test'.version
+        echo "version=$version" >> $env:GITHUB_OUTPUT
+      shell: pwsh
+
+    - name: 💾 Restore Playwright browsers cache
+      uses: actions/cache@v4
+      with:
+        path: '~/.cache/ms-playwright'
+        key: ${{ runner.os }}-playwright-${{ steps.playwright-version.outputs.version }}-${{ hashFiles('.github/workflows/install-playwright.yml') }}
+        restore-keys: |
+          ${{ runner.os }}-playwright-
+        fail-on-cache-miss: true
