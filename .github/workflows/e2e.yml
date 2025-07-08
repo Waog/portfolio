@@ -16,44 +16,13 @@ jobs:
     name: E2E Tests
     runs-on: ubuntu-latest
     steps:
-      - name: 🔄 Checkout repository
-        uses: actions/checkout@v4
+      - name: � Setup Nx environment
+        uses: ./.github/actions/setup-nx
         with:
-          ref: ${{ inputs.commit || github.sha }}
-          fetch-depth: 0
+          commit: ${{ inputs.commit }}
 
-      - name: 🟢 Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-
-      - name: 💾 Restore Cached npm dependencies
-        uses: actions/cache@v4
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-npm-deps-${{ hashFiles('package-lock.json', '.github/workflows/install-npm-deps.yml') }}
-          restore-keys: |
-            ${{ runner.os }}-npm-deps-
-          fail-on-cache-miss: true
-
-      - name: 🔍 Get installed Playwright version
-        id: playwright-version
-        run: |
-          $version = (npm list @playwright/test --depth=0 --json | ConvertFrom-Json).dependencies.'@playwright/test'.version
-          echo "version=$version" >> $env:GITHUB_OUTPUT
-        shell: pwsh
-
-      - name: 💾 Restore Playwright browsers cache
-        uses: actions/cache@v4
-        with:
-          path: '~/.cache/ms-playwright'
-          key: ${{ runner.os }}-playwright-${{ steps.playwright-version.outputs.version }}-${{ hashFiles('.github/workflows/install-playwright.yml') }}
-          restore-keys: |
-            ${{ runner.os }}-playwright-
-          fail-on-cache-miss: true
-
-      - name: 🔧 Set Nx SHAs
-        uses: nrwl/nx-set-shas@v4
+      - name: 🎭 Setup Playwright environment
+        uses: ./.github/actions/setup-playwright
 
       - name: 🧪 Run E2E Tests (chromium only)
         run: npx nx e2e frontend-e2e -- --project=chromium
