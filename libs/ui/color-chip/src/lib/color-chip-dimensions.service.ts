@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { isPlatformServer } from '@angular/common';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 
 import { ChipSpacing } from './color-chip.component';
 
@@ -13,15 +14,10 @@ export interface ColorChipInputs {
   providedIn: 'root',
 })
 export class ColorChipDimensionsService {
+  constructor(@Inject(PLATFORM_ID) private platformId: object) {}
+
   getWidth(colorChipInputs: ColorChipInputs): number {
-    const fontSizePx = 14;
-    const fontWeight = 500;
-    const fontFamily = 'Roboto, Arial, sans-serif';
-    const canvas = document.createElement('canvas');
-    const context = canvas.getContext('2d');
-    if (!context) return 0;
-    context.font = `${fontWeight} ${fontSizePx}px ${fontFamily}`;
-    const textWidth = context.measureText(colorChipInputs.text).width;
+    const textWidth = this.getTextWidth(colorChipInputs.text);
 
     const { spacing } = colorChipInputs;
     const paddingLeft = spacing === 'small' ? 4 : spacing === 'large' ? 12 : 8;
@@ -44,5 +40,21 @@ export class ColorChipDimensionsService {
         iconWidth +
         closeButtonWidth
     );
+  }
+
+  private getTextWidth(text: string): number {
+    if (isPlatformServer(this.platformId)) {
+      // Fallback for SSR or environments without document
+      return text.length * 8;
+    }
+
+    const fontSizePx = 14;
+    const fontWeight = 500;
+    const fontFamily = 'Roboto, Arial, sans-serif';
+    const canvas = document.createElement('canvas');
+    const context = canvas.getContext('2d');
+    if (!context) return 0;
+    context.font = `${fontWeight} ${fontSizePx}px ${fontFamily}`;
+    return context.measureText(text).width;
   }
 }
