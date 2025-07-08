@@ -10,4 +10,5 @@ import { booleanAttribute, Component, input } from '@angular/core';
 export class SectionComponent {
   background = input(false, { transform: booleanAttribute });
   fullWidth = input(false, { transform: booleanAttribute });
+  noVerticalPadding = input(false, { transform: booleanAttribute });
 }

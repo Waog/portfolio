@@ -15,6 +15,10 @@ const meta: Meta<SectionComponent> = {
       control: 'boolean',
       description: 'Remove horizontal padding (set to 0)',
     },
+    noVerticalPadding: {
+      control: 'boolean',
+      description: 'Remove top and bottom padding (set to 0)',
+    },
   },
 };
 
@@ -25,7 +29,7 @@ export const Default: Story = {
   render: args => ({
     props: args,
     template: `
-      <lib-section [background]="background" [fullWidth]="fullWidth">
+      <lib-section [background]="background" [fullWidth]="fullWidth" [noVerticalPadding]="noVerticalPadding">
         <h2 style="background-color: lightblue;">Section Content</h2>
         <p style="background-color: lightgreen;">This is content projected into the section component. The section provides consistent padding and optional styling.</p>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
@@ -35,6 +39,7 @@ export const Default: Story = {
   args: {
     background: false,
     fullWidth: false,
+    noVerticalPadding: false,
   },
 };
 
@@ -64,6 +69,26 @@ export const FullWidth: Story = {
       </lib-section>
     `,
   }),
+};
+
+export const NoVerticalPadding: Story = {
+  render: args => ({
+    props: args,
+    template: `
+      <div style="background-color: #f0f0f0; padding: 20px;">
+        <p>Parent container (gray background) <code>hr</code> elements around section</p>
+        <hr style="margin: 0;" />
+        <lib-section [noVerticalPadding]="noVerticalPadding">
+        <span style="background-color: white;">This section has no top or bottom padding, allowing content to be flush with the section edges vertically.</span>
+        </lib-section>
+        <hr style="margin: 0;" />
+        <p>More content after the section</p>
+      </div>
+    `,
+  }),
+  args: {
+    noVerticalPadding: true,
+  },
 };
 
 export const BackgroundAndFullWidth: Story = {

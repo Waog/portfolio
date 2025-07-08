@@ -43,6 +43,7 @@
   .about-me-card {
     box-shadow: none;
     border-radius: 0;
+    margin-bottom: 0; // NOTE: override magic MD3 card margin
   }
 
   .main-content {

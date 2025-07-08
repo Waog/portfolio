@@ -1,14 +1,26 @@
 @use 'spacing' as spacing;
 
-.section {
-  padding: spacing.xl();
-
+.outer-container {
   &.background {
-    background-color: rgba(128, 128, 128, 0.2);
+    background-color: rgba(128, 128, 128, 0.1);
   }
 
-  &.full-width {
-    padding-left: 0;
-    padding-right: 0;
+  .inner-container {
+    margin: 0 auto;
+    padding: spacing.xl();
+
+    @media screen {
+      max-width: 1200px;
+    }
+
+    &.full-width {
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    &.no-vertical-padding {
+      padding-top: 0;
+      padding-bottom: 0;
+    }
   }
 }

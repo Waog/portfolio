@@ -1,7 +1,9 @@
-<div
-  class="section"
-  [class.background]="background()"
-  [class.full-width]="fullWidth()"
->
-  <ng-content></ng-content>
+<div class="outer-container" [class.background]="background()">
+  <div
+    class="inner-container"
+    [class.full-width]="fullWidth()"
+    [class.no-vertical-padding]="noVerticalPadding()"
+  >
+    <ng-content></ng-content>
+  </div>
 </div>
