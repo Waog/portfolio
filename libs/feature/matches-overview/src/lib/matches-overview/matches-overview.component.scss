@@ -1,9 +1,10 @@
 @use 'spacing' as spacing;
-@use 'breakpoints' as bp;
+@use 'breakpoints' as breakpoints;
 
 .container {
   display: flex;
   flex-direction: column;
+  margin-bottom: spacing.lg();
 
   @media print {
     padding-left: spacing.lg();
@@ -22,7 +23,7 @@
       word-wrap: break-word;
     }
 
-    @include bp.mobile-only {
+    @include breakpoints.mobile-only {
       grid-template-columns: max-content 1fr;
 
       .search-term {

@@ -55,28 +55,10 @@ describe('ColorChipListComponent', () => {
       component.grayItems = ['CSS', 'HTML', 'SCSS', 'Bootstrap', 'Tailwind'];
     });
 
-    it('should show all green items first', () => {
+    it('should show green items first', () => {
       const visibleItems = component.visibleItems;
-      const greenItems = visibleItems.filter(item => item.color === 'green');
-      expect(greenItems).toHaveLength(2);
-      expect(greenItems[0].text).toBe('React');
-      expect(greenItems[1].text).toBe('Angular');
-    });
-
-    it('should limit to 10 items when collapsed', () => {
-      component.showAllItems = false;
-      const visibleItems = component.visibleItems;
-      expect(visibleItems.length).toBeLessThanOrEqual(10);
-    });
-
-    it('should show minimum 6 items when possible', () => {
-      component.greenItems = ['React'];
-      component.yellowItems = ['TypeScript'];
-      component.grayItems = ['CSS', 'HTML', 'SCSS', 'Bootstrap'];
-
-      component.showAllItems = false;
-      const visibleItems = component.visibleItems;
-      expect(visibleItems.length).toBeGreaterThanOrEqual(6);
+      expect(visibleItems[0].text).toBe('React');
+      expect(visibleItems[1].text).toBe('Angular');
     });
 
     it('should show all items when expanded', () => {

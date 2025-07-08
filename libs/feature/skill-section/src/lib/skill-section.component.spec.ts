@@ -79,37 +79,45 @@ describe('SkillSectionComponent', () => {
     ]);
   });
 
-  it('should render the card title with icon', () => {
-    const cardTitle = fixture.debugElement.query(By.css('mat-card-title'));
+  it('should render the card title', () => {
+    const cardTitle = fixture.debugElement.query(By.css('lib-section-header'));
     expect(cardTitle).toBeTruthy();
-
-    const icon = cardTitle.query(By.css('mat-icon'));
-    expect(icon).toBeTruthy();
-    expect(icon.nativeElement.textContent.trim()).toBe('code');
-
     expect(cardTitle.nativeElement.textContent).toContain('Skills');
   });
 
-  it('should render all skill categories', () => {
+  it('should render all skill categories in screen mode', () => {
     const categoryElements = fixture.debugElement.queryAll(
-      By.css('.skill-category')
+      By.css('.skill-category:not(.and-more)')
     );
     expect(categoryElements.length).toBe(3);
   });
 
   it('should render category titles correctly', () => {
-    const titleElements = fixture.debugElement.queryAll(
-      By.css('.category-title h3')
+    const categoryElements = fixture.debugElement.queryAll(
+      By.css('.skill-category:not(.and-more)')
     );
-    expect(titleElements.length).toBe(3);
-    expect(titleElements[0].nativeElement.textContent.trim()).toBe('Frontend');
-    expect(titleElements[1].nativeElement.textContent.trim()).toBe('Backend');
-    expect(titleElements[2].nativeElement.textContent.trim()).toBe('Database');
+    expect(categoryElements.length).toBe(3);
+    const categoryTitles = categoryElements.map(el =>
+      el.nativeElement.textContent.trim()
+    );
+    expect(categoryTitles).toContain('Frontend:');
+    expect(categoryTitles).toContain('Backend:');
+    expect(categoryTitles).toContain('Database:');
+  });
+
+  it('should render `and more...` in print mode', () => {
+    const categoryElements = fixture.debugElement.queryAll(
+      By.css('.skill-category.and-more')
+    );
+    expect(categoryElements.length).toBe(1);
+    expect(categoryElements[0].nativeElement.textContent.trim()).toBe(
+      'and more...'
+    );
   });
 
   it('should pass keywords to keyword-list components', () => {
     const keywordListElements = fixture.debugElement.queryAll(
-      By.css('lib-keyword-list')
+      By.css('lib-keyword-list:not(.and-more)')
     );
     expect(keywordListElements.length).toBe(3);
 
@@ -120,28 +128,6 @@ describe('SkillSectionComponent', () => {
     expect(keywordListElements[2]).toBeTruthy();
   });
 
-  it('should apply correct CSS classes', () => {
-    const card = fixture.debugElement.query(By.css('.skills-card'));
-    expect(card).toBeTruthy();
-
-    const container = fixture.debugElement.query(By.css('.skills-container'));
-    expect(container).toBeTruthy();
-
-    const categoryContent = fixture.debugElement.query(
-      By.css('.skill-category-content')
-    );
-    expect(categoryContent).toBeTruthy();
-  });
-
-  it('should have subtle border separation between categories except last', () => {
-    const categories = fixture.debugElement.queryAll(By.css('.skill-category'));
-
-    // First category should have border (not last)
-    expect(categories[0].nativeElement).toBeTruthy();
-
-    // Last category should be present
-    expect(categories[categories.length - 1].nativeElement).toBeTruthy();
-  });
   describe('Service Integration', () => {
     it('should call getSkillCategories on service', () => {
       const spy = jest.spyOn(mockService, 'getSkillCategories');
@@ -152,30 +138,6 @@ describe('SkillSectionComponent', () => {
       expect(categories).toBeDefined();
       expect(categories.length).toBe(3);
       expect(spy).toHaveBeenCalled();
-    });
-  });
-
-  describe('Component Structure', () => {
-    it('should have mat-card as root element', () => {
-      const matCard = fixture.debugElement.query(By.css('mat-card'));
-      expect(matCard).toBeTruthy();
-      expect(matCard.classes['skills-card']).toBeTruthy();
-    });
-
-    it('should have proper header structure', () => {
-      const header = fixture.debugElement.query(By.css('mat-card-header'));
-      expect(header).toBeTruthy();
-
-      const title = header.query(By.css('mat-card-title'));
-      expect(title).toBeTruthy();
-    });
-
-    it('should have proper content structure', () => {
-      const content = fixture.debugElement.query(By.css('mat-card-content'));
-      expect(content).toBeTruthy();
-
-      const container = content.query(By.css('.skills-container'));
-      expect(container).toBeTruthy();
     });
   });
 });

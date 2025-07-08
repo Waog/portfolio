@@ -1,19 +1,13 @@
 import { expect, type Locator, type Page, test } from '@playwright/test';
 
 test.describe('Skills Section', () => {
-  test('displays the skills section', async ({ page }) => {
+  test('displays some categories', async ({ page }) => {
     await page.goto('/');
 
     const skillsSection = await getSkillsSection(page);
-    await expect(
-      skillsSection.getByText('Frontend', { exact: true })
-    ).toBeVisible();
-    await expect(
-      skillsSection.getByText('Backend', { exact: true })
-    ).toBeVisible();
-    await expect(
-      skillsSection.getByText('Testing and QA', { exact: true })
-    ).toBeVisible();
+    await expect(skillsSection.getByText(/^Frontend:$/)).toBeVisible();
+    await expect(skillsSection.getByText(/^Backend:$/)).toBeVisible();
+    await expect(skillsSection.getByText(/^Misc:$/)).toBeVisible();
   });
 
   test('displays frontend technologies', async ({ page }) => {
@@ -44,7 +38,7 @@ test.describe('Skills Section', () => {
 });
 
 async function getSkillsSection(page: Page): Promise<Locator> {
-  const skillsSection = page.getByText(/Skills.*General.*Frontend.*Backend/s);
+  const skillsSection = page.getByText(/Skills.*Backend.*more/s);
   await expect(skillsSection).toBeVisible();
   return skillsSection;
 }

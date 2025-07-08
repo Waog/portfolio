@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { TechnologyMatchingService } from '@portfolio/projects';
 
 export interface SkillCategory {
   title: string;
@@ -9,6 +10,8 @@ export interface SkillCategory {
   providedIn: 'root',
 })
 export class SkillSectionService {
+  constructor(private technologyMatchingService: TechnologyMatchingService) {}
+
   private readonly skillCategories: SkillCategory[] = [
     {
       title: 'General',
@@ -125,6 +128,21 @@ export class SkillSectionService {
   ];
 
   getSkillCategories(): SkillCategory[] {
-    return this.skillCategories;
+    return [...this.skillCategories].sort(
+      (catA, catB) => this.getMatchCount(catB) - this.getMatchCount(catA)
+    );
+  }
+
+  private getMatchCount(category: SkillCategory): number {
+    return category.keywords.reduce((score, keyword) => {
+      const matchType =
+        this.technologyMatchingService.getBestMatchType(keyword);
+      if (matchType === 'full') {
+        return score + 1;
+      } else if (matchType === 'indirect') {
+        return score + 0.1;
+      }
+      return score;
+    }, 0);
   }
 }

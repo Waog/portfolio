@@ -1,8 +1,19 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  HostListener,
+  Input,
+  ViewChild,
+} from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { ColorChipComponent } from '@portfolio/color-chip';
+import {
+  ColorChipComponent,
+  ColorChipDimensionsService,
+} from '@portfolio/color-chip';
 
 interface ChipItem {
   text: string;
@@ -16,12 +27,43 @@ interface ChipItem {
   templateUrl: './color-chip-list.component.html',
   styleUrl: './color-chip-list.component.scss',
 })
-export class ColorChipListComponent {
+export class ColorChipListComponent implements AfterViewInit {
   @Input() greenItems: string[] = [];
   @Input() yellowItems: string[] = [];
   @Input() grayItems: string[] = [];
 
+  @ViewChild('chipColumn', { static: false }) chipColumnRef!: ElementRef;
+
   showAllItems = false;
+  private maxItemRowWidth: number = this.calculateMaxItemRowWidth();
+
+  constructor(
+    private colorChipDimensionsService: ColorChipDimensionsService,
+    private changeDetectorRef: ChangeDetectorRef
+  ) {}
+
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      this.maxItemRowWidth = this.calculateMaxItemRowWidth();
+      this.changeDetectorRef.detectChanges();
+    });
+  }
+
+  @HostListener('window:resize')
+  onResize(): void {
+    this.maxItemRowWidth = this.calculateMaxItemRowWidth();
+  }
+
+  private calculateMaxItemRowWidth(): number {
+    if (this.chipColumnRef) {
+      const chipColumnWidth =
+        this.chipColumnRef.nativeElement.getBoundingClientRect().width;
+      if (chipColumnWidth > 0) {
+        return chipColumnWidth;
+      }
+    }
+    return window.innerWidth * 0.7; // Fallback calculation
+  }
 
   get allItems(): ChipItem[] {
     const green = this.greenItems.map(text => ({
@@ -42,64 +84,54 @@ export class ColorChipListComponent {
     return [...green, ...yellow, ...gray];
   }
 
+  getItemsWidth(items: ChipItem[]): number {
+    return items.reduce((total, item, index) => {
+      const toleranceBuffer = 1; // width calculation is not perfect, so we add a buffer
+      const gap = index > 0 ? 8 : 0; // 0.5rem is equivalent to 8px
+      return total + this.getItemWidth(item) + gap + toleranceBuffer;
+    }, 0);
+  }
+
+  getItemWidth(item: ChipItem): number {
+    return this.colorChipDimensionsService.getWidth({
+      text: item.text,
+      icon: item.icon,
+      spacing: 'large',
+    });
+  }
+
+  getItemsFittingIntoMaxWidth(items: ChipItem[]): ChipItem[] {
+    const result = [];
+    for (const item of items) {
+      if (this.getItemsWidth([...result, item]) <= this.maxItemRowWidth) {
+        result.push(item);
+      } else {
+        break;
+      }
+    }
+    return result;
+  }
+
   get visibleItems(): ChipItem[] {
     if (this.showAllItems) {
       return this.allItems;
     }
 
-    // Smart folding logic: prioritize green, then yellow, then gray
-    const green = this.allItems.filter(item => item.color === 'green');
-    const yellow = this.allItems.filter(item => item.color === 'yellow');
-    const gray = this.allItems.filter(item => item.color === 'gray');
-
-    const result = [...green]; // Always show ALL green items
-
-    // Add yellow items until we reach max 10 total
-    const remainingSlots = Math.max(0, 10 - result.length);
-    result.push(...yellow.slice(0, remainingSlots));
-
-    // If we're below minimum of 6, add gray items to reach minimum
-    if (result.length < 6) {
-      const neededToReachMin = 6 - result.length;
-      result.push(...gray.slice(0, neededToReachMin));
-    }
-
-    return result;
+    return this.getItemsFittingIntoMaxWidth(this.allItems);
   }
 
   get hiddenItemsCount(): number {
     return this.allItems.length - this.visibleItems.length;
   }
 
-  get shouldShowLessButton(): boolean {
+  get showToggleButtons(): boolean {
     return (
-      this.showAllItems && this.allItems.length > this.getCollapsedItemsCount()
+      this.allItems.length >
+      this.getItemsFittingIntoMaxWidth(this.allItems).length
     );
-  }
-
-  private getCollapsedItemsCount(): number {
-    // Simulate the collapsed logic to see how many items would be visible
-    const green = this.allItems.filter(item => item.color === 'green');
-    const yellow = this.allItems.filter(item => item.color === 'yellow');
-    const gray = this.allItems.filter(item => item.color === 'gray');
-
-    const result = [...green];
-    const remainingSlots = Math.max(0, 10 - result.length);
-    result.push(...yellow.slice(0, remainingSlots));
-
-    if (result.length < 6) {
-      const neededToReachMin = 6 - result.length;
-      result.push(...gray.slice(0, neededToReachMin));
-    }
-
-    return result.length;
   }
 
   toggleItems(): void {
     this.showAllItems = !this.showAllItems;
-  }
-
-  trackByItem(index: number, item: ChipItem): string {
-    return item.text;
   }
 }

@@ -13,6 +13,12 @@
 
 @media print {
   lib-about-me {
+    order: -3;
+  }
+  lib-matches-overview {
+    order: -2;
+  }
+  lib-skill-section {
     order: -1;
   }
 }
