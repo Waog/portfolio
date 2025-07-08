@@ -19,7 +19,7 @@ jobs:
       - name: 🔄 Checkout repository
         uses: actions/checkout@v4
 
-      - name: � Setup Nx environment
+      - name: 🔁 Setup Nx environment
         uses: ./.github/actions/setup-nx
         with:
           commit: ${{ inputs.commit }}
