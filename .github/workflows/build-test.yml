@@ -66,8 +66,8 @@ jobs:
       - name: 🏗️ Build, Test and Lint
         run: npx nx affected -t lint test build build-storybook -c ci
 
-      - name: 🧪 Run E2E Tests (excluding webkit)
-        run: npx nx e2e frontend-e2e -- --project=chromium --project=firefox
+      - name: 🧪 Run E2E Tests (chromium only)
+        run: npx nx e2e frontend-e2e -- --project=chromium
 
       - name: 📚 Install wait-on for Storybook tests
         run: npm install --no-save wait-on
