@@ -24,6 +24,9 @@ jobs:
         with:
           commit: ${{ inputs.commit }}
 
+      - name: 🎭 Setup Playwright environment
+        uses: ./.github/actions/setup-playwright
+
       - name: 📚 Install wait-on for Storybook tests
         run: npm install --no-save wait-on
 
