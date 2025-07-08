@@ -21,8 +21,6 @@ jobs:
 
       - name: 🔁 Setup Nx environment
         uses: ./.github/actions/setup-nx
-        with:
-          commit: ${{ inputs.commit }}
 
       - name: 🔍 Check SCSS Dependencies
         run: node libs/util/shared-styles/scripts/check-scss-dependencies.js

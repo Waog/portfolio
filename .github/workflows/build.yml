@@ -21,8 +21,6 @@ jobs:
 
       - name: 🔁 Setup Nx environment
         uses: ./.github/actions/setup-nx
-        with:
-          commit: ${{ inputs.commit }}
 
       - name: 🏗️ Build affected projects
         run: npx nx affected -t build build-storybook -c ci

@@ -21,8 +21,6 @@ jobs:
 
       - name: 🔁 Setup Nx environment
         uses: ./.github/actions/setup-nx
-        with:
-          commit: ${{ inputs.commit }}
 
       - name: 🎭 Setup Playwright environment
         uses: ./.github/actions/setup-playwright

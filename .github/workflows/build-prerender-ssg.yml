@@ -21,8 +21,6 @@ jobs:
 
       - name: 🔁 Setup Nx environment
         uses: ./.github/actions/setup-nx
-        with:
-          commit: ${{ inputs.commit }}
 
       - name: 🏗️ Build and pre-render (SSG) frontend for production (for deployment)
         run: npx nx prerender frontend --configuration=production
