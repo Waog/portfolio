@@ -31,4 +31,3 @@ runs:
 
     - name: 🔧 Set Nx SHAs
       uses: nrwl/nx-set-shas@v4
-      shell: bash
