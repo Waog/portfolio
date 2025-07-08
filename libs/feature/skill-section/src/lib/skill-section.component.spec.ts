@@ -87,14 +87,14 @@ describe('SkillSectionComponent', () => {
 
   it('should render all skill categories in screen mode', () => {
     const categoryElements = fixture.debugElement.queryAll(
-      By.css('.skill-category:not(.print-only)')
+      By.css('.skill-category:not(.and-more)')
     );
     expect(categoryElements.length).toBe(3);
   });
 
   it('should render category titles correctly', () => {
     const categoryElements = fixture.debugElement.queryAll(
-      By.css('.skill-category:not(.print-only)')
+      By.css('.skill-category:not(.and-more)')
     );
     expect(categoryElements.length).toBe(3);
     const categoryTitles = categoryElements.map(el =>
@@ -107,7 +107,7 @@ describe('SkillSectionComponent', () => {
 
   it('should render `and more...` in print mode', () => {
     const categoryElements = fixture.debugElement.queryAll(
-      By.css('.skill-category.print-only')
+      By.css('.skill-category.and-more')
     );
     expect(categoryElements.length).toBe(1);
     expect(categoryElements[0].nativeElement.textContent.trim()).toBe(
@@ -117,7 +117,7 @@ describe('SkillSectionComponent', () => {
 
   it('should pass keywords to keyword-list components', () => {
     const keywordListElements = fixture.debugElement.queryAll(
-      By.css('lib-keyword-list')
+      By.css('lib-keyword-list:not(.and-more)')
     );
     expect(keywordListElements.length).toBe(3);
 
