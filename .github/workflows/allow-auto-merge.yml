@@ -1,0 +1,13 @@
+# Empty job, to be referenced in the GitHub settings as a condition for auto-merge
+name: Allow Auto-Merge
+
+on:
+  workflow_call:
+
+jobs:
+  allow:
+    name: Just pass
+    runs-on: ubuntu-latest
+    steps:
+      - name: ✅ Trivial pass step
+        run: echo "This step just passes."

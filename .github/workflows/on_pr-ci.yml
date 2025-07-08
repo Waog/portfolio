@@ -41,3 +41,8 @@ jobs:
   build-prerender-ssg:
     needs: install-npm-deps
     uses: ./.github/workflows/build-prerender-ssg.yml
+
+  allow-auto-merge:
+    needs:
+      [commitlint, build, test, lint, e2e, test-storybook, build-prerender-ssg]
+    uses: ./.github/workflows/allow-auto-merge.yml
