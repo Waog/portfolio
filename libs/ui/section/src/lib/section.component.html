@@ -1,1 +1,7 @@
-<p>Section works!</p>
+<div
+  class="section"
+  [class.background]="background()"
+  [class.full-width]="fullWidth()"
+>
+  <ng-content></ng-content>
+</div>

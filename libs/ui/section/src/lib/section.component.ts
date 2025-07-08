@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { booleanAttribute, Component, input } from '@angular/core';
 
 @Component({
   selector: 'lib-section',
@@ -7,4 +7,7 @@ import { Component } from '@angular/core';
   templateUrl: './section.component.html',
   styleUrl: './section.component.scss',
 })
-export class SectionComponent {}
+export class SectionComponent {
+  background = input(false, { transform: booleanAttribute });
+  fullWidth = input(false, { transform: booleanAttribute });
+}

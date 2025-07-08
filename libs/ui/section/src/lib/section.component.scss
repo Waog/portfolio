@@ -1,0 +1,14 @@
+@use 'spacing' as spacing;
+
+.section {
+  padding: spacing.xl();
+
+  &.background {
+    background-color: rgba(128, 128, 128, 0.2);
+  }
+
+  &.full-width {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
