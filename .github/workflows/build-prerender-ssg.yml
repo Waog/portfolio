@@ -22,9 +22,6 @@ jobs:
       - name: 🔁 Setup Nx environment
         uses: ./.github/actions/setup-nx
 
-      - name: 🏗️ Build and pre-render (SSG) frontend for production (for deployment)
-        run: npx nx prerender frontend --configuration=production
-
       - name: 💾 Cache frontend build artifact
         uses: actions/cache@v4
         with:
@@ -32,3 +29,6 @@ jobs:
           key: ${{ runner.os }}-frontend-build-${{ github.sha }}
           restore-keys: |
             ${{ runner.os }}-frontend-build-
+
+      - name: 🏗️ Build and pre-render (SSG) frontend for production (for deployment)
+        run: npx nx prerender frontend --configuration=production
