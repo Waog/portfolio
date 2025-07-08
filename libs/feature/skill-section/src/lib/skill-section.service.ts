@@ -128,7 +128,7 @@ export class SkillSectionService {
   ];
 
   getSkillCategories(): SkillCategory[] {
-    return this.skillCategories.sort(
+    return [...this.skillCategories].sort(
       (catA, catB) => this.getMatchCount(catB) - this.getMatchCount(catA)
     );
   }
