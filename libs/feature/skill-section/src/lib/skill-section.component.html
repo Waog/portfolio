@@ -3,12 +3,20 @@
 
   <div class="grid">
     @for (category of skillCategories; track category.title) {
-    <span class="skill-category">{{ category.title }}:</span>
+    <span class="skill-category" #categoryRef>{{ category.title }}:</span>
 
-    <lib-keyword-list
-      class="skill-category-content"
-      [keywords]="category.keywords"
-    />
+    <div class="skill-category-content-container" #keywordListRef>
+      <lib-keyword-list
+        class="skill-category-content"
+        [keywords]="category.keywords"
+      />
+    </div>
     }
+
+    <span class="skill-category print-only and-more">and more...</span>
+    <lib-keyword-list
+      class="skill-category-content print-only and-more spacer"
+      [keywords]="['Spacer']"
+    />
   </div>
 </div>

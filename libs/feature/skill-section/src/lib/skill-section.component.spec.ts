@@ -85,16 +85,16 @@ describe('SkillSectionComponent', () => {
     expect(cardTitle.nativeElement.textContent).toContain('Skills');
   });
 
-  it('should render all skill categories', () => {
+  it('should render all skill categories in screen mode', () => {
     const categoryElements = fixture.debugElement.queryAll(
-      By.css('.skill-category')
+      By.css('.skill-category:not(.print-only)')
     );
     expect(categoryElements.length).toBe(3);
   });
 
   it('should render category titles correctly', () => {
     const categoryElements = fixture.debugElement.queryAll(
-      By.css('.skill-category')
+      By.css('.skill-category:not(.print-only)')
     );
     expect(categoryElements.length).toBe(3);
     const categoryTitles = categoryElements.map(el =>
@@ -103,6 +103,16 @@ describe('SkillSectionComponent', () => {
     expect(categoryTitles).toContain('Frontend:');
     expect(categoryTitles).toContain('Backend:');
     expect(categoryTitles).toContain('Database:');
+  });
+
+  it('should render `and more...` in print mode', () => {
+    const categoryElements = fixture.debugElement.queryAll(
+      By.css('.skill-category.print-only')
+    );
+    expect(categoryElements.length).toBe(1);
+    expect(categoryElements[0].nativeElement.textContent.trim()).toBe(
+      'and more...'
+    );
   });
 
   it('should pass keywords to keyword-list components', () => {

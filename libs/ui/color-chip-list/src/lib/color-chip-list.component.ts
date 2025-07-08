@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
 import {
-  AfterViewChecked,
   AfterViewInit,
   ChangeDetectorRef,
   Component,
@@ -28,17 +27,15 @@ interface ChipItem {
   templateUrl: './color-chip-list.component.html',
   styleUrl: './color-chip-list.component.scss',
 })
-export class ColorChipListComponent implements AfterViewInit, AfterViewChecked {
+export class ColorChipListComponent implements AfterViewInit {
   @Input() greenItems: string[] = [];
   @Input() yellowItems: string[] = [];
   @Input() grayItems: string[] = [];
 
-  @ViewChild('container', { static: false }) containerRef!: ElementRef;
-  @ViewChild('toggleColumn', { static: false }) toggleColumnRef!: ElementRef;
   @ViewChild('chipColumn', { static: false }) chipColumnRef!: ElementRef;
 
   showAllItems = false;
-  private maxItemWidth: number = this.calculateMaxItemRowWidth();
+  private maxItemRowWidth: number = this.calculateMaxItemRowWidth();
 
   constructor(
     private colorChipDimensionsService: ColorChipDimensionsService,
@@ -46,43 +43,26 @@ export class ColorChipListComponent implements AfterViewInit, AfterViewChecked {
   ) {}
 
   ngAfterViewInit(): void {
-    this.maxItemWidth = this.calculateMaxItemRowWidth();
-  }
-
-  ngAfterViewChecked(): void {
-    this.maxItemWidth = this.calculateMaxItemRowWidth();
-    this.changeDetectorRef.detectChanges();
+    setTimeout(() => {
+      this.maxItemRowWidth = this.calculateMaxItemRowWidth();
+      this.changeDetectorRef.detectChanges();
+    });
   }
 
   @HostListener('window:resize')
   onResize(): void {
-    this.maxItemWidth = this.calculateMaxItemRowWidth();
+    this.maxItemRowWidth = this.calculateMaxItemRowWidth();
   }
 
   private calculateMaxItemRowWidth(): number {
-    if (this.containerRef) {
-      const containerWidth =
-        this.containerRef.nativeElement.getBoundingClientRect().width;
-      if (containerWidth > 0) {
-        console.log({ containerWidth, first: this.allItems[0].text });
-      }
-    }
-    if (this.toggleColumnRef) {
-      const toggleColumnWidth =
-        this.toggleColumnRef.nativeElement.getBoundingClientRect().width;
-      if (toggleColumnWidth > 0) {
-        console.log({ toggleColumnWidth, first: this.allItems[0].text });
-      }
-    }
     if (this.chipColumnRef) {
       const chipColumnWidth =
         this.chipColumnRef.nativeElement.getBoundingClientRect().width;
       if (chipColumnWidth > 0) {
-        console.log({ chipColumnWidth, first: this.allItems[0].text });
         return chipColumnWidth;
       }
     }
-    return window.innerWidth * 0.5; // Fallback calculation
+    return window.innerWidth * 0.7; // Fallback calculation
   }
 
   get allItems(): ChipItem[] {
@@ -123,7 +103,7 @@ export class ColorChipListComponent implements AfterViewInit, AfterViewChecked {
   getItemsFittingIntoMaxWidth(items: ChipItem[]): ChipItem[] {
     const result = [];
     for (const item of items) {
-      if (this.getItemsWidth([...result, item]) <= this.maxItemWidth) {
+      if (this.getItemsWidth([...result, item]) <= this.maxItemRowWidth) {
         result.push(item);
       } else {
         break;

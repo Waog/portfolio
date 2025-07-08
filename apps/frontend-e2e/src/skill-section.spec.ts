@@ -38,7 +38,7 @@ test.describe('Skills Section', () => {
 });
 
 async function getSkillsSection(page: Page): Promise<Locator> {
-  const skillsSection = page.getByText(/Skills.*General.*Frontend.*Backend/s);
+  const skillsSection = page.getByText(/Skills.*Backend.*more/s);
   await expect(skillsSection).toBeVisible();
   return skillsSection;
 }

@@ -20,13 +20,28 @@
     display: grid;
     gap: spacing.md();
     grid-template-columns: max-content 1fr;
-    align-items: center;
+    align-items: stretch;
 
     .skill-category {
       max-width: 20vw;
       font-weight: 500;
       color: var(--text-primary, #333);
       word-wrap: break-word;
+    }
+
+    .skill-category-content-container,
+    .skill-category {
+      height: 100%;
+      display: flex;
+      align-items: center;
+    }
+
+    .skill-category-content {
+      width: 100%;
+    }
+
+    .and-more.spacer {
+      visibility: hidden;
     }
 
     @include breakpoints.mobile-only {

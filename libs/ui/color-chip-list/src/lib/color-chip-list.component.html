@@ -1,4 +1,4 @@
-<div class="container" #container>
+<div class="container">
   <div class="chip-column" #chipColumn>
     @for ( item of visibleItems; track item.text) {
     <lib-color-chip
@@ -11,7 +11,7 @@
     }
   </div>
 
-  <div class="toggle-button-column" #toggleColumn>
+  <div class="toggle-button-column">
     @if (showToggleButtons) {
     <button
       mat-button
