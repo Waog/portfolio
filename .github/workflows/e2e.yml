@@ -1,4 +1,4 @@
-name: Build and Test
+name: E2E Tests
 
 on:
   workflow_call:
@@ -12,8 +12,8 @@ env:
   NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
 
 jobs:
-  build-and-test:
-    name: Build and Test
+  e2e:
+    name: E2E Tests
     runs-on: ubuntu-latest
     steps:
       - name: 🔄 Checkout repository
@@ -55,45 +55,5 @@ jobs:
       - name: 🔧 Set Nx SHAs
         uses: nrwl/nx-set-shas@v4
 
-      - name: 🔍 Check SCSS Dependencies
-        run: node libs/util/shared-styles/scripts/check-scss-dependencies.js
-
-      # Prepend any command with "nx-cloud record --" to record its logs to Nx Cloud
-      # - run: npx nx-cloud record -- echo Hello World
-      # Nx Affected runs only tasks affected by the changes in this PR/commit. Learn more: https://nx.dev/ci/features/affected
-      # When you enable task distribution, run the e2e-ci task instead of e2e
-
-      - name: 🏗️ Build, Test and Lint
-        run: npx nx affected -t lint test build build-storybook -c ci
-
       - name: 🧪 Run E2E Tests (chromium only)
         run: npx nx e2e frontend-e2e -- --project=chromium
-
-      - name: 📚 Install wait-on for Storybook tests
-        run: npm install --no-save wait-on
-
-      - name: 📖 Test Storybook
-        run: |
-          # Start static Storybook server in background on port 6006
-          npx nx static-storybook frontend --configuration=ci --port=6006 &
-          STORYBOOK_PID=$!
-
-          # Wait for Storybook to be ready
-          npx wait-on http://localhost:6006 --timeout 60000
-
-          # Run Storybook tests
-          npx nx test-storybook frontend --url=http://localhost:6006
-
-          # Stop Storybook server
-          kill $STORYBOOK_PID || true
-
-      - name: 💾 Cache frontend build artifact
-        uses: actions/cache@v4
-        with:
-          path: dist/apps/frontend/browser
-          key: ${{ runner.os }}-frontend-build-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-frontend-build-
-
-      - name: 🏗️ Build and pre-render (SSG) frontend for production (for deployment)
-        run: npx nx prerender frontend --configuration=production

@@ -23,10 +23,31 @@ jobs:
     needs: install-npm-deps
     uses: ./.github/workflows/commitlint-since-last-commit.yml
 
-  build-and-test:
-    needs: [install-npm-deps, install-playwright]
-    uses: ./.github/workflows/build-test.yml
+  build:
+    needs: install-npm-deps
+    uses: ./.github/workflows/build.yml
+
+  test:
+    needs: install-npm-deps
+    uses: ./.github/workflows/test.yml
+
+  lint:
+    needs: install-npm-deps
+    uses: ./.github/workflows/lint.yml
+
+  e2e:
+    needs: install-playwright
+    uses: ./.github/workflows/e2e.yml
+
+  test-storybook:
+    needs: install-npm-deps
+    uses: ./.github/workflows/test-storybook.yml
+
+  build-prerender-ssg:
+    needs: [build, test, lint, e2e, test-storybook]
+    uses: ./.github/workflows/build-prerender-ssg.yml
 
   publish-to-gh-pages:
-    needs: build-and-test
+    needs:
+      [commitlint, build, test, lint, e2e, test-storybook, build-prerender-ssg]
     uses: ./.github/workflows/publish-to-gh-pages.yml

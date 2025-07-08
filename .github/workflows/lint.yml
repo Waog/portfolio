@@ -1,0 +1,46 @@
+name: Lint
+
+on:
+  workflow_call:
+    inputs:
+      commit:
+        description: 'The commit to checkout'
+        required: false
+        type: string
+
+env:
+  NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🔄 Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.commit || github.sha }}
+          fetch-depth: 0
+
+      - name: 🟢 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: 💾 Restore Cached npm dependencies
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-npm-deps-${{ hashFiles('package-lock.json', '.github/workflows/install-npm-deps.yml') }}
+          restore-keys: |
+            ${{ runner.os }}-npm-deps-
+          fail-on-cache-miss: true
+
+      - name: 🔧 Set Nx SHAs
+        uses: nrwl/nx-set-shas@v4
+
+      - name: 🔍 Check SCSS Dependencies
+        run: node libs/util/shared-styles/scripts/check-scss-dependencies.js
+
+      - name: 🔍 Lint affected projects
+        run: npx nx affected -t lint -c ci
