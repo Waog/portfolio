@@ -1,11 +1,13 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, isPlatformServer } from '@angular/common';
 import {
   AfterViewInit,
   ChangeDetectorRef,
   Component,
   ElementRef,
   HostListener,
+  Inject,
   Input,
+  PLATFORM_ID,
   ViewChild,
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
@@ -35,12 +37,15 @@ export class ColorChipListComponent implements AfterViewInit {
   @ViewChild('chipColumn', { static: false }) chipColumnRef!: ElementRef;
 
   showAllItems = false;
-  private maxItemRowWidth: number = this.calculateMaxItemRowWidth();
+  private maxItemRowWidth = 1000;
 
   constructor(
+    @Inject(PLATFORM_ID) private platformId: object,
     private colorChipDimensionsService: ColorChipDimensionsService,
     private changeDetectorRef: ChangeDetectorRef
-  ) {}
+  ) {
+    this.maxItemRowWidth = this.calculateMaxItemRowWidth();
+  }
 
   ngAfterViewInit(): void {
     setTimeout(() => {
@@ -55,6 +60,9 @@ export class ColorChipListComponent implements AfterViewInit {
   }
 
   private calculateMaxItemRowWidth(): number {
+    if (isPlatformServer(this.platformId)) {
+      return 1000; // Fallback for SSR without window
+    }
     if (this.chipColumnRef) {
       const chipColumnWidth =
         this.chipColumnRef.nativeElement.getBoundingClientRect().width;

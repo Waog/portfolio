@@ -1,10 +1,12 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import {
   AfterViewInit,
   Component,
   ElementRef,
   HostListener,
+  Inject,
   inject,
+  PLATFORM_ID,
   QueryList,
   Renderer2,
   ViewChildren,
@@ -41,6 +43,8 @@ export class SkillSectionComponent implements AfterViewInit {
 
   skillCategories: SkillCategory[] =
     this.skillSectionService.getSkillCategories();
+
+  constructor(@Inject(PLATFORM_ID) private platformId: object) {}
 
   ngAfterViewInit(): void {
     setTimeout(() => {
@@ -81,6 +85,10 @@ export class SkillSectionComponent implements AfterViewInit {
   }
 
   private hideAllInPrintIfAnyOutsidePage1(rows: ElementRef[]) {
+    if (!isPlatformBrowser(this.platformId)) {
+      return;
+    }
+
     const anyOutsidePage1 = rows.some(row => !this.isOnPage1(row));
     if (anyOutsidePage1) {
       rows.forEach(row =>

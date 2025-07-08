@@ -94,7 +94,7 @@ async function expectCalculatedWithEqRenderedWidth(
   canvasElement: HTMLElement,
   colorChipInputs: ColorChipInputs
 ) {
-  const service = new ColorChipDimensionsService();
+  const service = new ColorChipDimensionsService('browser' as any);
   const calculatedWidth = service.getWidth(colorChipInputs);
 
   const chipElement = canvasElement.querySelector('.color-chip') as HTMLElement;
