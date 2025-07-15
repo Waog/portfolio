@@ -8,12 +8,10 @@
   <div>
     <!-- Compact Content (Collapsed State) -->
     <section *ngIf="!showExpandedContent" class="compact-content">
-      <article class="compact-description">
-        <p>
-          {{ project().compactDescription }}
-          <span class="key-achievements"> {{ project().keyAchievements }}</span>
-        </p>
-      </article>
+      <div class="compact-description">
+        {{ project().compactDescription }}
+      </div>
+      <div class="key-achievements">{{ project().keyAchievements }}</div>
 
       <nav class="content-toggle screen-only">
         <button
@@ -30,17 +28,10 @@
 
     <!-- Expanded Content (Full State) -->
     <section *ngIf="showExpandedContent" class="expanded-content">
-      <article class="description-section">
-        <p>
-          {{ project().fullDescription }}
-        </p>
-      </article>
+      <div class="expanded-description">{{ project().fullDescription }}</div>
 
       <section class="features-section">
-        <h4>
-          <mat-icon>check_circle</mat-icon>
-          Key Features
-        </h4>
+        <h4>Key Features</h4>
         <mat-list dense>
           <mat-list-item *ngFor="let feature of project().features">
             <mat-icon matListItemIcon color="primary">check</mat-icon>
@@ -50,10 +41,7 @@
       </section>
 
       <section class="highlights-section">
-        <h4>
-          <mat-icon>star</mat-icon>
-          Highlights
-        </h4>
+        <h4>Highlights</h4>
         <mat-list dense>
           <mat-list-item *ngFor="let highlight of project().highlights">
             <mat-icon matListItemIcon color="accent">star</mat-icon>
@@ -79,8 +67,6 @@
 
     <lib-project-item-meta-tiles [project]="project()" />
 
-    <footer class="technologies-section">
-      <lib-keyword-list [keywords]="project().technologies"> </lib-keyword-list>
-    </footer>
+    <lib-keyword-list [keywords]="project().technologies"> </lib-keyword-list>
   </div>
 </div>
