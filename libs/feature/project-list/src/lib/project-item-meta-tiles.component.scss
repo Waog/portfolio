@@ -1,19 +1,38 @@
 @use 'spacing' as spacing;
 @use 'breakpoints' as bp;
 
+$show-debug-colors: true;
+
+@if $show-debug-colors {
+  .meta-tiles {
+    background-color: red;
+    .meta-tile {
+      background-color: orange;
+      mat-icon,
+      .tile-content {
+        background-color: yellow;
+        .primary-text,
+        .secondary-text {
+          background-color: green;
+        }
+      }
+    }
+  }
+}
+
 .meta-tiles {
-  display: flex;
-  flex-wrap: nowrap;
+  display: grid;
   gap: spacing.md();
+  grid-template-columns: 1fr max-content max-content 1fr;
+
+  @include bp.mobile-only {
+    grid-template-columns: 1fr;
+  }
 
   .meta-tile {
     display: flex;
     align-items: flex-start;
     gap: spacing.sm();
-    padding: 0;
-    flex: 1 1 auto;
-    // min-width: 15%;
-    max-width: 40%;
 
     mat-icon {
       color: rgba(0, 0, 0, 0.6);
@@ -21,54 +40,24 @@
     }
 
     .tile-content {
-      flex: 1;
-      min-width: 0;
-
-      .primary-text,
-      .secondary-text {
-        display: inline-block;
-      }
-
       .primary-text {
         font-weight: 500;
         font-size: 0.875rem;
         line-height: 1.3;
         color: rgba(0, 0, 0, 0.87);
         margin-bottom: spacing.xs();
+
+        @include bp.mobile-only {
+          font-size: 0.8rem;
+        }
       }
 
       .secondary-text {
         font-size: 0.8rem;
         color: rgba(0, 0, 0, 0.6);
         line-height: 1.2;
-      }
 
-      .allow-text-wrap {
-        word-break: break-word;
-      }
-
-      .forbid-text-wrap {
-        white-space: nowrap;
-      }
-    }
-  }
-}
-
-// Responsive design
-@include bp.mobile-only {
-  .meta-tiles {
-    flex-wrap: wrap;
-
-    .meta-tile {
-      flex: 1 1 100%;
-      padding: spacing.sm();
-
-      .tile-content {
-        .primary-text {
-          font-size: 0.8rem;
-        }
-
-        .secondary-text {
+        @include bp.mobile-only {
           font-size: 0.75rem;
         }
       }
