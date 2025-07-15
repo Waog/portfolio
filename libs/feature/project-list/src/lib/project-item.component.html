@@ -1,6 +1,6 @@
 <div class="project-card no-page-break" [class.top-project]="isTopProject()">
   <header class="header-content">
-    <h3>{{ project().title }}</h3>
+    <h3 [class.compact]="compact()">{{ project().title }}</h3>
     <mat-chip color="accent" highlighted class="project-type-chip">
       {{ project().projectType }}
     </mat-chip>
@@ -11,7 +11,9 @@
       <div class="compact-description">
         {{ project().compactDescription }}
       </div>
-      <div class="key-achievements">{{ project().keyAchievements }}</div>
+      <div class="key-achievements" [class.compact]="compact()">
+        {{ project().keyAchievements }}
+      </div>
 
       <nav class="content-toggle screen-only">
         <button
@@ -65,7 +67,10 @@
       </nav>
     </section>
 
-    <lib-project-item-meta-tiles [project]="project()" />
+    <lib-project-item-meta-tiles
+      [project]="project()"
+      [compact]="compact() && !showExpandedContent"
+    />
 
     <lib-keyword-list [keywords]="project().technologies" />
   </div>

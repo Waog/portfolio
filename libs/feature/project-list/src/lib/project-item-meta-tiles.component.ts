@@ -11,4 +11,5 @@ import { Project } from '@portfolio/projects';
 })
 export class ProjectItemMetaTilesComponent {
   project = input.required<Project>();
+  compact = input<boolean>(false);
 }

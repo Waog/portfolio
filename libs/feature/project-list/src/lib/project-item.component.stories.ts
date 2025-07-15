@@ -103,6 +103,12 @@ const meta: Meta<ProjectItemComponent> = {
         defaultValue: { summary: 'false' },
       },
     },
+    compact: {
+      control: 'boolean',
+      table: {
+        type: { summary: 'boolean' },
+      },
+    },
   },
 };
 
@@ -159,6 +165,7 @@ export const Default: Story = {
   args: {
     project: mockProject,
     isTopProject: false,
+    compact: false,
   },
   parameters: {
     docs: {
@@ -275,5 +282,13 @@ export const AsTopProject: Story = {
           'Project item displayed as a top project with special styling and matching search tags.',
       },
     },
+  },
+};
+
+export const Compact: Story = {
+  args: {
+    project: mockProject,
+    isTopProject: false,
+    compact: true,
   },
 };

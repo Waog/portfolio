@@ -14,6 +14,12 @@ const meta: Meta<ProjectItemMetaTilesComponent> = {
         type: { summary: 'Project' },
       },
     },
+    compact: {
+      control: 'boolean',
+      table: {
+        type: { summary: 'boolean' },
+      },
+    },
   },
 };
 
@@ -35,6 +41,7 @@ const mockProject: Project = {
 export const Default: Story = {
   args: {
     project: mockProject,
+    compact: false,
   },
 };
 
@@ -51,5 +58,12 @@ export const LongerTexts: Story = {
       company: 'FinTech Startup in Accelerator Phase',
       industry: 'FinTech',
     },
+  },
+};
+
+export const CompactMode: Story = {
+  args: {
+    project: mockProject,
+    compact: true,
   },
 };

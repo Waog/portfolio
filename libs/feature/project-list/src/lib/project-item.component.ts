@@ -30,6 +30,7 @@ import { ProjectItemMetaTilesComponent } from './project-item-meta-tiles.compone
 export class ProjectItemComponent {
   project = input.required<Project>();
   isTopProject = input<boolean>(false);
+  compact = input<boolean>(false);
 
   showExpandedContent = false;
 

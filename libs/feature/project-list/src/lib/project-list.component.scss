@@ -40,4 +40,10 @@ lib-project-item {
     page-break-after: always;
     break-after: page;
   }
+
+  .all-projects-list {
+    lib-project-item {
+      margin-bottom: spacing.lg();
+    }
+  }
 }

@@ -21,6 +21,10 @@
     gap: spacing.md();
     margin-bottom: spacing.md();
 
+    h3.compact {
+      margin: 0;
+    }
+
     @include breakpoints.mobile-only {
       flex-direction: column;
       align-items: flex-start;
@@ -44,6 +48,10 @@
       margin-bottom: spacing.md();
       color: rgba(0, 0, 0, 0.7);
       font-style: italic;
+    }
+
+    .key-achievements.compact {
+      display: none;
     }
   }
 
