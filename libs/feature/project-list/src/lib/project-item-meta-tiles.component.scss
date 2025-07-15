@@ -1,4 +1,5 @@
-@use 'libs/util/shared-styles/src/lib/spacing' as spacing;
+@use 'spacing' as spacing;
+@use 'breakpoints' as bp;
 
 .meta-tiles {
   display: grid;
@@ -40,20 +41,13 @@
 }
 
 // Responsive design
-@media (max-width: 768px) {
-  .meta-tiles {
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: spacing.sm();
-  }
-}
-
-@media (max-width: 480px) {
+@include bp.mobile-only {
   .meta-tiles {
     grid-template-columns: 1fr;
-    gap: spacing.xs();
+    gap: spacing.sm();
 
     .meta-tile {
-      padding: spacing.xs();
+      padding: spacing.sm();
 
       .tile-content {
         .primary-text {
