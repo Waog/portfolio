@@ -1,34 +1,31 @@
+@use 'spacing' as spacing;
+
 .project-card {
-  // margin-bottom: 0; // NOTE: override magic MD3 card margin
-  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-
-  &:hover {
-    transform: translateY(-2px);
-  }
-
   &.top-project {
+    margin-left: calc(-1 * spacing.md());
+    padding-left: calc(spacing.md() - 4px);
     border-left: 4px solid #28a745;
   }
-}
 
-.header-content {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  gap: 1rem;
+  .header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    gap: 1rem;
 
-  .project-type-chip {
-    flex-shrink: 0;
+    .project-type-chip {
+      flex-shrink: 0;
+    }
   }
-}
 
-.description-section {
-  margin-bottom: 1.5rem;
+  .description-section {
+    margin-bottom: 1.5rem;
 
-  p {
-    line-height: 1.6;
-    margin: 0;
+    p {
+      line-height: 1.6;
+      margin: 0;
+    }
   }
 }
 
@@ -53,13 +50,6 @@
   margin-top: 1.5rem;
 }
 
-// Custom styling for more subtle dividers
-mat-divider {
-  opacity: 0.6;
-  margin: 1.5rem 0 0 0;
-}
-
-// Content toggle functionality
 .compact-content {
   .compact-description {
     margin-bottom: 1rem;
@@ -119,8 +109,4 @@ mat-divider {
       align-self: flex-start;
     }
   }
-}
-
-@media (max-width: 480px) {
-  // No specific styles needed at this breakpoint
 }

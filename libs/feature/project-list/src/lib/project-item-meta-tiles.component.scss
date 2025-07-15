@@ -1,7 +1,7 @@
 @use 'spacing' as spacing;
 @use 'breakpoints' as bp;
 
-$show-debug-colors: true;
+$show-debug-colors: false;
 
 @if $show-debug-colors {
   .meta-tiles {
