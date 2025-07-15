@@ -4,13 +4,20 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { Project, ProjectService } from '@portfolio/projects';
 import { SearchTagService } from '@portfolio/search-tags';
+import { SectionHeaderComponent } from '@portfolio/section-header';
 import { Subject, takeUntil } from 'rxjs';
 
 import { ProjectItemComponent } from './project-item.component';
 
 @Component({
   selector: 'lib-project-list',
-  imports: [CommonModule, ProjectItemComponent, MatButtonModule, MatIconModule],
+  imports: [
+    CommonModule,
+    ProjectItemComponent,
+    MatButtonModule,
+    MatIconModule,
+    SectionHeaderComponent,
+  ],
   templateUrl: './project-list.component.html',
   styleUrl: './project-list.component.scss',
 })

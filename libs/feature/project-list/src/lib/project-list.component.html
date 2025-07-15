@@ -2,7 +2,7 @@
   <!-- Top matching projects section -->
   @if (topProjects.length > 0) {
   <section class="top-projects-section">
-    <h3>Top Matching Projects</h3>
+    <lib-section-header text="Top Matching Projects" />
     <lib-project-item
       *ngFor="let project of topProjects; trackBy: trackByProjectId"
       [project]="project"
@@ -27,9 +27,9 @@
   } @if (showAllProjects || topProjects.length === 0) {
   <main class="projects-list">
     @if (topProjects.length > 0) {
-    <h3>All Projects</h3>
+    <lib-section-header text="All Projects" />
     } @else {
-    <h3>My Projects</h3>
+    <lib-section-header text="My Projects" />
     }
     <lib-project-item
       *ngFor="let project of projectService.getAll(); trackBy: trackByProjectId"
