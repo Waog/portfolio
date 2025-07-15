@@ -1,4 +1,5 @@
 @use 'nav-scroll-spacer' as *;
+@use 'breakpoints' as breakpoints;
 
 .projects-container {
   @include nav-scroll-spacer();
@@ -7,32 +8,6 @@
 
 .top-projects-section {
   margin-bottom: 3rem;
-
-  h3 {
-    font-size: 1.75rem;
-    color: #333;
-    margin-bottom: 1.5rem;
-    font-weight: 400;
-    text-align: center;
-  }
-
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-
-.projects-list {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-
-  h3 {
-    font-size: 1.75rem;
-    color: #333;
-    margin-bottom: 1.5rem;
-    font-weight: 400;
-    text-align: center;
-  }
 }
 
 .all-projects-toggle {
@@ -54,18 +29,9 @@
   }
 }
 
-@media (max-width: 768px) {
-  .top-projects-section {
-    margin-bottom: 2rem;
-
-    h3 {
-      font-size: 1.5rem;
-    }
-  }
-
-  .projects-list {
-    h3 {
-      font-size: 1.5rem;
-    }
+@media print {
+  .page-break-after {
+    page-break-after: always;
+    break-after: page;
   }
 }

@@ -1,5 +1,5 @@
 .project-card {
-  margin-bottom: 1.5rem;
+  // margin-bottom: 0; // NOTE: override magic MD3 card margin
   transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 
   &:hover {

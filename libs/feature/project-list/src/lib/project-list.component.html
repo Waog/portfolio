@@ -1,7 +1,7 @@
 <section id="projects" class="projects-container">
   <!-- Top matching projects section -->
   @if (topProjects.length > 0) {
-  <section class="top-projects-section">
+  <section class="top-projects-section page-break-after">
     <lib-section-header text="Top Matching Projects" />
     <lib-project-item
       *ngFor="let project of topProjects; trackBy: trackByProjectId"
@@ -18,14 +18,14 @@
       mat-button
       color="primary"
       (click)="toggleAllProjects()"
-      class="toggle-button"
+      class="toggle-button screen-only"
     >
       <mat-icon>{{ showAllProjects ? 'expand_less' : 'expand_more' }}</mat-icon>
       {{ showAllProjects ? 'Hide All Projects' : 'Show All Projects' }}
     </button>
   </section>
   } @if (showAllProjects || topProjects.length === 0) {
-  <main class="projects-list">
+  <main class="all-projects-list">
     @if (topProjects.length > 0) {
     <lib-section-header text="All Projects" />
     } @else {
