@@ -2,17 +2,19 @@
 @use 'breakpoints' as bp;
 
 .meta-tiles {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  display: flex;
+  flex-wrap: nowrap;
   gap: spacing.md();
-  margin-top: spacing.lg();
-  margin-bottom: spacing.sm();
+  background-color: red;
 
   .meta-tile {
     display: flex;
     align-items: center;
     gap: spacing.sm();
-    padding: spacing.sm();
+    padding: 0;
+    flex: 1 1 auto;
+    max-width: 40%;
+    background-color: orange;
 
     mat-icon {
       color: rgba(0, 0, 0, 0.6);
@@ -22,19 +24,32 @@
     .tile-content {
       flex: 1;
       min-width: 0;
+      background-color: yellow;
 
       .primary-text {
         font-weight: 500;
         font-size: 0.875rem;
         line-height: 1.3;
         color: rgba(0, 0, 0, 0.87);
+        margin-bottom: spacing.xs();
+        background-color: green;
       }
 
       .secondary-text {
         font-size: 0.8rem;
         color: rgba(0, 0, 0, 0.6);
         line-height: 1.2;
-        margin-top: spacing.xs();
+      }
+
+      .allow-text-wrap {
+        display: inline-block;
+        word-break: break-word;
+      }
+
+      .forbid-text-wrap {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
     }
   }
@@ -43,10 +58,10 @@
 // Responsive design
 @include bp.mobile-only {
   .meta-tiles {
-    grid-template-columns: 1fr;
-    gap: spacing.sm();
+    flex-wrap: wrap;
 
     .meta-tile {
+      flex: 1 1 100%;
       padding: spacing.sm();
 
       .tile-content {

@@ -22,14 +22,14 @@ type Story = StoryObj<ProjectItemMetaTilesComponent>;
 
 const mockProject: Project = {
   ...({} as Project),
-  role: 'Full-Stack Developer',
-  team: 'Solo Project',
-  fromTo: 'Jan 2024 - Present',
-  duration: '6+ months',
-  location: 'Berlin, Germany',
+  role: 'Project Manager & Full-Stack Developer',
+  team: 'Solo development',
+  fromTo: '08/2023 – Present',
+  duration: '1 year 10 months',
+  location: 'Remote',
   workMode: 'Remote',
-  company: 'Personal Project',
-  industry: 'Technology',
+  company: 'Oliver Stadie IT GmbH',
+  industry: 'Education Technology',
 };
 
 export const Default: Story = {
@@ -38,34 +38,18 @@ export const Default: Story = {
   },
 };
 
-export const RemoteWork: Story = {
+export const LongerTexts: Story = {
   args: {
     project: {
       ...mockProject,
-      role: 'Senior Frontend Developer',
+      role: 'Senior Frontend Web and App Developer',
       team: 'Cross-functional Team (5 members)',
       fromTo: 'Mar 2023 - Dec 2023',
       duration: '10 months',
       location: 'Multiple Cities',
       workMode: 'Hybrid',
-      company: 'Tech Startup',
+      company: 'FinTech Startup in Accelerator Phase',
       industry: 'FinTech',
-    },
-  },
-};
-
-export const ConsultingProject: Story = {
-  args: {
-    project: {
-      ...mockProject,
-      role: 'Technical Consultant',
-      team: 'Client Team + External Consultants',
-      fromTo: 'Jun 2022 - Feb 2023',
-      duration: '9 months',
-      location: 'Frankfurt, Germany',
-      workMode: 'On-site',
-      company: 'Large Enterprise Client',
-      industry: 'Banking & Finance',
     },
   },
 };
