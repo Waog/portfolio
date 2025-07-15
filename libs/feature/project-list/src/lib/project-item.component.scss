@@ -13,12 +13,13 @@
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    gap: 1rem;
+    gap: spacing.md();
+    margin-bottom: spacing.md();
 
     @include breakpoints.mobile-only {
       flex-direction: column;
       align-items: flex-start;
-      gap: 0.75rem;
+      gap: 0;
     }
 
     .project-type-chip {
@@ -30,7 +31,12 @@
   }
 
   .compact-content {
+    .compact-description {
+      margin-bottom: spacing.md();
+    }
+
     .key-achievements {
+      margin-bottom: spacing.md();
       color: rgba(0, 0, 0, 0.7);
       font-style: italic;
     }
@@ -45,6 +51,11 @@
     .highlights-section {
       margin-bottom: 1.5rem;
     }
+  }
+
+  lib-project-item-meta-tiles {
+    display: block;
+    margin-bottom: spacing.md();
   }
 
   .content-toggle {

@@ -1,5 +1,6 @@
 @use 'nav-scroll-spacer' as *;
 @use 'breakpoints' as breakpoints;
+@use 'spacing' as spacing;
 
 .projects-container {
   @include nav-scroll-spacer();
@@ -12,12 +13,12 @@
 
 lib-project-item {
   display: block;
-  margin-bottom: 2rem;
+  margin-bottom: spacing.xl();
 }
 
 .all-projects-toggle {
   text-align: center;
-  margin-bottom: 2rem;
+  margin-bottom: spacing.xl();
 
   .toggle-button {
     display: inline-flex;
