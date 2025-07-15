@@ -1,0 +1,33 @@
+<aside class="meta-tiles">
+  <section class="meta-tile">
+    <mat-icon>person</mat-icon>
+    <div class="tile-content">
+      <div class="primary-text">{{ project().role }}</div>
+      <div class="secondary-text">{{ project().team }}</div>
+    </div>
+  </section>
+
+  <section class="meta-tile">
+    <mat-icon>schedule</mat-icon>
+    <div class="tile-content">
+      <div class="primary-text">{{ project().fromTo }}</div>
+      <div class="secondary-text">{{ project().duration }}</div>
+    </div>
+  </section>
+
+  <section class="meta-tile">
+    <mat-icon>location_on</mat-icon>
+    <div class="tile-content">
+      <div class="primary-text">{{ project().workMode }}</div>
+      <div class="secondary-text">{{ project().location }}</div>
+    </div>
+  </section>
+
+  <section class="meta-tile">
+    <mat-icon>business</mat-icon>
+    <div class="tile-content">
+      <div class="primary-text">{{ project().company }}</div>
+      <div class="secondary-text">{{ project().industry }}</div>
+    </div>
+  </section>
+</aside>
