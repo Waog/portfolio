@@ -11,7 +11,7 @@
     </lib-project-item>
   </section>
   }
-  <!-- All projects section -->
+  <!-- Other projects section -->
   @if (topProjects.length > 0) {
   <section class="all-projects-toggle">
     <button
@@ -27,12 +27,15 @@
   } @if (showAllProjects || topProjects.length === 0) {
   <main class="all-projects-list">
     @if (topProjects.length > 0) {
-    <lib-section-header text="All Projects" />
+    <lib-section-header text="Other Projects" />
     } @else {
     <lib-section-header text="My Projects" />
     }
     <lib-project-item
-      *ngFor="let project of projectService.getAll(); trackBy: trackByProjectId"
+      *ngFor="
+        let project of projectService.getNonTopProjects();
+        trackBy: trackByProjectId
+      "
       [project]="project"
       [isTopProject]="isTopProject(project)"
     >
