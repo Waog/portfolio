@@ -20,6 +20,20 @@ const meta: Meta<ColorChipListComponent> = {
       control: 'object',
       description: 'Array of items to display with gray color and no icon',
     },
+    spacing: {
+      control: 'select',
+      options: [undefined, 'small', 'medium', 'large'],
+      mapping: {
+        undefined: undefined,
+        small: 'small',
+        medium: 'medium',
+        large: 'large',
+      },
+      table: {
+        type: { summary: 'ChipSpacing' },
+        defaultValue: { summary: 'large' },
+      },
+    },
   },
 };
 
@@ -31,6 +45,33 @@ export const Default: Story = {
     greenItems: ['React', 'Angular', 'TypeScript'],
     yellowItems: ['JavaScript', 'Node.js'],
     grayItems: ['CSS', 'HTML'],
+  },
+};
+
+export const Small: Story = {
+  args: {
+    greenItems: ['React', 'Angular', 'TypeScript'],
+    yellowItems: ['JavaScript', 'Node.js'],
+    grayItems: ['CSS', 'HTML'],
+    spacing: 'small',
+  },
+};
+
+export const Medium: Story = {
+  args: {
+    greenItems: ['React', 'Angular', 'TypeScript'],
+    yellowItems: ['JavaScript', 'Node.js'],
+    grayItems: ['CSS', 'HTML'],
+    spacing: 'medium',
+  },
+};
+
+export const Large: Story = {
+  args: {
+    greenItems: ['React', 'Angular', 'TypeScript'],
+    yellowItems: ['JavaScript', 'Node.js'],
+    grayItems: ['CSS', 'HTML'],
+    spacing: 'large',
   },
 };
 
