@@ -57,6 +57,6 @@ export class ProjectListComponent implements OnInit, OnDestroy {
   }
 
   isPrintMode(): boolean {
-    return window.matchMedia && window.matchMedia('print').matches;
+    return typeof window !== 'undefined' && window.matchMedia && window.matchMedia('print').matches;
   }
 }
