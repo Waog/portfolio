@@ -12,9 +12,12 @@
   }
 
   .info-icon {
-    color: #3498db;
-    margin-top: 0.2rem;
+    color: grey;
+    margin-left: 0.3rem;
     flex-shrink: 0;
+    font-size: 1.2rem;
+    width: 1.2rem;
+    height: 1.2rem;
   }
 
   .info-details {
@@ -28,9 +31,9 @@
     .info-value {
       font-size: 1rem;
       color: #2c3e50;
-      font-weight: 500;
+      font-weight: 400;
       a {
-        color: #3498db;
+        color: #2c3e50;
         text-decoration: none;
         &:hover {
           text-decoration: underline;

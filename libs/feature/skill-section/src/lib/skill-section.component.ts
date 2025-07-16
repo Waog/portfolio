@@ -59,7 +59,10 @@ export class SkillSectionComponent implements AfterViewInit {
 
   private handleExceedingRows(): void {
     this.showAllRows();
-    this.hideExceedingRowsInPrint();
+    // TODO: wait for actual chip-list rendering
+    setTimeout(() => {
+      this.hideExceedingRowsInPrint();
+    }, 1000); // NOTE: Delay to ensure each chip-list reduced itself to one line
   }
 
   private hideExceedingRowsInPrint() {

@@ -4,11 +4,6 @@
 .container {
   display: flex;
   flex-direction: column;
-  margin-bottom: spacing.lg();
-
-  @media print {
-    padding-left: spacing.lg();
-  }
 
   .grid {
     display: grid;

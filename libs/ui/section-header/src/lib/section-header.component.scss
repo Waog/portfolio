@@ -1,11 +1,14 @@
 @use 'spacing' as spacing;
 
 .container {
-  margin-bottom: spacing.xl();
-
   display: flex;
   align-items: center;
   gap: spacing.sm();
+
+  margin-bottom: spacing.xl();
+  @media print {
+    margin-bottom: spacing.md();
+  }
 
   h2 {
     margin: 0;

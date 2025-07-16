@@ -4,8 +4,18 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
 
+  @media print {
+    box-shadow: none;
+    border-radius: 0;
+    background-color: inherit;
+  }
+
   mat-card-header {
     padding: spacing.lg() spacing.lg() spacing.md() spacing.lg();
+
+    @media print {
+      padding: spacing.md() spacing.md() spacing.md() spacing.lg();
+    }
 
     .section-title {
       display: flex;
@@ -24,13 +34,9 @@
 
   mat-card-content {
     padding: 0 spacing.lg() spacing.lg() spacing.lg();
-  }
-}
 
-@media print {
-  .info-card {
-    box-shadow: none;
-    border-radius: 0;
-    background-color: inherit;
+    @media print {
+      padding: 0 spacing.md() spacing.md() spacing.lg();
+    }
   }
 }

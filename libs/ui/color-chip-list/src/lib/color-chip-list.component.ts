@@ -13,6 +13,7 @@ import {
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import {
+  ChipSpacing,
   ColorChipComponent,
   ColorChipDimensionsService,
 } from '@portfolio/color-chip';
@@ -33,6 +34,7 @@ export class ColorChipListComponent implements AfterViewInit {
   @Input() greenItems: string[] = [];
   @Input() yellowItems: string[] = [];
   @Input() grayItems: string[] = [];
+  @Input() spacing: ChipSpacing = 'large';
 
   @ViewChild('chipColumn', { static: false }) chipColumnRef!: ElementRef;
 
@@ -104,7 +106,7 @@ export class ColorChipListComponent implements AfterViewInit {
     return this.colorChipDimensionsService.getWidth({
       text: item.text,
       icon: item.icon,
-      spacing: 'large',
+      spacing: this.spacing,
     });
   }
 
