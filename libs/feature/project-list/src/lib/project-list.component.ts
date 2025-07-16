@@ -55,4 +55,12 @@ export class ProjectListComponent implements OnInit, OnDestroy {
   toggleAllProjects(): void {
     this.showAllProjects = !this.showAllProjects;
   }
+
+  isPrintMode(): boolean {
+    return (
+      typeof window !== 'undefined' &&
+      window.matchMedia &&
+      window.matchMedia('print').matches
+    );
+  }
 }

@@ -11,7 +11,7 @@
     </lib-project-item>
   </section>
   }
-  <!-- Other projects section -->
+  <!-- Other projects toggle button -->
   @if (topProjects.length > 0) {
   <section class="all-projects-toggle">
     <button
@@ -24,7 +24,10 @@
       {{ showAllProjects ? 'Hide All Projects' : 'Show All Projects' }}
     </button>
   </section>
-  } @if (showAllProjects || topProjects.length === 0) {
+  }
+
+  <!-- Other projects section -->
+  @if (showAllProjects || topProjects.length === 0 || isPrintMode()) {
   <main class="all-projects-list">
     @if (topProjects.length > 0) {
     <lib-section-header text="Other Projects" />
@@ -33,7 +36,9 @@
     }
     <lib-project-item
       *ngFor="
-        let project of projectService.getNonTopProjects();
+        let project of isPrintMode()
+          ? projectService.getNonTopProjects().slice(0, 5)
+          : projectService.getNonTopProjects();
         trackBy: trackByProjectId
       "
       [project]="project"
