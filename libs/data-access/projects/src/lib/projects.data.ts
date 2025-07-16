@@ -54,7 +54,7 @@ export const ALL_PROJECTS: Project[] = [
     ],
     role: 'Project Manager & Full-Stack Developer',
     team: 'Solo development',
-    fromTo: '08/2023 – Present',
+    fromTo: '08/2024 – Present',
     duration: '1 year 11 months',
     location: 'Remote',
     workMode: 'Remote',
