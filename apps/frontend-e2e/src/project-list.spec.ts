@@ -170,7 +170,7 @@ async function getLlsProjectItem(page: Page): Promise<Locator> {
 async function getLotteryProjectItem(page: Page): Promise<Locator> {
   const projectList = await getProjectListSection(page);
   const lotteryProject = projectList.getByText(
-    /Enterprise Lottery Platform.*Large Scrum team.*Remote.*eCommerce/
+    /Enterprise Lottery Platform.*Large Scrum Team.*Remote.*eCommerce/
   );
   await expect(lotteryProject).toBeVisible();
   return lotteryProject;
