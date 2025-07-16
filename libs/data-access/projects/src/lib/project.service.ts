@@ -51,4 +51,9 @@ export class ProjectService {
   getTopProjects(): Project[] {
     return this.topProjectsService.getTopProjects();
   }
+  getNonTopProjects(): Project[] {
+    return this.getAll().filter(
+      project => !this.topProjectsService.getTopProjects().includes(project)
+    );
+  }
 }

@@ -9,6 +9,8 @@ import { MatListModule } from '@angular/material/list';
 import { KeywordListComponent } from '@portfolio/keyword-list';
 import { Project } from '@portfolio/projects';
 
+import { ProjectItemMetaTilesComponent } from './project-item-meta-tiles.component';
+
 @Component({
   selector: 'lib-project-item',
   imports: [
@@ -20,6 +22,7 @@ import { Project } from '@portfolio/projects';
     MatIconModule,
     MatListModule,
     KeywordListComponent,
+    ProjectItemMetaTilesComponent,
   ],
   templateUrl: './project-item.component.html',
   styleUrl: './project-item.component.scss',
@@ -27,6 +30,7 @@ import { Project } from '@portfolio/projects';
 export class ProjectItemComponent {
   project = input.required<Project>();
   isTopProject = input<boolean>(false);
+  compact = input<boolean>(false);
 
   showExpandedContent = false;
 

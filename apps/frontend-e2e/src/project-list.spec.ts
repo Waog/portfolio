@@ -1,13 +1,15 @@
-import { expect, test } from '@playwright/test';
+import { expect, Locator, Page, test } from '@playwright/test';
 
-test.describe('Project List Page', () => {
+test.describe('Project List Section', () => {
   test('displays all projects by default (when no search tags)', async ({
     page,
   }) => {
-    await page.goto('/'); // Should show all projects when no search filters are active
-    await expect(page.locator('lib-project-item')).toHaveCount(8); // 8 total projects
+    await page.goto('/');
 
-    // Should not show "Top Matching Projects" section
+    const projectList = await getProjectListSection(page);
+
+    await expect(projectList.locator('lib-project-item')).toHaveCount(8);
+
     await expect(
       page.getByRole('heading', { name: 'Top Matching Projects' })
     ).toBeHidden();
@@ -16,92 +18,174 @@ test.describe('Project List Page', () => {
   test('displays project titles', async ({ page }) => {
     await page.goto('/');
 
+    const projectList = await getProjectListSection(page);
+
     await expect(
-      page
-        .locator('mat-card-title')
-        .filter({ hasText: /AI-Powered Language Learning App/ })
+      projectList.getByText(/AI-Powered Language Learning App/)
     ).toBeVisible();
 
     await expect(
-      page
-        .locator('mat-card-title')
-        .filter({ hasText: /Enterprise Lottery Platform/ })
+      projectList.getByText(/Enterprise Lottery Platform/)
     ).toBeVisible();
   });
-  test('displays company information', async ({ page }) => {
+
+  test('displays team information', async ({ page }) => {
     await page.goto('/');
 
-    // Target company information specifically within project cards
-    await expect(
-      page
-        .locator('lib-project-item .primary-text')
-        .filter({ hasText: /Oliver Stadie IT GmbH/i })
-    ).toBeVisible();
+    const llsProject = await getLlsProjectItem(page);
+
+    await expect(llsProject.getByText(/Solo development/)).toBeVisible();
   });
+
+  test('displays duration information', async ({ page }) => {
+    await page.goto('/');
+
+    const lotteryProject = await getLotteryProjectItem(page);
+
+    await expect(lotteryProject.getByText(/11 months/)).toBeVisible();
+  });
+
+  test('displays location information', async ({ page }) => {
+    await page.goto('/');
+
+    const llsProject = await getLlsProjectItem(page);
+
+    await expect(llsProject.getByText(/Remote.*Remote/)).toBeVisible();
+  });
+
+  test('displays industry information', async ({ page }) => {
+    await page.goto('/');
+
+    const llsProject = await getLlsProjectItem(page);
+
+    await expect(llsProject.getByText(/Education Technology/)).toBeVisible();
+  });
+
   test('displays technology chips', async ({ page }) => {
     await page.goto('/');
 
-    await expect(page.getByText('TypeScript').first()).toBeVisible();
-    await expect(page.getByText('Angular').first()).toBeVisible();
+    const llsProject = await getLlsProjectItem(page);
+
+    await expect(llsProject.getByText('Java').first()).toBeVisible();
+    await expect(llsProject.getByText('React').first()).toBeVisible();
   });
 
-  test('shows top matching projects when search tags are active', async ({
+  test('shows up to 3 top matching projects when search tags are active', async ({
     page,
   }) => {
-    // Navigate with a search tag that should match some projects
     await page.goto('/?searchTags=TypeScript');
 
-    // Should show "Top Matching Projects" section
+    const topMatchingProjects = await getTopMatchingProjectsList(page);
+
     await expect(
-      page.getByRole('heading', { name: 'Top Matching Projects' })
+      topMatchingProjects.getByRole('heading', {
+        name: 'Top Matching Projects',
+      })
     ).toBeVisible();
 
-    // Should show toggle button for all projects
-    await expect(
-      page.getByRole('button', { name: /Show All Projects/ })
-    ).toBeVisible(); // Top projects should have green border (check CSS class)
-    await expect(page.locator('mat-card.top-project')).toHaveCount(3); // Top 3 matching projects
+    await expect(topMatchingProjects.locator('lib-project-item')).toHaveCount(
+      3
+    );
   });
 
-  test('toggle functionality works correctly', async ({ page }) => {
-    // Navigate with search tags to trigger top projects
-    await page.goto('/?searchTags=TypeScript'); // Initially, "All Projects" section should be hidden
+  test('allows showing more projects when search tags are active', async ({
+    page,
+  }) => {
+    await page.goto('/?searchTags=TypeScript');
+
+    const projectList = await getProjectListSection(page);
+
+    await expect(
+      projectList.getByRole('button', { name: /Show All Projects/ })
+    ).toBeVisible();
+  });
+
+  test('toggle functionality shows/hides all projects', async ({ page }) => {
+    await page.goto('/?searchTags=TypeScript');
+
     await expect(
       page.getByRole('heading', { name: 'All Projects' })
     ).toBeHidden();
 
-    // Click toggle button to show all projects
     await page.getByRole('button', { name: /Show All Projects/ }).click();
 
-    // Now "All Projects" section should be visible
     await expect(
-      page.getByRole('heading', { name: 'All Projects' })
+      page.getByRole('heading', { name: 'Other Projects' })
     ).toBeVisible();
 
-    // Button text should change
     await expect(
       page.getByRole('button', { name: /Hide All Projects/ })
     ).toBeVisible();
 
-    // Click again to hide
-    await page.getByRole('button', { name: /Hide All Projects/ }).click(); // "All Projects" section should be hidden again
+    await page.getByRole('button', { name: /Hide All Projects/ }).click();
+
     await expect(
-      page.getByRole('heading', { name: 'All Projects' })
+      page.getByRole('heading', { name: 'Other Projects' })
     ).toBeHidden();
   });
 
   test('projects with matching technologies have green border', async ({
     page,
   }) => {
-    await page.goto('/?searchTags=TypeScript'); // Check that top matching projects have the green border class
-    const topProjectCards = page.locator('mat-card.top-project');
-    await expect(topProjectCards).toHaveCount(3); // Top 3 matching projects
+    await page.goto('/?searchTags=TypeScript');
 
-    // Verify the green border is applied via CSS
-    const firstTopProject = topProjectCards.first();
-    await expect(firstTopProject).toHaveCSS(
-      'border-left-color',
-      'rgb(40, 167, 69)'
-    ); // #28a745
+    const topMatchingProjects = await getTopMatchingProjectsList(page);
+
+    const topProjectItems = topMatchingProjects.locator('lib-project-item');
+
+    await expect(topProjectItems).toHaveCount(3);
+
+    const firstTopProject = topProjectItems.first();
+    const borderedChildElement = firstTopProject.locator('.top-project');
+    expect(await isGreen(borderedChildElement, 'border-left-color')).toBe(true);
   });
 });
+
+async function getProjectListSection(page: Page): Promise<Locator> {
+  const projectListSection = page.getByText(
+    /(My Projects.*Java.*Remote)|(Top Matching Projects.*All Projects)/s
+  );
+  await expect(projectListSection).toBeVisible();
+  return projectListSection;
+}
+
+async function getTopMatchingProjectsList(page: Page): Promise<Locator> {
+  const projectList = await getProjectListSection(page);
+  const topMatchingProjectsList = projectList.getByText(
+    /Top Matching Projects.*Show Details/
+  );
+  await expect(topMatchingProjectsList).toBeVisible();
+  return topMatchingProjectsList;
+}
+
+async function getLlsProjectItem(page: Page): Promise<Locator> {
+  const projectList = await getProjectListSection(page);
+  const llsProject = projectList.getByText(
+    /AI-Powered Language Learning App.*Solo.*Remote.*Education/
+  );
+  await expect(llsProject).toBeVisible();
+  return llsProject;
+}
+
+async function getLotteryProjectItem(page: Page): Promise<Locator> {
+  const projectList = await getProjectListSection(page);
+  const lotteryProject = projectList.getByText(
+    /Enterprise Lottery Platform.*Large Scrum team.*Remote.*eCommerce/
+  );
+  await expect(lotteryProject).toBeVisible();
+  return lotteryProject;
+}
+
+async function isGreen(
+  element: Locator,
+  cssProperty: string
+): Promise<boolean> {
+  const color: string = await element.evaluate(
+    (el, prop) => window.getComputedStyle(el).getPropertyValue(prop),
+    cssProperty
+  );
+  const match = color.match(/rgb\((\d+), (\d+), (\d+)\)/);
+  if (!match) throw new Error(`Invalid color format: ${color}`);
+  const [, r, g, b] = match.map(Number);
+  return g > r && g > b;
+}

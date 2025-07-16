@@ -1,0 +1,49 @@
+<aside class="meta-tiles" [class.compact]="compact()">
+  <section class="meta-tile" [class.compact]="compact()">
+    <mat-icon [class.compact]="compact()">person</mat-icon>
+    <div class="tile-content">
+      <div class="primary-text" [class.compact]="compact()">
+        {{ project().role }}
+      </div>
+      <div class="secondary-text" [class.compact]="compact()">
+        {{ project().team }}
+      </div>
+    </div>
+  </section>
+
+  <section class="meta-tile">
+    <mat-icon [class.compact]="compact()">schedule</mat-icon>
+    <div class="tile-content">
+      <div class="primary-text" [class.compact]="compact()">
+        {{ project().fromTo }}
+      </div>
+      <div class="secondary-text" [class.compact]="compact()">
+        {{ project().duration }}
+      </div>
+    </div>
+  </section>
+
+  <section class="meta-tile">
+    <mat-icon [class.compact]="compact()">location_on</mat-icon>
+    <div class="tile-content">
+      <div class="primary-text" [class.compact]="compact()">
+        {{ project().workMode }}
+      </div>
+      <div class="secondary-text" [class.compact]="compact()">
+        {{ project().location }}
+      </div>
+    </div>
+  </section>
+
+  <section class="meta-tile">
+    <mat-icon [class.compact]="compact()">business</mat-icon>
+    <div class="tile-content">
+      <div class="primary-text" [class.compact]="compact()">
+        {{ project().company }}
+      </div>
+      <div class="secondary-text" [class.compact]="compact()">
+        {{ project().industry }}
+      </div>
+    </div>
+  </section>
+</aside>
