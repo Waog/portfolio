@@ -3,6 +3,7 @@ export type TagName =
   | 'AngularJS'
   | 'Angular Material'
   | 'CSS'
+  | 'Framework'
   | 'Frontend Framework'
   | 'HTML'
   | 'JavaScript'
@@ -16,18 +17,18 @@ export type TagName =
   | 'Vue.js';
 
 export type TaxonomyTerm = {
-  canonical: TagName;
-  synonyms?: (RegExp | string)[];
-  includes?: TagName[];
-  related?: TagName[];
-  parents?: TagName[];
-  children?: TagName[];
+  readonly canonical: TagName;
+  readonly synonyms?: readonly (RegExp | string)[];
+  readonly includes?: readonly TagName[];
+  readonly related?: readonly TagName[];
+  readonly parents?: readonly TagName[];
+  readonly children?: readonly TagName[];
 };
 
-export const TAXONOMY: TaxonomyTerm[] = [
+export const TAXONOMY: readonly TaxonomyTerm[] = [
   {
     canonical: 'Angular',
-    synonyms: [/angular/i],
+    synonyms: [/^angular$/i],
     includes: ['CSS', 'HTML', 'JavaScript'],
     related: ['Angular Material', 'AngularJS', 'RxJS', 'SASS', 'SCSS'],
     parents: ['Frontend Framework'],
@@ -50,8 +51,13 @@ export const TAXONOMY: TaxonomyTerm[] = [
     synonyms: [/^css$/i],
   },
   {
+    canonical: 'Framework',
+    children: ['Frontend Framework'],
+  },
+  {
     canonical: 'Frontend Framework',
     synonyms: [/frontend framework/i, /javascript framework/i, /js framework/i],
+    parents: ['Framework'],
     children: ['Angular', 'AngularJS', 'React', 'Vue.js'],
   },
   {
@@ -65,7 +71,7 @@ export const TAXONOMY: TaxonomyTerm[] = [
   },
   {
     canonical: 'React',
-    synonyms: [/react/i],
+    synonyms: [/^react$/i, /react\.js/i],
     parents: ['Frontend Framework'],
     children: ['React Native', 'React Web'],
     includes: ['CSS', 'HTML', 'TypeScript'],
@@ -108,4 +114,4 @@ export const TAXONOMY: TaxonomyTerm[] = [
     synonyms: [/vue/i, /vue\.js/i, /vuejs/i],
     parents: ['Frontend Framework'],
   },
-];
+] as const;
