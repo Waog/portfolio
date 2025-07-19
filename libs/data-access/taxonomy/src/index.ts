@@ -1,1 +1,1 @@
-export * from './lib/taxonomy.component';
+export * from './lib/tag';
