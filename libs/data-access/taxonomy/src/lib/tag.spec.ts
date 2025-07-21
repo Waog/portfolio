@@ -1,4 +1,4 @@
-import { Tag } from './Tag';
+import { Tag } from './tag';
 
 describe('Tag', () => {
   describe('static get()', () => {
@@ -132,6 +132,22 @@ describe('Tag', () => {
     it('returns an empty set if there are no ancestors', () => {
       expect(Tag.get('Framework').getAllAncestors()).toEqual(new Set());
     });
+
+    it('caches and reuses the result', () => {
+      const ancestors1 = Tag.get('Angular').getAllAncestors();
+      const ancestors2 = Tag.get('Angular').getAllAncestors();
+      expect(ancestors1).toBe(ancestors2);
+    });
+
+    it('uses different caches for different Tags', () => {
+      const tag1 = Tag.get('Angular');
+      const tag2 = Tag.get('React');
+      expect(tag1).not.toBe(tag2);
+
+      const ancestors1 = tag1.getAllAncestors();
+      const ancestors2 = tag2.getAllAncestors();
+      expect(ancestors1).not.toBe(ancestors2);
+    });
   });
 
   describe('getAllCommonAncestors()', () => {
@@ -143,6 +159,28 @@ describe('Tag', () => {
 
     it('returns an empty set if there are no common ancestors', () => {
       expect(Tag.get('CSS').getAllCommonAncestors('HTML')).toEqual(new Set());
+    });
+
+    it('caches and reuses the result', () => {
+      const ancestors1 = Tag.get('Angular').getAllCommonAncestors('React');
+      const ancestors2 = Tag.get('Angular').getAllCommonAncestors('React');
+      expect(ancestors1).toBe(ancestors2);
+    });
+
+    it('uses different caches for different Tags', () => {
+      const tag1 = Tag.get('Angular');
+      const tag2 = Tag.get('React');
+      expect(tag1).not.toBe(tag2);
+
+      const ancestors1 = tag1.getAllCommonAncestors('React');
+      const ancestors2 = tag2.getAllCommonAncestors('React');
+      expect(ancestors1).not.toBe(ancestors2);
+    });
+
+    it('cache distinguished between different inputs', () => {
+      const ancestors1 = Tag.get('Angular').getAllCommonAncestors('React');
+      const ancestors2 = Tag.get('Angular').getAllCommonAncestors('Angular');
+      expect(ancestors1).not.toBe(ancestors2);
     });
   });
 

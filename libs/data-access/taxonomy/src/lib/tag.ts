@@ -1,3 +1,5 @@
+import { Memoize } from 'typescript-memoize';
+
 import { TAXONOMY, TaxonomyTerm } from './taxonomy.data';
 
 export class Tag {
@@ -44,10 +46,12 @@ export class Tag {
     }
   }
 
+  @Memoize()
   is(term: string): boolean {
     return this.matches(term, this.taxonomyTerm);
   }
 
+  @Memoize()
   isA(term: string): boolean {
     for (const parentTerm of this.taxonomyTerm.parents || []) {
       const parentTag = Tag.get(parentTerm);
@@ -58,6 +62,7 @@ export class Tag {
     return false;
   }
 
+  @Memoize()
   hasChild(term: string): boolean {
     for (const childTerm of this.taxonomyTerm.children || []) {
       const childTag = Tag.get(childTerm);
@@ -68,6 +73,7 @@ export class Tag {
     return false;
   }
 
+  @Memoize()
   isSibling(term: string): boolean {
     for (const parentTerm of this.taxonomyTerm.parents || []) {
       const parentTag = Tag.get(parentTerm);
@@ -78,6 +84,7 @@ export class Tag {
     return false;
   }
 
+  @Memoize()
   getDistanceToAncestor(ancestorTerm: string): number | null {
     if (this.is(ancestorTerm)) {
       return 0;
@@ -103,6 +110,7 @@ export class Tag {
     return shortestParentDistance !== null ? shortestParentDistance + 1 : null;
   }
 
+  @Memoize()
   getAllAncestors(): Set<string> {
     const result = new Set<string>();
     for (const parentTerm of this.taxonomyTerm.parents || []) {
@@ -113,6 +121,7 @@ export class Tag {
     return result;
   }
 
+  @Memoize()
   getAllCommonAncestors(term: string): Set<string> {
     const thisAncestors = this.getAllAncestors();
     const otherAncestors = Tag.get(term).getAllAncestors();
@@ -126,6 +135,7 @@ export class Tag {
     return commonAncestors;
   }
 
+  @Memoize()
   getLowestCommonAncestor(term: string): string | null {
     if (this.is(term)) {
       return this.taxonomyTerm.canonical;
@@ -160,6 +170,7 @@ export class Tag {
     return shortestDistanceAncestor;
   }
 
+  @Memoize()
   getMinDistanceToLowestCommonAncestor(term: string): number | null {
     const lowestCommonAncestor = this.getLowestCommonAncestor(term);
     if (lowestCommonAncestor === null) {
@@ -171,6 +182,7 @@ export class Tag {
     );
   }
 
+  @Memoize()
   includes(term: string): boolean {
     if (this.is(term)) {
       return true;
@@ -191,6 +203,7 @@ export class Tag {
     return false;
   }
 
+  @Memoize()
   isRelated(term: string): boolean {
     if (this.is(term)) {
       return true;
