@@ -124,7 +124,7 @@ export class TechnologyMatchingService {
 
     const minDistanceToAncestor =
       techTag.getMinDistanceToLowestCommonAncestor(searchTag) ?? Infinity;
-    if (minDistanceToAncestor <= 1) {
+    if (minDistanceToAncestor <= 1 || techTag.isRelated(searchTag)) {
       return 'indirect';
     }
 

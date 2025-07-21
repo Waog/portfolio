@@ -131,6 +131,15 @@ describe('TechnologyMatchingService', () => {
         })
       ).toBe('full');
     });
+
+    it('should return indirect match for taxonomically related items', () => {
+      expect(
+        service.getMatchType({
+          technologyName: 'Angular',
+          searchTag: 'RxJS',
+        })
+      ).toBe('indirect');
+    });
   });
 
   describe('getBestMatchTypeForSearchTag', () => {

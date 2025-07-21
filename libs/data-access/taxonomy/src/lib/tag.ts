@@ -161,6 +161,20 @@ export class Tag {
     return false;
   }
 
+  isRelated(term: string): boolean {
+    if (this.is(term)) {
+      return true;
+    }
+
+    for (const relatedTerm of this.taxonomyTerm.related || []) {
+      const relatedTag = new Tag(relatedTerm);
+      if (relatedTag.is(term)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   private matches(term: string, taxonomyTerm: TaxonomyTerm): boolean {
     return (
       taxonomyTerm.canonical === term ||

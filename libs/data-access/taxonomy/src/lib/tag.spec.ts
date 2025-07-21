@@ -216,4 +216,22 @@ describe('Tag', () => {
       expect(new Tag('React').includes('AWS')).toEqual(false);
     });
   });
+
+  describe('related()', () => {
+    it('returns true for the element itself', () => {
+      expect(new Tag('Angular').isRelated('Angular')).toEqual(true);
+    });
+
+    it('returns true for directly related elements', () => {
+      expect(new Tag('Angular').isRelated('RxJS')).toEqual(true);
+    });
+
+    it('returns false if only indirectly related', () => {
+      expect(new Tag('SASS').isRelated('CSS')).toEqual(false);
+    });
+
+    it('returns false if not related', () => {
+      expect(new Tag('React').isRelated('AWS')).toEqual(false);
+    });
+  });
 });
