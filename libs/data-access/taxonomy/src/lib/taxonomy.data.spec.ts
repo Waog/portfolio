@@ -63,6 +63,22 @@ describe('Taxonomy Data', () => {
     }
   });
 
+  it('categories include elements which are either `Misc` or others', () => {
+    for (const data of TAXONOMY) {
+      const categories = data.categories;
+      expect(
+        categories.length,
+        `Taxonomy Element "${data.canonical}" has empty categories`
+      ).toBeGreaterThan(0);
+      if (categories.includes('Misc')) {
+        expect(
+          categories.length,
+          `Taxonomy Element "${data.canonical}" has "Misc" despite additional categories`
+        ).toBe(1);
+      }
+    }
+  });
+
   function customSort(
     a: RegExp | string | TagName,
     b: RegExp | string | TagName

@@ -1,3 +1,13 @@
+export type Category =
+  | 'Frontend'
+  | 'Concepts'
+  | 'Backend'
+  | 'Testing and QA'
+  | 'Cloud & Infrastructure'
+  | 'DevOps & Build & CI/CD'
+  | 'Tools & Libraries'
+  | 'Misc';
+
 export type TagName =
   | 'Angular'
   | 'AngularJS'
@@ -22,6 +32,9 @@ export type TagName =
 export type TaxonomyData = {
   /** Canonical Name of the Keyword, e.g. "Node.js" */
   readonly canonical: TagName;
+
+  /** The Categories of this Keyword, e.g. "Cypress" has `categories: ["Testing and QA"]` */
+  readonly categories: Category[];
 
   /**
    * Matching alternatives:
@@ -69,6 +82,7 @@ export type TaxonomyData = {
 export const TAXONOMY: readonly TaxonomyData[] = [
   {
     canonical: 'Angular',
+    categories: ['Frontend', 'Tools & Libraries'],
     synonyms: [/^angular$/i],
     includes: ['CSS', 'HTML', 'TypeScript'],
     related: ['Angular Material', 'AngularJS', 'RxJS', 'SASS', 'SCSS'],
@@ -77,10 +91,12 @@ export const TAXONOMY: readonly TaxonomyData[] = [
   },
   {
     canonical: 'Angular Material',
+    categories: ['Frontend', 'Tools & Libraries'],
     parents: ['Angular'],
   },
   {
     canonical: 'AngularJS',
+    categories: ['Frontend', 'Tools & Libraries'],
     synonyms: [/angular\.js/i, /angularjs/i],
     parents: ['Frontend Framework'],
     includes: ['CSS', 'HTML', 'TypeScript'],
@@ -88,28 +104,34 @@ export const TAXONOMY: readonly TaxonomyData[] = [
   },
   {
     canonical: 'CSS',
+    categories: ['Frontend'],
     synonyms: [/^css$/i],
   },
   {
     canonical: 'Framework',
+    categories: ['Misc'],
     children: ['Frontend Framework'],
   },
   {
     canonical: 'Frontend Framework',
+    categories: ['Frontend'],
     synonyms: [/frontend framework/i, /javascript framework/i, /js framework/i],
     parents: ['Framework'],
     children: ['Angular', 'AngularJS', 'React', 'Vue.js'],
   },
   {
     canonical: 'HTML',
+    categories: ['Frontend'],
   },
   {
     canonical: 'JavaScript',
+    categories: ['Frontend', 'Backend'],
     synonyms: [/^js$/i, /javascript/i],
     children: ['TypeScript'],
   },
   {
     canonical: 'React',
+    categories: ['Frontend', 'Tools & Libraries'],
     synonyms: [/^react$/i, /react\.js/i],
     parents: ['Frontend Framework'],
     children: ['React Native', 'React Web'],
@@ -117,34 +139,41 @@ export const TAXONOMY: readonly TaxonomyData[] = [
   },
   {
     canonical: 'React Native',
+    categories: ['Frontend', 'Tools & Libraries'],
     parents: ['React'],
   },
   {
     canonical: 'React Web',
+    categories: ['Frontend', 'Tools & Libraries'],
     parents: ['React'],
   },
   {
     canonical: 'RxJS',
+    categories: ['Frontend', 'Tools & Libraries'],
     related: ['Angular'],
     includes: ['TypeScript'],
   },
   {
     canonical: 'SASS',
+    categories: ['Frontend'],
     related: ['SCSS'],
     includes: ['CSS'],
   },
   {
     canonical: 'SCSS',
+    categories: ['Frontend'],
     related: ['SASS'],
     includes: ['CSS'],
   },
   {
     canonical: 'TypeScript',
+    categories: ['Frontend', 'Backend'],
     synonyms: [/^ts$/i, /typescript/i],
     parents: ['JavaScript'],
   },
   {
     canonical: 'Vue.js',
+    categories: ['Frontend', 'Tools & Libraries'],
     synonyms: [/vue/i, /vue\.js/i, /vuejs/i],
     parents: ['Frontend Framework'],
   },
