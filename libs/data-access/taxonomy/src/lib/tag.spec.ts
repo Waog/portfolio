@@ -293,4 +293,21 @@ describe('Tag', () => {
       expect(Tag.get('React').isRelated('AWS')).toEqual(false);
     });
   });
+
+  describe('getImplicitTags()', () => {
+    it('returns all Tags which are implicitly included in this tag in any way', () => {
+      const implicitTags: Set<Tag> = Tag.get('Angular').getImplicitTags();
+      expect(implicitTags).toEqual(
+        new Set([
+          Tag.get('Angular'),
+          Tag.get('CSS'),
+          Tag.get('HTML'),
+          Tag.get('TypeScript'),
+          Tag.get('JavaScript'),
+          Tag.get('Frontend Framework'),
+          Tag.get('Framework'),
+        ])
+      );
+    });
+  });
 });

@@ -70,7 +70,7 @@ export const TAXONOMY: readonly TaxonomyData[] = [
   {
     canonical: 'Angular',
     synonyms: [/^angular$/i],
-    includes: ['CSS', 'HTML', 'JavaScript'],
+    includes: ['CSS', 'HTML', 'TypeScript'],
     related: ['Angular Material', 'AngularJS', 'RxJS', 'SASS', 'SCSS'],
     parents: ['Frontend Framework'],
     children: ['Angular Material'],

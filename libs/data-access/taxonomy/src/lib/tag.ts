@@ -224,6 +224,23 @@ export class Tag {
     return false;
   }
 
+  @Memoize()
+  getImplicitTags(): Set<Tag> {
+    const result = new Set<Tag>();
+    result.add(this);
+    for (const includesTerm of this.taxonomyData.includes || []) {
+      const includesTag = Tag.get(includesTerm);
+      const includesImplicitTags = includesTag.getImplicitTags();
+      includesImplicitTags.forEach(tag => result.add(tag));
+    }
+    for (const parentTerm of this.taxonomyData.parents || []) {
+      const parentTag = Tag.get(parentTerm);
+      const parentImplicitTags = parentTag.getImplicitTags();
+      parentImplicitTags.forEach(tag => result.add(tag));
+    }
+    return result;
+  }
+
   private static matches(term: string, taxonomyData: TaxonomyData): boolean {
     return (
       taxonomyData.canonical === term || Tag.synonymMatch(term, taxonomyData)
