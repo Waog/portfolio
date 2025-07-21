@@ -190,4 +190,30 @@ describe('Tag', () => {
       ).toEqual(null);
     });
   });
+
+  describe('includes()', () => {
+    it('returns true for the element itself', () => {
+      expect(new Tag('Angular').includes('Angular')).toEqual(true);
+    });
+
+    it('returns true for ancestors of the element', () => {
+      expect(new Tag('React Web').includes('Frontend Framework')).toEqual(true);
+    });
+
+    it('returns true if the term is included directly', () => {
+      expect(new Tag('Angular').includes('HTML')).toEqual(true);
+    });
+
+    it('returns true if the term is included in an included member', () => {
+      expect(new Tag('Angular').includes('CSS')).toEqual(true);
+    });
+
+    it('returns true if the term is included in any ancestor', () => {
+      expect(new Tag('React Native').includes('JavaScript')).toEqual(true);
+    });
+
+    it('returns false if the term is not included in any way', () => {
+      expect(new Tag('React').includes('AWS')).toEqual(false);
+    });
+  });
 });

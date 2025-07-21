@@ -114,7 +114,11 @@ export class TechnologyMatchingService {
   ): MatchType {
     const techTag = new Tag(technologyName);
 
-    if (techTag.is(searchTag) || techTag.isA(searchTag)) {
+    if (
+      techTag.is(searchTag) ||
+      techTag.isA(searchTag) ||
+      techTag.includes(searchTag)
+    ) {
       return 'full';
     }
 

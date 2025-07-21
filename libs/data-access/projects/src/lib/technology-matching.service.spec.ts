@@ -116,6 +116,21 @@ describe('TechnologyMatchingService', () => {
         })
       ).toBe('none');
     });
+
+    it('should return full match for taxonomically included items', () => {
+      expect(
+        service.getMatchType({ technologyName: 'Angular', searchTag: 'HTML' })
+      ).toBe('full');
+    });
+
+    it('should return full match for taxonomically indirectly included items', () => {
+      expect(
+        service.getMatchType({
+          technologyName: 'React Web',
+          searchTag: 'JavaScript',
+        })
+      ).toBe('full');
+    });
   });
 
   describe('getBestMatchTypeForSearchTag', () => {

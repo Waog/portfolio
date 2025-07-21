@@ -141,6 +141,26 @@ export class Tag {
     );
   }
 
+  includes(term: string): boolean {
+    if (this.is(term)) {
+      return true;
+    }
+
+    for (const includesTerm of this.taxonomyTerm.includes || []) {
+      const includesTag = new Tag(includesTerm);
+      if (includesTag.is(term) || includesTag.includes(term)) {
+        return true;
+      }
+    }
+    for (const parentTerm of this.taxonomyTerm.parents || []) {
+      const parentTag = new Tag(parentTerm);
+      if (parentTag.includes(term)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   private matches(term: string, taxonomyTerm: TaxonomyTerm): boolean {
     return (
       taxonomyTerm.canonical === term ||
