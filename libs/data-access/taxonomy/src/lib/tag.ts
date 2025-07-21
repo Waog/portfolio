@@ -37,7 +37,7 @@ export class Tag {
 
   private constructor(public originalString: string) {
     const matchingTerm = TAXONOMY.find(term =>
-      this.matches(originalString, term)
+      Tag.matches(originalString, term)
     );
     if (matchingTerm) {
       this.taxonomyData = matchingTerm;
@@ -48,7 +48,7 @@ export class Tag {
 
   @Memoize()
   is(term: string): boolean {
-    return this.matches(term, this.taxonomyData);
+    return Tag.matches(term, this.taxonomyData);
   }
 
   @Memoize()
@@ -224,18 +224,23 @@ export class Tag {
     return false;
   }
 
-  private matches(term: string, taxonomyData: TaxonomyData): boolean {
+  private static matches(term: string, taxonomyData: TaxonomyData): boolean {
     return (
-      taxonomyData.canonical === term ||
-      this.synonymMatch(term, taxonomyData.synonyms)
+      taxonomyData.canonical === term || Tag.synonymMatch(term, taxonomyData)
     );
   }
 
-  private synonymMatch(
+  private static synonymMatch(
     term: string,
-    synonyms: TaxonomyData['synonyms']
+    taxonomyData: TaxonomyData
   ): boolean {
-    if (!synonyms) return false;
+    const synonyms = taxonomyData.synonyms;
+    if (!synonyms) {
+      return (
+        term.toLowerCase().replace(/[^a-z0-9]/g, '') ===
+        taxonomyData.canonical.toLowerCase().replace(/[^a-z0-9]/g, '')
+      );
+    }
 
     return synonyms.some(
       synonym =>

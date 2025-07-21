@@ -16,12 +16,53 @@ export type TagName =
   | 'TypeScript'
   | 'Vue.js';
 
+/**
+ * Represents a single Keyword in the taxonomy.
+ */
 export type TaxonomyData = {
+  /** Canonical Name of the Keyword, e.g. "Node.js" */
   readonly canonical: TagName;
+
+  /**
+   * Matching alternatives:
+   * Alternative names and identifying Regexes which mean the same Keyword, e.g. "node".
+   * If not defined, defaults to the lowercase alphanumeric-only version of the canonical name.
+   * Example: "Vue.js" would implicitly have `synonyms: [/vue/i]`.
+   * Only define if the canonical name is not sufficient to identify the term.
+   */
   readonly synonyms?: readonly (RegExp | string)[];
+
+  /**
+   * Implicitly included Keywords, which are *always* worked with in projects with the technology, but are not a parent/child relationship.
+   * E.g. in Angular projects, you will always work with HTML, CSS, and TypeScript, even though they are not parent/child relationships.
+   * Only list it in the topmost applicable ancestor (parent). E.g. list JavaScript/TypeScript in `React`, not in `React Web`.
+   * Don't define if empty.
+   */
   readonly includes?: readonly TagName[];
+
+  /**
+   * Related Keywords that are somehow related and worth mentioning in a related CV but not in a parent/child/cousin relationship, nor included.
+   * E.g. RxJS is related to Angular, as often used together, but they can also exist independently.
+   * Don't define if empty.
+   */
   readonly related?: readonly TagName[];
+
+  /**
+   * Parent Keywords that are broader concepts that this Keyword falls under.
+   * represents an "is a" relationship.
+   * E.g. `Angular` is a `Frontend Framework`, so it has `parents: ['Frontend Framework']`.
+   * Keep in sync with the `children` property of the other Keyword.
+   * Don't define if empty.
+   */
   readonly parents?: readonly TagName[];
+
+  /**
+   * Children Keywords that are more specific concepts that fall under this Keyword.
+   * Represents an "is a" relationship.
+   * E.g. `React Native` is a `React`, so `React` has `children: ['React Native', 'React Web']`.
+   * Keep in sync with the `parents` property of the other Keyword.
+   * Don't define if empty.
+   */
   readonly children?: readonly TagName[];
 };
 
@@ -36,7 +77,6 @@ export const TAXONOMY: readonly TaxonomyData[] = [
   },
   {
     canonical: 'Angular Material',
-    synonyms: [/angular material/i],
     parents: ['Angular'],
   },
   {
@@ -62,7 +102,6 @@ export const TAXONOMY: readonly TaxonomyData[] = [
   },
   {
     canonical: 'HTML',
-    synonyms: [/html/i],
   },
   {
     canonical: 'JavaScript',
@@ -78,29 +117,24 @@ export const TAXONOMY: readonly TaxonomyData[] = [
   },
   {
     canonical: 'React Native',
-    synonyms: [/react native/i],
     parents: ['React'],
   },
   {
     canonical: 'React Web',
-    synonyms: [/react web/i],
     parents: ['React'],
   },
   {
     canonical: 'RxJS',
-    synonyms: [/rxjs/i],
     related: ['Angular'],
     includes: ['TypeScript'],
   },
   {
     canonical: 'SASS',
-    synonyms: [/sass/i],
     related: ['SCSS'],
     includes: ['CSS'],
   },
   {
     canonical: 'SCSS',
-    synonyms: [/scss/i],
     related: ['SASS'],
     includes: ['CSS'],
   },
