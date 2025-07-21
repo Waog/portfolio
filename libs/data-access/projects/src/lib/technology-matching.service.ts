@@ -112,7 +112,7 @@ export class TechnologyMatchingService {
     technologyName: string,
     searchTag: string
   ): MatchType {
-    const techTag = new Tag(technologyName);
+    const techTag = Tag.get(technologyName);
 
     if (
       techTag.is(searchTag) ||

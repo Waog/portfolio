@@ -1,9 +1,39 @@
 import { TAXONOMY, TaxonomyTerm } from './taxonomy.data';
 
 export class Tag {
+  private static cache = new Map<string, Tag | null>();
+
   private readonly taxonomyTerm: TaxonomyTerm;
 
-  constructor(public originalString: string) {
+  public static get(originalString: string): Tag {
+    const cached = Tag.cache.get(originalString);
+    if (cached === null) {
+      throw new Error(`Tag "${originalString}" not found in taxonomy.`);
+    }
+    if (cached) {
+      return cached;
+    }
+
+    let newTag: Tag;
+    try {
+      newTag = new Tag(originalString);
+    } catch (error) {
+      Tag.cache.set(originalString, null);
+      throw error;
+    }
+
+    const cachedCanonical = Tag.cache.get(newTag.taxonomyTerm.canonical);
+    if (cachedCanonical) {
+      Tag.cache.set(originalString, cachedCanonical);
+      return cachedCanonical;
+    }
+
+    Tag.cache.set(newTag.taxonomyTerm.canonical, newTag);
+    Tag.cache.set(originalString, newTag);
+    return newTag;
+  }
+
+  private constructor(public originalString: string) {
     const matchingTerm = TAXONOMY.find(term =>
       this.matches(originalString, term)
     );
@@ -20,7 +50,7 @@ export class Tag {
 
   isA(term: string): boolean {
     for (const parentTerm of this.taxonomyTerm.parents || []) {
-      const parentTag = new Tag(parentTerm);
+      const parentTag = Tag.get(parentTerm);
       if (parentTag.is(term) || parentTag.isA(term)) {
         return true;
       }
@@ -30,7 +60,7 @@ export class Tag {
 
   hasChild(term: string): boolean {
     for (const childTerm of this.taxonomyTerm.children || []) {
-      const childTag = new Tag(childTerm);
+      const childTag = Tag.get(childTerm);
       if (childTag.is(term)) {
         return true;
       }
@@ -40,7 +70,7 @@ export class Tag {
 
   isSibling(term: string): boolean {
     for (const parentTerm of this.taxonomyTerm.parents || []) {
-      const parentTag = new Tag(parentTerm);
+      const parentTag = Tag.get(parentTerm);
       if (parentTag.hasChild(term)) {
         return true;
       }
@@ -59,7 +89,7 @@ export class Tag {
 
     let shortestParentDistance: number | null = null;
     for (const parentTerm of this.taxonomyTerm.parents) {
-      const parentTag = new Tag(parentTerm);
+      const parentTag = Tag.get(parentTerm);
       const distance = parentTag.getDistanceToAncestor(ancestorTerm);
       if (distance !== null) {
         if (
@@ -76,7 +106,7 @@ export class Tag {
   getAllAncestors(): Set<string> {
     const result = new Set<string>();
     for (const parentTerm of this.taxonomyTerm.parents || []) {
-      const parentTag = new Tag(parentTerm);
+      const parentTag = Tag.get(parentTerm);
       result.add(parentTag.taxonomyTerm.canonical);
       parentTag.getAllAncestors().forEach(ancestor => result.add(ancestor));
     }
@@ -85,7 +115,7 @@ export class Tag {
 
   getAllCommonAncestors(term: string): Set<string> {
     const thisAncestors = this.getAllAncestors();
-    const otherAncestors = new Tag(term).getAllAncestors();
+    const otherAncestors = Tag.get(term).getAllAncestors();
     const commonAncestors = new Set<string>();
     // NOTE: set.intersection() is a very new in ES2024
     thisAncestors.forEach(ancestor => {
@@ -101,7 +131,7 @@ export class Tag {
       return this.taxonomyTerm.canonical;
     }
 
-    const otherTag = new Tag(term);
+    const otherTag = Tag.get(term);
 
     if (this.isA(term)) {
       return otherTag.taxonomyTerm.canonical;
@@ -137,7 +167,7 @@ export class Tag {
     }
     return Math.min(
       this.getDistanceToAncestor(lowestCommonAncestor) as number,
-      new Tag(term).getDistanceToAncestor(lowestCommonAncestor) as number
+      Tag.get(term).getDistanceToAncestor(lowestCommonAncestor) as number
     );
   }
 
@@ -147,13 +177,13 @@ export class Tag {
     }
 
     for (const includesTerm of this.taxonomyTerm.includes || []) {
-      const includesTag = new Tag(includesTerm);
+      const includesTag = Tag.get(includesTerm);
       if (includesTag.is(term) || includesTag.includes(term)) {
         return true;
       }
     }
     for (const parentTerm of this.taxonomyTerm.parents || []) {
-      const parentTag = new Tag(parentTerm);
+      const parentTag = Tag.get(parentTerm);
       if (parentTag.includes(term)) {
         return true;
       }
@@ -167,7 +197,7 @@ export class Tag {
     }
 
     for (const relatedTerm of this.taxonomyTerm.related || []) {
-      const relatedTag = new Tag(relatedTerm);
+      const relatedTag = Tag.get(relatedTerm);
       if (relatedTag.is(term)) {
         return true;
       }
