@@ -7,7 +7,7 @@ import { SectionHeaderComponent } from '@portfolio/section-header';
 import { Subject, takeUntil } from 'rxjs';
 
 interface TagMatchInfo {
-  tag: string;
+  searchTag: string;
   fullMatches: number;
   partialMatches: number;
 }
@@ -28,8 +28,8 @@ export class MatchesOverviewComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.searchTagService.tags$
       .pipe(takeUntil(this.destroy$))
-      .subscribe(tags => {
-        this.updateTagMatches(tags);
+      .subscribe(searchTags => {
+        this.updateSearchTagMatches(searchTags);
       });
   }
 
@@ -38,11 +38,13 @@ export class MatchesOverviewComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  private updateTagMatches(tags: string[]): void {
-    this.tagMatches = tags.map(tag => ({
-      tag,
-      fullMatches: this.projectService.getBy({ isFullMatchFor: tag }).length,
-      partialMatches: this.projectService.getBy({ isPartialFor: tag }).length,
+  private updateSearchTagMatches(searchTags: string[]): void {
+    this.tagMatches = searchTags.map(searchTag => ({
+      searchTag,
+      fullMatches: this.projectService.getBy({ isFullMatchFor: searchTag })
+        .length,
+      partialMatches: this.projectService.getBy({ isPartialFor: searchTag })
+        .length,
     }));
   }
 }

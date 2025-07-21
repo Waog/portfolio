@@ -72,20 +72,20 @@ export class TopProjectsService {
   private countFullMatches(project: Project, searchTags: string[]): number {
     return project.technologies.filter(
       technology =>
-        this.technologyMatchingService.getBestMatchType(
-          technology,
-          searchTags
-        ) === 'full'
+        this.technologyMatchingService.getBestMatchTypeForTechnology({
+          technologyName: technology,
+          searchTags,
+        }) === 'full'
     ).length;
   }
 
   private countIndirectMatches(project: Project, searchTags: string[]): number {
     return project.technologies.filter(
       technology =>
-        this.technologyMatchingService.getBestMatchType(
-          technology,
-          searchTags
-        ) === 'indirect'
+        this.technologyMatchingService.getBestMatchTypeForTechnology({
+          technologyName: technology,
+          searchTags,
+        }) === 'indirect'
     ).length;
   }
 }

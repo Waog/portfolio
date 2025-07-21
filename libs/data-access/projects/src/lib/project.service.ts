@@ -22,23 +22,26 @@ export class ProjectService {
   }
 
   getBy(filterConfig: ProjectFilterConfig): Project[] {
-    const { isFullMatchFor, isPartialFor } = filterConfig;
+    const {
+      isFullMatchFor: fullMatchSearchTag,
+      isPartialFor: partialMatchSearchTag,
+    } = filterConfig;
 
-    if (isFullMatchFor) {
+    if (fullMatchSearchTag) {
       return ALL_PROJECTS.filter(
         project =>
-          this.technologyMatchingService.getBestMatchType(
-            isFullMatchFor,
-            project.technologies
-          ) === 'full'
+          this.technologyMatchingService.getBestMatchTypeForSearchTag({
+            searchTag: fullMatchSearchTag,
+            technologyNames: project.technologies,
+          }) === 'full'
       );
-    } else if (isPartialFor) {
+    } else if (partialMatchSearchTag) {
       return ALL_PROJECTS.filter(
         project =>
-          this.technologyMatchingService.getBestMatchType(
-            isPartialFor,
-            project.technologies
-          ) === 'indirect'
+          this.technologyMatchingService.getBestMatchTypeForSearchTag({
+            searchTag: partialMatchSearchTag,
+            technologyNames: project.technologies,
+          }) === 'indirect'
       );
     } else {
       throw new Error(
@@ -51,6 +54,7 @@ export class ProjectService {
   getTopProjects(): Project[] {
     return this.topProjectsService.getTopProjects();
   }
+
   getNonTopProjects(): Project[] {
     return this.getAll().filter(
       project => !this.topProjectsService.getTopProjects().includes(project)

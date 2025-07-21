@@ -136,7 +136,9 @@ export class SkillSectionService {
   private getMatchCount(category: SkillCategory): number {
     return category.keywords.reduce((score, keyword) => {
       const matchType =
-        this.technologyMatchingService.getBestMatchType(keyword);
+        this.technologyMatchingService.getBestMatchTypeForTechnology({
+          technologyName: keyword,
+        });
       if (matchType === 'full') {
         return score + 1;
       } else if (matchType === 'indirect') {

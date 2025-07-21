@@ -2,8 +2,8 @@
   <lib-section-header text="Experience by Keywords" />
 
   <div class="grid">
-    @for (tagMatch of tagMatches; track tagMatch.tag) {
-    <span class="search-term">{{ tagMatch.tag }}:</span>
+    @for (tagMatch of tagMatches; track tagMatch.searchTag) {
+    <span class="search-term">{{ tagMatch.searchTag }}:</span>
 
     <div class="match-results">
       @if (tagMatch.fullMatches > 0) {

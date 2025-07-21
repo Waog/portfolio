@@ -22,7 +22,9 @@ export class KeywordListComponent {
   get technologies(): TechnologyWithMatch[] {
     return this.keywords().map(keyword => ({
       name: keyword,
-      matchType: this.technologyMatchingService.getBestMatchType(keyword),
+      matchType: this.technologyMatchingService.getBestMatchTypeForTechnology({
+        technologyName: keyword,
+      }),
     }));
   }
 

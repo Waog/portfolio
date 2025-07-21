@@ -9,6 +9,13 @@ describe('Taxonomy Data', () => {
     expect(canonicalNames).toEqual([...canonicalNames].sort());
   });
 
+  it('has no duplicate canonical values', () => {
+    const canonicalNames = TAXONOMY.map(term => term.canonical);
+    const uniqueCanonicalNames = new Set(canonicalNames);
+
+    expect(canonicalNames.length).toBe(uniqueCanonicalNames.size);
+  });
+
   it('`includes` elements exist as another TAXONOMY element', () => {
     throwIfBrokenReference('includes');
   });

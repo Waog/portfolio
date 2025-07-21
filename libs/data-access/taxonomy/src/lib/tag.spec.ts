@@ -84,4 +84,110 @@ describe('Tag', () => {
       expect(new Tag('React').isSibling('CSS')).toBe(false);
     });
   });
+
+  describe('getDistanceToAncestor()', () => {
+    it('returns 0 for identical element', () => {
+      expect(new Tag('React').getDistanceToAncestor('React')).toBe(0);
+    });
+
+    it('return 1 for direct parent', () => {
+      expect(new Tag('React Native').getDistanceToAncestor('React')).toBe(1);
+    });
+
+    it('returns 2 for grand parent', () => {
+      expect(
+        new Tag('React Native').getDistanceToAncestor('Frontend Framework')
+      ).toBe(2);
+    });
+
+    it('returns `null` for non-ancestor', () => {
+      expect(new Tag('React').getDistanceToAncestor('RxJS')).toBeNull();
+    });
+  });
+
+  describe('getAllAncestors()', () => {
+    it('returns a set of all ancestors', () => {
+      expect(new Tag('React Web').getAllAncestors()).toEqual(
+        new Set(['React', 'Frontend Framework', 'Framework'])
+      );
+    });
+
+    it('returns an empty set if there are no ancestors', () => {
+      expect(new Tag('Framework').getAllAncestors()).toEqual(new Set());
+    });
+  });
+
+  describe('getAllCommonAncestors()', () => {
+    it('returns a set of all common ancestors', () => {
+      expect(new Tag('React Web').getAllCommonAncestors('Angular')).toEqual(
+        new Set(['Frontend Framework', 'Framework'])
+      );
+    });
+
+    it('returns an empty set if there are no common ancestors', () => {
+      expect(new Tag('CSS').getAllCommonAncestors('HTML')).toEqual(new Set());
+    });
+  });
+
+  describe('getLowestCommonAncestor()', () => {
+    it('returns the element itself, if comparing to itself', () => {
+      expect(new Tag('Angular').getLowestCommonAncestor('Angular')).toEqual(
+        'Angular'
+      );
+    });
+
+    it('returns the direct ancestor if comparing to an element with its direct ancestor', () => {
+      expect(
+        new Tag('Frontend Framework').getLowestCommonAncestor('React Native')
+      ).toEqual('Frontend Framework');
+
+      expect(
+        new Tag('React Native').getLowestCommonAncestor('Frontend Framework')
+      ).toEqual('Frontend Framework');
+    });
+
+    it('returns a the common ancestors', () => {
+      expect(new Tag('React Web').getLowestCommonAncestor('Angular')).toEqual(
+        'Frontend Framework'
+      );
+    });
+
+    it('returns null if there is no common ancestor', () => {
+      expect(new Tag('CSS').getLowestCommonAncestor('HTML')).toEqual(null);
+    });
+  });
+
+  describe('getMinDistanceToLowestCommonAncestor()', () => {
+    it('returns 0 for the element itself', () => {
+      expect(
+        new Tag('React').getMinDistanceToLowestCommonAncestor('React')
+      ).toEqual(0);
+    });
+
+    it('returns 0 if one element is the ancestor of the other', () => {
+      expect(
+        new Tag('Frontend Framework').getMinDistanceToLowestCommonAncestor(
+          'React Native'
+        )
+      ).toEqual(0);
+
+      expect(
+        new Tag('React Native').getMinDistanceToLowestCommonAncestor(
+          'Frontend Framework'
+        )
+      ).toEqual(0);
+    });
+
+    it('returns 1 if the lowest common ancestor is a direct parent of one participant', () => {
+      expect(
+        new Tag('Angular').getMinDistanceToLowestCommonAncestor('React Native')
+      ).toEqual(1);
+    });
+
+    it('returns null if there is no common ancestor', () => {
+      expect(
+        new Tag('CSS').getMinDistanceToLowestCommonAncestor('HTML')
+      ).toEqual(null);
+    });
+  });
 });

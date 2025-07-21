@@ -12,7 +12,7 @@ describe('KeywordListComponent', () => {
 
   beforeEach(async () => {
     const mockTechnologyMatchingServiceObj = {
-      getBestMatchType: jest.fn(),
+      getBestMatchTypeForTechnology: jest.fn(),
       getMatchType: jest.fn(),
     };
 
@@ -43,10 +43,9 @@ describe('KeywordListComponent', () => {
 
   describe('technologies getter', () => {
     it('should return keywords with match types', () => {
-      // Mock the getBestMatchType method
-      mockTechnologyMatchingService.getBestMatchType.mockImplementation(
-        (keyword: string) => {
-          switch (keyword) {
+      mockTechnologyMatchingService.getBestMatchTypeForTechnology.mockImplementation(
+        ({ technologyName }: { technologyName: string }) => {
+          switch (technologyName) {
             case 'Angular':
               return 'full';
             case 'TypeScript':
@@ -64,20 +63,19 @@ describe('KeywordListComponent', () => {
         { name: 'TypeScript', matchType: 'indirect' },
       ]);
       expect(
-        mockTechnologyMatchingService.getBestMatchType
-      ).toHaveBeenCalledWith('Angular');
+        mockTechnologyMatchingService.getBestMatchTypeForTechnology
+      ).toHaveBeenCalledWith({ technologyName: 'Angular' });
       expect(
-        mockTechnologyMatchingService.getBestMatchType
-      ).toHaveBeenCalledWith('TypeScript');
+        mockTechnologyMatchingService.getBestMatchTypeForTechnology
+      ).toHaveBeenCalledWith({ technologyName: 'TypeScript' });
     });
   });
 
   describe('keyword categorization', () => {
     beforeEach(() => {
-      // Mock the getBestMatchType method for each keyword
-      mockTechnologyMatchingService.getBestMatchType.mockImplementation(
-        (keyword: string) => {
-          switch (keyword) {
+      mockTechnologyMatchingService.getBestMatchTypeForTechnology.mockImplementation(
+        ({ technologyName }: { technologyName: string }) => {
+          switch (technologyName) {
             case 'Angular':
               return 'full';
             case 'TypeScript':
@@ -106,7 +104,9 @@ describe('KeywordListComponent', () => {
     describe('grayTechnologies', () => {
       it('should return keywords with no match', () => {
         // Update the mock to return 'none' for both keywords
-        mockTechnologyMatchingService.getBestMatchType.mockReturnValue('none');
+        mockTechnologyMatchingService.getBestMatchTypeForTechnology.mockReturnValue(
+          'none'
+        );
 
         const grayKeywords = component.grayTechnologies;
         expect(grayKeywords).toEqual(['Angular', 'TypeScript']);

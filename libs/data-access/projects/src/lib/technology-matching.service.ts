@@ -15,7 +15,13 @@ export class TechnologyMatchingService {
   /**
    * Determines the match type between a technology name and a search tag
    */
-  getMatchType(technologyName: string, searchTag: string): MatchType {
+  getMatchType({
+    technologyName,
+    searchTag,
+  }: {
+    technologyName: string;
+    searchTag: string;
+  }): MatchType {
     const cacheKey = `${technologyName}::${searchTag}`;
     const cached = this.getCache(cacheKey);
     if (cached !== undefined) {
@@ -44,21 +50,54 @@ export class TechnologyMatchingService {
   /**
    * Finds the best match type for a technology against multiple search tags
    */
-  getBestMatchType(technologyName: string, searchTags?: string[]): MatchType {
+  getBestMatchTypeForTechnology({
+    technologyName,
+    searchTags,
+  }: {
+    technologyName: string;
+    searchTags?: string[];
+  }): MatchType {
     if (!searchTags) {
       searchTags = this.searchTagService.currentTags;
     }
 
     // First check for any full matches
-    for (const tag of searchTags) {
-      if (this.getMatchType(technologyName, tag) === 'full') {
+    for (const searchTag of searchTags) {
+      if (this.getMatchType({ technologyName, searchTag }) === 'full') {
         return 'full';
       }
     }
 
     // Then check for any indirect matches
-    for (const tag of searchTags) {
-      if (this.getMatchType(technologyName, tag) === 'indirect') {
+    for (const searchTag of searchTags) {
+      if (this.getMatchType({ technologyName, searchTag }) === 'indirect') {
+        return 'indirect';
+      }
+    }
+
+    return 'none';
+  }
+
+  /**
+   * Finds the best match type for a technology against multiple search tags
+   */
+  getBestMatchTypeForSearchTag({
+    searchTag,
+    technologyNames,
+  }: {
+    searchTag: string;
+    technologyNames: string[];
+  }): MatchType {
+    // First check for any full matches
+    for (const technologyName of technologyNames) {
+      if (this.getMatchType({ technologyName, searchTag }) === 'full') {
+        return 'full';
+      }
+    }
+
+    // Then check for any indirect matches
+    for (const technologyName of technologyNames) {
+      if (this.getMatchType({ technologyName, searchTag }) === 'indirect') {
         return 'indirect';
       }
     }
@@ -79,7 +118,9 @@ export class TechnologyMatchingService {
       return 'full';
     }
 
-    if (techTag.isSibling(searchTag) || techTag.hasChild(searchTag)) {
+    const minDistanceToAncestor =
+      techTag.getMinDistanceToLowestCommonAncestor(searchTag) ?? Infinity;
+    if (minDistanceToAncestor <= 1) {
       return 'indirect';
     }
 
