@@ -125,7 +125,11 @@ describe('Tag', () => {
   describe('getAllAncestors()', () => {
     it('returns a set of all ancestors', () => {
       expect(Tag.get('React Web').getAllAncestors()).toEqual(
-        new Set(['React', 'Frontend Framework', 'Framework'])
+        new Set([
+          Tag.get('React'),
+          Tag.get('Frontend Framework'),
+          Tag.get('Framework'),
+        ])
       );
     });
 
@@ -153,7 +157,7 @@ describe('Tag', () => {
   describe('getAllCommonAncestors()', () => {
     it('returns a set of all common ancestors', () => {
       expect(Tag.get('React Web').getAllCommonAncestors('Angular')).toEqual(
-        new Set(['Frontend Framework', 'Framework'])
+        new Set([Tag.get('Frontend Framework'), Tag.get('Framework')])
       );
     });
 
@@ -187,23 +191,23 @@ describe('Tag', () => {
   describe('getLowestCommonAncestor()', () => {
     it('returns the element itself, if comparing to itself', () => {
       expect(Tag.get('Angular').getLowestCommonAncestor('Angular')).toEqual(
-        'Angular'
+        Tag.get('Angular')
       );
     });
 
     it('returns the direct ancestor if comparing to an element with its direct ancestor', () => {
       expect(
         Tag.get('Frontend Framework').getLowestCommonAncestor('React Native')
-      ).toEqual('Frontend Framework');
+      ).toEqual(Tag.get('Frontend Framework'));
 
       expect(
         Tag.get('React Native').getLowestCommonAncestor('Frontend Framework')
-      ).toEqual('Frontend Framework');
+      ).toEqual(Tag.get('Frontend Framework'));
     });
 
     it('returns a the common ancestors', () => {
       expect(Tag.get('React Web').getLowestCommonAncestor('Angular')).toEqual(
-        'Frontend Framework'
+        Tag.get('Frontend Framework')
       );
     });
 

@@ -111,74 +111,80 @@ export class Tag {
   }
 
   @Memoize()
-  getAllAncestors(): Set<string> {
-    const result = new Set<string>();
+  getAllAncestors(): Set<Tag> {
+    const result = new Set<Tag>();
     for (const parentTerm of this.taxonomyTerm.parents || []) {
       const parentTag = Tag.get(parentTerm);
-      result.add(parentTag.taxonomyTerm.canonical);
-      parentTag.getAllAncestors().forEach(ancestor => result.add(ancestor));
+      result.add(parentTag);
+      parentTag
+        .getAllAncestors()
+        .forEach(ancestorTag => result.add(ancestorTag));
     }
     return result;
   }
 
   @Memoize()
-  getAllCommonAncestors(term: string): Set<string> {
-    const thisAncestors = this.getAllAncestors();
-    const otherAncestors = Tag.get(term).getAllAncestors();
-    const commonAncestors = new Set<string>();
-    // NOTE: set.intersection() is a very new in ES2024
-    thisAncestors.forEach(ancestor => {
-      if (otherAncestors.has(ancestor)) {
-        commonAncestors.add(ancestor);
+  getAllCommonAncestors(term: string): Set<Tag> {
+    const thisAncestorTags = this.getAllAncestors();
+    const otherAncestorTags = Tag.get(term).getAllAncestors();
+    const result = new Set<Tag>();
+    // NOTE: not using Set.intersection() as it is too new (ES2024)
+    thisAncestorTags.forEach(thisAncestorTag => {
+      if (otherAncestorTags.has(thisAncestorTag)) {
+        result.add(thisAncestorTag);
       }
     });
-    return commonAncestors;
+    return result;
   }
 
   @Memoize()
-  getLowestCommonAncestor(term: string): string | null {
+  getLowestCommonAncestor(term: string): Tag | null {
     if (this.is(term)) {
-      return this.taxonomyTerm.canonical;
+      return this;
     }
 
     const otherTag = Tag.get(term);
 
     if (this.isA(term)) {
-      return otherTag.taxonomyTerm.canonical;
+      return otherTag;
     }
 
     if (otherTag.isA(this.taxonomyTerm.canonical)) {
-      return this.taxonomyTerm.canonical;
+      return this;
     }
 
-    const commonAncestors = this.getAllCommonAncestors(term);
-    if (commonAncestors.size === 0) {
+    const commonAncestorTags = this.getAllCommonAncestors(term);
+    if (commonAncestorTags.size === 0) {
       return null;
     }
     let shortestDistanceToThis = Infinity;
-    let shortestDistanceAncestor: string | null = null;
-    for (const commonAncestor of commonAncestors) {
+    let shortestDistanceAncestorTag: Tag | null = null;
+    for (const commonAncestorTag of commonAncestorTags) {
       const distanceToThis = this.getDistanceToAncestor(
-        commonAncestor
+        commonAncestorTag.taxonomyTerm.canonical
       ) as number;
       if (distanceToThis < shortestDistanceToThis) {
         shortestDistanceToThis = distanceToThis;
-        shortestDistanceAncestor = commonAncestor;
+        shortestDistanceAncestorTag = commonAncestorTag;
       }
     }
 
-    return shortestDistanceAncestor;
+    return shortestDistanceAncestorTag;
   }
 
   @Memoize()
   getMinDistanceToLowestCommonAncestor(term: string): number | null {
-    const lowestCommonAncestor = this.getLowestCommonAncestor(term);
-    if (lowestCommonAncestor === null) {
+    const lowestCommonAncestorTag = this.getLowestCommonAncestor(term);
+    if (lowestCommonAncestorTag === null) {
       return null;
     }
     return Math.min(
-      this.getDistanceToAncestor(lowestCommonAncestor) as number,
-      Tag.get(term).getDistanceToAncestor(lowestCommonAncestor) as number
+      this.getDistanceToAncestor(
+        lowestCommonAncestorTag.taxonomyTerm.canonical
+      ) as number,
+      Tag.get(term).getDistanceToAncestor(
+        lowestCommonAncestorTag.taxonomyTerm.canonical
+      ) as number
     );
   }
 
