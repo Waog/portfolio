@@ -1,6 +1,6 @@
 import 'jest-expect-message';
 
-import { TagName, TAXONOMY, TaxonomyTerm } from './taxonomy.data';
+import { TagName, TAXONOMY, TaxonomyData } from './taxonomy.data';
 
 describe('Taxonomy Data', () => {
   it('has ordered elements (by canonical name)', () => {
@@ -41,7 +41,7 @@ describe('Taxonomy Data', () => {
   });
 
   it('array properties are ordered alphabetically', () => {
-    const arrayProperties: (keyof TaxonomyTerm)[] = [
+    const arrayProperties: (keyof TaxonomyData)[] = [
       'synonyms',
       'includes',
       'related',
@@ -73,8 +73,8 @@ describe('Taxonomy Data', () => {
   }
 
   function throwIfBrokenReference(
-    sourcePropertyName: keyof TaxonomyTerm,
-    targetPropertyName: keyof TaxonomyTerm | undefined = undefined
+    sourcePropertyName: keyof TaxonomyData,
+    targetPropertyName: keyof TaxonomyData | undefined = undefined
   ) {
     for (const sourceTerm of TAXONOMY) {
       const sourceValues: TagName[] = sourceTerm[

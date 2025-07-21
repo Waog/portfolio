@@ -1,11 +1,11 @@
 import { Memoize } from 'typescript-memoize';
 
-import { TAXONOMY, TaxonomyTerm } from './taxonomy.data';
+import { TAXONOMY, TaxonomyData } from './taxonomy.data';
 
 export class Tag {
   private static cache = new Map<string, Tag | null>();
 
-  private readonly taxonomyTerm: TaxonomyTerm;
+  private readonly taxonomyData: TaxonomyData;
 
   public static get(originalString: string): Tag {
     const cached = Tag.cache.get(originalString);
@@ -24,13 +24,13 @@ export class Tag {
       throw error;
     }
 
-    const cachedCanonical = Tag.cache.get(newTag.taxonomyTerm.canonical);
+    const cachedCanonical = Tag.cache.get(newTag.taxonomyData.canonical);
     if (cachedCanonical) {
       Tag.cache.set(originalString, cachedCanonical);
       return cachedCanonical;
     }
 
-    Tag.cache.set(newTag.taxonomyTerm.canonical, newTag);
+    Tag.cache.set(newTag.taxonomyData.canonical, newTag);
     Tag.cache.set(originalString, newTag);
     return newTag;
   }
@@ -40,7 +40,7 @@ export class Tag {
       this.matches(originalString, term)
     );
     if (matchingTerm) {
-      this.taxonomyTerm = matchingTerm;
+      this.taxonomyData = matchingTerm;
     } else {
       throw new Error(`Tag "${originalString}" not found in taxonomy.`);
     }
@@ -48,12 +48,12 @@ export class Tag {
 
   @Memoize()
   is(term: string): boolean {
-    return this.matches(term, this.taxonomyTerm);
+    return this.matches(term, this.taxonomyData);
   }
 
   @Memoize()
   isA(term: string): boolean {
-    for (const parentTerm of this.taxonomyTerm.parents || []) {
+    for (const parentTerm of this.taxonomyData.parents || []) {
       const parentTag = Tag.get(parentTerm);
       if (parentTag.is(term) || parentTag.isA(term)) {
         return true;
@@ -64,7 +64,7 @@ export class Tag {
 
   @Memoize()
   hasChild(term: string): boolean {
-    for (const childTerm of this.taxonomyTerm.children || []) {
+    for (const childTerm of this.taxonomyData.children || []) {
       const childTag = Tag.get(childTerm);
       if (childTag.is(term)) {
         return true;
@@ -75,7 +75,7 @@ export class Tag {
 
   @Memoize()
   isSibling(term: string): boolean {
-    for (const parentTerm of this.taxonomyTerm.parents || []) {
+    for (const parentTerm of this.taxonomyData.parents || []) {
       const parentTag = Tag.get(parentTerm);
       if (parentTag.hasChild(term)) {
         return true;
@@ -90,12 +90,12 @@ export class Tag {
       return 0;
     }
 
-    if (!this.taxonomyTerm.parents || this.taxonomyTerm.parents.length === 0) {
+    if (!this.taxonomyData.parents || this.taxonomyData.parents.length === 0) {
       return null;
     }
 
     let shortestParentDistance: number | null = null;
-    for (const parentTerm of this.taxonomyTerm.parents) {
+    for (const parentTerm of this.taxonomyData.parents) {
       const parentTag = Tag.get(parentTerm);
       const distance = parentTag.getDistanceToAncestor(ancestorTerm);
       if (distance !== null) {
@@ -113,7 +113,7 @@ export class Tag {
   @Memoize()
   getAllAncestors(): Set<Tag> {
     const result = new Set<Tag>();
-    for (const parentTerm of this.taxonomyTerm.parents || []) {
+    for (const parentTerm of this.taxonomyData.parents || []) {
       const parentTag = Tag.get(parentTerm);
       result.add(parentTag);
       parentTag
@@ -149,7 +149,7 @@ export class Tag {
       return otherTag;
     }
 
-    if (otherTag.isA(this.taxonomyTerm.canonical)) {
+    if (otherTag.isA(this.taxonomyData.canonical)) {
       return this;
     }
 
@@ -161,7 +161,7 @@ export class Tag {
     let shortestDistanceAncestorTag: Tag | null = null;
     for (const commonAncestorTag of commonAncestorTags) {
       const distanceToThis = this.getDistanceToAncestor(
-        commonAncestorTag.taxonomyTerm.canonical
+        commonAncestorTag.taxonomyData.canonical
       ) as number;
       if (distanceToThis < shortestDistanceToThis) {
         shortestDistanceToThis = distanceToThis;
@@ -180,10 +180,10 @@ export class Tag {
     }
     return Math.min(
       this.getDistanceToAncestor(
-        lowestCommonAncestorTag.taxonomyTerm.canonical
+        lowestCommonAncestorTag.taxonomyData.canonical
       ) as number,
       Tag.get(term).getDistanceToAncestor(
-        lowestCommonAncestorTag.taxonomyTerm.canonical
+        lowestCommonAncestorTag.taxonomyData.canonical
       ) as number
     );
   }
@@ -194,13 +194,13 @@ export class Tag {
       return true;
     }
 
-    for (const includesTerm of this.taxonomyTerm.includes || []) {
+    for (const includesTerm of this.taxonomyData.includes || []) {
       const includesTag = Tag.get(includesTerm);
       if (includesTag.is(term) || includesTag.includes(term)) {
         return true;
       }
     }
-    for (const parentTerm of this.taxonomyTerm.parents || []) {
+    for (const parentTerm of this.taxonomyData.parents || []) {
       const parentTag = Tag.get(parentTerm);
       if (parentTag.includes(term)) {
         return true;
@@ -215,7 +215,7 @@ export class Tag {
       return true;
     }
 
-    for (const relatedTerm of this.taxonomyTerm.related || []) {
+    for (const relatedTerm of this.taxonomyData.related || []) {
       const relatedTag = Tag.get(relatedTerm);
       if (relatedTag.is(term)) {
         return true;
@@ -224,16 +224,16 @@ export class Tag {
     return false;
   }
 
-  private matches(term: string, taxonomyTerm: TaxonomyTerm): boolean {
+  private matches(term: string, taxonomyData: TaxonomyData): boolean {
     return (
-      taxonomyTerm.canonical === term ||
-      this.synonymMatch(term, taxonomyTerm.synonyms)
+      taxonomyData.canonical === term ||
+      this.synonymMatch(term, taxonomyData.synonyms)
     );
   }
 
   private synonymMatch(
     term: string,
-    synonyms: TaxonomyTerm['synonyms']
+    synonyms: TaxonomyData['synonyms']
   ): boolean {
     if (!synonyms) return false;
 

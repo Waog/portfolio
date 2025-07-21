@@ -16,7 +16,7 @@ export type TagName =
   | 'TypeScript'
   | 'Vue.js';
 
-export type TaxonomyTerm = {
+export type TaxonomyData = {
   readonly canonical: TagName;
   readonly synonyms?: readonly (RegExp | string)[];
   readonly includes?: readonly TagName[];
@@ -25,7 +25,7 @@ export type TaxonomyTerm = {
   readonly children?: readonly TagName[];
 };
 
-export const TAXONOMY: readonly TaxonomyTerm[] = [
+export const TAXONOMY: readonly TaxonomyData[] = [
   {
     canonical: 'Angular',
     synonyms: [/^angular$/i],
