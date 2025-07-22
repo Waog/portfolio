@@ -48,7 +48,13 @@ class MockTechnologyMatchingService {
     return 'none';
   }
 
-  getBestMatchType(technologyName: string, searchTags?: string[]): MatchType {
+  getBestMatchTypeForTechnology({
+    technologyName,
+    searchTags,
+  }: {
+    technologyName: string;
+    searchTags?: string[];
+  }): MatchType {
     if (!searchTags) {
       searchTags = this.searchTagService.currentTags;
     }
