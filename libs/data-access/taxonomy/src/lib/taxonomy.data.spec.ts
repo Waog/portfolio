@@ -4,7 +4,7 @@ import { TagName, TAXONOMY, TaxonomyData } from './taxonomy.data';
 
 describe('Taxonomy Data', () => {
   it('has ordered elements (by canonical name)', () => {
-    const canonicalNames = TAXONOMY.map(term => term.canonical);
+    const canonicalNames = TAXONOMY.map(term => term.canonical.toLowerCase());
 
     expect(canonicalNames).toEqual([...canonicalNames].sort());
   });
@@ -112,34 +112,18 @@ describe('Taxonomy Data', () => {
 
         if (!targetPropertyName) continue; // only check for canonical name if no target property is specified
 
-        const targetValue = targetTerm![targetPropertyName];
+        const targetValue = targetTerm?.[targetPropertyName];
 
         if (typeof targetValue === 'string') {
-          const contextMsg = `Taxonomy Element "${
-            sourceTerm.canonical
-          }" has property "${sourcePropertyName}" with element "${sourceValue}", but Taxonomy Element "${
-            targetTerm!.canonical
-          }"'s property "${targetPropertyName}" !== "${
-            sourceTerm.canonical
-          }" (but is "${targetValue}")`;
+          const contextMsg = `Taxonomy Element "${sourceTerm.canonical}" has property "${sourcePropertyName}" with element "${sourceValue}", but Taxonomy Element "${targetTerm?.canonical}"'s property "${targetPropertyName}" !== "${sourceTerm.canonical}" (but is "${targetValue}")`;
 
           expect(targetValue, contextMsg).toBe(sourceTerm.canonical);
         } else if (Array.isArray(targetValue)) {
-          const contextMsg = `Taxonomy Element "${
-            sourceTerm.canonical
-          }" has property "${sourcePropertyName}" with element "${sourceValue}", but Taxonomy Element "${
-            targetTerm!.canonical
-          }"'s property "${targetPropertyName}" does not include "${
-            sourceTerm.canonical
-          }"`;
+          const contextMsg = `Taxonomy Element "${sourceTerm.canonical}" has property "${sourcePropertyName}" with element "${sourceValue}", but Taxonomy Element "${targetTerm?.canonical}"'s property "${targetPropertyName}" does not include "${sourceTerm.canonical}"`;
 
           expect(targetValue, contextMsg).toContain(sourceTerm.canonical);
         } else {
-          const contextMsg = `Taxonomy Element "${
-            sourceTerm.canonical
-          }" has property "${sourcePropertyName}" with element "${sourceValue}", but Taxonomy Element "${
-            targetTerm!.canonical
-          }"'s doesn't have a property "${targetPropertyName}" of type string or string[]`;
+          const contextMsg = `Taxonomy Element "${sourceTerm.canonical}" has property "${sourcePropertyName}" with element "${sourceValue}", but Taxonomy Element "${targetTerm?.canonical}"'s doesn't have a property "${targetPropertyName}" of type string or string[]`;
 
           expect(
             typeof targetValue === 'string' || Array.isArray(targetValue),

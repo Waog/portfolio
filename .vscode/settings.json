@@ -193,8 +193,12 @@
     "autodocs",
     "commitlint",
     "domcontentloaded",
+    "expressjs",
+    "Frontends",
     "noreferrer",
     "prerender",
-    "vuejs"
+    "Redash",
+    "vuejs",
+    "Zeplin"
   ]
 }
