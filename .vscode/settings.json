@@ -189,10 +189,12 @@
   "git.inputValidationSubjectLength": 100,
   "nxConsole.generateAiAgentRules": true,
   "cSpell.words": [
+    "AngularJS",
     "autodocs",
     "commitlint",
     "domcontentloaded",
     "noreferrer",
-    "prerender"
+    "prerender",
+    "vuejs"
   ]
 }

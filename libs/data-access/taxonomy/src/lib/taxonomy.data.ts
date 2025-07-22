@@ -86,6 +86,7 @@ export const TAXONOMY: readonly TaxonomyData[] = [
     categories: ['Frontend', 'Tools & Libraries'],
     synonyms: [
       // Matches "Angular 13", "Angular v13", "Angular Version 13", etc., but not "Angular Material"
+      // cSpell: disable-next-line
       /^angular\s*(v(?:ersion)?\s*)?\d+$/i,
       /^angular$/i,
     ],
