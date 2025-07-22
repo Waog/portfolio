@@ -92,4 +92,37 @@ export class TechnologyMatchingService {
 
     return 'none';
   }
+
+  getMatchCountForCurrentSearchTags({
+    keywordTags,
+  }: {
+    keywordTags: Tag[];
+  }): Record<MatchType, number> {
+    const searchTags = this.searchTagService.currentTags;
+    return this.getMatchCount({
+      keywordTags,
+      searchTags,
+    });
+  }
+
+  @Memoize()
+  getMatchCount({
+    keywordTags,
+    searchTags,
+  }: {
+    keywordTags: Tag[];
+    searchTags: string[];
+  }): Record<MatchType, number> {
+    const result: Record<MatchType, number> = { full: 0, indirect: 0, none: 0 };
+
+    for (const keywordTag of keywordTags) {
+      const matchType = this.getBestMatchTypeForKeywordTag({
+        keywordTag,
+        searchTags,
+      });
+      result[matchType]++;
+    }
+
+    return result;
+  }
 }

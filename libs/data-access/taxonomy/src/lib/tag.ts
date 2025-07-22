@@ -2,6 +2,8 @@ import { Memoize } from 'typescript-memoize';
 
 import { Category, TagName, TAXONOMY, TaxonomyData } from './taxonomy.data';
 
+export { Category, TagName } from './taxonomy.data';
+
 export class Tag {
   private static cache = new Map<string, Tag | null>();
 

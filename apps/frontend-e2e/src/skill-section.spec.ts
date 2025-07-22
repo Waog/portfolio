@@ -15,12 +15,8 @@ test.describe('Skills Section', () => {
 
     const skillsSection = await getSkillsSection(page);
 
-    await expect(
-      skillsSection.getByText('Angular', { exact: true })
-    ).toBeVisible();
-    await expect(
-      skillsSection.getByText('React Native', { exact: true })
-    ).toBeVisible();
+    await expect(skillsSection.getByText('Angular').first()).toBeVisible();
+    await expect(skillsSection.getByText('React Native').first()).toBeVisible();
   });
 
   test('displays backend technologies', async ({ page }) => {
@@ -28,12 +24,8 @@ test.describe('Skills Section', () => {
 
     const skillsSection = await getSkillsSection(page);
 
-    await expect(
-      skillsSection.getByText('Node.js', { exact: true })
-    ).toBeVisible();
-    await expect(
-      skillsSection.getByText('Java', { exact: true })
-    ).toBeVisible();
+    await expect(skillsSection.getByText('Node.js').first()).toBeVisible();
+    await expect(skillsSection.getByText('Java').first()).toBeVisible();
   });
 });
 

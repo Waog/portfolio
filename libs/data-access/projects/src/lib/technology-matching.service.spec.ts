@@ -177,4 +177,22 @@ describe('TechnologyMatchingService', () => {
       expect(result).toBe('full');
     });
   });
+
+  describe('getMatchCount', () => {
+    it('should return the correct number of matches', () => {
+      const result = service.getMatchCount({
+        keywordTags: [Tag.get('Angular'), Tag.get('React'), Tag.get('AWS')],
+        searchTags: ['AWS', 'React Native'],
+      });
+      expect(result).toEqual({ full: 1, indirect: 1, none: 1 });
+    });
+
+    it('should not only count multiple matches on the same keyword once', () => {
+      const result = service.getMatchCount({
+        keywordTags: [Tag.get('React')],
+        searchTags: ['React', 'React Native', 'React', 'React Web'],
+      });
+      expect(result).toEqual({ full: 1, indirect: 0, none: 0 });
+    });
+  });
 });

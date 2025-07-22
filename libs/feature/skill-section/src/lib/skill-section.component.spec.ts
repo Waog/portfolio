@@ -4,39 +4,27 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { By } from '@angular/platform-browser';
 import { KeywordListComponent } from '@portfolio/keyword-list';
-import { Tag } from '@portfolio/taxonomy';
+import { Category, Tag } from '@portfolio/taxonomy';
 
 import { SkillSectionComponent } from './skill-section.component';
-import {
-  type SkillCategory,
-  SkillSectionService,
-} from './skill-section.service';
+import { SkillSectionService } from './skill-section.service';
 
-// Mock SkillSectionService
 class MockSkillSectionService {
-  getSkillCategories(): SkillCategory[] {
-    return [
-      {
-        title: 'Frontend',
-        keywords: ['Angular', 'React', 'TypeScript'],
-      },
-      {
-        title: 'Backend',
-        keywords: ['Node.js', 'Python', 'Java'],
-      },
-      {
-        title: 'Database',
-        keywords: ['PostgreSQL', 'MongoDB'],
-      },
-    ];
-  }
-
-  toTags(keywords: string[]): Tag[] {
-    return keywords.map(keyword => Tag.get(keyword));
+  getSkillCategories(): Map<Category, Tag[]> {
+    return new Map<Category, Tag[]>([
+      [
+        'Frontend' as Category,
+        [Tag.get('Angular'), Tag.get('React'), Tag.get('TypeScript')],
+      ],
+      [
+        'Backend' as Category,
+        [Tag.get('Node.js'), Tag.get('Python'), Tag.get('Java')],
+      ],
+      ['Database' as Category, [Tag.get('PostgreSQL'), Tag.get('MongoDB')]],
+    ]);
   }
 }
 
-// Mock KeywordListComponent
 @Component({
   selector: 'lib-keyword-list',
   standalone: true,
@@ -73,14 +61,14 @@ describe('SkillSectionComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should initialize with skill categories from service', () => {
+  it('should initialize with skill categories from all projects and additional keywords from service itself', () => {
     expect(component.skillCategories).toBeDefined();
-    expect(component.skillCategories.length).toBe(3);
-    expect(component.skillCategories[0].title).toBe('Frontend');
-    expect(component.skillCategories[0].keywords).toEqual([
-      'Angular',
-      'React',
-      'TypeScript',
+    expect([...component.skillCategories].length).toBe(3);
+    expect(component.skillCategories.keys().next().value).toBe('Frontend');
+    expect(component.skillCategories.get('Frontend')).toEqual([
+      Tag.get('Angular'),
+      Tag.get('React'),
+      Tag.get('TypeScript'),
     ]);
   });
 
@@ -141,7 +129,7 @@ describe('SkillSectionComponent', () => {
       const categories = mockService.getSkillCategories();
 
       expect(categories).toBeDefined();
-      expect(categories.length).toBe(3);
+      expect([...categories].length).toBe(3);
       expect(spy).toHaveBeenCalled();
     });
   });

@@ -15,11 +15,9 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { KeywordListComponent } from '@portfolio/keyword-list';
 import { SectionHeaderComponent } from '@portfolio/section-header';
+import { Category, Tag } from '@portfolio/taxonomy';
 
-import {
-  type SkillCategory,
-  SkillSectionService,
-} from './skill-section.service';
+import { SkillSectionService } from './skill-section.service';
 
 @Component({
   selector: 'lib-skill-section',
@@ -38,10 +36,12 @@ export class SkillSectionComponent implements AfterViewInit {
   @ViewChildren('keywordListRef')
   keywordListElementRefs!: QueryList<ElementRef>;
 
-  skillSectionService = inject(SkillSectionService);
+  readonly SPACER_TAGS: Tag[] = [Tag.get('Spacer')];
+
+  private skillSectionService = inject(SkillSectionService);
   private renderer = inject(Renderer2);
 
-  skillCategories: SkillCategory[] =
+  skillCategories: Map<Category, Tag[]> =
     this.skillSectionService.getSkillCategories();
 
   constructor(@Inject(PLATFORM_ID) private platformId: object) {}

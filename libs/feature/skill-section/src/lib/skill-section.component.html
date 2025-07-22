@@ -2,13 +2,13 @@
   <lib-section-header text="Skills" />
 
   <div class="grid">
-    @for (category of skillCategories; track category.title) {
-    <span class="skill-category" #categoryRef>{{ category.title }}:</span>
+    @for (category of skillCategories; track category[0]) {
+    <span class="skill-category" #categoryRef>{{ category[0] }}:</span>
 
     <div class="skill-category-content-container" #keywordListRef>
       <lib-keyword-list
         class="skill-category-content"
-        [keywordTags]="skillSectionService.toTags(category.keywords)"
+        [keywordTags]="category[1]"
       />
     </div>
     }
@@ -16,7 +16,7 @@
     <span class="skill-category print-only and-more">and more...</span>
     <lib-keyword-list
       class="skill-category-content print-only and-more spacer"
-      [keywordTags]="skillSectionService.toTags(['Spacer'])"
+      [keywordTags]="SPACER_TAGS"
     />
   </div>
 </div>
