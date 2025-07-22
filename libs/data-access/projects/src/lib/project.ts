@@ -61,8 +61,18 @@ export class Project {
 
   @Memoize()
   get technologies(): Tag[] {
-    return this.data.technologies.map(tech => {
+    const originalDataTags: Tag[] = this.data.technologies.map(tech => {
       return Tag.get(tech);
     });
+
+    const resultSet = new Set<Tag>(originalDataTags);
+
+    for (const tag of originalDataTags) {
+      tag.getImplicitTags().forEach(implicitTag => {
+        resultSet.add(implicitTag);
+      });
+    }
+
+    return Array.from(resultSet);
   }
 }

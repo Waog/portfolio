@@ -46,17 +46,11 @@ describe('TechnologyMatchingService', () => {
       ).toBe('full');
     });
 
-    it('should return indirect for taxonomic siblings', () => {
-      expect(
-        service.getMatchType({
-          keywordTag: Tag.get('Angular'),
-          searchTag: 'react',
-        })
-      ).toBe('indirect');
+    it('should return indirect for taxonomic children', () => {
       expect(
         service.getMatchType({
           keywordTag: Tag.get('React'),
-          searchTag: 'angular.js',
+          searchTag: 'React Native',
         })
       ).toBe('indirect');
     });
@@ -106,24 +100,6 @@ describe('TechnologyMatchingService', () => {
       ).toBe('none');
     });
 
-    it('should return full match for taxonomically included items', () => {
-      expect(
-        service.getMatchType({
-          keywordTag: Tag.get('Angular'),
-          searchTag: 'HTML',
-        })
-      ).toBe('full');
-    });
-
-    it('should return full match for taxonomically indirectly included items', () => {
-      expect(
-        service.getMatchType({
-          keywordTag: Tag.get('React Web'),
-          searchTag: 'JavaScript',
-        })
-      ).toBe('full');
-    });
-
     it('should return indirect match for taxonomically related items', () => {
       expect(
         service.getMatchType({
@@ -145,7 +121,7 @@ describe('TechnologyMatchingService', () => {
 
     it('should return indirect when no full match but has indirect', () => {
       const result = service.getBestMatchTypeForSearchTag({
-        searchTag: 'Angular 13',
+        searchTag: 'React Native',
         keywordTags: [Tag.get('react'), Tag.get('vue')],
       });
       expect(result).toBe('indirect');
@@ -166,14 +142,6 @@ describe('TechnologyMatchingService', () => {
       });
       expect(result).toBe('full');
     });
-
-    it('should regard direct descendants of Search Term as full match', () => {
-      const result = service.getBestMatchTypeForSearchTag({
-        searchTag: 'JavaScript',
-        keywordTags: [Tag.get('TypeScript')],
-      });
-      expect(result).toBe('full');
-    });
   });
 
   describe('getBestMatchTypeForKeywordTag', () => {
@@ -187,7 +155,7 @@ describe('TechnologyMatchingService', () => {
 
     it('should return indirect when no full match but has indirect', () => {
       const result = service.getBestMatchTypeForKeywordTag({
-        keywordTag: Tag.get('Angular'),
+        keywordTag: Tag.get('React Native'),
         searchTags: ['react', 'vue'],
       });
       expect(result).toBe('indirect');
@@ -205,14 +173,6 @@ describe('TechnologyMatchingService', () => {
       const result = service.getBestMatchTypeForKeywordTag({
         keywordTag: Tag.get('Angular'),
         searchTags: ['Angular', 'React'],
-      });
-      expect(result).toBe('full');
-    });
-
-    it('should regard direct descendants of Search Term as full match', () => {
-      const result = service.getBestMatchTypeForKeywordTag({
-        keywordTag: Tag.get('TypeScript'),
-        searchTags: ['JavaScript'],
       });
       expect(result).toBe('full');
     });

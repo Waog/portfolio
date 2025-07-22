@@ -22,17 +22,13 @@ export class TechnologyMatchingService {
     keywordTag: Tag;
     searchTag: string;
   }): MatchType {
-    if (
-      keywordTag.is(searchTag) ||
-      keywordTag.isA(searchTag) ||
-      keywordTag.includes(searchTag)
-    ) {
+    if (keywordTag.is(searchTag)) {
       return 'full';
     }
 
     const minDistanceToAncestor =
       keywordTag.getMinDistanceToLowestCommonAncestor(searchTag) ?? Infinity;
-    if (minDistanceToAncestor <= 1 || keywordTag.isRelated(searchTag)) {
+    if (minDistanceToAncestor == 0 || keywordTag.isRelated(searchTag)) {
       return 'indirect';
     }
 
