@@ -42,6 +42,7 @@ describe('Taxonomy Data', () => {
 
   it('array properties are ordered alphabetically', () => {
     const arrayProperties: (keyof TaxonomyData)[] = [
+      'categories',
       'synonyms',
       'includes',
       'related',

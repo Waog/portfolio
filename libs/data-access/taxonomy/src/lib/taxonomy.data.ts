@@ -1,12 +1,12 @@
 export type Category =
-  | 'Frontend'
-  | 'Concepts'
   | 'Backend'
-  | 'Testing and QA'
   | 'Cloud & Infrastructure'
+  | 'Concepts'
   | 'DevOps & Build & CI/CD'
-  | 'Tools & Libraries'
-  | 'Misc';
+  | 'Frontend'
+  | 'Misc'
+  | 'Testing and QA'
+  | 'Tools & Libraries';
 
 export type TagName =
   | 'Angular'
@@ -132,7 +132,7 @@ export const TAXONOMY: readonly TaxonomyData[] = [
   },
   {
     canonical: 'JavaScript',
-    categories: ['Frontend', 'Backend'],
+    categories: ['Backend', 'Frontend'],
     synonyms: [/^js$/i, /javascript/i],
     children: ['TypeScript'],
   },
@@ -157,20 +157,20 @@ export const TAXONOMY: readonly TaxonomyData[] = [
   {
     canonical: 'RxJS',
     categories: ['Frontend', 'Tools & Libraries'],
-    related: ['Angular'],
     includes: ['TypeScript'],
+    related: ['Angular'],
   },
   {
     canonical: 'SASS',
     categories: ['Frontend'],
-    related: ['SCSS'],
     includes: ['CSS'],
+    related: ['SCSS'],
   },
   {
     canonical: 'SCSS',
     categories: ['Frontend'],
-    related: ['SASS'],
     includes: ['CSS'],
+    related: ['SASS'],
   },
   {
     // NOTE: this is not a real technology, but a placeholder for empty spaces in the UI
@@ -180,7 +180,7 @@ export const TAXONOMY: readonly TaxonomyData[] = [
   },
   {
     canonical: 'TypeScript',
-    categories: ['Frontend', 'Backend'],
+    categories: ['Backend', 'Frontend'],
     synonyms: [/^ts$/i, /typescript/i],
     parents: ['JavaScript'],
   },
