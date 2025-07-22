@@ -4,6 +4,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { By } from '@angular/platform-browser';
 import { KeywordListComponent } from '@portfolio/keyword-list';
+import { Tag } from '@portfolio/taxonomy';
 
 import { SkillSectionComponent } from './skill-section.component';
 import {
@@ -29,6 +30,10 @@ class MockSkillSectionService {
       },
     ];
   }
+
+  toTags(keywords: string[]): Tag[] {
+    return keywords.map(keyword => Tag.get(keyword));
+  }
 }
 
 // Mock KeywordListComponent
@@ -38,7 +43,7 @@ class MockSkillSectionService {
   template: '<div class="mock-keyword-list">Mock Keyword List</div>',
 })
 class MockKeywordListComponent {
-  @Input() keywords: string[] = [];
+  @Input() keywordTags: Tag[] = [];
 }
 
 describe('SkillSectionComponent', () => {

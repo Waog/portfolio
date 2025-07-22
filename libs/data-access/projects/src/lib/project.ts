@@ -1,3 +1,6 @@
+import { Tag } from '@portfolio/taxonomy';
+import { Memoize } from 'typescript-memoize';
+
 import type { ProjectData } from './project.data';
 
 export class Project {
@@ -31,9 +34,6 @@ export class Project {
   get highlights() {
     return this.data.highlights;
   }
-  get technologies() {
-    return this.data.technologies;
-  }
   get role() {
     return this.data.role;
   }
@@ -57,5 +57,12 @@ export class Project {
   }
   get industry() {
     return this.data.industry;
+  }
+
+  @Memoize()
+  get technologies(): Tag[] {
+    return this.data.technologies.map(tech => {
+      return Tag.get(tech);
+    });
   }
 }

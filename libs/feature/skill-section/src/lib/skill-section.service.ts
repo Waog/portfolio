@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { TechnologyMatchingService } from '@portfolio/projects';
+import { Tag } from '@portfolio/taxonomy';
+import { Memoize } from 'typescript-memoize';
 
 export interface SkillCategory {
   title: string;
@@ -12,6 +14,7 @@ export interface SkillCategory {
 export class SkillSectionService {
   constructor(private technologyMatchingService: TechnologyMatchingService) {}
 
+  // TODO: derive skills from project Tags
   private readonly skillCategories: SkillCategory[] = [
     {
       title: 'General',
@@ -29,7 +32,6 @@ export class SkillSectionService {
       title: 'Frontend',
       keywords: [
         'Angular',
-        'Angular 13',
         'AngularJS',
         'React Native',
         'TypeScript',
@@ -133,11 +135,17 @@ export class SkillSectionService {
     );
   }
 
+  // TODO: this is a temporary workaround until skill section is derived from project Tags
+  @Memoize()
+  toTags(keywords: string[]): Tag[] {
+    return keywords.map(keyword => Tag.get(keyword));
+  }
+
   private getMatchCount(category: SkillCategory): number {
     return category.keywords.reduce((score, keyword) => {
       const matchType =
-        this.technologyMatchingService.getBestMatchTypeForTechnology({
-          technologyName: keyword,
+        this.technologyMatchingService.getBestMatchTypeForKeywordTag({
+          keywordTag: Tag.get(keyword),
         });
       if (matchType === 'full') {
         return score + 1;

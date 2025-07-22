@@ -38,7 +38,7 @@ export class SkillSectionComponent implements AfterViewInit {
   @ViewChildren('keywordListRef')
   keywordListElementRefs!: QueryList<ElementRef>;
 
-  private skillSectionService = inject(SkillSectionService);
+  skillSectionService = inject(SkillSectionService);
   private renderer = inject(Renderer2);
 
   skillCategories: SkillCategory[] =

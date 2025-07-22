@@ -32,7 +32,7 @@ export class ProjectService {
         project =>
           this.technologyMatchingService.getBestMatchTypeForSearchTag({
             searchTag: fullMatchSearchTag,
-            technologyNames: project.technologies,
+            keywordTags: project.technologies,
           }) === 'full'
       );
     } else if (partialMatchSearchTag) {
@@ -40,7 +40,7 @@ export class ProjectService {
         project =>
           this.technologyMatchingService.getBestMatchTypeForSearchTag({
             searchTag: partialMatchSearchTag,
-            technologyNames: project.technologies,
+            keywordTags: project.technologies,
           }) === 'indirect'
       );
     } else {

@@ -8,7 +8,7 @@
     <div class="skill-category-content-container" #keywordListRef>
       <lib-keyword-list
         class="skill-category-content"
-        [keywords]="category.keywords"
+        [keywordTags]="skillSectionService.toTags(category.keywords)"
       />
     </div>
     }
@@ -16,7 +16,7 @@
     <span class="skill-category print-only and-more">and more...</span>
     <lib-keyword-list
       class="skill-category-content print-only and-more spacer"
-      [keywords]="['Spacer']"
+      [keywordTags]="skillSectionService.toTags(['Spacer'])"
     />
   </div>
 </div>

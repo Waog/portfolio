@@ -79,8 +79,8 @@ export class TopProjectsService {
   private countFullMatches(project: Project, searchTags: string[]): number {
     return project.technologies.filter(
       technology =>
-        this.technologyMatchingService.getBestMatchTypeForTechnology({
-          technologyName: technology,
+        this.technologyMatchingService.getBestMatchTypeForKeywordTag({
+          keywordTag: technology,
           searchTags,
         }) === 'full'
     ).length;
@@ -89,8 +89,8 @@ export class TopProjectsService {
   private countIndirectMatches(project: Project, searchTags: string[]): number {
     return project.technologies.filter(
       technology =>
-        this.technologyMatchingService.getBestMatchTypeForTechnology({
-          technologyName: technology,
+        this.technologyMatchingService.getBestMatchTypeForKeywordTag({
+          keywordTag: technology,
           searchTags,
         }) === 'indirect'
     ).length;

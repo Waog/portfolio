@@ -1,12 +1,14 @@
 import { Memoize } from 'typescript-memoize';
 
-import { TagName, TAXONOMY, TaxonomyData } from './taxonomy.data';
+import { Category, TagName, TAXONOMY, TaxonomyData } from './taxonomy.data';
 
 export class Tag {
   private static cache = new Map<string, Tag | null>();
 
   private readonly taxonomyData: TaxonomyData;
 
+  // TODO: possibly only allow TagName type instead of string, once taxonomy is complete
+  // consider if we want tolerance in project definition data or not
   public static get(originalString: string): Tag {
     const cached = Tag.cache.get(originalString);
     if (cached === null) {
@@ -246,6 +248,38 @@ export class Tag {
       parentImplicitTags.forEach(tag => result.add(tag));
     }
     return result;
+  }
+
+  public get canonical(): TagName {
+    return this.taxonomyData.canonical;
+  }
+
+  public get categories(): Category[] {
+    return this.taxonomyData.categories;
+  }
+
+  public get synonyms(): readonly (RegExp | string)[] | undefined {
+    return this.taxonomyData.synonyms;
+  }
+
+  @Memoize()
+  public get includedTags(): Tag[] | undefined {
+    return this.taxonomyData.includes?.map(tagName => Tag.get(tagName));
+  }
+
+  @Memoize()
+  public get related(): Tag[] | undefined {
+    return this.taxonomyData.related?.map(tagName => Tag.get(tagName));
+  }
+
+  @Memoize()
+  public get parents(): Tag[] | undefined {
+    return this.taxonomyData.parents?.map(tagName => Tag.get(tagName));
+  }
+
+  @Memoize()
+  public get children(): Tag[] | undefined {
+    return this.taxonomyData.children?.map(tagName => Tag.get(tagName));
   }
 
   private static matches(term: string, taxonomyData: TaxonomyData): boolean {

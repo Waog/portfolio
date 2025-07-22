@@ -83,7 +83,11 @@ export const TAXONOMY: readonly TaxonomyData[] = [
   {
     canonical: 'Angular',
     categories: ['Frontend', 'Tools & Libraries'],
-    synonyms: [/^angular$/i],
+    synonyms: [
+      // Matches "Angular 13", "Angular v13", "Angular Version 13", etc., but not "Angular Material"
+      /^angular\s*(v(?:ersion)?\s*)?\d+$/i,
+      /^angular$/i,
+    ],
     includes: ['CSS', 'HTML', 'TypeScript'],
     related: ['Angular Material', 'AngularJS', 'RxJS', 'SASS', 'SCSS'],
     parents: ['Frontend Framework'],

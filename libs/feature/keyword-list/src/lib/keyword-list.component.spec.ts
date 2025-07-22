@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TechnologyMatchingService } from '@portfolio/projects';
+import { Tag } from '@portfolio/taxonomy';
 
 import { KeywordListComponent } from './keyword-list.component';
 
@@ -8,11 +9,11 @@ describe('KeywordListComponent', () => {
   let fixture: ComponentFixture<KeywordListComponent>;
   let mockTechnologyMatchingService: jest.Mocked<TechnologyMatchingService>;
 
-  const mockKeywords = ['Angular', 'TypeScript'];
+  const mockTags = [Tag.get('Angular'), Tag.get('TypeScript')];
 
   beforeEach(async () => {
     const mockTechnologyMatchingServiceObj = {
-      getBestMatchTypeForTechnology: jest.fn(),
+      getBestMatchTypeForKeywordTag: jest.fn(),
       getMatchType: jest.fn(),
     };
 
@@ -33,7 +34,7 @@ describe('KeywordListComponent', () => {
     ) as jest.Mocked<TechnologyMatchingService>;
 
     // Set the required input before detectChanges
-    fixture.componentRef.setInput('keywords', mockKeywords);
+    fixture.componentRef.setInput('keywordTags', mockTags);
     fixture.detectChanges();
   });
 
@@ -43,12 +44,12 @@ describe('KeywordListComponent', () => {
 
   describe('technologies getter', () => {
     it('should return keywords with match types', () => {
-      mockTechnologyMatchingService.getBestMatchTypeForTechnology.mockImplementation(
-        ({ technologyName }: { technologyName: string }) => {
-          switch (technologyName) {
-            case 'Angular':
+      mockTechnologyMatchingService.getBestMatchTypeForKeywordTag.mockImplementation(
+        ({ keywordTag }: { keywordTag: Tag }) => {
+          switch (keywordTag) {
+            case Tag.get('Angular'):
               return 'full';
-            case 'TypeScript':
+            case Tag.get('TypeScript'):
               return 'indirect';
             default:
               return 'none';
@@ -56,29 +57,29 @@ describe('KeywordListComponent', () => {
         }
       );
 
-      const technologies = component.technologies;
+      const tagsWithMatchType = component.tagsWithMatchType;
 
-      expect(technologies).toEqual([
-        { name: 'Angular', matchType: 'full' },
-        { name: 'TypeScript', matchType: 'indirect' },
+      expect(tagsWithMatchType).toEqual([
+        { tag: Tag.get('Angular'), matchType: 'full' },
+        { tag: Tag.get('TypeScript'), matchType: 'indirect' },
       ]);
       expect(
-        mockTechnologyMatchingService.getBestMatchTypeForTechnology
-      ).toHaveBeenCalledWith({ technologyName: 'Angular' });
+        mockTechnologyMatchingService.getBestMatchTypeForKeywordTag
+      ).toHaveBeenCalledWith({ keywordTag: Tag.get('Angular') });
       expect(
-        mockTechnologyMatchingService.getBestMatchTypeForTechnology
-      ).toHaveBeenCalledWith({ technologyName: 'TypeScript' });
+        mockTechnologyMatchingService.getBestMatchTypeForKeywordTag
+      ).toHaveBeenCalledWith({ keywordTag: Tag.get('TypeScript') });
     });
   });
 
   describe('keyword categorization', () => {
     beforeEach(() => {
-      mockTechnologyMatchingService.getBestMatchTypeForTechnology.mockImplementation(
-        ({ technologyName }: { technologyName: string }) => {
-          switch (technologyName) {
-            case 'Angular':
+      mockTechnologyMatchingService.getBestMatchTypeForKeywordTag.mockImplementation(
+        ({ keywordTag }: { keywordTag: Tag }) => {
+          switch (keywordTag) {
+            case Tag.get('Angular'):
               return 'full';
-            case 'TypeScript':
+            case Tag.get('TypeScript'):
               return 'indirect';
             default:
               return 'none';
@@ -104,7 +105,7 @@ describe('KeywordListComponent', () => {
     describe('grayTechnologies', () => {
       it('should return keywords with no match', () => {
         // Update the mock to return 'none' for both keywords
-        mockTechnologyMatchingService.getBestMatchTypeForTechnology.mockReturnValue(
+        mockTechnologyMatchingService.getBestMatchTypeForKeywordTag.mockReturnValue(
           'none'
         );
 

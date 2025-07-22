@@ -7,7 +7,7 @@ export interface ProjectData {
   fullDescription: string;
   features: string[];
   highlights: string[];
-  technologies: string[];
+  technologies: string[]; // TODO: consider using tagName instead of string
   role: string;
   team: string;
   fromTo: string;
@@ -15,7 +15,7 @@ export interface ProjectData {
   location: string;
   workMode: string;
   company: string;
-  industry: string;
+  industry: string; // TODO: consider adding industries to the taxonomy to match/highlight them
 }
 
 export const ALL_PROJECT_DATA: ProjectData[] = [

@@ -1,6 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { SearchTagService } from '@portfolio/search-tags';
 import { Tag } from '@portfolio/taxonomy';
+import { Memoize } from 'typescript-memoize';
 
 export type MatchType = 'full' | 'indirect' | 'none';
 
@@ -9,52 +10,43 @@ export type MatchType = 'full' | 'indirect' | 'none';
 })
 export class TechnologyMatchingService {
   private searchTagService = inject(SearchTagService);
-  private readonly CACHE_MAX_SIZE = 5000;
-  private matchTypeCache = new Map<string, MatchType>();
 
   /**
    * Determines the match type between a technology name and a search tag
    */
+  @Memoize()
   getMatchType({
-    technologyName,
+    keywordTag,
     searchTag,
   }: {
-    technologyName: string;
+    keywordTag: Tag;
     searchTag: string;
   }): MatchType {
-    const cacheKey = `${technologyName}::${searchTag}`;
-    const cached = this.getCache(cacheKey);
-    if (cached !== undefined) {
-      return cached;
+    if (
+      keywordTag.is(searchTag) ||
+      keywordTag.isA(searchTag) ||
+      keywordTag.includes(searchTag)
+    ) {
+      return 'full';
     }
 
-    let result: MatchType;
-    try {
-      result = this.getMatchTypeWithTaxonomy(technologyName, searchTag);
-      if (result === 'none') {
-        result = this.getMatchTypeFallback(technologyName, searchTag);
-      }
-    } catch (error) {
-      console.warn(
-        `Failed to do taxonomy matching. Falling back to basic string matching.`,
-        { technologyName, searchTag },
-        error
-      );
-      result = this.getMatchTypeFallback(technologyName, searchTag);
+    const minDistanceToAncestor =
+      keywordTag.getMinDistanceToLowestCommonAncestor(searchTag) ?? Infinity;
+    if (minDistanceToAncestor <= 1 || keywordTag.isRelated(searchTag)) {
+      return 'indirect';
     }
 
-    this.setCache(cacheKey, result);
-    return result;
+    return 'none';
   }
 
   /**
    * Finds the best match type for a technology against multiple search tags
    */
-  getBestMatchTypeForTechnology({
-    technologyName,
+  getBestMatchTypeForKeywordTag({
+    keywordTag,
     searchTags,
   }: {
-    technologyName: string;
+    keywordTag: Tag;
     searchTags?: string[];
   }): MatchType {
     if (!searchTags) {
@@ -63,14 +55,14 @@ export class TechnologyMatchingService {
 
     // First check for any full matches
     for (const searchTag of searchTags) {
-      if (this.getMatchType({ technologyName, searchTag }) === 'full') {
+      if (this.getMatchType({ keywordTag, searchTag }) === 'full') {
         return 'full';
       }
     }
 
     // Then check for any indirect matches
     for (const searchTag of searchTags) {
-      if (this.getMatchType({ technologyName, searchTag }) === 'indirect') {
+      if (this.getMatchType({ keywordTag, searchTag }) === 'indirect') {
         return 'indirect';
       }
     }
@@ -83,107 +75,25 @@ export class TechnologyMatchingService {
    */
   getBestMatchTypeForSearchTag({
     searchTag,
-    technologyNames,
+    keywordTags,
   }: {
     searchTag: string;
-    technologyNames: string[];
+    keywordTags: Tag[];
   }): MatchType {
     // First check for any full matches
-    for (const technologyName of technologyNames) {
-      if (this.getMatchType({ technologyName, searchTag }) === 'full') {
+    for (const keywordTag of keywordTags) {
+      if (this.getMatchType({ keywordTag, searchTag }) === 'full') {
         return 'full';
       }
     }
 
     // Then check for any indirect matches
-    for (const technologyName of technologyNames) {
-      if (this.getMatchType({ technologyName, searchTag }) === 'indirect') {
+    for (const keywordTag of keywordTags) {
+      if (this.getMatchType({ keywordTag, searchTag }) === 'indirect') {
         return 'indirect';
       }
     }
 
     return 'none';
-  }
-
-  /**
-   * Rely on taxonomy Tag class for keyword matching.
-   */
-  private getMatchTypeWithTaxonomy(
-    technologyName: string,
-    searchTag: string
-  ): MatchType {
-    const techTag = Tag.get(technologyName);
-
-    if (
-      techTag.is(searchTag) ||
-      techTag.isA(searchTag) ||
-      techTag.includes(searchTag)
-    ) {
-      return 'full';
-    }
-
-    const minDistanceToAncestor =
-      techTag.getMinDistanceToLowestCommonAncestor(searchTag) ?? Infinity;
-    if (minDistanceToAncestor <= 1 || techTag.isRelated(searchTag)) {
-      return 'indirect';
-    }
-
-    return 'none';
-  }
-
-  /**
-   * Basic String matching, without taxonomy and Tag class.
-   */
-  private getMatchTypeFallback(
-    technologyName: string,
-    searchTag: string
-  ): MatchType {
-    const techLower = technologyName.toLowerCase();
-    const tagLower = searchTag.toLowerCase();
-
-    // Check for full match (exact string match, case insensitive)
-    if (techLower === tagLower) {
-      return 'full';
-    }
-
-    // Check for indirect matches (substring match in either direction)
-    if (techLower.includes(tagLower) || tagLower.includes(techLower)) {
-      return 'indirect';
-    }
-
-    return 'none';
-  }
-
-  /**
-   * Sets a value in the cache and evicts the least recently used item if over the size limit.
-   */
-  private setCache(key: string, value: MatchType): void {
-    if (this.matchTypeCache.has(key)) {
-      this.matchTypeCache.delete(key);
-    }
-    this.matchTypeCache.set(key, value);
-    if (this.matchTypeCache.size > this.CACHE_MAX_SIZE) {
-      const oldestKey = this.matchTypeCache.keys().next().value;
-      if (oldestKey !== undefined) {
-        this.matchTypeCache.delete(oldestKey);
-      }
-    }
-  }
-
-  /**
-   * Gets a value from the cache and updates its usage order.
-   */
-  private getCache(key: string): MatchType | undefined {
-    if (!this.matchTypeCache.has(key)) {
-      return undefined;
-    }
-    const value = this.matchTypeCache.get(key);
-    if (value === undefined) {
-      return undefined;
-    }
-    // Move accessed key to the end to mark as recently used
-    this.matchTypeCache.delete(key);
-    this.matchTypeCache.set(key, value);
-    return value;
   }
 }
