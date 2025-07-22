@@ -1,9 +1,9 @@
 import { inject, Injectable } from '@angular/core';
+import { Memoize } from 'typescript-memoize';
 
 import { Project } from './project';
-import { ALL_PROJECTS } from './projects.data';
+import { ALL_PROJECT_DATA } from './project.data';
 import { TechnologyMatchingService } from './technology-matching.service';
-import { TopProjectsService } from './top-projects.service';
 
 export interface ProjectFilterConfig {
   isFullMatchFor?: string;
@@ -15,10 +15,10 @@ export interface ProjectFilterConfig {
 })
 export class ProjectService {
   private technologyMatchingService = inject(TechnologyMatchingService);
-  private topProjectsService = inject(TopProjectsService);
 
+  @Memoize()
   getAll(): Project[] {
-    return ALL_PROJECTS;
+    return ALL_PROJECT_DATA.map(data => new Project(data));
   }
 
   getBy(filterConfig: ProjectFilterConfig): Project[] {
@@ -28,7 +28,7 @@ export class ProjectService {
     } = filterConfig;
 
     if (fullMatchSearchTag) {
-      return ALL_PROJECTS.filter(
+      return this.getAll().filter(
         project =>
           this.technologyMatchingService.getBestMatchTypeForSearchTag({
             searchTag: fullMatchSearchTag,
@@ -36,7 +36,7 @@ export class ProjectService {
           }) === 'full'
       );
     } else if (partialMatchSearchTag) {
-      return ALL_PROJECTS.filter(
+      return this.getAll().filter(
         project =>
           this.technologyMatchingService.getBestMatchTypeForSearchTag({
             searchTag: partialMatchSearchTag,
@@ -49,15 +49,5 @@ export class ProjectService {
           JSON.stringify(filterConfig)
       );
     }
-  }
-
-  getTopProjects(): Project[] {
-    return this.topProjectsService.getTopProjects();
-  }
-
-  getNonTopProjects(): Project[] {
-    return this.getAll().filter(
-      project => !this.topProjectsService.getTopProjects().includes(project)
-    );
   }
 }

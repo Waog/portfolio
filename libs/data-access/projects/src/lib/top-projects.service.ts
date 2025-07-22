@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { SearchTagService } from '@portfolio/search-tags';
 
 import { Project } from './project';
-import { ALL_PROJECTS } from './projects.data';
+import { ProjectService } from './project.service';
 import { TechnologyMatchingService } from './technology-matching.service';
 
 interface ProjectScore {
@@ -18,6 +18,7 @@ interface ProjectScore {
 export class TopProjectsService {
   private searchTagService = inject(SearchTagService);
   private technologyMatchingService = inject(TechnologyMatchingService);
+  private projectService = inject(ProjectService);
 
   /**
    * Returns the top 3 projects based on technology matches with current search tags.
@@ -35,14 +36,14 @@ export class TopProjectsService {
     }
 
     // Score all projects
-    const projectScores: ProjectScore[] = ALL_PROJECTS.map(
-      (project, index) => ({
+    const projectScores: ProjectScore[] = this.projectService
+      .getAll()
+      .map((project, index) => ({
         project,
         fullMatches: this.countFullMatches(project, searchTags),
         indirectMatches: this.countIndirectMatches(project, searchTags),
         originalIndex: index,
-      })
-    );
+      }));
 
     // Filter projects that have at least one match
     const projectsWithMatches = projectScores.filter(
@@ -67,6 +68,12 @@ export class TopProjectsService {
 
     // Return top 3
     return sortedProjects.slice(0, 3).map(score => score.project);
+  }
+
+  getNonTopProjects(): Project[] {
+    return this.projectService
+      .getAll()
+      .filter(project => !this.getTopProjects().includes(project));
   }
 
   private countFullMatches(project: Project, searchTags: string[]): number {

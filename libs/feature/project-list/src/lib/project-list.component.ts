@@ -2,7 +2,11 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { Project, ProjectService } from '@portfolio/projects';
+import {
+  Project,
+  ProjectService,
+  TopProjectsService,
+} from '@portfolio/projects';
 import { SearchTagService } from '@portfolio/search-tags';
 import { SectionHeaderComponent } from '@portfolio/section-header';
 import { Subject, takeUntil } from 'rxjs';
@@ -23,6 +27,7 @@ import { ProjectItemComponent } from './project-item.component';
 })
 export class ProjectListComponent implements OnInit, OnDestroy {
   public projectService = inject(ProjectService);
+  public topProjectsService = inject(TopProjectsService);
   private searchTagService = inject(SearchTagService);
   private destroy$ = new Subject<void>();
 
@@ -32,11 +37,11 @@ export class ProjectListComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     // Subscribe to search tag changes to update top projects
     this.searchTagService.tags$.pipe(takeUntil(this.destroy$)).subscribe(() => {
-      this.topProjects = this.projectService.getTopProjects();
+      this.topProjects = this.topProjectsService.getTopProjects();
     });
 
     // Initialize top projects
-    this.topProjects = this.projectService.getTopProjects();
+    this.topProjects = this.topProjectsService.getTopProjects();
   }
 
   ngOnDestroy(): void {

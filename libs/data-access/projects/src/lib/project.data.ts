@@ -1,6 +1,24 @@
-import { Project } from './project';
+export interface ProjectData {
+  id: string;
+  title: string;
+  projectType: string;
+  compactDescription: string;
+  keyAchievements: string;
+  fullDescription: string;
+  features: string[];
+  highlights: string[];
+  technologies: string[];
+  role: string;
+  team: string;
+  fromTo: string;
+  duration: string;
+  location: string;
+  workMode: string;
+  company: string;
+  industry: string;
+}
 
-export const ALL_PROJECTS: Project[] = [
+export const ALL_PROJECT_DATA: ProjectData[] = [
   {
     id: 'language-learning-app',
     title: 'AI-Powered Language Learning App',

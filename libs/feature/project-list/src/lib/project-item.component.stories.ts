@@ -115,7 +115,7 @@ const meta: Meta<ProjectItemComponent> = {
 export default meta;
 type Story = StoryObj<ProjectItemComponent>;
 
-const mockProject: Project = {
+const mockProject: Project = new Project({
   id: 'angular-portfolio',
   title: 'Portfolio Website Development',
   projectType: 'Web Application',
@@ -159,7 +159,7 @@ const mockProject: Project = {
   workMode: 'Remote',
   company: 'Personal Project',
   industry: 'Technology',
-};
+});
 
 export const Default: Story = {
   args: {
