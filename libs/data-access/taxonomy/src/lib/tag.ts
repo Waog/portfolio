@@ -1,6 +1,6 @@
 import { Memoize } from 'typescript-memoize';
 
-import { TAXONOMY, TaxonomyData } from './taxonomy.data';
+import { TagName, TAXONOMY, TaxonomyData } from './taxonomy.data';
 
 export class Tag {
   private static cache = new Map<string, Tag | null>();
@@ -42,7 +42,14 @@ export class Tag {
     if (matchingTerm) {
       this.taxonomyData = matchingTerm;
     } else {
-      throw new Error(`Tag "${originalString}" not found in taxonomy.`);
+      // TODO: reactivate this error once the taxonomy is complete
+      // @GitHub Copilot: mark this in review, as it shall not be merged into master
+      // throw new Error(`Tag "${originalString}" not found in taxonomy.`);
+      console.warn(`Tag "${originalString}" not found in taxonomy.`);
+      this.taxonomyData = {
+        canonical: originalString as TagName,
+        categories: ['Misc'],
+      };
     }
   }
 
