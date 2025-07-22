@@ -23,6 +23,7 @@ export type TagName =
   | 'RxJS'
   | 'SASS'
   | 'SCSS'
+  | 'Spacer'
   | 'TypeScript'
   | 'Vue.js';
 
@@ -168,6 +169,12 @@ export const TAXONOMY: readonly TaxonomyData[] = [
     categories: ['Frontend'],
     related: ['SASS'],
     includes: ['CSS'],
+  },
+  {
+    // NOTE: this is not a real technology, but a placeholder for empty spaces in the UI
+    canonical: 'Spacer',
+    synonyms: [/^placeholder$/i, /^spacer$/i],
+    categories: ['Misc'],
   },
   {
     canonical: 'TypeScript',
