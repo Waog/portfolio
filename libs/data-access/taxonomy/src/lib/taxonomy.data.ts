@@ -111,6 +111,7 @@ export const TAXONOMY: readonly TaxonomyData[] = [
     canonical: 'CSS',
     categories: ['Frontend'],
     synonyms: [/^css$/i],
+    related: ['SASS', 'SCSS'],
   },
   {
     canonical: 'Framework',
