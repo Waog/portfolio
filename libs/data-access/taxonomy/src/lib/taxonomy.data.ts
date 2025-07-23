@@ -17,6 +17,7 @@ export type TagName =
   | 'AppConfig'
   | 'Atlassian'
   | 'AWS'
+  | 'AWS Organizations'
   | 'Backend Systems'
   | 'BitBucket'
   | 'Bower'
@@ -222,6 +223,7 @@ export const TAXONOMY: readonly TaxonomyData[] = [
     children: [
       'API Gateway',
       'AppConfig',
+      'AWS Organizations',
       'CDK',
       'CloudFormation',
       'CloudWatch',
@@ -233,6 +235,11 @@ export const TAXONOMY: readonly TaxonomyData[] = [
       'S3',
     ],
     synonyms: [/amazon web services/i, /aws/i],
+  },
+  {
+    canonical: 'AWS Organizations',
+    categories: ['Cloud & Infrastructure'],
+    parents: ['AWS'],
   },
   {
     canonical: 'Backend Systems',
