@@ -1,3 +1,5 @@
+import { TagName } from '@portfolio/taxonomy';
+
 export interface ProjectData {
   id: string;
   title: string;
@@ -7,7 +9,7 @@ export interface ProjectData {
   fullDescription: string;
   features: string[];
   highlights: string[];
-  technologies: string[]; // TODO taxonomy: consider using tagName instead of string
+  technologies: TagName[];
   role: string;
   team: string;
   fromTo: string;
@@ -106,12 +108,12 @@ export const ALL_PROJECT_DATA: ProjectData[] = [
       'Worked with complex micro-frontend architecture',
     ],
     technologies: [
-      'Angular 13',
+      'Angular',
       'Node.js',
       'NestJS',
       'TypeScript',
       'RxJS',
-      'nx',
+      'Nx',
       'SCSS',
       'HTML',
       'CSS',
@@ -180,7 +182,7 @@ export const ALL_PROJECT_DATA: ProjectData[] = [
       'Express',
       'TypeScript',
       'RxJS',
-      'nx',
+      'Nx',
       'SCSS',
       'HTML',
       'CSS',
@@ -297,7 +299,7 @@ export const ALL_PROJECT_DATA: ProjectData[] = [
       'RabbitMQ',
       'MongoDB',
       'Docker',
-      'Yarn',
+      'yarn',
       'JSON',
       'GitLab',
     ],
@@ -349,7 +351,7 @@ export const ALL_PROJECT_DATA: ProjectData[] = [
       'Jasmine',
       'Karma',
       'Zeplin',
-      'JIRA',
+      'Jira',
       'Confluence',
       'BitBucket',
     ],
@@ -439,16 +441,16 @@ export const ALL_PROJECT_DATA: ProjectData[] = [
       'Maintained high quality standards across all engagements',
     ],
     technologies: [
-      'Various technologies',
-      'Web development',
-      'Mobile development',
-      'Backend systems',
-      'Frontend frameworks',
-      'Database systems',
-      'Cloud platforms',
-      'DevOps tools',
-      'Project management',
-      'Quality assurance',
+      'Various Technologies',
+      'Web Development',
+      'Mobile Development',
+      'Backend Systems',
+      'Frontend Framework',
+      'Database Systems',
+      'Cloud Platforms',
+      'DevOps Tools',
+      'Project Management',
+      'QA',
     ],
     role: 'Freelancing IT Professional',
     team: 'Various team configurations',

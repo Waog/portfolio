@@ -8,7 +8,7 @@ export type Category =
   | 'Testing and QA'
   | 'Tools & Libraries';
 
-export type TagName =
+type InternalTagName =
   | 'Agile'
   | 'Angular'
   | 'Angular Material'
@@ -117,22 +117,24 @@ export type TagName =
  */
 export type TaxonomyData = {
   /** Canonical Name of the Keyword, e.g. "Node.js" */
-  readonly canonical: TagName;
+  readonly canonical: InternalTagName;
 
   /** The Categories of this Keyword, e.g. "Cypress" has `categories: ["Testing and QA"]` */
   readonly categories: Category[];
 
-  // TODO taxonomy: default matching is a little inconsistent
-  // decide for either whole-word matching or partial overlap
-  // and consistently apply it to all entries `synonyms` fields
-  // add a test which tries to match each keyword against all other keywords,
-  // to ensure mutual exclusion. e.g. Tag.get('React Web').is('React') must be false
   /**
    * Matching alternatives:
    * Alternative names and identifying Regexes which mean the same Keyword, e.g. "node".
-   * If not defined, defaults to the lowercase alphanumeric-only version of the canonical name.
-   * Example: "Vue.js" would implicitly have `synonyms: [/^vuejs$/i]`.
-   * Only define if the canonical name is not sufficient to identify the term.
+   * Regexes must match the search term as defined.
+   * Strings must match the search term by exactly matching the string.
+   * If not defined, matches to the lowercase alphanumeric-only version of the canonical name
+   * against any substring of the lowercase alphanumeric-only version of the search term.
+   * Example is synonyms is undefined:
+   * canonical name: `Vue.js` -> becomes `vuejs`
+   * search term: `Vue version 13` -> becomes `vueversion13`
+   * As `vuejs` is not a substring of `vueversion13`, it does not match.
+   * Only define if the default behavior is not sufficient to identify the term.
+   * If substring matching is not desired, must be defined.
    */
   readonly synonyms?: readonly (RegExp | string)[];
 
@@ -142,14 +144,14 @@ export type TaxonomyData = {
    * Only list it in the topmost applicable ancestor (parent). E.g. list JavaScript/TypeScript in `React`, not in `React Web`.
    * Don't define if empty.
    */
-  readonly includes?: readonly TagName[];
+  readonly includes?: readonly InternalTagName[];
 
   /**
    * Related Keywords that are somehow related and worth mentioning in a related CV but not in a parent/child/cousin relationship, nor included.
    * E.g. RxJS is related to Angular, as often used together, but they can also exist independently.
    * Don't define if empty.
    */
-  readonly related?: readonly TagName[];
+  readonly related?: readonly InternalTagName[];
 
   /**
    * Parent Keywords that are broader concepts that this Keyword falls under.
@@ -158,7 +160,7 @@ export type TaxonomyData = {
    * Keep in sync with the `children` property of the other Keyword.
    * Don't define if empty.
    */
-  readonly parents?: readonly TagName[];
+  readonly parents?: readonly InternalTagName[];
 
   /**
    * Children Keywords that are more specific concepts that fall under this Keyword.
@@ -167,10 +169,10 @@ export type TaxonomyData = {
    * Keep in sync with the `parents` property of the other Keyword.
    * Don't define if empty.
    */
-  readonly children?: readonly TagName[];
+  readonly children?: readonly InternalTagName[];
 };
 
-export const TAXONOMY: readonly TaxonomyData[] = [
+const INTERNAL_TAXONOMY = [
   {
     canonical: 'Agile',
     categories: ['Concepts'],
@@ -197,7 +199,6 @@ export const TAXONOMY: readonly TaxonomyData[] = [
   {
     canonical: 'AngularJS',
     categories: ['Frontend', 'Tools & Libraries'],
-    synonyms: [/angular\.js/i, /angularjs/i],
     parents: ['Frontend Framework'],
     includes: ['CSS', 'HTML', 'TypeScript'],
     related: ['Angular'],
@@ -234,7 +235,7 @@ export const TAXONOMY: readonly TaxonomyData[] = [
       'Polly',
       'S3',
     ],
-    synonyms: [/amazon web services/i, /aws/i],
+    synonyms: [/^aws$/i, /amazon web services/i],
   },
   {
     canonical: 'AWS Organizations',
@@ -268,7 +269,7 @@ export const TAXONOMY: readonly TaxonomyData[] = [
   {
     canonical: 'Cloud Platforms',
     categories: ['Misc'],
-    synonyms: [/cloud/i, /cloud platforms/i],
+    synonyms: [/^cloud$/i, /cloud platform/i],
   },
   {
     canonical: 'CloudFormation',
@@ -292,7 +293,7 @@ export const TAXONOMY: readonly TaxonomyData[] = [
   {
     canonical: 'CSS',
     categories: ['Frontend'],
-    synonyms: [/^css$/i],
+    synonyms: [/^css/i],
     related: ['SASS', 'SCSS'],
   },
   {
@@ -303,7 +304,7 @@ export const TAXONOMY: readonly TaxonomyData[] = [
   {
     canonical: 'Database Systems',
     categories: ['Misc'],
-    synonyms: [/database systems/i, /databases/i],
+    synonyms: [/database system/i, /databases/i],
   },
   {
     canonical: 'DataDog',
@@ -340,7 +341,6 @@ export const TAXONOMY: readonly TaxonomyData[] = [
     categories: ['Backend', 'Tools & Libraries'],
     children: ['NestJS'],
     parents: ['Node.js'],
-    synonyms: [/^express\.js$/i, /^express$/i, /^expressjs$/i],
   },
   {
     canonical: 'Fractal',
@@ -506,7 +506,7 @@ export const TAXONOMY: readonly TaxonomyData[] = [
   {
     canonical: 'Mobile Development',
     categories: ['Misc'],
-    synonyms: [/mobile dev/i, /mobile development/i],
+    synonyms: [/mobile dev/i],
   },
   {
     canonical: 'Mocha',
@@ -532,7 +532,7 @@ export const TAXONOMY: readonly TaxonomyData[] = [
     categories: ['Backend'],
     children: ['Express'],
     includes: ['JavaScript'],
-    synonyms: [/^node\.js$/i, /^node$/i, /^nodejs$/i],
+    synonyms: [/node/i],
   },
   {
     canonical: 'npm',
@@ -652,8 +652,6 @@ export const TAXONOMY: readonly TaxonomyData[] = [
   {
     canonical: 'Spring Boot',
     categories: ['Backend'],
-    // cSpell: disable-next-line
-    synonyms: [/^springboot$/i, /spring boot/i],
     parents: ['Java'],
   },
   {
@@ -664,7 +662,6 @@ export const TAXONOMY: readonly TaxonomyData[] = [
     canonical: 'Stencil',
     categories: ['Frontend', 'Tools & Libraries'],
     related: ['Fractal', 'TypeScript', 'Web Components'],
-    synonyms: [/stencil/i],
   },
   {
     canonical: 'Swiper',
@@ -688,7 +685,7 @@ export const TAXONOMY: readonly TaxonomyData[] = [
   {
     canonical: 'Vue.js',
     categories: ['Frontend', 'Tools & Libraries'],
-    synonyms: [/vue/i, /vue\.js/i, /vuejs/i],
+    synonyms: [/^vue/i],
     parents: ['Frontend Framework'],
   },
   {
@@ -723,4 +720,11 @@ export const TAXONOMY: readonly TaxonomyData[] = [
     canonical: 'Zeplin',
     categories: ['Tools & Libraries'],
   },
-] as const;
+] as const satisfies readonly TaxonomyData[];
+
+export type TagName = (typeof INTERNAL_TAXONOMY)[number]['canonical'];
+export const TAXONOMY = INTERNAL_TAXONOMY as readonly TaxonomyData[];
+
+// NOTE: check if any non defined tags are used, by checking this type
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+type nonDefinedTags = Exclude<InternalTagName, TagName>;

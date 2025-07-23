@@ -1,69 +1,42 @@
-import { Memoize } from 'typescript-memoize';
-
+import { MemoizeAllArgs } from './memoize-all-args';
 import { Category, TagName, TAXONOMY, TaxonomyData } from './taxonomy.data';
 
 export { Category, TagName } from './taxonomy.data';
 
 export class Tag {
-  private static cache = new Map<string, Tag | null>();
-
   private readonly taxonomyData: TaxonomyData;
 
-  // TODO taxonomy: possibly only allow TagName type instead of string, once taxonomy is complete
-  // consider if we want tolerance in project definition data or not
-  public static get(originalString: string): Tag {
-    const cached = Tag.cache.get(originalString);
-    if (cached === null) {
-      throw new Error(`Tag "${originalString}" not found in taxonomy.`);
-    }
-    if (cached) {
-      return cached;
-    }
-
-    let newTag: Tag;
-    try {
-      newTag = new Tag(originalString);
-    } catch (error) {
-      Tag.cache.set(originalString, null);
-      throw error;
-    }
-
-    const cachedCanonical = Tag.cache.get(newTag.taxonomyData.canonical);
-    if (cachedCanonical) {
-      Tag.cache.set(originalString, cachedCanonical);
-      return cachedCanonical;
-    }
-
-    Tag.cache.set(newTag.taxonomyData.canonical, newTag);
-    Tag.cache.set(originalString, newTag);
-    return newTag;
+  @MemoizeAllArgs
+  public static get(tagName: TagName): Tag {
+    return new Tag(tagName);
   }
 
-  private constructor(public originalString: string) {
-    const matchingTerm = TAXONOMY.find(term =>
-      Tag.matches(originalString, term)
+  @MemoizeAllArgs
+  private static find(searchTerm: string): Tag | undefined {
+    const matchByCanonical = TAXONOMY.find(
+      data => searchTerm === data.canonical
     );
-    if (matchingTerm) {
-      this.taxonomyData = matchingTerm;
-    } else {
-      // TODO taxonomy: reactivate this error once the taxonomy is complete
-      // or decide to stick with the fallback + warnings and clean up code
-      // @GitHub Copilot: mark this in review, as it shall not be merged into master
-      // throw new Error(`Tag "${originalString}" not found in taxonomy.`);
-      console.warn(`Tag "${originalString}" not found in taxonomy.`);
-      this.taxonomyData = {
-        canonical: originalString as TagName,
-        categories: ['Misc'],
-      };
+    if (matchByCanonical) {
+      return Tag.get(matchByCanonical.canonical);
     }
+
+    const matchingData = TAXONOMY.find(data => Tag.matches(searchTerm, data));
+    return matchingData ? Tag.get(matchingData.canonical) : undefined;
   }
 
-  @Memoize()
+  private constructor(public tagName: TagName) {
+    // NOTE: since we match against a TagName and TagName is derived from TAXONOMY,
+    // we can safely assume that the tagName exists in TAXONOMY.
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    this.taxonomyData = TAXONOMY.find(data => tagName === data.canonical)!;
+  }
+
+  @MemoizeAllArgs
   is(term: string): boolean {
     return Tag.matches(term, this.taxonomyData);
   }
 
-  @Memoize()
+  @MemoizeAllArgs
   isA(term: string): boolean {
     for (const parentTerm of this.taxonomyData.parents || []) {
       const parentTag = Tag.get(parentTerm);
@@ -74,7 +47,7 @@ export class Tag {
     return false;
   }
 
-  @Memoize()
+  @MemoizeAllArgs
   hasChild(term: string): boolean {
     for (const childTerm of this.taxonomyData.children || []) {
       const childTag = Tag.get(childTerm);
@@ -85,7 +58,7 @@ export class Tag {
     return false;
   }
 
-  @Memoize()
+  @MemoizeAllArgs
   isSibling(term: string): boolean {
     for (const parentTerm of this.taxonomyData.parents || []) {
       const parentTag = Tag.get(parentTerm);
@@ -96,7 +69,7 @@ export class Tag {
     return false;
   }
 
-  @Memoize()
+  @MemoizeAllArgs
   getDistanceToAncestor(ancestorTerm: string): number | null {
     if (this.is(ancestorTerm)) {
       return 0;
@@ -122,7 +95,7 @@ export class Tag {
     return shortestParentDistance !== null ? shortestParentDistance + 1 : null;
   }
 
-  @Memoize()
+  @MemoizeAllArgs
   getAllAncestors(): Set<Tag> {
     const result = new Set<Tag>();
     for (const parentTerm of this.taxonomyData.parents || []) {
@@ -135,10 +108,11 @@ export class Tag {
     return result;
   }
 
-  @Memoize()
+  @MemoizeAllArgs
   getAllCommonAncestors(term: string): Set<Tag> {
     const thisAncestorTags = this.getAllAncestors();
-    const otherAncestorTags = Tag.get(term).getAllAncestors();
+    const otherAncestorTags =
+      Tag.find(term)?.getAllAncestors() || new Set<Tag>();
     const result = new Set<Tag>();
     // NOTE: not using Set.intersection() as it is too new (ES2024)
     thisAncestorTags.forEach(thisAncestorTag => {
@@ -149,13 +123,17 @@ export class Tag {
     return result;
   }
 
-  @Memoize()
+  @MemoizeAllArgs
   getLowestCommonAncestor(term: string): Tag | null {
     if (this.is(term)) {
       return this;
     }
 
-    const otherTag = Tag.get(term);
+    const otherTag = Tag.find(term);
+
+    if (!otherTag) {
+      return null;
+    }
 
     if (this.isA(term)) {
       return otherTag;
@@ -184,8 +162,12 @@ export class Tag {
     return shortestDistanceAncestorTag;
   }
 
-  @Memoize()
+  @MemoizeAllArgs
   getMinDistanceToLowestCommonAncestor(term: string): number | null {
+    const otherTag = Tag.find(term);
+    if (!otherTag) {
+      return null;
+    }
     const lowestCommonAncestorTag = this.getLowestCommonAncestor(term);
     if (lowestCommonAncestorTag === null) {
       return null;
@@ -194,13 +176,13 @@ export class Tag {
       this.getDistanceToAncestor(
         lowestCommonAncestorTag.taxonomyData.canonical
       ) as number,
-      Tag.get(term).getDistanceToAncestor(
+      otherTag.getDistanceToAncestor(
         lowestCommonAncestorTag.taxonomyData.canonical
       ) as number
     );
   }
 
-  @Memoize()
+  @MemoizeAllArgs
   includes(term: string): boolean {
     if (this.is(term)) {
       return true;
@@ -221,7 +203,7 @@ export class Tag {
     return false;
   }
 
-  @Memoize()
+  @MemoizeAllArgs
   isRelated(term: string): boolean {
     if (this.is(term)) {
       return true;
@@ -236,7 +218,7 @@ export class Tag {
     return false;
   }
 
-  @Memoize()
+  @MemoizeAllArgs
   getImplicitTags(): Set<Tag> {
     const result = new Set<Tag>();
     result.add(this);
@@ -265,41 +247,42 @@ export class Tag {
     return this.taxonomyData.synonyms;
   }
 
-  @Memoize()
+  @MemoizeAllArgs
   public get includedTags(): Tag[] | undefined {
     return this.taxonomyData.includes?.map(tagName => Tag.get(tagName));
   }
 
-  @Memoize()
+  @MemoizeAllArgs
   public get related(): Tag[] | undefined {
     return this.taxonomyData.related?.map(tagName => Tag.get(tagName));
   }
 
-  @Memoize()
+  @MemoizeAllArgs
   public get parents(): Tag[] | undefined {
     return this.taxonomyData.parents?.map(tagName => Tag.get(tagName));
   }
 
-  @Memoize()
+  @MemoizeAllArgs
   public get children(): Tag[] | undefined {
     return this.taxonomyData.children?.map(tagName => Tag.get(tagName));
   }
 
+  @MemoizeAllArgs
   private static matches(term: string, taxonomyData: TaxonomyData): boolean {
     return (
       taxonomyData.canonical === term || Tag.synonymMatch(term, taxonomyData)
     );
   }
 
+  @MemoizeAllArgs
   private static synonymMatch(
     term: string,
     taxonomyData: TaxonomyData
   ): boolean {
     const synonyms = taxonomyData.synonyms;
     if (!synonyms) {
-      return (
-        term.toLowerCase().replace(/[^a-z0-9]/g, '') ===
-        taxonomyData.canonical.toLowerCase().replace(/[^a-z0-9]/g, '')
+      return Tag.normalize(term).includes(
+        Tag.normalize(taxonomyData.canonical)
       );
     }
 
@@ -309,5 +292,9 @@ export class Tag {
         (typeof synonym === 'string' &&
           synonym.toLowerCase().trim() === term.toLowerCase().trim())
     );
+  }
+
+  private static normalize(term: string): string {
+    return term.toLowerCase().replace(/[^a-z0-9]/g, '');
   }
 }

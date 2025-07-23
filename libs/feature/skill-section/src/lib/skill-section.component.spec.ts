@@ -13,14 +13,14 @@ class MockSkillSectionService {
   getSkillCategories(): Map<Category, Tag[]> {
     return new Map<Category, Tag[]>([
       [
-        'Frontend' as Category,
+        'Frontend',
         [Tag.get('Angular'), Tag.get('React'), Tag.get('TypeScript')],
       ],
       [
-        'Backend' as Category,
-        [Tag.get('Node.js'), Tag.get('Python'), Tag.get('Java')],
+        'Backend',
+        [Tag.get('Node.js'), Tag.get('Spring Boot'), Tag.get('Java')],
       ],
-      ['Database' as Category, [Tag.get('PostgreSQL'), Tag.get('MongoDB')]],
+      ['Concepts', [Tag.get('REST'), Tag.get('Agile')]],
     ]);
   }
 }
@@ -95,7 +95,7 @@ describe('SkillSectionComponent', () => {
     );
     expect(categoryTitles).toContain('Frontend:');
     expect(categoryTitles).toContain('Backend:');
-    expect(categoryTitles).toContain('Database:');
+    expect(categoryTitles).toContain('Concepts:');
   });
 
   it('should render `and more...` in print mode', () => {

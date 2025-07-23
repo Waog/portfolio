@@ -1,13 +1,14 @@
+import 'jest-expect-message';
+
 import { Tag } from './tag';
+import { TAXONOMY } from './taxonomy.data';
+import RandExp = require('randexp');
+import seedrandom = require('seedrandom');
 
 describe('Tag', () => {
   describe('static get()', () => {
     it('can create', () => {
       expect(Tag.get('Angular')).toBeInstanceOf(Tag);
-    });
-
-    it('can create with synonyms', () => {
-      expect(Tag.get('TS')).toBeInstanceOf(Tag);
     });
 
     it('creates multiple objects', () => {
@@ -16,31 +17,33 @@ describe('Tag', () => {
 
     it('reuses existing objects', () => {
       const tag1 = Tag.get('JavaScript');
-      const tag2 = Tag.get('JS');
-      const tag3 = Tag.get('JavaScript');
+      const tag2 = Tag.get('JavaScript');
       expect(tag1).toBe(tag2);
-      expect(tag2).toBe(tag3);
     });
 
-    // TODO taxonomy: reactivate this test once the taxonomy is complete
-    // or decide to stick with the fallback + warnings and clean up code
-    // @GitHub Copilot: mark this in review, as it shall not be merged into master
-    xit('throws for unknown terms', () => {
-      expect(() => Tag.get('some unknown term')).toThrow();
-    });
+    it('each canonical term creates exactly the corresponding Tag', () => {
+      seedrandom('some-seed.', { global: true });
 
-    // TODO taxonomy: reactivate this test once the taxonomy is complete
-    // or decide to stick with the fallback + warnings and clean up code
-    // @GitHub Copilot: mark this in review, as it shall not be merged into master
-    xit('throws multiple times for same term', () => {
-      expect(() => Tag.get('some unknown term')).toThrow();
-      expect(() => Tag.get('some unknown term')).toThrow();
+      const errors: string[] = [];
+
+      for (const taxonomyEntry of TAXONOMY) {
+        const tag = Tag.get(taxonomyEntry.canonical);
+        if (tag.canonical !== taxonomyEntry.canonical) {
+          errors.push(
+            `Input '${taxonomyEntry.canonical}' created Tag '${tag.canonical}', but should create '${taxonomyEntry.canonical}'`
+          );
+        }
+      }
+
+      if (errors.length > 0) {
+        throw new Error(`Found ${errors.length} errors:\n${errors.join('\n')}`);
+      }
     });
   });
 
   describe('is()', () => {
     it('matches canonical name', () => {
-      expect(Tag.get('TS').is('TypeScript')).toBe(true);
+      expect(Tag.get('TypeScript').is('TypeScript')).toBe(true);
     });
 
     it('matches synonyms', () => {
@@ -50,6 +53,32 @@ describe('Tag', () => {
     it('does not match different terms', () => {
       expect(Tag.get('JavaScript').is('TypeScript')).toBe(false);
     });
+
+    it('matches all taxonomy canonical terms and synonyms', () => {
+      seedrandom('some-seed.', { global: true });
+
+      const errors: string[] = [];
+
+      for (const taxonomyEntry of TAXONOMY) {
+        const tag = Tag.get(taxonomyEntry.canonical);
+        const searchTerms = getSearchTerms(tag);
+        for (const termA of searchTerms) {
+          if (!tag.is(termA)) {
+            errors.push(`Expected ${termA} to match ${tag.canonical}`);
+          }
+        }
+      }
+
+      if (errors.length > 0) {
+        throw new Error(errors.join('\n'));
+      }
+    });
+
+    function getSearchTerms(tagA: Tag): string[] {
+      return [tagA.canonical, ...(tagA.synonyms || [])].map(term =>
+        term instanceof RegExp ? new RandExp(term).gen() : term
+      );
+    }
   });
 
   describe('isA()', () => {

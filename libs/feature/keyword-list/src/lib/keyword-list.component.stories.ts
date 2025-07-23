@@ -19,7 +19,7 @@ export const Default: Story = {
     keywordTags: [
       Tag.get('Angular'),
       Tag.get('TypeScript'),
-      Tag.get('Material Design'),
+      Tag.get('Angular Material'),
       Tag.get('RxJS'),
       Tag.get('Jest'),
     ],
@@ -31,7 +31,7 @@ export const WithMatchingTags: Story = {
     keywordTags: [
       Tag.get('Angular'),
       Tag.get('TypeScript'),
-      Tag.get('Material Design'),
+      Tag.get('Angular Material'),
       Tag.get('RxJS'),
       Tag.get('Jest'),
     ],
@@ -62,7 +62,7 @@ export const WithPartialMatches: Story = {
     keywordTags: [
       Tag.get('Angular'),
       Tag.get('TypeScript'),
-      Tag.get('Material Design'),
+      Tag.get('Angular Material'),
       Tag.get('RxJS'),
       Tag.get('Jest'),
     ],
