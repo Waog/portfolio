@@ -137,6 +137,11 @@
           "description": "",
           "label": "🚧 WIP - squash later",
           "value": "🚧"
+        },
+        {
+          "label": "📄 Documentation",
+          "value": "📄",
+          "description": ""
         }
       ],
       "type": "enum"

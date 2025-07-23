@@ -122,7 +122,7 @@ export type TaxonomyData = {
   /** The Categories of this Keyword, e.g. "Cypress" has `categories: ["Testing and QA"]` */
   readonly categories: Category[];
 
-  // TODO: default matching is a little inconsistent
+  // TODO taxonomy: default matching is a little inconsistent
   // decide for either whole-word matching or partial overlap
   // and consistently apply it to all entries `synonyms` fields
   // add a test which tries to match each keyword against all other keywords,

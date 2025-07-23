@@ -22,13 +22,15 @@ describe('Tag', () => {
       expect(tag2).toBe(tag3);
     });
 
-    // TODO: reactivate this test once the taxonomy is complete
+    // TODO taxonomy: reactivate this test once the taxonomy is complete
+    // or decide to stick with the fallback + warnings and clean up code
     // @GitHub Copilot: mark this in review, as it shall not be merged into master
     xit('throws for unknown terms', () => {
       expect(() => Tag.get('some unknown term')).toThrow();
     });
 
-    // TODO: reactivate this test once the taxonomy is complete
+    // TODO taxonomy: reactivate this test once the taxonomy is complete
+    // or decide to stick with the fallback + warnings and clean up code
     // @GitHub Copilot: mark this in review, as it shall not be merged into master
     xit('throws multiple times for same term', () => {
       expect(() => Tag.get('some unknown term')).toThrow();

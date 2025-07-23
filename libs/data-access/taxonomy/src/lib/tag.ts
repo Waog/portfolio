@@ -9,7 +9,7 @@ export class Tag {
 
   private readonly taxonomyData: TaxonomyData;
 
-  // TODO: possibly only allow TagName type instead of string, once taxonomy is complete
+  // TODO taxonomy: possibly only allow TagName type instead of string, once taxonomy is complete
   // consider if we want tolerance in project definition data or not
   public static get(originalString: string): Tag {
     const cached = Tag.cache.get(originalString);
@@ -46,7 +46,8 @@ export class Tag {
     if (matchingTerm) {
       this.taxonomyData = matchingTerm;
     } else {
-      // TODO: reactivate this error once the taxonomy is complete
+      // TODO taxonomy: reactivate this error once the taxonomy is complete
+      // or decide to stick with the fallback + warnings and clean up code
       // @GitHub Copilot: mark this in review, as it shall not be merged into master
       // throw new Error(`Tag "${originalString}" not found in taxonomy.`);
       console.warn(`Tag "${originalString}" not found in taxonomy.`);
