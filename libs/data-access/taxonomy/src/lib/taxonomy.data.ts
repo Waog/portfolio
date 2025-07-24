@@ -11,8 +11,8 @@ export type Category =
 type InternalTagName =
   | 'Agile'
   | 'Angular'
-  | 'Angular Material'
   | 'AngularJS'
+  | 'Angular Material'
   | 'API Gateway'
   | 'AppConfig'
   | 'Atlassian'
@@ -23,8 +23,8 @@ type InternalTagName =
   | 'Bower'
   | 'CDK'
   | 'Chai'
-  | 'Cloud Platforms'
   | 'CloudFormation'
+  | 'Cloud Platforms'
   | 'CloudWatch'
   | 'Confluence'
   | 'Cordova'
@@ -106,8 +106,8 @@ type InternalTagName =
   | 'Vue.js'
   | 'Web Components'
   | 'Web Development'
-  | 'Web Vitals'
   | 'Webpack'
+  | 'Web Vitals'
   | 'XCode'
   | 'yarn'
   | 'Zeplin';
@@ -115,12 +115,46 @@ type InternalTagName =
 /**
  * Represents a single Keyword in the taxonomy.
  */
+// @keep-sorted
 export type TaxonomyData = {
   /** Canonical Name of the Keyword, e.g. "Node.js" */
   readonly canonical: InternalTagName;
 
   /** The Categories of this Keyword, e.g. "Cypress" has `categories: ["Testing and QA"]` */
   readonly categories: Category[];
+
+  /**
+   * Children Keywords that are more specific concepts that fall under this Keyword.
+   * Represents an "is a" relationship.
+   * E.g. `React Native` is a `React`, so `React` has `children: ['React Native', 'React Web']`.
+   * Keep in sync with the `parents` property of the other Keyword.
+   * Don't define if empty.
+   */
+  readonly children?: readonly InternalTagName[];
+
+  /**
+   * Implicitly included Keywords, which are *always* worked with in projects with the technology, but are not a parent/child relationship.
+   * E.g. in Angular projects, you will always work with HTML, CSS, and TypeScript, even though they are not parent/child relationships.
+   * Only list it in the topmost applicable ancestor (parent). E.g. list JavaScript/TypeScript in `React`, not in `React Web`.
+   * Don't define if empty.
+   */
+  readonly includes?: readonly InternalTagName[];
+
+  /**
+   * Parent Keywords that are broader concepts that this Keyword falls under.
+   * represents an "is a" relationship.
+   * E.g. `Angular` is a `Frontend Framework`, so it has `parents: ['Frontend Framework']`.
+   * Keep in sync with the `children` property of the other Keyword.
+   * Don't define if empty.
+   */
+  readonly parents?: readonly InternalTagName[];
+
+  /**
+   * Related Keywords that are somehow related and worth mentioning in a related CV but not in a parent/child/cousin relationship, nor included.
+   * E.g. RxJS is related to Angular, as often used together, but they can also exist independently.
+   * Don't define if empty.
+   */
+  readonly related?: readonly InternalTagName[];
 
   /**
    * Matching alternatives:
@@ -137,59 +171,13 @@ export type TaxonomyData = {
    * If substring matching is not desired, must be defined.
    */
   readonly synonyms?: readonly (RegExp | string)[];
-
-  /**
-   * Implicitly included Keywords, which are *always* worked with in projects with the technology, but are not a parent/child relationship.
-   * E.g. in Angular projects, you will always work with HTML, CSS, and TypeScript, even though they are not parent/child relationships.
-   * Only list it in the topmost applicable ancestor (parent). E.g. list JavaScript/TypeScript in `React`, not in `React Web`.
-   * Don't define if empty.
-   */
-  readonly includes?: readonly InternalTagName[];
-
-  /**
-   * Related Keywords that are somehow related and worth mentioning in a related CV but not in a parent/child/cousin relationship, nor included.
-   * E.g. RxJS is related to Angular, as often used together, but they can also exist independently.
-   * Don't define if empty.
-   */
-  readonly related?: readonly InternalTagName[];
-
-  /**
-   * Parent Keywords that are broader concepts that this Keyword falls under.
-   * represents an "is a" relationship.
-   * E.g. `Angular` is a `Frontend Framework`, so it has `parents: ['Frontend Framework']`.
-   * Keep in sync with the `children` property of the other Keyword.
-   * Don't define if empty.
-   */
-  readonly parents?: readonly InternalTagName[];
-
-  /**
-   * Children Keywords that are more specific concepts that fall under this Keyword.
-   * Represents an "is a" relationship.
-   * E.g. `React Native` is a `React`, so `React` has `children: ['React Native', 'React Web']`.
-   * Keep in sync with the `parents` property of the other Keyword.
-   * Don't define if empty.
-   */
-  readonly children?: readonly InternalTagName[];
 };
 
+// @keep-sorted { "keys": ["canonical"] }
 const INTERNAL_TAXONOMY = [
   {
     canonical: 'Agile',
     categories: ['Concepts'],
-  },
-  {
-    canonical: 'Angular',
-    categories: ['Frontend', 'Tools & Libraries'],
-    synonyms: [
-      // Matches "Angular 13", "Angular v13", "Angular Version 13", etc., but not "Angular Material"
-      // cSpell: disable-next-line
-      /^angular\s*(v(?:ersion)?\s*)?\d+$/i,
-      /^angular$/i,
-    ],
-    includes: ['CSS', 'HTML', 'TypeScript'],
-    related: ['Angular Material', 'AngularJS', 'RxJS', 'SASS', 'SCSS'],
-    parents: ['Frontend Framework'],
-    children: ['Angular Material'],
   },
   {
     canonical: 'Angular Material',
@@ -197,10 +185,24 @@ const INTERNAL_TAXONOMY = [
     parents: ['Angular'],
   },
   {
+    canonical: 'Angular',
+    categories: ['Frontend', 'Tools & Libraries'],
+    children: ['Angular Material'],
+    includes: ['CSS', 'HTML', 'TypeScript'],
+    parents: ['Frontend Framework'],
+    related: ['Angular Material', 'AngularJS', 'RxJS', 'SASS', 'SCSS'],
+    synonyms: [
+      // Matches "Angular 13", "Angular v13", "Angular Version 13", etc., but not "Angular Material"
+      // cSpell: disable-next-line
+      /^angular\s*(v(?:ersion)?\s*)?\d+$/i,
+      /^angular$/i,
+    ],
+  },
+  {
     canonical: 'AngularJS',
     categories: ['Frontend', 'Tools & Libraries'],
-    parents: ['Frontend Framework'],
     includes: ['CSS', 'HTML', 'TypeScript'],
+    parents: ['Frontend Framework'],
     related: ['Angular'],
   },
   {
@@ -217,6 +219,11 @@ const INTERNAL_TAXONOMY = [
     canonical: 'Atlassian',
     categories: ['Tools & Libraries'],
     children: ['BitBucket', 'Confluence', 'Jira'],
+  },
+  {
+    canonical: 'AWS Organizations',
+    categories: ['Cloud & Infrastructure'],
+    parents: ['AWS'],
   },
   {
     canonical: 'AWS',
@@ -238,14 +245,9 @@ const INTERNAL_TAXONOMY = [
     synonyms: [/^aws$/i, /amazon web services/i],
   },
   {
-    canonical: 'AWS Organizations',
-    categories: ['Cloud & Infrastructure'],
-    parents: ['AWS'],
-  },
-  {
     canonical: 'Backend Systems',
     categories: ['Misc'],
-    synonyms: [/backend/i, /backend systems/i],
+    synonyms: [/backend systems/i, /backend/i],
   },
   {
     canonical: 'BitBucket',
@@ -293,8 +295,8 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'CSS',
     categories: ['Frontend'],
-    synonyms: [/^css/i],
     related: ['SASS', 'SCSS'],
+    synonyms: [/^css/i],
   },
   {
     canonical: 'Cypress',
@@ -355,9 +357,9 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'Frontend Framework',
     categories: ['Frontend'],
-    synonyms: [/frontend framework/i, /javascript framework/i, /js framework/i],
-    parents: ['Framework'],
     children: ['Angular', 'AngularJS', 'React', 'Vue.js'],
+    parents: ['Framework'],
+    synonyms: [/frontend framework/i, /javascript framework/i, /js framework/i],
   },
   {
     canonical: 'GitHub',
@@ -405,16 +407,16 @@ const INTERNAL_TAXONOMY = [
     includes: ['CSS', 'HTML', 'JavaScript'],
   },
   {
-    canonical: 'IAM',
-    categories: ['Cloud & Infrastructure'],
-    parents: ['AWS'],
-    children: ['IAM Identity Center'],
-    synonyms: [/^aws iam$/i, /^iam$/i],
-  },
-  {
     canonical: 'IAM Identity Center',
     categories: ['Cloud & Infrastructure'],
     parents: ['AWS', 'IAM'],
+  },
+  {
+    canonical: 'IAM',
+    categories: ['Cloud & Infrastructure'],
+    children: ['IAM Identity Center'],
+    parents: ['AWS'],
+    synonyms: [/^aws iam$/i, /^iam$/i],
   },
   {
     canonical: 'Ionic',
@@ -434,14 +436,14 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'Java',
     categories: ['Backend'],
-    synonyms: [/^java$/i],
     children: ['Spring Boot'],
+    synonyms: [/^java$/i],
   },
   {
     canonical: 'JavaScript',
     categories: ['Backend', 'Frontend'],
-    synonyms: [/^js$/i, /javascript/i],
     children: ['TypeScript'],
+    synonyms: [/^js$/i, /javascript/i],
   },
   {
     canonical: 'Jenkins',
@@ -575,14 +577,6 @@ const INTERNAL_TAXONOMY = [
     categories: ['Backend', 'Tools & Libraries'],
   },
   {
-    canonical: 'React',
-    categories: ['Frontend', 'Tools & Libraries'],
-    synonyms: [/^react$/i, /react\.js/i],
-    parents: ['Frontend Framework'],
-    children: ['React Native', 'React Web'],
-    includes: ['CSS', 'HTML', 'TypeScript'],
-  },
-  {
     canonical: 'React Native',
     categories: ['Frontend', 'Tools & Libraries'],
     parents: ['React'],
@@ -591,6 +585,14 @@ const INTERNAL_TAXONOMY = [
     canonical: 'React Web',
     categories: ['Frontend', 'Tools & Libraries'],
     parents: ['React'],
+  },
+  {
+    canonical: 'React',
+    categories: ['Frontend', 'Tools & Libraries'],
+    children: ['React Native', 'React Web'],
+    includes: ['CSS', 'HTML', 'TypeScript'],
+    parents: ['Frontend Framework'],
+    synonyms: [/^react$/i, /react\.js/i],
   },
   {
     canonical: 'Redash',
@@ -641,8 +643,8 @@ const INTERNAL_TAXONOMY = [
   {
     // NOTE: this is not a real technology, but a placeholder for empty spaces in the UI
     canonical: 'Spacer',
-    synonyms: [/^placeholder$/i, /^spacer$/i],
     categories: ['Misc'],
+    synonyms: [/^placeholder$/i, /^spacer$/i],
   },
   {
     canonical: 'Splunk',
@@ -675,8 +677,8 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'TypeScript',
     categories: ['Backend', 'Frontend'],
-    synonyms: [/^ts$/i, /typescript/i],
     parents: ['JavaScript'],
+    synonyms: [/^ts$/i, /typescript/i],
   },
   {
     canonical: 'Various Technologies',
@@ -685,8 +687,8 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'Vue.js',
     categories: ['Frontend', 'Tools & Libraries'],
-    synonyms: [/^vue/i],
     parents: ['Frontend Framework'],
+    synonyms: [/^vue/i],
   },
   {
     canonical: 'Web Components',
@@ -720,7 +722,7 @@ const INTERNAL_TAXONOMY = [
     canonical: 'Zeplin',
     categories: ['Tools & Libraries'],
   },
-] as const satisfies readonly TaxonomyData[];
+] satisfies readonly TaxonomyData[];
 
 export type TagName = (typeof INTERNAL_TAXONOMY)[number]['canonical'];
 export const TAXONOMY = INTERNAL_TAXONOMY as readonly TaxonomyData[];

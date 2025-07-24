@@ -3,12 +3,6 @@ import 'jest-expect-message';
 import { TagName, TAXONOMY, TaxonomyData } from './taxonomy.data';
 
 describe('Taxonomy Data', () => {
-  it('has ordered elements (by canonical name)', () => {
-    const canonicalNames = TAXONOMY.map(term => term.canonical.toLowerCase());
-
-    expect(canonicalNames).toEqual([...canonicalNames].sort());
-  });
-
   it('has no duplicate canonical values', () => {
     const canonicalNames = TAXONOMY.map(term => term.canonical);
     const uniqueCanonicalNames = new Set(canonicalNames);
@@ -40,30 +34,6 @@ describe('Taxonomy Data', () => {
     throwIfBrokenReference('parents', 'children');
   });
 
-  it('array properties are ordered alphabetically', () => {
-    const arrayProperties: (keyof TaxonomyData)[] = [
-      'categories',
-      'synonyms',
-      'includes',
-      'related',
-      'parents',
-      'children',
-    ];
-
-    for (const term of TAXONOMY) {
-      for (const propName of arrayProperties) {
-        const propValue = term[propName];
-
-        if (!propValue || !Array.isArray(propValue)) continue;
-
-        expect(
-          propValue,
-          `Taxonomy Element "${term.canonical}" has property "${propName}" that is not ordered alphabetically`
-        ).toEqual([...propValue].sort(customSort));
-      }
-    }
-  });
-
   it('categories include elements which are either `Misc` or others', () => {
     for (const data of TAXONOMY) {
       const categories = data.categories;
@@ -79,15 +49,6 @@ describe('Taxonomy Data', () => {
       }
     }
   });
-
-  function customSort(
-    a: RegExp | string | TagName,
-    b: RegExp | string | TagName
-  ): number {
-    const aString = a instanceof RegExp ? a.source : String(a);
-    const bString = b instanceof RegExp ? b.source : String(b);
-    return aString.localeCompare(bString);
-  }
 
   function throwIfBrokenReference(
     sourcePropertyName: keyof TaxonomyData,
