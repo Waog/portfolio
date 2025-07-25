@@ -1,4 +1,5 @@
-import { MemoizeAllArgs } from './memoize-all-args';
+import { MemoizeAllArgs } from '@portfolio/memoize';
+
 import { Category, TagName, TAXONOMY, TaxonomyData } from './taxonomy.data';
 
 export { Category, TagName } from './taxonomy.data';

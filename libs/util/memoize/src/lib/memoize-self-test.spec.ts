@@ -1,8 +1,7 @@
 import { Memoize } from 'typescript-memoize';
 
-import { MemoizeAllArgs } from './memoize-all-args';
+import { MemoizeAllArgs } from './memoize-all-args.decorator';
 
-// TODO taxonomy: move to own nx library
 class SomeMemoizeClass {
   @Memoize()
   noParamMethod(): { rnd: number } {

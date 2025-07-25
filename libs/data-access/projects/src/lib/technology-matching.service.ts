@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
+import { MemoizeAllArgs } from '@portfolio/memoize';
 import { SearchTagService } from '@portfolio/search-tags';
 import { Tag } from '@portfolio/taxonomy';
-import { Memoize } from 'typescript-memoize';
 
 export type MatchType = 'full' | 'indirect' | 'none';
 
@@ -14,7 +14,7 @@ export class TechnologyMatchingService {
   /**
    * Determines the match type between a technology name and a search tag
    */
-  @Memoize()
+  @MemoizeAllArgs
   getMatchType({
     keywordTag,
     searchTag,
@@ -38,17 +38,14 @@ export class TechnologyMatchingService {
   /**
    * Finds the best match type for a technology against multiple search tags
    */
+  @MemoizeAllArgs
   getBestMatchTypeForKeywordTag({
     keywordTag,
     searchTags,
   }: {
     keywordTag: Tag;
-    searchTags?: string[];
+    searchTags: string[];
   }): MatchType {
-    if (!searchTags) {
-      searchTags = this.searchTagService.currentTags;
-    }
-
     // First check for any full matches
     for (const searchTag of searchTags) {
       if (this.getMatchType({ keywordTag, searchTag }) === 'full') {
@@ -105,7 +102,7 @@ export class TechnologyMatchingService {
     });
   }
 
-  @Memoize()
+  @MemoizeAllArgs
   getMatchCount({
     keywordTags,
     searchTags,

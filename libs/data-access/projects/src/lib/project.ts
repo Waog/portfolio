@@ -1,5 +1,5 @@
+import { MemoizeAllArgs } from '@portfolio/memoize';
 import { Tag } from '@portfolio/taxonomy';
-import { Memoize } from 'typescript-memoize';
 
 import type { ProjectData } from './project.data';
 
@@ -59,7 +59,7 @@ export class Project {
     return this.data.industry;
   }
 
-  @Memoize()
+  @MemoizeAllArgs
   get technologies(): Tag[] {
     const originalDataTags: Tag[] = this.data.technologies.map(tech => {
       return Tag.get(tech);

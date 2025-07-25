@@ -1,8 +1,8 @@
 import { inject, Injectable } from '@angular/core';
+import { MemoizeAllArgs } from '@portfolio/memoize';
 import { ProjectService, TechnologyMatchingService } from '@portfolio/projects';
 import { SearchTagService } from '@portfolio/search-tags';
 import { Category, Tag, TagName } from '@portfolio/taxonomy';
-import { Memoize } from 'typescript-memoize';
 
 @Injectable({
   providedIn: 'root',
@@ -24,7 +24,7 @@ export class SkillSectionService {
     return this.sortCategoriesByMatchCount({ unsortedCategories, searchTags });
   }
 
-  @Memoize()
+  @MemoizeAllArgs
   private getUnsortedSkillCategories(): Map<Category, Tag[]> {
     const result: Map<Category, Tag[]> = new Map();
 
@@ -64,7 +64,7 @@ export class SkillSectionService {
   /**
    * NOTE: only public for unit tests, don't call it directly
    */
-  @Memoize()
+  @MemoizeAllArgs
   public sortCategoriesByMatchCount({
     unsortedCategories,
     searchTags,

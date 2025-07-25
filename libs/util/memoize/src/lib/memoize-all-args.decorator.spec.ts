@@ -1,6 +1,5 @@
-import { MemoizeAllArgs } from './memoize-all-args';
+import { MemoizeAllArgs } from './memoize-all-args.decorator';
 
-// TODO taxonomy: move to own nx library
 describe('MemoizeAllArgs', () => {
   it('1 static method, no params is cached', () => {
     expect(SomeMemoizeClass.staticNoParamMethod()).toBe(
@@ -11,6 +10,11 @@ describe('MemoizeAllArgs', () => {
   it('1 object, 1 method, no params is cached', () => {
     const instance = new SomeMemoizeClass();
     expect(instance.noParamMethod()).toBe(instance.noParamMethod());
+  });
+
+  it('1 object, 2 method, no params use different cache', () => {
+    const instance = new SomeMemoizeClass();
+    expect(instance.noParamMethod()).not.toBe(instance.noParamMethod2());
   });
 
   it('2 object, 1 method, no params, use different cache', () => {
@@ -32,7 +36,7 @@ describe('MemoizeAllArgs', () => {
     );
   });
 
-  it('1 object, 1 method, 2 primitive params is cached caching', () => {
+  it('1 object, 1 method, 2 primitive params is cached', () => {
     const instance = new SomeMemoizeClass();
     expect(instance.twoParamMethod('test1', 'test2')).toBe(
       instance.twoParamMethod('test1', 'test2')
@@ -57,7 +61,7 @@ describe('MemoizeAllArgs', () => {
     );
   });
 
-  it('1 object, 1 method, 1 object param is returns different results for deeply different objects', () => {
+  it('1 object, 1 method, 1 object param returns different results for deeply different objects', () => {
     const instance = new SomeMemoizeClass();
     const paramA = { root: 'test', child: { a: 'a', b: 'b' } };
     const paramB = { root: 'test', child: { a: 'a', b: 'c' } };
@@ -68,7 +72,7 @@ describe('MemoizeAllArgs', () => {
     );
   });
 
-  it('1 object, 1 method, 1 array param is returns same results for equal arrays', () => {
+  it('1 object, 1 method, 1 array param returns same results for equal arrays', () => {
     const instance = new SomeMemoizeClass();
     const paramA = ['a', 'b'];
     const paramB = ['a', 'b'];
@@ -79,7 +83,7 @@ describe('MemoizeAllArgs', () => {
     );
   });
 
-  it('1 object, 1 method, 1 array param is returns different results for deeply different objects', () => {
+  it('1 object, 1 method, 1 array param returns different results for deeply different objects', () => {
     const instance = new SomeMemoizeClass();
     const paramA = ['a', 'b'];
     const paramB = ['a', 'c'];
@@ -90,7 +94,7 @@ describe('MemoizeAllArgs', () => {
     );
   });
 
-  it('1 object, 1 method, 2 complex param is returns same results for equal params', () => {
+  it('1 object, 1 method, 2 complex param returns same results for equal params', () => {
     const instance = new SomeMemoizeClass();
     const param1A = { a: 'a', b: { c: 'c', d: 'd' } };
     const param1B = { a: 'a', b: { c: 'c', d: 'd' } };
@@ -109,7 +113,7 @@ describe('MemoizeAllArgs', () => {
     );
   });
 
-  it('1 object, 1 method, 2 complex param is returns different results for deeply different params', () => {
+  it('1 object, 1 method, 2 complex param returns different results for deeply different params', () => {
     const instance = new SomeMemoizeClass();
     const param1A = { a: 'a', b: { c: 'c', d: 'd' } };
     const param1B = { a: 'a', b: { c: 'c', d: 'd' } };
@@ -125,6 +129,28 @@ describe('MemoizeAllArgs', () => {
 
     expect(instance.twoComplexParamMethod(param1A, param2A)).not.toBe(
       instance.twoComplexParamMethod(param1B, param2B)
+    );
+  });
+
+  it('1 object, 1 method, 1 array param with regex returns same results for equal regex', () => {
+    const instance = new SomeMemoizeClass();
+    const paramA = [/hello/i];
+    const paramB = [/hello/i];
+    expect(paramA).not.toBe(paramB);
+    expect(paramA).toEqual(paramB);
+    expect(instance.oneRegexArrayParamMethod(paramA)).toBe(
+      instance.oneRegexArrayParamMethod(paramB)
+    );
+  });
+
+  it('1 object, 1 method, 1 array param with regex returns different results for different regex', () => {
+    const instance = new SomeMemoizeClass();
+    const paramA = [/hello/i];
+    const paramB = [/hello/];
+    expect(paramA).not.toBe(paramB);
+    expect(paramA).not.toEqual(paramB);
+    expect(instance.oneRegexArrayParamMethod(paramA)).not.toBe(
+      instance.oneRegexArrayParamMethod(paramB)
     );
   });
 
@@ -163,6 +189,11 @@ class SomeMemoizeClass {
   }
 
   @MemoizeAllArgs
+  noParamMethod2(): { rnd: number } {
+    return { rnd: SomeMemoizeClass.rnd() };
+  }
+
+  @MemoizeAllArgs
   primitiveParamMethod(s: string): { rnd: string } {
     return { rnd: s + SomeMemoizeClass.rnd() };
   }
@@ -184,6 +215,13 @@ class SomeMemoizeClass {
 
   @MemoizeAllArgs
   oneArrayParamMethod(param: Array<string>): { rnd: string } {
+    return {
+      rnd: param.join(',') + SomeMemoizeClass.rnd(),
+    };
+  }
+
+  @MemoizeAllArgs
+  oneRegexArrayParamMethod(param: Array<RegExp>): { rnd: string } {
     return {
       rnd: param.join(',') + SomeMemoizeClass.rnd(),
     };

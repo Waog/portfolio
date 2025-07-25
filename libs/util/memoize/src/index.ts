@@ -1,1 +1,1 @@
-export * from './lib/memoize.component';
+export * from './lib/memoize-all-args.decorator';

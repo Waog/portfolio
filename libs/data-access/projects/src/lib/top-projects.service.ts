@@ -1,4 +1,5 @@
 import { inject, Injectable } from '@angular/core';
+import { MemoizeAllArgs } from '@portfolio/memoize';
 import { SearchTagService } from '@portfolio/search-tags';
 
 import { Project } from './project';
@@ -76,6 +77,7 @@ export class TopProjectsService {
       .filter(project => !this.getTopProjects().includes(project));
   }
 
+  @MemoizeAllArgs
   private countFullMatches(project: Project, searchTags: string[]): number {
     return project.technologies.filter(
       technology =>
@@ -86,6 +88,7 @@ export class TopProjectsService {
     ).length;
   }
 
+  @MemoizeAllArgs
   private countIndirectMatches(project: Project, searchTags: string[]): number {
     return project.technologies.filter(
       technology =>

@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { Memoize } from 'typescript-memoize';
+import { MemoizeAllArgs } from '@portfolio/memoize';
 
 import { Project } from './project';
 import { ALL_PROJECT_DATA } from './project.data';
@@ -16,7 +16,7 @@ export interface ProjectFilterConfig {
 export class ProjectService {
   private technologyMatchingService = inject(TechnologyMatchingService);
 
-  @Memoize()
+  @MemoizeAllArgs
   getAll(): Project[] {
     return ALL_PROJECT_DATA.map(data => new Project(data));
   }

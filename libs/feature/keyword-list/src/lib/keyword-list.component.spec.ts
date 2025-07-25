@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TechnologyMatchingService } from '@portfolio/projects';
+import { SearchTagService } from '@portfolio/search-tags';
 import { Tag } from '@portfolio/taxonomy';
+import { Observable, Subject } from 'rxjs';
 
 import { KeywordListComponent } from './keyword-list.component';
 
@@ -8,6 +10,8 @@ describe('KeywordListComponent', () => {
   let component: KeywordListComponent;
   let fixture: ComponentFixture<KeywordListComponent>;
   let mockTechnologyMatchingService: jest.Mocked<TechnologyMatchingService>;
+  let mockSearchTagService: { tags$: Observable<string[]> };
+  let tagsSubject: Subject<string[]>;
 
   const mockTags = [Tag.get('Angular'), Tag.get('TypeScript')];
 
@@ -16,6 +20,10 @@ describe('KeywordListComponent', () => {
       getBestMatchTypeForKeywordTag: jest.fn(),
       getMatchType: jest.fn(),
     };
+    tagsSubject = new Subject<string[]>();
+    mockSearchTagService = {
+      tags$: tagsSubject.asObservable(),
+    };
 
     await TestBed.configureTestingModule({
       imports: [KeywordListComponent],
@@ -23,6 +31,10 @@ describe('KeywordListComponent', () => {
         {
           provide: TechnologyMatchingService,
           useValue: mockTechnologyMatchingServiceObj,
+        },
+        {
+          provide: SearchTagService,
+          useValue: mockSearchTagService,
         },
       ],
     }).compileComponents();
@@ -42,8 +54,8 @@ describe('KeywordListComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  describe('technologies getter', () => {
-    it('should return keywords with match types', () => {
+  describe('tagsWithMatchType', () => {
+    it('should update when tags$ emits', () => {
       mockTechnologyMatchingService.getBestMatchTypeForKeywordTag.mockImplementation(
         ({ keywordTag }: { keywordTag: Tag }) => {
           switch (keywordTag) {
@@ -57,18 +69,28 @@ describe('KeywordListComponent', () => {
         }
       );
 
-      const tagsWithMatchType = component.tagsWithMatchType;
+      // Before emission, should be empty
+      expect(component.tagsWithMatchType).toEqual([]);
 
-      expect(tagsWithMatchType).toEqual([
+      tagsSubject.next([]); // simulate tags$ emission
+      fixture.detectChanges();
+
+      expect(component.tagsWithMatchType).toEqual([
         { tag: Tag.get('Angular'), matchType: 'full' },
         { tag: Tag.get('TypeScript'), matchType: 'indirect' },
       ]);
       expect(
         mockTechnologyMatchingService.getBestMatchTypeForKeywordTag
-      ).toHaveBeenCalledWith({ keywordTag: Tag.get('Angular') });
+      ).toHaveBeenCalledWith({
+        keywordTag: Tag.get('Angular'),
+        searchTags: [],
+      });
       expect(
         mockTechnologyMatchingService.getBestMatchTypeForKeywordTag
-      ).toHaveBeenCalledWith({ keywordTag: Tag.get('TypeScript') });
+      ).toHaveBeenCalledWith({
+        keywordTag: Tag.get('TypeScript'),
+        searchTags: [],
+      });
     });
   });
 
@@ -86,32 +108,25 @@ describe('KeywordListComponent', () => {
           }
         }
       );
+      tagsSubject.next([]); // ensure state is updated before each test
+      fixture.detectChanges();
     });
 
-    describe('greenTechnologies', () => {
-      it('should return keywords with full match', () => {
-        const greenKeywords = component.greenTechnologies;
-        expect(greenKeywords).toEqual(['Angular']);
-      });
+    it('should update greenTechnologies, yellowTechnologies, and grayTechnologies on tags$ emission', () => {
+      expect(component.greenTechnologies).toEqual(['Angular']);
+      expect(component.yellowTechnologies).toEqual(['TypeScript']);
+      expect(component.grayTechnologies).toEqual([]);
     });
 
-    describe('yellowTechnologies', () => {
-      it('should return keywords with indirect match', () => {
-        const yellowKeywords = component.yellowTechnologies;
-        expect(yellowKeywords).toEqual(['TypeScript']);
-      });
-    });
-
-    describe('grayTechnologies', () => {
-      it('should return keywords with no match', () => {
-        // Update the mock to return 'none' for both keywords
-        mockTechnologyMatchingService.getBestMatchTypeForKeywordTag.mockReturnValue(
-          'none'
-        );
-
-        const grayKeywords = component.grayTechnologies;
-        expect(grayKeywords).toEqual(['Angular', 'TypeScript']);
-      });
+    it('should update grayTechnologies when all are none', () => {
+      mockTechnologyMatchingService.getBestMatchTypeForKeywordTag.mockImplementation(
+        () => 'none'
+      );
+      tagsSubject.next([]); // re-emit to update state with new mock
+      fixture.detectChanges();
+      expect(component.greenTechnologies).toEqual([]);
+      expect(component.yellowTechnologies).toEqual([]);
+      expect(component.grayTechnologies).toEqual(['Angular', 'TypeScript']);
     });
   });
 });
