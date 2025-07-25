@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, input, OnDestroy, OnInit } from '@angular/core';
 import { ColorChipListComponent } from '@portfolio/color-chip-list';
+import { MemoizeAllArgs } from '@portfolio/memoize';
 import { MatchType, TechnologyMatchingService } from '@portfolio/projects';
 import { SearchTagService } from '@portfolio/search-tags';
 import { Tag } from '@portfolio/taxonomy';
@@ -42,6 +43,7 @@ export class KeywordListComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
+  @MemoizeAllArgs
   private updateSearchTagMatches(searchTags: string[]): void {
     this.tagsWithMatchType = this.getTagsWithMatchType(searchTags);
     this.greenTechnologies = this.getGreenTechnologies();
