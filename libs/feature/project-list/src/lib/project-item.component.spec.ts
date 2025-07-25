@@ -7,7 +7,7 @@ describe('ProjectItemComponent', () => {
   let component: ProjectItemComponent;
   let fixture: ComponentFixture<ProjectItemComponent>;
 
-  const mockProject: Project = {
+  const mockProject: Project = new Project({
     id: 'test-project',
     title: 'Test Project',
     projectType: 'Web Application',
@@ -25,7 +25,7 @@ describe('ProjectItemComponent', () => {
     workMode: 'Remote',
     company: 'Test Company',
     industry: 'Technology',
-  };
+  });
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({

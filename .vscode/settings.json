@@ -137,6 +137,11 @@
           "description": "",
           "label": "🚧 WIP - squash later",
           "value": "🚧"
+        },
+        {
+          "label": "📄 Documentation",
+          "value": "📄",
+          "description": ""
         }
       ],
       "type": "enum"
@@ -189,10 +194,17 @@
   "git.inputValidationSubjectLength": 100,
   "nxConsole.generateAiAgentRules": true,
   "cSpell.words": [
+    "AngularJS",
     "autodocs",
     "commitlint",
     "domcontentloaded",
+    "expressjs",
+    "Frontends",
     "noreferrer",
-    "prerender"
+    "prerender",
+    "randexp",
+    "Redash",
+    "vuejs",
+    "Zeplin"
   ]
 }

@@ -1,9 +1,9 @@
 import { inject, Injectable } from '@angular/core';
+import { MemoizeAllArgs } from '@portfolio/memoize';
 
 import { Project } from './project';
-import { ALL_PROJECTS } from './projects.data';
+import { ALL_PROJECT_DATA } from './project.data';
 import { TechnologyMatchingService } from './technology-matching.service';
-import { TopProjectsService } from './top-projects.service';
 
 export interface ProjectFilterConfig {
   isFullMatchFor?: string;
@@ -15,30 +15,33 @@ export interface ProjectFilterConfig {
 })
 export class ProjectService {
   private technologyMatchingService = inject(TechnologyMatchingService);
-  private topProjectsService = inject(TopProjectsService);
 
+  @MemoizeAllArgs
   getAll(): Project[] {
-    return ALL_PROJECTS;
+    return ALL_PROJECT_DATA.map(data => new Project(data));
   }
 
   getBy(filterConfig: ProjectFilterConfig): Project[] {
-    const { isFullMatchFor, isPartialFor } = filterConfig;
+    const {
+      isFullMatchFor: fullMatchSearchTag,
+      isPartialFor: partialMatchSearchTag,
+    } = filterConfig;
 
-    if (isFullMatchFor) {
-      return ALL_PROJECTS.filter(
+    if (fullMatchSearchTag) {
+      return this.getAll().filter(
         project =>
-          this.technologyMatchingService.getBestMatchType(
-            isFullMatchFor,
-            project.technologies
-          ) === 'full'
+          this.technologyMatchingService.getBestMatchTypeForSearchTag({
+            searchTag: fullMatchSearchTag,
+            keywordTags: project.technologies,
+          }) === 'full'
       );
-    } else if (isPartialFor) {
-      return ALL_PROJECTS.filter(
+    } else if (partialMatchSearchTag) {
+      return this.getAll().filter(
         project =>
-          this.technologyMatchingService.getBestMatchType(
-            isPartialFor,
-            project.technologies
-          ) === 'indirect'
+          this.technologyMatchingService.getBestMatchTypeForSearchTag({
+            searchTag: partialMatchSearchTag,
+            keywordTags: project.technologies,
+          }) === 'indirect'
       );
     } else {
       throw new Error(
@@ -46,14 +49,5 @@ export class ProjectService {
           JSON.stringify(filterConfig)
       );
     }
-  }
-
-  getTopProjects(): Project[] {
-    return this.topProjectsService.getTopProjects();
-  }
-  getNonTopProjects(): Project[] {
-    return this.getAll().filter(
-      project => !this.topProjectsService.getTopProjects().includes(project)
-    );
   }
 }

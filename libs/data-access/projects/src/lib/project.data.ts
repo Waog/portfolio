@@ -1,6 +1,26 @@
-import { Project } from './project';
+import { TagName } from '@portfolio/taxonomy';
 
-export const ALL_PROJECTS: Project[] = [
+export interface ProjectData {
+  id: string;
+  title: string;
+  projectType: string;
+  compactDescription: string;
+  keyAchievements: string;
+  fullDescription: string;
+  features: string[];
+  highlights: string[];
+  technologies: TagName[];
+  role: string;
+  team: string;
+  fromTo: string;
+  duration: string;
+  location: string;
+  workMode: string;
+  company: string;
+  industry: string; // TODO taxonomy: consider adding industries to the taxonomy to match/highlight them
+}
+
+export const ALL_PROJECT_DATA: ProjectData[] = [
   {
     id: 'language-learning-app',
     title: 'AI-Powered Language Learning App',
@@ -88,12 +108,12 @@ export const ALL_PROJECTS: Project[] = [
       'Worked with complex micro-frontend architecture',
     ],
     technologies: [
-      'Angular 13',
+      'Angular',
       'Node.js',
       'NestJS',
       'TypeScript',
       'RxJS',
-      'nx',
+      'Nx',
       'SCSS',
       'HTML',
       'CSS',
@@ -162,7 +182,7 @@ export const ALL_PROJECTS: Project[] = [
       'Express',
       'TypeScript',
       'RxJS',
-      'nx',
+      'Nx',
       'SCSS',
       'HTML',
       'CSS',
@@ -279,7 +299,7 @@ export const ALL_PROJECTS: Project[] = [
       'RabbitMQ',
       'MongoDB',
       'Docker',
-      'Yarn',
+      'yarn',
       'JSON',
       'GitLab',
     ],
@@ -331,7 +351,7 @@ export const ALL_PROJECTS: Project[] = [
       'Jasmine',
       'Karma',
       'Zeplin',
-      'JIRA',
+      'Jira',
       'Confluence',
       'BitBucket',
     ],
@@ -421,16 +441,16 @@ export const ALL_PROJECTS: Project[] = [
       'Maintained high quality standards across all engagements',
     ],
     technologies: [
-      'Various technologies',
-      'Web development',
-      'Mobile development',
-      'Backend systems',
-      'Frontend frameworks',
-      'Database systems',
-      'Cloud platforms',
-      'DevOps tools',
-      'Project management',
-      'Quality assurance',
+      'Various Technologies',
+      'Web Development',
+      'Mobile Development',
+      'Backend Systems',
+      'Frontend Framework',
+      'Database Systems',
+      'Cloud Platforms',
+      'DevOps Tools',
+      'Project Management',
+      'QA',
     ],
     role: 'Freelancing IT Professional',
     team: 'Various team configurations',

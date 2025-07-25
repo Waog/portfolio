@@ -1,5 +1,7 @@
 import { inject, Injectable } from '@angular/core';
+import { MemoizeAllArgs } from '@portfolio/memoize';
 import { SearchTagService } from '@portfolio/search-tags';
+import { Tag } from '@portfolio/taxonomy';
 
 export type MatchType = 'full' | 'indirect' | 'none';
 
@@ -12,17 +14,21 @@ export class TechnologyMatchingService {
   /**
    * Determines the match type between a technology name and a search tag
    */
-  getMatchType(technologyName: string, searchTag: string): MatchType {
-    const techLower = technologyName.toLowerCase();
-    const tagLower = searchTag.toLowerCase();
-
-    // Check for full match (exact string match, case insensitive)
-    if (techLower === tagLower) {
+  @MemoizeAllArgs
+  getMatchType({
+    keywordTag,
+    searchTag,
+  }: {
+    keywordTag: Tag;
+    searchTag: string;
+  }): MatchType {
+    if (keywordTag.is(searchTag)) {
       return 'full';
     }
 
-    // Check for indirect matches (substring match in either direction)
-    if (techLower.includes(tagLower) || tagLower.includes(techLower)) {
+    const minDistanceToAncestor =
+      keywordTag.getMinDistanceToLowestCommonAncestor(searchTag) ?? Infinity;
+    if (minDistanceToAncestor == 0 || keywordTag.isRelated(searchTag)) {
       return 'indirect';
     }
 
@@ -32,25 +38,88 @@ export class TechnologyMatchingService {
   /**
    * Finds the best match type for a technology against multiple search tags
    */
-  getBestMatchType(technologyName: string, searchTags?: string[]): MatchType {
-    if (!searchTags) {
-      searchTags = this.searchTagService.currentTags;
-    }
-
+  @MemoizeAllArgs
+  getBestMatchTypeForKeywordTag({
+    keywordTag,
+    searchTags,
+  }: {
+    keywordTag: Tag;
+    searchTags: string[];
+  }): MatchType {
     // First check for any full matches
-    for (const tag of searchTags) {
-      if (this.getMatchType(technologyName, tag) === 'full') {
+    for (const searchTag of searchTags) {
+      if (this.getMatchType({ keywordTag, searchTag }) === 'full') {
         return 'full';
       }
     }
 
     // Then check for any indirect matches
-    for (const tag of searchTags) {
-      if (this.getMatchType(technologyName, tag) === 'indirect') {
+    for (const searchTag of searchTags) {
+      if (this.getMatchType({ keywordTag, searchTag }) === 'indirect') {
         return 'indirect';
       }
     }
 
     return 'none';
+  }
+
+  /**
+   * Finds the best match type for a technology against multiple search tags
+   */
+  getBestMatchTypeForSearchTag({
+    searchTag,
+    keywordTags,
+  }: {
+    searchTag: string;
+    keywordTags: Tag[];
+  }): MatchType {
+    // First check for any full matches
+    for (const keywordTag of keywordTags) {
+      if (this.getMatchType({ keywordTag, searchTag }) === 'full') {
+        return 'full';
+      }
+    }
+
+    // Then check for any indirect matches
+    for (const keywordTag of keywordTags) {
+      if (this.getMatchType({ keywordTag, searchTag }) === 'indirect') {
+        return 'indirect';
+      }
+    }
+
+    return 'none';
+  }
+
+  getMatchCountForCurrentSearchTags({
+    keywordTags,
+  }: {
+    keywordTags: Tag[];
+  }): Record<MatchType, number> {
+    const searchTags = this.searchTagService.currentTags;
+    return this.getMatchCount({
+      keywordTags,
+      searchTags,
+    });
+  }
+
+  @MemoizeAllArgs
+  getMatchCount({
+    keywordTags,
+    searchTags,
+  }: {
+    keywordTags: Tag[];
+    searchTags: string[];
+  }): Record<MatchType, number> {
+    const result: Record<MatchType, number> = { full: 0, indirect: 0, none: 0 };
+
+    for (const keywordTag of keywordTags) {
+      const matchType = this.getBestMatchTypeForKeywordTag({
+        keywordTag,
+        searchTags,
+      });
+      result[matchType]++;
+    }
+
+    return result;
   }
 }

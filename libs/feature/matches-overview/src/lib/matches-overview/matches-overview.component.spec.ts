@@ -63,12 +63,12 @@ describe('MatchesOverviewComponent', () => {
     });
 
     expect(component.tagMatches[0]).toEqual({
-      tag: 'Angular',
+      searchTag: 'Angular',
       fullMatches: 2,
       partialMatches: 1,
     });
     expect(component.tagMatches[1]).toEqual({
-      tag: 'TypeScript',
+      searchTag: 'TypeScript',
       fullMatches: 3,
       partialMatches: 2,
     });

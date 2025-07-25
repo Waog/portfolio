@@ -37,8 +37,8 @@
     <lib-project-item
       *ngFor="
         let project of isPrintMode()
-          ? projectService.getNonTopProjects().slice(0, 5)
-          : projectService.getNonTopProjects();
+          ? topProjectsService.getNonTopProjects().slice(0, 5)
+          : topProjectsService.getNonTopProjects();
         trackBy: trackByProjectId
       "
       [project]="project"

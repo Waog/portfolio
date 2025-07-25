@@ -1,10 +1,14 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, input } from '@angular/core';
+import { Component, inject, input, OnDestroy, OnInit } from '@angular/core';
 import { ColorChipListComponent } from '@portfolio/color-chip-list';
+import { MemoizeAllArgs } from '@portfolio/memoize';
 import { MatchType, TechnologyMatchingService } from '@portfolio/projects';
+import { SearchTagService } from '@portfolio/search-tags';
+import { Tag } from '@portfolio/taxonomy';
+import { Subject, takeUntil } from 'rxjs';
 
-interface TechnologyWithMatch {
-  name: string;
+interface TagWithMatchType {
+  tag: Tag;
   matchType: MatchType;
 }
 
@@ -14,33 +18,64 @@ interface TechnologyWithMatch {
   templateUrl: './keyword-list.component.html',
   styleUrl: './keyword-list.component.scss',
 })
-export class KeywordListComponent {
+export class KeywordListComponent implements OnInit, OnDestroy {
+  keywordTags = input.required<Tag[]>();
+
+  tagsWithMatchType: TagWithMatchType[] = [];
+  greenTechnologies: string[] = [];
+  yellowTechnologies: string[] = [];
+  grayTechnologies: string[] = [];
+
   private technologyMatchingService = inject(TechnologyMatchingService);
+  private searchTagService = inject(SearchTagService);
+  private destroy$ = new Subject<void>();
 
-  keywords = input.required<string[]>();
+  ngOnInit(): void {
+    this.searchTagService.tags$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(searchTags => {
+        this.updateSearchTagMatches(searchTags);
+      });
+  }
 
-  get technologies(): TechnologyWithMatch[] {
-    return this.keywords().map(keyword => ({
-      name: keyword,
-      matchType: this.technologyMatchingService.getBestMatchType(keyword),
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  @MemoizeAllArgs
+  private updateSearchTagMatches(searchTags: string[]): void {
+    this.tagsWithMatchType = this.getTagsWithMatchType(searchTags);
+    this.greenTechnologies = this.getGreenTechnologies();
+    this.yellowTechnologies = this.getYellowTechnologies();
+    this.grayTechnologies = this.getGrayTechnologies();
+  }
+
+  private getTagsWithMatchType(searchTags: string[]): TagWithMatchType[] {
+    return this.keywordTags().map(keywordTag => ({
+      tag: keywordTag,
+      matchType: this.technologyMatchingService.getBestMatchTypeForKeywordTag({
+        keywordTag,
+        searchTags,
+      }),
     }));
   }
 
-  get greenTechnologies(): string[] {
-    return this.technologies
-      .filter(tech => tech.matchType === 'full')
-      .map(tech => tech.name);
+  private getGreenTechnologies(): string[] {
+    return this.tagsWithMatchType
+      .filter(tagWithMatchType => tagWithMatchType.matchType === 'full')
+      .map(tagWithMatchType => tagWithMatchType.tag.canonical);
   }
 
-  get yellowTechnologies(): string[] {
-    return this.technologies
-      .filter(tech => tech.matchType === 'indirect')
-      .map(tech => tech.name);
+  private getYellowTechnologies(): string[] {
+    return this.tagsWithMatchType
+      .filter(tagWithMatchType => tagWithMatchType.matchType === 'indirect')
+      .map(tagWithMatchType => tagWithMatchType.tag.canonical);
   }
 
-  get grayTechnologies(): string[] {
-    return this.technologies
-      .filter(tech => tech.matchType === 'none')
-      .map(tech => tech.name);
+  private getGrayTechnologies(): string[] {
+    return this.tagsWithMatchType
+      .filter(tagWithMatchType => tagWithMatchType.matchType === 'none')
+      .map(tagWithMatchType => tagWithMatchType.tag.canonical);
   }
 }

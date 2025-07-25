@@ -26,6 +26,7 @@
       "@portfolio/matches-overview": [
         "libs/feature/matches-overview/src/index.ts"
       ],
+      "@portfolio/memoize": ["libs/util/memoize/src/index.ts"],
       "@portfolio/navigation": ["libs/feature/navigation/src/index.ts"],
       "@portfolio/page-home": ["libs/feature/page-home/src/index.ts"],
       "@portfolio/page-legal": ["libs/feature/page-legal/src/index.ts"],
@@ -35,7 +36,8 @@
       "@portfolio/section": ["libs/ui/section/src/index.ts"],
       "@portfolio/section-header": ["libs/ui/section-header/src/index.ts"],
       "@portfolio/skill-section": ["libs/feature/skill-section/src/index.ts"],
-      "@portfolio/tag-input": ["libs/feature/tag-input/src/index.ts"]
+      "@portfolio/tag-input": ["libs/feature/tag-input/src/index.ts"],
+      "@portfolio/taxonomy": ["libs/data-access/taxonomy/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

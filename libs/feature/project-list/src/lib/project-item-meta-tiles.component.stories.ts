@@ -26,8 +26,7 @@ const meta: Meta<ProjectItemMetaTilesComponent> = {
 export default meta;
 type Story = StoryObj<ProjectItemMetaTilesComponent>;
 
-const mockProject: Project = {
-  ...({} as Project),
+const mockProjectData = {
   role: 'Project Manager & Full-Stack Developer',
   team: 'Solo development',
   fromTo: '08/2023 – Present',
@@ -36,7 +35,17 @@ const mockProject: Project = {
   workMode: 'Remote',
   company: 'Oliver Stadie IT GmbH',
   industry: 'Education Technology',
+  id: '',
+  title: '',
+  projectType: '',
+  compactDescription: '',
+  keyAchievements: '',
+  fullDescription: '',
+  features: [],
+  highlights: [],
+  technologies: [],
 };
+const mockProject: Project = new Project(mockProjectData);
 
 export const Default: Story = {
   args: {
@@ -47,8 +56,8 @@ export const Default: Story = {
 
 export const LongerTexts: Story = {
   args: {
-    project: {
-      ...mockProject,
+    project: new Project({
+      ...mockProjectData,
       role: 'Senior Frontend Web and App Developer',
       team: 'Cross-functional Team (5 members)',
       fromTo: 'Mar 2023 - Dec 2023',
@@ -57,7 +66,7 @@ export const LongerTexts: Story = {
       workMode: 'Hybrid',
       company: 'FinTech Startup in Accelerator Phase',
       industry: 'FinTech',
-    },
+    }),
   },
 };
 
