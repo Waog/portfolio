@@ -20,6 +20,7 @@ type InternalTagName =
   | 'AWS Organizations'
   | 'Backend Systems'
   | 'BitBucket'
+  | 'Bootstrap'
   | 'Bower'
   | 'CDK'
   | 'Chai'
@@ -253,6 +254,12 @@ const INTERNAL_TAXONOMY = [
     canonical: 'BitBucket',
     categories: ['DevOps & Build & CI/CD', 'Tools & Libraries'],
     parents: ['Atlassian'],
+  },
+  {
+    canonical: 'Bootstrap',
+    categories: ['Frontend', 'Tools & Libraries'],
+    includes: ['CSS', 'HTML', 'JavaScript'],
+    related: ['jQuery', 'SASS', 'SCSS'],
   },
   {
     canonical: 'Bower',
