@@ -36,6 +36,7 @@ type InternalTagName =
   | 'DevOps Tools'
   | 'Docker'
   | 'DynamoDB'
+  | 'Eclipse'
   | 'Elastic Beanstalk'
   | 'Expo'
   | 'Express'
@@ -61,6 +62,7 @@ type InternalTagName =
   | 'Jest'
   | 'Jira'
   | 'jQuery'
+  | 'jQuery UI'
   | 'JSON'
   | 'Karma'
   | 'Kubernetes'
@@ -77,6 +79,7 @@ type InternalTagName =
   | 'Node.js'
   | 'npm'
   | 'Nx'
+  | 'OAuth2'
   | 'OpenAI'
   | 'Polly'
   | 'Project Management'
@@ -102,7 +105,9 @@ type InternalTagName =
   | 'Stencil'
   | 'Swiper'
   | 'TFS'
+  | 'Travis CI'
   | 'TypeScript'
+  | 'Underscore'
   | 'Various Technologies'
   | 'Vue.js'
   | 'Web Components'
@@ -111,6 +116,7 @@ type InternalTagName =
   | 'Web Vitals'
   | 'XCode'
   | 'yarn'
+  | 'Yeoman'
   | 'Zeplin';
 
 /**
@@ -336,6 +342,10 @@ const INTERNAL_TAXONOMY = [
     synonyms: [/dynamo/i],
   },
   {
+    canonical: 'Eclipse',
+    categories: ['Tools & Libraries'],
+  },
+  {
     canonical: 'Elastic Beanstalk',
     categories: ['Cloud & Infrastructure'],
     parents: ['AWS'],
@@ -467,8 +477,15 @@ const INTERNAL_TAXONOMY = [
     parents: ['Atlassian'],
   },
   {
+    canonical: 'jQuery UI',
+    categories: ['Frontend', 'Tools & Libraries'],
+    includes: ['JavaScript'],
+    parents: ['jQuery'],
+  },
+  {
     canonical: 'jQuery',
     categories: ['Frontend', 'Tools & Libraries'],
+    children: ['jQuery UI'],
     includes: ['JavaScript'],
   },
   {
@@ -496,6 +513,7 @@ const INTERNAL_TAXONOMY = [
     canonical: 'Lodash',
     categories: ['Tools & Libraries'],
     includes: ['JavaScript'],
+    related: ['Underscore'],
   },
   {
     canonical: 'Maven',
@@ -554,6 +572,11 @@ const INTERNAL_TAXONOMY = [
     parents: ['Mono Repo'],
     related: ['JavaScript', 'TypeScript'],
     synonyms: [/^nrwl nx$/i, /^nx$/i],
+  },
+  {
+    canonical: 'OAuth2',
+    categories: ['Concepts'],
+    synonyms: [/oauth 2/i, /oauth2/i],
   },
   {
     canonical: 'OpenAI',
@@ -682,10 +705,22 @@ const INTERNAL_TAXONOMY = [
     synonyms: [/^tfs$/i, /team foundation server/i],
   },
   {
+    canonical: 'Travis CI',
+    categories: ['DevOps & Build & CI/CD'],
+    related: ['GitHub', 'GitLab', 'Jenkins'],
+    synonyms: [/travis/i],
+  },
+  {
     canonical: 'TypeScript',
     categories: ['Backend', 'Frontend'],
     parents: ['JavaScript'],
     synonyms: [/^ts$/i, /typescript/i],
+  },
+  {
+    canonical: 'Underscore',
+    categories: ['Tools & Libraries'],
+    includes: ['JavaScript'],
+    related: ['Lodash'],
   },
   {
     canonical: 'Various Technologies',
@@ -723,6 +758,11 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'yarn',
     categories: ['DevOps & Build & CI/CD'],
+    related: ['npm'],
+  },
+  {
+    canonical: 'Yeoman',
+    categories: ['DevOps & Build & CI/CD', 'Tools & Libraries'],
     related: ['npm'],
   },
   {
