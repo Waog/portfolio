@@ -23,13 +23,15 @@ type InternalTagName =
   | 'Bootstrap'
   | 'Bower'
   | 'CDK'
-  | 'Chai'
+  | 'chai'
   | 'CloudFormation'
   | 'Cloud Platforms'
   | 'CloudWatch'
   | 'Confluence'
   | 'Cordova'
   | 'CSS'
+  | 'Custom Game Engine'
+  | 'Custom Test Framework'
   | 'Cypress'
   | 'Database Systems'
   | 'DataDog'
@@ -40,12 +42,16 @@ type InternalTagName =
   | 'Elastic Beanstalk'
   | 'Expo'
   | 'Express'
+  | 'Facebook'
+  | 'Facebook API'
   | 'Fractal'
   | 'Framework'
   | 'Frontend Framework'
   | 'GitHub'
+  | 'GitHub API'
   | 'GitLab'
   | 'Google Analytics'
+  | 'Google App Engine'
   | 'GraphQL'
   | 'Grunt'
   | 'GTM'
@@ -72,7 +78,7 @@ type InternalTagName =
   | 'Micro Frontends'
   | 'Microservices'
   | 'Mobile Development'
-  | 'Mocha'
+  | 'mocha'
   | 'MongoDB'
   | 'Mono Repo'
   | 'NestJS'
@@ -98,15 +104,24 @@ type InternalTagName =
   | 'SCRUM'
   | 'SCSS'
   | 'Sentry'
+  | 'Software Architecture'
+  | 'Software Design'
   | 'Spacer'
   | 'Splunk'
   | 'Spring Boot'
   | 'SQL'
   | 'Stencil'
+  | 'SVN'
   | 'Swiper'
+  | 'TeddyMocks'
   | 'TFS'
+  | 'TortoiseSVN'
   | 'Travis CI'
+  | 'tsd'
+  | 'Twitter'
+  | 'Twitter API'
   | 'TypeScript'
+  | 'UML'
   | 'Underscore'
   | 'Various Technologies'
   | 'Vue.js'
@@ -117,6 +132,7 @@ type InternalTagName =
   | 'XCode'
   | 'yarn'
   | 'Yeoman'
+  | 'yo'
   | 'Zeplin';
 
 /**
@@ -278,12 +294,13 @@ const INTERNAL_TAXONOMY = [
     parents: ['AWS'],
   },
   {
-    canonical: 'Chai',
+    canonical: 'chai',
     categories: ['Testing and QA'],
   },
   {
     canonical: 'Cloud Platforms',
     categories: ['Misc'],
+    children: ['Google App Engine'],
     synonyms: [/^cloud$/i, /cloud platform/i],
   },
   {
@@ -310,6 +327,15 @@ const INTERNAL_TAXONOMY = [
     categories: ['Frontend'],
     related: ['SASS', 'SCSS'],
     synonyms: [/^css/i],
+  },
+  {
+    canonical: 'Custom Game Engine',
+    categories: ['Misc'],
+    related: ['Framework'],
+  },
+  {
+    canonical: 'Custom Test Framework',
+    categories: ['Testing and QA'],
   },
   {
     canonical: 'Cypress',
@@ -362,6 +388,18 @@ const INTERNAL_TAXONOMY = [
     parents: ['Node.js'],
   },
   {
+    canonical: 'Facebook API',
+    categories: ['Tools & Libraries'],
+    parents: ['Facebook'],
+    related: ['OAuth2', 'REST'],
+  },
+  {
+    canonical: 'Facebook',
+    categories: ['Tools & Libraries'],
+    children: ['Facebook API'],
+    related: ['OAuth2'],
+  },
+  {
     canonical: 'Fractal',
     categories: ['Frontend', 'Tools & Libraries'],
     related: ['Stencil', 'Web Components'],
@@ -379,12 +417,23 @@ const INTERNAL_TAXONOMY = [
     synonyms: [/frontend framework/i, /javascript framework/i, /js framework/i],
   },
   {
+    canonical: 'GitHub API',
+    categories: [
+      'Cloud & Infrastructure',
+      'DevOps & Build & CI/CD',
+      'Tools & Libraries',
+    ],
+    parents: ['GitHub'],
+    related: ['OAuth2', 'REST'],
+  },
+  {
     canonical: 'GitHub',
     categories: [
       'Cloud & Infrastructure',
       'DevOps & Build & CI/CD',
       'Tools & Libraries',
     ],
+    children: ['GitHub API'],
   },
   {
     canonical: 'GitLab',
@@ -398,6 +447,12 @@ const INTERNAL_TAXONOMY = [
     canonical: 'Google Analytics',
     categories: ['Tools & Libraries'],
     related: ['GTM'],
+  },
+  {
+    canonical: 'Google App Engine',
+    categories: ['Cloud & Infrastructure'],
+    parents: ['Cloud Platforms'],
+    synonyms: [/^google app engine/i, /gae/i],
   },
   {
     canonical: 'GraphQL',
@@ -536,7 +591,7 @@ const INTERNAL_TAXONOMY = [
     synonyms: [/mobile dev/i],
   },
   {
-    canonical: 'Mocha',
+    canonical: 'mocha',
     categories: ['Testing and QA'],
   },
   {
@@ -671,6 +726,16 @@ const INTERNAL_TAXONOMY = [
     categories: ['Tools & Libraries'],
   },
   {
+    canonical: 'Software Architecture',
+    categories: ['Concepts'],
+    related: ['Microservices', 'Software Design', 'UML'],
+  },
+  {
+    canonical: 'Software Design',
+    categories: ['Concepts'],
+    related: ['Software Architecture', 'UML'],
+  },
+  {
     // NOTE: this is not a real technology, but a placeholder for empty spaces in the UI
     canonical: 'Spacer',
     categories: ['Misc'],
@@ -696,13 +761,30 @@ const INTERNAL_TAXONOMY = [
     related: ['Fractal', 'TypeScript', 'Web Components'],
   },
   {
+    canonical: 'SVN',
+    categories: ['DevOps & Build & CI/CD'],
+    children: ['TortoiseSVN'],
+    related: ['GitHub'],
+    synonyms: [/subversion/i, /svn/i],
+  },
+  {
     canonical: 'Swiper',
     categories: ['Frontend', 'Tools & Libraries'],
+  },
+  {
+    canonical: 'TeddyMocks',
+    categories: ['Testing and QA'],
+    related: ['chai', 'Jest', 'mocha'],
   },
   {
     canonical: 'TFS',
     categories: ['DevOps & Build & CI/CD', 'Tools & Libraries'],
     synonyms: [/^tfs$/i, /team foundation server/i],
+  },
+  {
+    canonical: 'TortoiseSVN',
+    categories: ['DevOps & Build & CI/CD'],
+    parents: ['SVN'],
   },
   {
     canonical: 'Travis CI',
@@ -711,10 +793,33 @@ const INTERNAL_TAXONOMY = [
     synonyms: [/travis/i],
   },
   {
+    canonical: 'tsd',
+    categories: ['DevOps & Build & CI/CD'],
+    related: ['npm', 'TypeScript'],
+    synonyms: [/^tsd$/i],
+  },
+  {
+    canonical: 'Twitter API',
+    categories: ['Tools & Libraries'],
+    parents: ['Twitter'],
+    related: ['OAuth2', 'REST'],
+  },
+  {
+    canonical: 'Twitter',
+    categories: ['Tools & Libraries'],
+    children: ['Twitter API'],
+    related: ['OAuth2'],
+  },
+  {
     canonical: 'TypeScript',
     categories: ['Backend', 'Frontend'],
     parents: ['JavaScript'],
     synonyms: [/^ts$/i, /typescript/i],
+  },
+  {
+    canonical: 'UML',
+    categories: ['Concepts'],
+    related: ['Software Architecture', 'Software Design'],
   },
   {
     canonical: 'Underscore',
@@ -763,7 +868,14 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'Yeoman',
     categories: ['DevOps & Build & CI/CD', 'Tools & Libraries'],
+    children: ['yo'],
     related: ['npm'],
+  },
+  {
+    canonical: 'yo',
+    categories: ['DevOps & Build & CI/CD', 'Tools & Libraries'],
+    parents: ['Yeoman'],
+    synonyms: [/^yo$/i],
   },
   {
     canonical: 'Zeplin',
