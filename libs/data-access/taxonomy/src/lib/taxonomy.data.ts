@@ -13,6 +13,7 @@ type InternalTagName =
   | 'Angular'
   | 'AngularJS'
   | 'Angular Material'
+  | 'Ant'
   | 'API Gateway'
   | 'AppConfig'
   | 'Atlassian'
@@ -31,14 +32,20 @@ type InternalTagName =
   | 'Cordova'
   | 'CSS'
   | 'Custom Game Engine'
+  | 'Custom Scripts'
   | 'Custom Test Framework'
   | 'Cypress'
   | 'Database Systems'
   | 'DataDog'
   | 'DevOps Tools'
   | 'Docker'
+  | 'DOORS'
   | 'DynamoDB'
   | 'Eclipse'
+  | 'Eclipse EMF'
+  | 'Eclipse GMF'
+  | 'Eclipse PDE'
+  | 'Eclipse RCP'
   | 'Elastic Beanstalk'
   | 'Expo'
   | 'Express'
@@ -70,6 +77,7 @@ type InternalTagName =
   | 'jQuery'
   | 'jQuery UI'
   | 'JSON'
+  | 'JUnit'
   | 'Karma'
   | 'Kubernetes'
   | 'Lighthouse'
@@ -87,10 +95,12 @@ type InternalTagName =
   | 'Nx'
   | 'OAuth2'
   | 'OpenAI'
+  | 'OSGI'
   | 'Polly'
   | 'Project Management'
   | 'Puppeteer'
   | 'QA'
+  | 'QF-Test'
   | 'RabbitMQ'
   | 'React'
   | 'React Native'
@@ -114,6 +124,7 @@ type InternalTagName =
   | 'SVN'
   | 'Swiper'
   | 'TeddyMocks'
+  | 'Testing'
   | 'TFS'
   | 'TortoiseSVN'
   | 'Travis CI'
@@ -121,7 +132,9 @@ type InternalTagName =
   | 'Twitter'
   | 'Twitter API'
   | 'TypeScript'
+  | 'UI Testing'
   | 'UML'
+  | 'UML state machine'
   | 'Underscore'
   | 'Various Technologies'
   | 'Vue.js'
@@ -130,6 +143,8 @@ type InternalTagName =
   | 'Webpack'
   | 'Web Vitals'
   | 'XCode'
+  | 'XML'
+  | 'XSD'
   | 'yarn'
   | 'Yeoman'
   | 'yo'
@@ -229,6 +244,11 @@ const INTERNAL_TAXONOMY = [
     related: ['Angular'],
   },
   {
+    canonical: 'Ant',
+    categories: ['DevOps & Build & CI/CD'],
+    related: ['Maven'],
+  },
+  {
     canonical: 'API Gateway',
     categories: ['Cloud & Infrastructure'],
     parents: ['AWS'],
@@ -296,6 +316,7 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'chai',
     categories: ['Testing and QA'],
+    parents: ['Testing'],
   },
   {
     canonical: 'Cloud Platforms',
@@ -334,12 +355,18 @@ const INTERNAL_TAXONOMY = [
     related: ['Framework'],
   },
   {
+    canonical: 'Custom Scripts',
+    categories: ['DevOps & Build & CI/CD'],
+  },
+  {
     canonical: 'Custom Test Framework',
     categories: ['Testing and QA'],
+    parents: ['Testing'],
   },
   {
     canonical: 'Cypress',
     categories: ['Testing and QA'],
+    parents: ['UI Testing'],
     related: ['JavaScript', 'TypeScript'],
   },
   {
@@ -362,14 +389,51 @@ const INTERNAL_TAXONOMY = [
     related: ['Kubernetes'],
   },
   {
+    canonical: 'DOORS',
+    categories: ['Testing and QA'],
+  },
+  {
     canonical: 'DynamoDB',
     categories: ['Backend', 'Cloud & Infrastructure'],
     parents: ['AWS'],
     synonyms: [/dynamo/i],
   },
   {
+    canonical: 'Eclipse EMF',
+    categories: ['Tools & Libraries'],
+    includes: ['Java'],
+    parents: ['Eclipse'],
+    related: ['Eclipse GMF', 'Eclipse RCP'],
+    synonyms: [/eclipse emf/i, /eclipse modeling framework/i, /emf/i],
+  },
+  {
+    canonical: 'Eclipse GMF',
+    categories: ['Tools & Libraries'],
+    includes: ['Java', 'OSGI'],
+    parents: ['Eclipse'],
+    related: ['Eclipse EMF', 'Eclipse PDE', 'Eclipse RCP'],
+    synonyms: [/eclipse gmf/i, /gmf/i, /graphical modeling framework/i],
+  },
+  {
+    canonical: 'Eclipse PDE',
+    categories: ['Tools & Libraries'],
+    includes: ['Java', 'OSGI'],
+    parents: ['Eclipse'],
+    related: ['Eclipse EMF', 'Eclipse GMF', 'Eclipse RCP'],
+    synonyms: [/eclipse pde/i, /pde/i, /plugin development environment/i],
+  },
+  {
+    canonical: 'Eclipse RCP',
+    categories: ['Frontend'],
+    includes: ['Java', 'OSGI'],
+    parents: ['Eclipse'],
+    related: ['Eclipse EMF'],
+    synonyms: [/eclipse rcp/i, /rcp/i, /rich client platform/i],
+  },
+  {
     canonical: 'Eclipse',
     categories: ['Tools & Libraries'],
+    children: ['Eclipse EMF', 'Eclipse GMF', 'Eclipse PDE', 'Eclipse RCP'],
   },
   {
     canonical: 'Elastic Beanstalk',
@@ -504,6 +568,7 @@ const INTERNAL_TAXONOMY = [
     canonical: 'Jasmine',
     categories: ['Testing and QA'],
     includes: ['JavaScript'],
+    parents: ['Testing'],
   },
   {
     canonical: 'Java',
@@ -525,6 +590,7 @@ const INTERNAL_TAXONOMY = [
     canonical: 'Jest',
     categories: ['Testing and QA'],
     includes: ['JavaScript'],
+    parents: ['Testing'],
   },
   {
     canonical: 'Jira',
@@ -548,9 +614,16 @@ const INTERNAL_TAXONOMY = [
     categories: ['Concepts'],
   },
   {
+    canonical: 'JUnit',
+    categories: ['Testing and QA'],
+    includes: ['Java'],
+    parents: ['Testing'],
+  },
+  {
     canonical: 'Karma',
     categories: ['Testing and QA'],
     includes: ['JavaScript'],
+    parents: ['Testing'],
     related: ['Jasmine'],
   },
   {
@@ -593,6 +666,7 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'mocha',
     categories: ['Testing and QA'],
+    parents: ['Testing'],
   },
   {
     canonical: 'MongoDB',
@@ -638,6 +712,12 @@ const INTERNAL_TAXONOMY = [
     categories: ['Tools & Libraries'],
   },
   {
+    canonical: 'OSGI',
+    categories: ['Tools & Libraries'],
+    includes: ['Java'],
+    related: ['Eclipse EMF', 'Eclipse PDE', 'Eclipse RCP'],
+  },
+  {
     canonical: 'Polly',
     categories: ['Cloud & Infrastructure'],
     parents: ['AWS'],
@@ -650,12 +730,18 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'Puppeteer',
     categories: ['Testing and QA', 'Tools & Libraries'],
-    related: ['JavaScript', 'TypeScript'],
+    related: ['JavaScript', 'TypeScript', 'UI Testing'],
   },
   {
     canonical: 'QA',
     categories: ['Misc'],
     synonyms: [/^qa$/i, /quality assurance/i],
+  },
+  {
+    canonical: 'QF-Test',
+    categories: ['Testing and QA'],
+    parents: ['UI Testing'],
+    related: ['JUnit'],
   },
   {
     canonical: 'RabbitMQ',
@@ -774,7 +860,23 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'TeddyMocks',
     categories: ['Testing and QA'],
+    parents: ['Testing'],
     related: ['chai', 'Jest', 'mocha'],
+  },
+  {
+    canonical: 'Testing',
+    categories: ['Concepts'],
+    children: [
+      'chai',
+      'Custom Test Framework',
+      'Jasmine',
+      'Jest',
+      'JUnit',
+      'Karma',
+      'mocha',
+      'TeddyMocks',
+      'UI Testing',
+    ],
   },
   {
     canonical: 'TFS',
@@ -817,9 +919,23 @@ const INTERNAL_TAXONOMY = [
     synonyms: [/^ts$/i, /typescript/i],
   },
   {
+    canonical: 'UI Testing',
+    categories: ['Concepts', 'Testing and QA'],
+    children: ['Cypress', 'QF-Test'],
+    parents: ['Testing'],
+    related: ['Puppeteer'],
+  },
+  {
+    canonical: 'UML state machine',
+    categories: ['Concepts'],
+    parents: ['UML'],
+    related: ['DOORS'],
+  },
+  {
     canonical: 'UML',
     categories: ['Concepts'],
-    related: ['Software Architecture', 'Software Design'],
+    children: ['UML state machine'],
+    related: ['Software Architecture', 'Software Design', 'UML state machine'],
   },
   {
     canonical: 'Underscore',
@@ -859,6 +975,17 @@ const INTERNAL_TAXONOMY = [
     canonical: 'XCode',
     categories: ['DevOps & Build & CI/CD'],
     includes: ['iOS'],
+  },
+  {
+    canonical: 'XML',
+    categories: ['Concepts'],
+    related: ['JSON', 'XSD'],
+  },
+  {
+    canonical: 'XSD',
+    categories: ['Concepts'],
+    includes: ['XML'],
+    related: ['XML'],
   },
   {
     canonical: 'yarn',
