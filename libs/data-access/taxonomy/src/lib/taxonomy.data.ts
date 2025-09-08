@@ -1010,7 +1010,7 @@ const INTERNAL_TAXONOMY = [
     canonical: 'UML',
     categories: ['Concepts'],
     children: ['UML state machine'],
-    related: ['Software Architecture', 'Software Design', 'UML state machine'],
+    related: ['Software Architecture', 'Software Design'],
   },
   {
     canonical: 'Underscore',
