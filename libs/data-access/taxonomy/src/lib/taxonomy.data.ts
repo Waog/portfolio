@@ -23,11 +23,13 @@ type InternalTagName =
   | 'BitBucket'
   | 'Bootstrap'
   | 'Bower'
+  | 'C++'
   | 'CDK'
   | 'chai'
   | 'CloudFormation'
   | 'Cloud Platforms'
   | 'CloudWatch'
+  | 'Computer Vision'
   | 'Confluence'
   | 'Cordova'
   | 'CSS'
@@ -67,6 +69,7 @@ type InternalTagName =
   | 'HTML5'
   | 'IAM'
   | 'IAM Identity Center'
+  | 'Image Processing'
   | 'IntelliJ IDEA'
   | 'Ionic'
   | 'iOS'
@@ -102,6 +105,7 @@ type InternalTagName =
   | 'OAuth2'
   | 'OpenAI'
   | 'OSGI'
+  | 'Pattern Recognition'
   | 'PayPal API'
   | 'Polly'
   | 'Project Management'
@@ -320,6 +324,11 @@ const INTERNAL_TAXONOMY = [
     related: ['npm', 'yarn'],
   },
   {
+    canonical: 'C++',
+    categories: ['Backend'],
+    synonyms: [/^c\+\+$/i, /^cpp$/i],
+  },
+  {
     canonical: 'CDK',
     categories: ['Cloud & Infrastructure', 'DevOps & Build & CI/CD'],
     parents: ['AWS'],
@@ -344,6 +353,11 @@ const INTERNAL_TAXONOMY = [
     canonical: 'CloudWatch',
     categories: ['Cloud & Infrastructure'],
     parents: ['AWS'],
+  },
+  {
+    canonical: 'Computer Vision',
+    categories: ['Concepts'],
+    related: ['Image Processing', 'Pattern Recognition'],
   },
   {
     canonical: 'Confluence',
@@ -572,6 +586,11 @@ const INTERNAL_TAXONOMY = [
     synonyms: [/^aws iam$/i, /^iam$/i],
   },
   {
+    canonical: 'Image Processing',
+    categories: ['Concepts'],
+    related: ['Computer Vision', 'Pattern Recognition'],
+  },
+  {
     canonical: 'IntelliJ IDEA',
     categories: ['Tools & Libraries'],
     related: ['Eclipse', 'Gradle', 'Java', 'Maven', 'Netbeans'],
@@ -768,6 +787,11 @@ const INTERNAL_TAXONOMY = [
     categories: ['Tools & Libraries'],
     includes: ['Java'],
     related: ['Eclipse EMF', 'Eclipse PDE', 'Eclipse RCP'],
+  },
+  {
+    canonical: 'Pattern Recognition',
+    categories: ['Concepts'],
+    related: ['Computer Vision', 'Image Processing'],
   },
   {
     canonical: 'PayPal API',

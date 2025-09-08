@@ -463,6 +463,45 @@ export const ALL_PROJECT_DATA: ProjectData[] = [
     industry: 'Gaming',
   },
   {
+    id: 'computer-vision-clothes-structure',
+    title: 'Computer Vision – Analyzing the Structure of Clothes',
+    projectType: 'Research Project',
+    compactDescription:
+      'Student research project on computer vision, developing an algorithm to separate structural patterns (mesh) and textures in clothing images, enabling retexturing for an AR virtual mirror.',
+    keyAchievements:
+      'Published student research paper • Novel structure–texture separation algorithm • Application to AR virtual try-on • Generalization to regular patterns (e.g., building facades) • C++ implementation and evaluation',
+    fullDescription:
+      "In this student research project, I developed and evaluated a computer vision algorithm to analyze clothing and fabric images by identifying and separating their structural mesh and surface textures. The algorithm enables the reapplication of different textures onto extracted structures, forming a component of an augmented reality 'virtual mirror' concept for virtual try-on. Implemented in C++, the approach was tested on various images and shown to generalize beyond clothing to other domains with regular patterns such as building facades. The complete research paper (in German) documents the motivation, methodology, and evaluation results.",
+    features: [
+      'Extract structural mesh from clothing and fabric images',
+      'Separate texture layers from photographs',
+      'Apply new textures to extracted structures (AR virtual try-on)',
+      'Generalizable to other regular patterns (e.g., architectural facades)',
+      'Evaluated on diverse image samples',
+      'Published student research paper (German)',
+    ],
+    highlights: [
+      'Novel algorithm for structure–texture separation',
+      'Component of an augmented reality virtual mirror',
+      'Flexible retexturing for clothing images',
+      'Generalizable approach beyond clothing (e.g., facades)',
+    ],
+    technologies: [
+      'C++',
+      'Computer Vision',
+      'Pattern Recognition',
+      'Image Processing',
+    ],
+    role: 'Research Student',
+    team: 'Solo research',
+    fromTo: '03/2012 – 01/2014',
+    duration: '2 years',
+    location: 'Berlin, Germany',
+    workMode: 'Remote',
+    company: 'Student Project',
+    industry: 'Academic Research',
+  },
+  {
     id: 'stomap',
     title: 'Stomap – Project Management Tool',
     projectType: 'Web App',
