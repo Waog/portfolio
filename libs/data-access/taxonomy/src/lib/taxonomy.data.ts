@@ -59,6 +59,7 @@ type InternalTagName =
   | 'GitLab'
   | 'Google Analytics'
   | 'Google App Engine'
+  | 'Gradle'
   | 'GraphQL'
   | 'Grunt'
   | 'GTM'
@@ -66,14 +67,17 @@ type InternalTagName =
   | 'HTML5'
   | 'IAM'
   | 'IAM Identity Center'
+  | 'IntelliJ IDEA'
   | 'Ionic'
   | 'iOS'
   | 'Jasmine'
   | 'Java'
   | 'JavaScript'
+  | 'Java Servlets'
   | 'Jenkins'
   | 'Jest'
   | 'Jira'
+  | 'jQuery.qrcode'
   | 'jQuery'
   | 'jQuery UI'
   | 'JSON'
@@ -87,21 +91,27 @@ type InternalTagName =
   | 'Microservices'
   | 'Mobile Development'
   | 'mocha'
+  | 'mockito'
   | 'MongoDB'
   | 'Mono Repo'
   | 'NestJS'
+  | 'Netbeans'
   | 'Node.js'
   | 'npm'
   | 'Nx'
   | 'OAuth2'
   | 'OpenAI'
   | 'OSGI'
+  | 'PayPal API'
   | 'Polly'
   | 'Project Management'
   | 'Puppeteer'
+  | 'Python'
   | 'QA'
   | 'QF-Test'
+  | 'QR Codes'
   | 'RabbitMQ'
+  | 'Raspberry Pi'
   | 'React'
   | 'React Native'
   | 'React Web'
@@ -136,6 +146,7 @@ type InternalTagName =
   | 'UML'
   | 'UML state machine'
   | 'Underscore'
+  | 'USB Monitor'
   | 'Various Technologies'
   | 'Vue.js'
   | 'Web Components'
@@ -201,7 +212,7 @@ export type TaxonomyData = {
    * Strings must match the search term by exactly matching the string.
    * If not defined, matches to the lowercase alphanumeric-only version of the canonical name
    * against any substring of the lowercase alphanumeric-only version of the search term.
-   * Example is synonyms is undefined:
+   * Example if synonyms is undefined:
    * canonical name: `Vue.js` -> becomes `vuejs`
    * search term: `Vue version 13` -> becomes `vueversion13`
    * As `vuejs` is not a substring of `vueversion13`, it does not match.
@@ -246,7 +257,7 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'Ant',
     categories: ['DevOps & Build & CI/CD'],
-    related: ['Maven'],
+    related: ['Gradle', 'Maven'],
   },
   {
     canonical: 'API Gateway',
@@ -434,6 +445,7 @@ const INTERNAL_TAXONOMY = [
     canonical: 'Eclipse',
     categories: ['Tools & Libraries'],
     children: ['Eclipse EMF', 'Eclipse GMF', 'Eclipse PDE', 'Eclipse RCP'],
+    related: ['IntelliJ IDEA', 'Netbeans'],
   },
   {
     canonical: 'Elastic Beanstalk',
@@ -519,6 +531,11 @@ const INTERNAL_TAXONOMY = [
     synonyms: [/^google app engine/i, /gae/i],
   },
   {
+    canonical: 'Gradle',
+    categories: ['DevOps & Build & CI/CD'],
+    related: ['Ant', 'Maven'],
+  },
+  {
     canonical: 'GraphQL',
     categories: ['Backend', 'Concepts', 'Frontend', 'Tools & Libraries'],
   },
@@ -555,6 +572,12 @@ const INTERNAL_TAXONOMY = [
     synonyms: [/^aws iam$/i, /^iam$/i],
   },
   {
+    canonical: 'IntelliJ IDEA',
+    categories: ['Tools & Libraries'],
+    related: ['Eclipse', 'Gradle', 'Java', 'Maven', 'Netbeans'],
+    synonyms: [/^intellij$/i, /intellij\s*idea/i],
+  },
+  {
     canonical: 'Ionic',
     categories: ['Frontend', 'Tools & Libraries'],
     includes: ['CSS', 'HTML', 'JavaScript'],
@@ -571,9 +594,16 @@ const INTERNAL_TAXONOMY = [
     parents: ['Testing'],
   },
   {
+    canonical: 'Java Servlets',
+    categories: ['Backend', 'Tools & Libraries'],
+    parents: ['Java'],
+    related: ['Spring Boot'],
+    synonyms: [/java servlets?/i, /servlets?/i],
+  },
+  {
     canonical: 'Java',
     categories: ['Backend'],
-    children: ['Spring Boot'],
+    children: ['Java Servlets', 'Spring Boot'],
     synonyms: [/^java$/i],
   },
   {
@@ -604,9 +634,17 @@ const INTERNAL_TAXONOMY = [
     parents: ['jQuery'],
   },
   {
+    canonical: 'jQuery.qrcode',
+    categories: ['Frontend', 'Tools & Libraries'],
+    includes: ['JavaScript'],
+    parents: ['jQuery'],
+    related: ['QR Codes'],
+    synonyms: [/jquery.*qrcode/i],
+  },
+  {
     canonical: 'jQuery',
     categories: ['Frontend', 'Tools & Libraries'],
-    children: ['jQuery UI'],
+    children: ['jQuery UI', 'jQuery.qrcode'],
     includes: ['JavaScript'],
   },
   {
@@ -646,6 +684,7 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'Maven',
     categories: ['DevOps & Build & CI/CD'],
+    related: ['Ant', 'Gradle'],
   },
   {
     canonical: 'Micro Frontends',
@@ -669,6 +708,13 @@ const INTERNAL_TAXONOMY = [
     parents: ['Testing'],
   },
   {
+    canonical: 'mockito',
+    categories: ['Testing and QA'],
+    includes: ['Java'],
+    parents: ['Testing'],
+    related: ['JUnit'],
+  },
+  {
     canonical: 'MongoDB',
     categories: ['Backend', 'Cloud & Infrastructure'],
   },
@@ -682,6 +728,12 @@ const INTERNAL_TAXONOMY = [
     canonical: 'NestJS',
     categories: ['Backend', 'Tools & Libraries'],
     parents: ['Express'],
+  },
+  {
+    canonical: 'Netbeans',
+    categories: ['Tools & Libraries'],
+    includes: ['Java'],
+    related: ['Eclipse', 'IntelliJ IDEA', 'Maven'],
   },
   {
     canonical: 'Node.js',
@@ -718,6 +770,11 @@ const INTERNAL_TAXONOMY = [
     related: ['Eclipse EMF', 'Eclipse PDE', 'Eclipse RCP'],
   },
   {
+    canonical: 'PayPal API',
+    categories: ['Tools & Libraries'],
+    includes: ['OAuth2', 'REST'],
+  },
+  {
     canonical: 'Polly',
     categories: ['Cloud & Infrastructure'],
     parents: ['AWS'],
@@ -733,6 +790,11 @@ const INTERNAL_TAXONOMY = [
     related: ['JavaScript', 'TypeScript', 'UI Testing'],
   },
   {
+    canonical: 'Python',
+    categories: ['Backend'],
+    synonyms: [/^py$/i, /^python$/i],
+  },
+  {
     canonical: 'QA',
     categories: ['Misc'],
     synonyms: [/^qa$/i, /quality assurance/i],
@@ -744,8 +806,20 @@ const INTERNAL_TAXONOMY = [
     related: ['JUnit'],
   },
   {
+    canonical: 'QR Codes',
+    categories: ['Concepts'],
+    related: ['jQuery.qrcode'],
+    synonyms: [/^qr\s*codes?$/i],
+  },
+  {
     canonical: 'RabbitMQ',
     categories: ['Backend', 'Tools & Libraries'],
+  },
+  {
+    canonical: 'Raspberry Pi',
+    categories: ['Misc'],
+    related: ['USB Monitor'],
+    synonyms: [/^raspberry\s*pi$/i, /^rpi$/i],
   },
   {
     canonical: 'React Native',
@@ -874,6 +948,7 @@ const INTERNAL_TAXONOMY = [
       'JUnit',
       'Karma',
       'mocha',
+      'mockito',
       'TeddyMocks',
       'UI Testing',
     ],
@@ -942,6 +1017,11 @@ const INTERNAL_TAXONOMY = [
     categories: ['Tools & Libraries'],
     includes: ['JavaScript'],
     related: ['Lodash'],
+  },
+  {
+    canonical: 'USB Monitor',
+    categories: ['Tools & Libraries'],
+    related: ['Raspberry Pi'],
   },
   {
     canonical: 'Various Technologies',
