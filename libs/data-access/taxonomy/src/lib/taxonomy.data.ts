@@ -24,8 +24,10 @@ type InternalTagName =
   | 'Bootstrap'
   | 'Bower'
   | 'C++'
+  | 'Capture-and-Replay'
   | 'CDK'
   | 'chai'
+  | 'Classification Tree Method'
   | 'CloudFormation'
   | 'Cloud Platforms'
   | 'CloudWatch'
@@ -40,12 +42,14 @@ type InternalTagName =
   | 'Database Systems'
   | 'DataDog'
   | 'DevOps Tools'
+  | 'Diploma Thesis'
   | 'Docker'
   | 'DOORS'
   | 'DynamoDB'
   | 'Eclipse'
   | 'Eclipse EMF'
   | 'Eclipse GMF'
+  | 'Eclipse Graphiti'
   | 'Eclipse PDE'
   | 'Eclipse RCP'
   | 'Elastic Beanstalk'
@@ -56,6 +60,7 @@ type InternalTagName =
   | 'Fractal'
   | 'Framework'
   | 'Frontend Framework'
+  | 'FRUIT'
   | 'GitHub'
   | 'GitHub API'
   | 'GitLab'
@@ -80,6 +85,7 @@ type InternalTagName =
   | 'Jenkins'
   | 'Jest'
   | 'Jira'
+  | 'JNativeHook'
   | 'jQuery.qrcode'
   | 'jQuery'
   | 'jQuery UI'
@@ -95,6 +101,7 @@ type InternalTagName =
   | 'Mobile Development'
   | 'mocha'
   | 'mockito'
+  | 'Model-based testing'
   | 'MongoDB'
   | 'Mono Repo'
   | 'NestJS'
@@ -125,6 +132,7 @@ type InternalTagName =
   | 'RxJS'
   | 'S3'
   | 'SASS'
+  | 'Scientific Paper'
   | 'SCRUM'
   | 'SCSS'
   | 'Sentry'
@@ -137,8 +145,10 @@ type InternalTagName =
   | 'Stencil'
   | 'SVN'
   | 'Swiper'
+  | 'Systematic Test Generation'
   | 'TeddyMocks'
   | 'Testing'
+  | 'TESTONA'
   | 'TFS'
   | 'TortoiseSVN'
   | 'Travis CI'
@@ -157,6 +167,7 @@ type InternalTagName =
   | 'Web Development'
   | 'Webpack'
   | 'Web Vitals'
+  | 'Widget Trees'
   | 'XCode'
   | 'XML'
   | 'XSD'
@@ -329,6 +340,11 @@ const INTERNAL_TAXONOMY = [
     synonyms: [/^c\+\+$/i, /^cpp$/i],
   },
   {
+    canonical: 'Capture-and-Replay',
+    categories: ['Testing and QA'],
+    parents: ['UI Testing'],
+  },
+  {
     canonical: 'CDK',
     categories: ['Cloud & Infrastructure', 'DevOps & Build & CI/CD'],
     parents: ['AWS'],
@@ -337,6 +353,12 @@ const INTERNAL_TAXONOMY = [
     canonical: 'chai',
     categories: ['Testing and QA'],
     parents: ['Testing'],
+  },
+  {
+    canonical: 'Classification Tree Method',
+    categories: ['Concepts', 'Testing and QA'],
+    parents: ['Model-based testing'],
+    synonyms: [/^ctm$/i, /classification\s*tree/i],
   },
   {
     canonical: 'Cloud Platforms',
@@ -409,6 +431,11 @@ const INTERNAL_TAXONOMY = [
     categories: ['Misc'],
   },
   {
+    canonical: 'Diploma Thesis',
+    categories: ['Misc'],
+    related: ['Scientific Paper'],
+  },
+  {
     canonical: 'Docker',
     categories: ['Cloud & Infrastructure', 'DevOps & Build & CI/CD'],
     related: ['Kubernetes'],
@@ -440,6 +467,12 @@ const INTERNAL_TAXONOMY = [
     synonyms: [/eclipse gmf/i, /gmf/i, /graphical modeling framework/i],
   },
   {
+    canonical: 'Eclipse Graphiti',
+    categories: ['Tools & Libraries'],
+    parents: ['Eclipse'],
+    related: ['Eclipse EMF', 'Eclipse GMF'],
+  },
+  {
     canonical: 'Eclipse PDE',
     categories: ['Tools & Libraries'],
     includes: ['Java', 'OSGI'],
@@ -458,7 +491,13 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'Eclipse',
     categories: ['Tools & Libraries'],
-    children: ['Eclipse EMF', 'Eclipse GMF', 'Eclipse PDE', 'Eclipse RCP'],
+    children: [
+      'Eclipse EMF',
+      'Eclipse GMF',
+      'Eclipse Graphiti',
+      'Eclipse PDE',
+      'Eclipse RCP',
+    ],
     related: ['IntelliJ IDEA', 'Netbeans'],
   },
   {
@@ -505,6 +544,11 @@ const INTERNAL_TAXONOMY = [
     children: ['Angular', 'AngularJS', 'React', 'Vue.js'],
     parents: ['Framework'],
     synonyms: [/frontend framework/i, /javascript framework/i, /js framework/i],
+  },
+  {
+    canonical: 'FRUIT',
+    categories: ['Testing and QA', 'Tools & Libraries'],
+    parents: ['Testing'],
   },
   {
     canonical: 'GitHub API',
@@ -622,7 +666,7 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'Java',
     categories: ['Backend'],
-    children: ['Java Servlets', 'Spring Boot'],
+    children: ['Java Servlets', 'JNativeHook', 'Spring Boot'],
     synonyms: [/^java$/i],
   },
   {
@@ -645,6 +689,11 @@ const INTERNAL_TAXONOMY = [
     canonical: 'Jira',
     categories: ['Tools & Libraries'],
     parents: ['Atlassian'],
+  },
+  {
+    canonical: 'JNativeHook',
+    categories: ['Tools & Libraries'],
+    parents: ['Java'],
   },
   {
     canonical: 'jQuery UI',
@@ -732,6 +781,12 @@ const INTERNAL_TAXONOMY = [
     includes: ['Java'],
     parents: ['Testing'],
     related: ['JUnit'],
+  },
+  {
+    canonical: 'Model-based testing',
+    categories: ['Concepts', 'Testing and QA'],
+    children: ['Classification Tree Method', 'Systematic Test Generation'],
+    parents: ['Testing'],
   },
   {
     canonical: 'MongoDB',
@@ -896,6 +951,11 @@ const INTERNAL_TAXONOMY = [
     related: ['SCSS'],
   },
   {
+    canonical: 'Scientific Paper',
+    categories: ['Misc'],
+    related: ['Diploma Thesis'],
+  },
+  {
     canonical: 'SCRUM',
     categories: ['Concepts'],
   },
@@ -956,6 +1016,11 @@ const INTERNAL_TAXONOMY = [
     categories: ['Frontend', 'Tools & Libraries'],
   },
   {
+    canonical: 'Systematic Test Generation',
+    categories: ['Concepts', 'Testing and QA'],
+    parents: ['Model-based testing'],
+  },
+  {
     canonical: 'TeddyMocks',
     categories: ['Testing and QA'],
     parents: ['Testing'],
@@ -967,15 +1032,23 @@ const INTERNAL_TAXONOMY = [
     children: [
       'chai',
       'Custom Test Framework',
+      'FRUIT',
       'Jasmine',
       'Jest',
       'JUnit',
       'Karma',
       'mocha',
       'mockito',
+      'Model-based testing',
       'TeddyMocks',
+      'TESTONA',
       'UI Testing',
     ],
+  },
+  {
+    canonical: 'TESTONA',
+    categories: ['Testing and QA', 'Tools & Libraries'],
+    parents: ['Testing'],
   },
   {
     canonical: 'TFS',
@@ -1020,7 +1093,7 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'UI Testing',
     categories: ['Concepts', 'Testing and QA'],
-    children: ['Cypress', 'QF-Test'],
+    children: ['Capture-and-Replay', 'Cypress', 'QF-Test', 'Widget Trees'],
     parents: ['Testing'],
     related: ['Puppeteer'],
   },
@@ -1074,6 +1147,11 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'Webpack',
     categories: ['DevOps & Build & CI/CD'],
+  },
+  {
+    canonical: 'Widget Trees',
+    categories: ['Testing and QA'],
+    parents: ['UI Testing'],
   },
   {
     canonical: 'XCode',
