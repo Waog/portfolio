@@ -9,6 +9,11 @@ export interface ProjectData {
   fullDescription: string;
   features: string[];
   highlights: string[];
+  /**
+   * Technologies, methodologies, tools, skills etc. used in this project.
+   * This may contain all keywords relevant for the CV, recruiters, and potential customers.
+   * NOTE: the property name `technologies` is kept for backwards compatibility, even though it is not fully accurate.
+   */
   technologies: TagName[];
   role: string;
   team: string;
