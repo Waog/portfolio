@@ -9,7 +9,9 @@ export type Category =
   | 'Tools & Libraries';
 
 type InternalTagName =
+  | '3D'
   | 'Agile'
+  | 'AJAX'
   | 'Angular'
   | 'AngularJS'
   | 'Angular Material'
@@ -31,6 +33,7 @@ type InternalTagName =
   | 'CloudFormation'
   | 'Cloud Platforms'
   | 'CloudWatch'
+  | 'Computer Graphics'
   | 'Computer Vision'
   | 'Confluence'
   | 'Cordova'
@@ -57,6 +60,7 @@ type InternalTagName =
   | 'Express'
   | 'Facebook'
   | 'Facebook API'
+  | 'First-person camera'
   | 'Fractal'
   | 'Framework'
   | 'Frontend Framework'
@@ -64,6 +68,7 @@ type InternalTagName =
   | 'GitHub'
   | 'GitHub API'
   | 'GitLab'
+  | 'GLSL'
   | 'Google Analytics'
   | 'Google App Engine'
   | 'Gradle'
@@ -72,6 +77,7 @@ type InternalTagName =
   | 'GTM'
   | 'HTML'
   | 'HTML5'
+  | 'HTML Canvas'
   | 'IAM'
   | 'IAM Identity Center'
   | 'Image Processing'
@@ -112,6 +118,7 @@ type InternalTagName =
   | 'Nx'
   | 'OAuth2'
   | 'OpenAI'
+  | 'OpenGL'
   | 'OSGI'
   | 'Pattern Recognition'
   | 'PayPal API'
@@ -140,6 +147,7 @@ type InternalTagName =
   | 'SCSS'
   | 'Sensor Fusion'
   | 'Sentry'
+  | 'Shader programming'
   | 'Software Architecture'
   | 'Software Design'
   | 'Spacer'
@@ -169,9 +177,11 @@ type InternalTagName =
   | 'Vue.js'
   | 'Web Components'
   | 'Web Development'
+  | 'WebGL'
   | 'Webpack'
   | 'Web Vitals'
   | 'Widget Trees'
+  | 'Wikipedia API'
   | 'XCode'
   | 'XML'
   | 'XSD'
@@ -244,8 +254,22 @@ export type TaxonomyData = {
 // @keep-sorted { "keys": ["canonical"] }
 const INTERNAL_TAXONOMY = [
   {
+    canonical: '3D',
+    categories: ['Concepts', 'Frontend'],
+    children: ['First-person camera'],
+    parents: ['Computer Graphics'],
+    related: ['WebGL'],
+    synonyms: [/^3d$/i, /three-?d/i],
+  },
+  {
     canonical: 'Agile',
     categories: ['Concepts'],
+  },
+  {
+    canonical: 'AJAX',
+    categories: ['Concepts', 'Frontend'],
+    related: ['JavaScript', 'REST'],
+    synonyms: [/^ajax$/i, /xmlhttprequest/i],
   },
   {
     canonical: 'Angular Material',
@@ -379,6 +403,11 @@ const INTERNAL_TAXONOMY = [
     canonical: 'CloudWatch',
     categories: ['Cloud & Infrastructure'],
     parents: ['AWS'],
+  },
+  {
+    canonical: 'Computer Graphics',
+    categories: ['Concepts'],
+    children: ['3D', 'HTML Canvas', 'OpenGL', 'Shader programming'],
   },
   {
     canonical: 'Computer Vision',
@@ -533,6 +562,13 @@ const INTERNAL_TAXONOMY = [
     related: ['OAuth2'],
   },
   {
+    canonical: 'First-person camera',
+    categories: ['Frontend'],
+    parents: ['3D'],
+    related: ['Computer Graphics'],
+    synonyms: [/first-?person camera/i, /fps camera/i],
+  },
+  {
     canonical: 'Fractal',
     categories: ['Frontend', 'Tools & Libraries'],
     related: ['Stencil', 'Web Components'],
@@ -582,6 +618,13 @@ const INTERNAL_TAXONOMY = [
     ],
   },
   {
+    canonical: 'GLSL',
+    categories: ['Frontend'],
+    parents: ['OpenGL'],
+    related: ['Shader programming'],
+    synonyms: [/^glsl$/i, /opengl shading language/i],
+  },
+  {
     canonical: 'Google Analytics',
     categories: ['Tools & Libraries'],
     related: ['GTM'],
@@ -611,6 +654,14 @@ const INTERNAL_TAXONOMY = [
     categories: ['Tools & Libraries'],
     related: ['Google Analytics'],
     synonyms: [/google tag manager/i, /gtm/i],
+  },
+  {
+    canonical: 'HTML Canvas',
+    categories: ['Frontend'],
+    includes: ['HTML', 'JavaScript'],
+    parents: ['Computer Graphics'],
+    related: ['WebGL'],
+    synonyms: [/^canvas$/i, /^html canvas/i],
   },
   {
     canonical: 'HTML',
@@ -848,6 +899,14 @@ const INTERNAL_TAXONOMY = [
     categories: ['Tools & Libraries'],
   },
   {
+    canonical: 'OpenGL',
+    categories: ['Frontend'],
+    children: ['GLSL', 'WebGL'],
+    parents: ['Computer Graphics'],
+    related: ['Shader programming'],
+    synonyms: [/^opengl$/i],
+  },
+  {
     canonical: 'OSGI',
     categories: ['Tools & Libraries'],
     includes: ['Java'],
@@ -992,6 +1051,12 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'Sentry',
     categories: ['Tools & Libraries'],
+  },
+  {
+    canonical: 'Shader programming',
+    categories: ['Concepts'],
+    parents: ['Computer Graphics'],
+    related: ['GLSL', 'WebGL'],
   },
   {
     canonical: 'Software Architecture',
@@ -1169,6 +1234,13 @@ const INTERNAL_TAXONOMY = [
     related: ['Lighthouse'],
   },
   {
+    canonical: 'WebGL',
+    categories: ['Frontend'],
+    parents: ['OpenGL'],
+    related: ['GLSL', 'HTML Canvas'],
+    synonyms: [/^webgl$/i],
+  },
+  {
     canonical: 'Webpack',
     categories: ['DevOps & Build & CI/CD'],
   },
@@ -1176,6 +1248,12 @@ const INTERNAL_TAXONOMY = [
     canonical: 'Widget Trees',
     categories: ['Testing and QA'],
     parents: ['UI Testing'],
+  },
+  {
+    canonical: 'Wikipedia API',
+    categories: ['Tools & Libraries'],
+    includes: ['JSON', 'REST'],
+    synonyms: [/wikipedia/i],
   },
   {
     canonical: 'XCode',
