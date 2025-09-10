@@ -796,6 +796,47 @@ export const ALL_PROJECT_DATA: ProjectData[] = [
     industry: 'Gaming',
   },
   {
+    id: 'ai-robotics',
+    title: 'AI & Robotics – Humanoid Robot Research',
+    projectType: 'Research Project',
+    compactDescription:
+      'Research on sensor fusion, adaptive grasping and walking for humanoid robots (Nao) and additional modular sensors.',
+    keyAchievements:
+      'Developed and tested adaptive grasping method • Built custom force-sensing modules for robot hands • Successfully lifted fragile and heavy objects safely • Improved walking stability using multi-sensor control • Co-authored peer-reviewed publication on adaptive grasping',
+    fullDescription:
+      'Worked for one year in the Cognitive Robotics Group at Humboldt University, Berlin, on improving how humanoid robots interact with the physical world. The project combined multiple sensor inputs (touch, motion, motor feedback, vision) to enable robots to adapt their grip and walking dynamically. I designed and integrated modular tactile sensors, developed adaptive control algorithms in C++, and validated them on NAO humanoid robots. The system successfully handled both delicate objects (e.g. paper cups) and heavier ones (e.g. bottles) without damage. Similar sensor-fusion principles were also applied to improve walking stability. Results on adaptive grasping were published in a peer-reviewed paper.',
+    features: [
+      'Sensor fusion from tactile, proprioceptive, and vision data',
+      'Custom-built force-sensing modules integrated into NAO hands',
+      'Adaptive grasping algorithms running in real time',
+      'Walking stability improvements under load',
+      'Validated on real humanoid robots with diverse objects',
+      'Co-authored scientific publication on adaptive grasping',
+    ],
+    highlights: [
+      'Robots successfully grasped fragile and heavy objects safely',
+      'Prototyped and integrated modular tactile sensors',
+      'Improved walking balance with multi-sensor feedback',
+      'Published adaptive grasping results in an academic paper',
+    ],
+    technologies: [
+      'C++',
+      'Robotics Control Systems',
+      'Computer Vision',
+      'Sensor Fusion',
+      'Prototyping',
+      'Nao',
+    ],
+    role: 'Research Student',
+    team: 'Academic Research Group',
+    fromTo: '10/2010 – 08/2011',
+    duration: '1 year',
+    location: 'Berlin, Germany',
+    workMode: 'On-site',
+    company: 'Humboldt University (AI Workgroup)',
+    industry: 'Academic Research',
+  },
+  {
     id: 'freelancing-it-professional',
     title: 'Freelancing IT Professional',
     projectType: 'Various Projects',

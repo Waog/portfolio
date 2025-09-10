@@ -104,6 +104,7 @@ type InternalTagName =
   | 'Model-based testing'
   | 'MongoDB'
   | 'Mono Repo'
+  | 'Nao'
   | 'NestJS'
   | 'Netbeans'
   | 'Node.js'
@@ -116,6 +117,7 @@ type InternalTagName =
   | 'PayPal API'
   | 'Polly'
   | 'Project Management'
+  | 'Prototyping'
   | 'Puppeteer'
   | 'Python'
   | 'QA'
@@ -129,12 +131,14 @@ type InternalTagName =
   | 'Redash'
   | 'Redux'
   | 'REST'
+  | 'Robotics Control Systems'
   | 'RxJS'
   | 'S3'
   | 'SASS'
   | 'Scientific Paper'
   | 'SCRUM'
   | 'SCSS'
+  | 'Sensor Fusion'
   | 'Sentry'
   | 'Software Architecture'
   | 'Software Design'
@@ -799,6 +803,12 @@ const INTERNAL_TAXONOMY = [
     related: ['Microservices'],
   },
   {
+    canonical: 'Nao',
+    categories: ['Misc'],
+    parents: ['Robotics Control Systems'],
+    synonyms: [/^nao$/i, /nao.*robots?/i],
+  },
+  {
     canonical: 'NestJS',
     categories: ['Backend', 'Tools & Libraries'],
     parents: ['Express'],
@@ -862,6 +872,11 @@ const INTERNAL_TAXONOMY = [
     canonical: 'Project Management',
     categories: ['Misc'],
     synonyms: [/^pm$/i, /project management/i],
+  },
+  {
+    canonical: 'Prototyping',
+    categories: ['Misc'],
+    synonyms: [/prototyping/i],
   },
   {
     canonical: 'Puppeteer',
@@ -934,6 +949,11 @@ const INTERNAL_TAXONOMY = [
     synonyms: [/^rest$/i, /rest api/i, /restful/i],
   },
   {
+    canonical: 'Robotics Control Systems',
+    categories: ['Misc'],
+    children: ['Nao'],
+  },
+  {
     canonical: 'RxJS',
     categories: ['Frontend', 'Tools & Libraries'],
     includes: ['TypeScript'],
@@ -964,6 +984,10 @@ const INTERNAL_TAXONOMY = [
     categories: ['Frontend'],
     includes: ['CSS'],
     related: ['SASS'],
+  },
+  {
+    canonical: 'Sensor Fusion',
+    categories: ['Concepts'],
   },
   {
     canonical: 'Sentry',
