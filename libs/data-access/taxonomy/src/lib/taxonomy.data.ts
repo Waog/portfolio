@@ -9,10 +9,13 @@ export type Category =
   | 'Tools & Libraries';
 
 type InternalTagName =
+  | '3D'
   | 'Agile'
+  | 'AJAX'
   | 'Angular'
   | 'AngularJS'
   | 'Angular Material'
+  | 'Ant'
   | 'API Gateway'
   | 'AppConfig'
   | 'Atlassian'
@@ -20,47 +23,80 @@ type InternalTagName =
   | 'AWS Organizations'
   | 'Backend Systems'
   | 'BitBucket'
+  | 'Bootstrap'
   | 'Bower'
+  | 'C++'
+  | 'Capture-and-Replay'
   | 'CDK'
-  | 'Chai'
+  | 'chai'
+  | 'Classification Tree Method'
   | 'CloudFormation'
   | 'Cloud Platforms'
   | 'CloudWatch'
+  | 'Computer Graphics'
+  | 'Computer Vision'
   | 'Confluence'
   | 'Cordova'
   | 'CSS'
+  | 'Custom Game Engine'
+  | 'Custom Scripts'
+  | 'Custom Test Framework'
   | 'Cypress'
   | 'Database Systems'
   | 'DataDog'
   | 'DevOps Tools'
+  | 'Diploma Thesis'
   | 'Docker'
+  | 'DOORS'
   | 'DynamoDB'
+  | 'Eclipse'
+  | 'Eclipse EMF'
+  | 'Eclipse GMF'
+  | 'Eclipse Graphiti'
+  | 'Eclipse PDE'
+  | 'Eclipse RCP'
   | 'Elastic Beanstalk'
   | 'Expo'
   | 'Express'
+  | 'Facebook'
+  | 'Facebook API'
+  | 'First-person camera'
   | 'Fractal'
   | 'Framework'
   | 'Frontend Framework'
+  | 'FRUIT'
   | 'GitHub'
+  | 'GitHub API'
   | 'GitLab'
+  | 'GLSL'
   | 'Google Analytics'
+  | 'Google App Engine'
+  | 'Gradle'
   | 'GraphQL'
   | 'Grunt'
   | 'GTM'
   | 'HTML'
   | 'HTML5'
+  | 'HTML Canvas'
   | 'IAM'
   | 'IAM Identity Center'
+  | 'Image Processing'
+  | 'IntelliJ IDEA'
   | 'Ionic'
   | 'iOS'
   | 'Jasmine'
   | 'Java'
   | 'JavaScript'
+  | 'Java Servlets'
   | 'Jenkins'
   | 'Jest'
   | 'Jira'
+  | 'JNativeHook'
+  | 'jQuery.qrcode'
   | 'jQuery'
+  | 'jQuery UI'
   | 'JSON'
+  | 'JUnit'
   | 'Karma'
   | 'Kubernetes'
   | 'Lighthouse'
@@ -69,47 +105,89 @@ type InternalTagName =
   | 'Micro Frontends'
   | 'Microservices'
   | 'Mobile Development'
-  | 'Mocha'
+  | 'mocha'
+  | 'mockito'
+  | 'Model-based testing'
   | 'MongoDB'
   | 'Mono Repo'
+  | 'Nao'
   | 'NestJS'
+  | 'Netbeans'
   | 'Node.js'
   | 'npm'
   | 'Nx'
+  | 'OAuth2'
   | 'OpenAI'
+  | 'OpenGL'
+  | 'OSGI'
+  | 'Pattern Recognition'
+  | 'PayPal API'
   | 'Polly'
   | 'Project Management'
+  | 'Prototyping'
   | 'Puppeteer'
+  | 'Python'
   | 'QA'
+  | 'QF-Test'
+  | 'QR Codes'
   | 'RabbitMQ'
+  | 'Raspberry Pi'
   | 'React'
   | 'React Native'
   | 'React Web'
   | 'Redash'
   | 'Redux'
   | 'REST'
+  | 'Robotics Control Systems'
   | 'RxJS'
   | 'S3'
   | 'SASS'
+  | 'Scientific Paper'
   | 'SCRUM'
   | 'SCSS'
+  | 'Sensor Fusion'
   | 'Sentry'
+  | 'Shader programming'
+  | 'Software Architecture'
+  | 'Software Design'
   | 'Spacer'
   | 'Splunk'
   | 'Spring Boot'
   | 'SQL'
   | 'Stencil'
+  | 'SVN'
   | 'Swiper'
+  | 'Systematic Test Generation'
+  | 'TeddyMocks'
+  | 'Testing'
+  | 'TESTONA'
   | 'TFS'
+  | 'TortoiseSVN'
+  | 'Travis CI'
+  | 'tsd'
+  | 'Twitter'
+  | 'Twitter API'
   | 'TypeScript'
+  | 'UI Testing'
+  | 'UML'
+  | 'UML state machine'
+  | 'Underscore'
+  | 'USB Monitor'
   | 'Various Technologies'
   | 'Vue.js'
   | 'Web Components'
   | 'Web Development'
+  | 'WebGL'
   | 'Webpack'
   | 'Web Vitals'
+  | 'Widget Trees'
+  | 'Wikipedia API'
   | 'XCode'
+  | 'XML'
+  | 'XSD'
   | 'yarn'
+  | 'Yeoman'
+  | 'yo'
   | 'Zeplin';
 
 /**
@@ -163,7 +241,7 @@ export type TaxonomyData = {
    * Strings must match the search term by exactly matching the string.
    * If not defined, matches to the lowercase alphanumeric-only version of the canonical name
    * against any substring of the lowercase alphanumeric-only version of the search term.
-   * Example is synonyms is undefined:
+   * Example if synonyms is undefined:
    * canonical name: `Vue.js` -> becomes `vuejs`
    * search term: `Vue version 13` -> becomes `vueversion13`
    * As `vuejs` is not a substring of `vueversion13`, it does not match.
@@ -176,8 +254,22 @@ export type TaxonomyData = {
 // @keep-sorted { "keys": ["canonical"] }
 const INTERNAL_TAXONOMY = [
   {
+    canonical: '3D',
+    categories: ['Concepts', 'Frontend'],
+    children: ['First-person camera'],
+    parents: ['Computer Graphics'],
+    related: ['WebGL'],
+    synonyms: [/^3d$/i, /three-?d/i],
+  },
+  {
     canonical: 'Agile',
     categories: ['Concepts'],
+  },
+  {
+    canonical: 'AJAX',
+    categories: ['Concepts', 'Frontend'],
+    related: ['JavaScript', 'REST'],
+    synonyms: [/^ajax$/i, /xmlhttprequest/i],
   },
   {
     canonical: 'Angular Material',
@@ -204,6 +296,11 @@ const INTERNAL_TAXONOMY = [
     includes: ['CSS', 'HTML', 'TypeScript'],
     parents: ['Frontend Framework'],
     related: ['Angular'],
+  },
+  {
+    canonical: 'Ant',
+    categories: ['DevOps & Build & CI/CD'],
+    related: ['Gradle', 'Maven'],
   },
   {
     canonical: 'API Gateway',
@@ -255,9 +352,25 @@ const INTERNAL_TAXONOMY = [
     parents: ['Atlassian'],
   },
   {
+    canonical: 'Bootstrap',
+    categories: ['Frontend', 'Tools & Libraries'],
+    includes: ['CSS', 'HTML', 'JavaScript'],
+    related: ['jQuery', 'SASS', 'SCSS'],
+  },
+  {
     canonical: 'Bower',
     categories: ['DevOps & Build & CI/CD'],
     related: ['npm', 'yarn'],
+  },
+  {
+    canonical: 'C++',
+    categories: ['Backend'],
+    synonyms: [/^c\+\+$/i, /^cpp$/i],
+  },
+  {
+    canonical: 'Capture-and-Replay',
+    categories: ['Testing and QA'],
+    parents: ['UI Testing'],
   },
   {
     canonical: 'CDK',
@@ -265,12 +378,20 @@ const INTERNAL_TAXONOMY = [
     parents: ['AWS'],
   },
   {
-    canonical: 'Chai',
+    canonical: 'chai',
     categories: ['Testing and QA'],
+    parents: ['Testing'],
+  },
+  {
+    canonical: 'Classification Tree Method',
+    categories: ['Concepts', 'Testing and QA'],
+    parents: ['Model-based testing'],
+    synonyms: [/^ctm$/i, /classification\s*tree/i],
   },
   {
     canonical: 'Cloud Platforms',
     categories: ['Misc'],
+    children: ['Google App Engine'],
     synonyms: [/^cloud$/i, /cloud platform/i],
   },
   {
@@ -282,6 +403,16 @@ const INTERNAL_TAXONOMY = [
     canonical: 'CloudWatch',
     categories: ['Cloud & Infrastructure'],
     parents: ['AWS'],
+  },
+  {
+    canonical: 'Computer Graphics',
+    categories: ['Concepts'],
+    children: ['3D', 'HTML Canvas', 'OpenGL', 'Shader programming'],
+  },
+  {
+    canonical: 'Computer Vision',
+    categories: ['Concepts'],
+    related: ['Image Processing', 'Pattern Recognition'],
   },
   {
     canonical: 'Confluence',
@@ -299,8 +430,23 @@ const INTERNAL_TAXONOMY = [
     synonyms: [/^css/i],
   },
   {
+    canonical: 'Custom Game Engine',
+    categories: ['Misc'],
+    related: ['Framework'],
+  },
+  {
+    canonical: 'Custom Scripts',
+    categories: ['DevOps & Build & CI/CD'],
+  },
+  {
+    canonical: 'Custom Test Framework',
+    categories: ['Testing and QA'],
+    parents: ['Testing'],
+  },
+  {
     canonical: 'Cypress',
     categories: ['Testing and QA'],
+    parents: ['UI Testing'],
     related: ['JavaScript', 'TypeScript'],
   },
   {
@@ -318,15 +464,74 @@ const INTERNAL_TAXONOMY = [
     categories: ['Misc'],
   },
   {
+    canonical: 'Diploma Thesis',
+    categories: ['Misc'],
+    related: ['Scientific Paper'],
+  },
+  {
     canonical: 'Docker',
     categories: ['Cloud & Infrastructure', 'DevOps & Build & CI/CD'],
     related: ['Kubernetes'],
+  },
+  {
+    canonical: 'DOORS',
+    categories: ['Testing and QA'],
   },
   {
     canonical: 'DynamoDB',
     categories: ['Backend', 'Cloud & Infrastructure'],
     parents: ['AWS'],
     synonyms: [/dynamo/i],
+  },
+  {
+    canonical: 'Eclipse EMF',
+    categories: ['Tools & Libraries'],
+    includes: ['Java'],
+    parents: ['Eclipse'],
+    related: ['Eclipse GMF', 'Eclipse RCP'],
+    synonyms: [/eclipse emf/i, /eclipse modeling framework/i, /emf/i],
+  },
+  {
+    canonical: 'Eclipse GMF',
+    categories: ['Tools & Libraries'],
+    includes: ['Java', 'OSGI'],
+    parents: ['Eclipse'],
+    related: ['Eclipse EMF', 'Eclipse PDE', 'Eclipse RCP'],
+    synonyms: [/eclipse gmf/i, /gmf/i, /graphical modeling framework/i],
+  },
+  {
+    canonical: 'Eclipse Graphiti',
+    categories: ['Tools & Libraries'],
+    parents: ['Eclipse'],
+    related: ['Eclipse EMF', 'Eclipse GMF'],
+  },
+  {
+    canonical: 'Eclipse PDE',
+    categories: ['Tools & Libraries'],
+    includes: ['Java', 'OSGI'],
+    parents: ['Eclipse'],
+    related: ['Eclipse EMF', 'Eclipse GMF', 'Eclipse RCP'],
+    synonyms: [/eclipse pde/i, /pde/i, /plugin development environment/i],
+  },
+  {
+    canonical: 'Eclipse RCP',
+    categories: ['Frontend'],
+    includes: ['Java', 'OSGI'],
+    parents: ['Eclipse'],
+    related: ['Eclipse EMF'],
+    synonyms: [/eclipse rcp/i, /rcp/i, /rich client platform/i],
+  },
+  {
+    canonical: 'Eclipse',
+    categories: ['Tools & Libraries'],
+    children: [
+      'Eclipse EMF',
+      'Eclipse GMF',
+      'Eclipse Graphiti',
+      'Eclipse PDE',
+      'Eclipse RCP',
+    ],
+    related: ['IntelliJ IDEA', 'Netbeans'],
   },
   {
     canonical: 'Elastic Beanstalk',
@@ -343,6 +548,25 @@ const INTERNAL_TAXONOMY = [
     categories: ['Backend', 'Tools & Libraries'],
     children: ['NestJS'],
     parents: ['Node.js'],
+  },
+  {
+    canonical: 'Facebook API',
+    categories: ['Tools & Libraries'],
+    parents: ['Facebook'],
+    related: ['OAuth2', 'REST'],
+  },
+  {
+    canonical: 'Facebook',
+    categories: ['Tools & Libraries'],
+    children: ['Facebook API'],
+    related: ['OAuth2'],
+  },
+  {
+    canonical: 'First-person camera',
+    categories: ['Frontend'],
+    parents: ['3D'],
+    related: ['Computer Graphics'],
+    synonyms: [/first-?person camera/i, /fps camera/i],
   },
   {
     canonical: 'Fractal',
@@ -362,12 +586,28 @@ const INTERNAL_TAXONOMY = [
     synonyms: [/frontend framework/i, /javascript framework/i, /js framework/i],
   },
   {
+    canonical: 'FRUIT',
+    categories: ['Testing and QA', 'Tools & Libraries'],
+    parents: ['Testing'],
+  },
+  {
+    canonical: 'GitHub API',
+    categories: [
+      'Cloud & Infrastructure',
+      'DevOps & Build & CI/CD',
+      'Tools & Libraries',
+    ],
+    parents: ['GitHub'],
+    related: ['OAuth2', 'REST'],
+  },
+  {
     canonical: 'GitHub',
     categories: [
       'Cloud & Infrastructure',
       'DevOps & Build & CI/CD',
       'Tools & Libraries',
     ],
+    children: ['GitHub API'],
   },
   {
     canonical: 'GitLab',
@@ -378,9 +618,27 @@ const INTERNAL_TAXONOMY = [
     ],
   },
   {
+    canonical: 'GLSL',
+    categories: ['Frontend'],
+    parents: ['OpenGL'],
+    related: ['Shader programming'],
+    synonyms: [/^glsl$/i, /opengl shading language/i],
+  },
+  {
     canonical: 'Google Analytics',
     categories: ['Tools & Libraries'],
     related: ['GTM'],
+  },
+  {
+    canonical: 'Google App Engine',
+    categories: ['Cloud & Infrastructure'],
+    parents: ['Cloud Platforms'],
+    synonyms: [/^google app engine/i, /gae/i],
+  },
+  {
+    canonical: 'Gradle',
+    categories: ['DevOps & Build & CI/CD'],
+    related: ['Ant', 'Maven'],
   },
   {
     canonical: 'GraphQL',
@@ -396,6 +654,14 @@ const INTERNAL_TAXONOMY = [
     categories: ['Tools & Libraries'],
     related: ['Google Analytics'],
     synonyms: [/google tag manager/i, /gtm/i],
+  },
+  {
+    canonical: 'HTML Canvas',
+    categories: ['Frontend'],
+    includes: ['HTML', 'JavaScript'],
+    parents: ['Computer Graphics'],
+    related: ['WebGL'],
+    synonyms: [/^canvas$/i, /^html canvas/i],
   },
   {
     canonical: 'HTML',
@@ -419,6 +685,17 @@ const INTERNAL_TAXONOMY = [
     synonyms: [/^aws iam$/i, /^iam$/i],
   },
   {
+    canonical: 'Image Processing',
+    categories: ['Concepts'],
+    related: ['Computer Vision', 'Pattern Recognition'],
+  },
+  {
+    canonical: 'IntelliJ IDEA',
+    categories: ['Tools & Libraries'],
+    related: ['Eclipse', 'Gradle', 'Java', 'Maven', 'Netbeans'],
+    synonyms: [/^intellij$/i, /intellij\s*idea/i],
+  },
+  {
     canonical: 'Ionic',
     categories: ['Frontend', 'Tools & Libraries'],
     includes: ['CSS', 'HTML', 'JavaScript'],
@@ -432,11 +709,19 @@ const INTERNAL_TAXONOMY = [
     canonical: 'Jasmine',
     categories: ['Testing and QA'],
     includes: ['JavaScript'],
+    parents: ['Testing'],
+  },
+  {
+    canonical: 'Java Servlets',
+    categories: ['Backend', 'Tools & Libraries'],
+    parents: ['Java'],
+    related: ['Spring Boot'],
+    synonyms: [/java servlets?/i, /servlets?/i],
   },
   {
     canonical: 'Java',
     categories: ['Backend'],
-    children: ['Spring Boot'],
+    children: ['Java Servlets', 'JNativeHook', 'Spring Boot'],
     synonyms: [/^java$/i],
   },
   {
@@ -453,6 +738,7 @@ const INTERNAL_TAXONOMY = [
     canonical: 'Jest',
     categories: ['Testing and QA'],
     includes: ['JavaScript'],
+    parents: ['Testing'],
   },
   {
     canonical: 'Jira',
@@ -460,8 +746,28 @@ const INTERNAL_TAXONOMY = [
     parents: ['Atlassian'],
   },
   {
+    canonical: 'JNativeHook',
+    categories: ['Tools & Libraries'],
+    parents: ['Java'],
+  },
+  {
+    canonical: 'jQuery UI',
+    categories: ['Frontend', 'Tools & Libraries'],
+    includes: ['JavaScript'],
+    parents: ['jQuery'],
+  },
+  {
+    canonical: 'jQuery.qrcode',
+    categories: ['Frontend', 'Tools & Libraries'],
+    includes: ['JavaScript'],
+    parents: ['jQuery'],
+    related: ['QR Codes'],
+    synonyms: [/jquery.*qrcode/i],
+  },
+  {
     canonical: 'jQuery',
     categories: ['Frontend', 'Tools & Libraries'],
+    children: ['jQuery UI', 'jQuery.qrcode'],
     includes: ['JavaScript'],
   },
   {
@@ -469,9 +775,16 @@ const INTERNAL_TAXONOMY = [
     categories: ['Concepts'],
   },
   {
+    canonical: 'JUnit',
+    categories: ['Testing and QA'],
+    includes: ['Java'],
+    parents: ['Testing'],
+  },
+  {
     canonical: 'Karma',
     categories: ['Testing and QA'],
     includes: ['JavaScript'],
+    parents: ['Testing'],
     related: ['Jasmine'],
   },
   {
@@ -489,10 +802,12 @@ const INTERNAL_TAXONOMY = [
     canonical: 'Lodash',
     categories: ['Tools & Libraries'],
     includes: ['JavaScript'],
+    related: ['Underscore'],
   },
   {
     canonical: 'Maven',
     categories: ['DevOps & Build & CI/CD'],
+    related: ['Ant', 'Gradle'],
   },
   {
     canonical: 'Micro Frontends',
@@ -511,8 +826,22 @@ const INTERNAL_TAXONOMY = [
     synonyms: [/mobile dev/i],
   },
   {
-    canonical: 'Mocha',
+    canonical: 'mocha',
     categories: ['Testing and QA'],
+    parents: ['Testing'],
+  },
+  {
+    canonical: 'mockito',
+    categories: ['Testing and QA'],
+    includes: ['Java'],
+    parents: ['Testing'],
+    related: ['JUnit'],
+  },
+  {
+    canonical: 'Model-based testing',
+    categories: ['Concepts', 'Testing and QA'],
+    children: ['Classification Tree Method', 'Systematic Test Generation'],
+    parents: ['Testing'],
   },
   {
     canonical: 'MongoDB',
@@ -525,9 +854,21 @@ const INTERNAL_TAXONOMY = [
     related: ['Microservices'],
   },
   {
+    canonical: 'Nao',
+    categories: ['Misc'],
+    parents: ['Robotics Control Systems'],
+    synonyms: [/^nao$/i, /nao.*robots?/i],
+  },
+  {
     canonical: 'NestJS',
     categories: ['Backend', 'Tools & Libraries'],
     parents: ['Express'],
+  },
+  {
+    canonical: 'Netbeans',
+    categories: ['Tools & Libraries'],
+    includes: ['Java'],
+    related: ['Eclipse', 'IntelliJ IDEA', 'Maven'],
   },
   {
     canonical: 'Node.js',
@@ -549,8 +890,37 @@ const INTERNAL_TAXONOMY = [
     synonyms: [/^nrwl nx$/i, /^nx$/i],
   },
   {
+    canonical: 'OAuth2',
+    categories: ['Concepts'],
+    synonyms: [/oauth 2/i, /oauth2/i],
+  },
+  {
     canonical: 'OpenAI',
     categories: ['Tools & Libraries'],
+  },
+  {
+    canonical: 'OpenGL',
+    categories: ['Frontend'],
+    children: ['GLSL', 'WebGL'],
+    parents: ['Computer Graphics'],
+    related: ['Shader programming'],
+    synonyms: [/^opengl$/i],
+  },
+  {
+    canonical: 'OSGI',
+    categories: ['Tools & Libraries'],
+    includes: ['Java'],
+    related: ['Eclipse EMF', 'Eclipse PDE', 'Eclipse RCP'],
+  },
+  {
+    canonical: 'Pattern Recognition',
+    categories: ['Concepts'],
+    related: ['Computer Vision', 'Image Processing'],
+  },
+  {
+    canonical: 'PayPal API',
+    categories: ['Tools & Libraries'],
+    includes: ['OAuth2', 'REST'],
   },
   {
     canonical: 'Polly',
@@ -563,9 +933,19 @@ const INTERNAL_TAXONOMY = [
     synonyms: [/^pm$/i, /project management/i],
   },
   {
+    canonical: 'Prototyping',
+    categories: ['Misc'],
+    synonyms: [/prototyping/i],
+  },
+  {
     canonical: 'Puppeteer',
     categories: ['Testing and QA', 'Tools & Libraries'],
-    related: ['JavaScript', 'TypeScript'],
+    related: ['JavaScript', 'TypeScript', 'UI Testing'],
+  },
+  {
+    canonical: 'Python',
+    categories: ['Backend'],
+    synonyms: [/^py$/i, /^python$/i],
   },
   {
     canonical: 'QA',
@@ -573,8 +953,26 @@ const INTERNAL_TAXONOMY = [
     synonyms: [/^qa$/i, /quality assurance/i],
   },
   {
+    canonical: 'QF-Test',
+    categories: ['Testing and QA'],
+    parents: ['UI Testing'],
+    related: ['JUnit'],
+  },
+  {
+    canonical: 'QR Codes',
+    categories: ['Concepts'],
+    related: ['jQuery.qrcode'],
+    synonyms: [/^qr\s*codes?$/i],
+  },
+  {
     canonical: 'RabbitMQ',
     categories: ['Backend', 'Tools & Libraries'],
+  },
+  {
+    canonical: 'Raspberry Pi',
+    categories: ['Misc'],
+    related: ['USB Monitor'],
+    synonyms: [/^raspberry\s*pi$/i, /^rpi$/i],
   },
   {
     canonical: 'React Native',
@@ -610,6 +1008,11 @@ const INTERNAL_TAXONOMY = [
     synonyms: [/^rest$/i, /rest api/i, /restful/i],
   },
   {
+    canonical: 'Robotics Control Systems',
+    categories: ['Misc'],
+    children: ['Nao'],
+  },
+  {
     canonical: 'RxJS',
     categories: ['Frontend', 'Tools & Libraries'],
     includes: ['TypeScript'],
@@ -627,6 +1030,11 @@ const INTERNAL_TAXONOMY = [
     related: ['SCSS'],
   },
   {
+    canonical: 'Scientific Paper',
+    categories: ['Misc'],
+    related: ['Diploma Thesis'],
+  },
+  {
     canonical: 'SCRUM',
     categories: ['Concepts'],
   },
@@ -637,8 +1045,28 @@ const INTERNAL_TAXONOMY = [
     related: ['SASS'],
   },
   {
+    canonical: 'Sensor Fusion',
+    categories: ['Concepts'],
+  },
+  {
     canonical: 'Sentry',
     categories: ['Tools & Libraries'],
+  },
+  {
+    canonical: 'Shader programming',
+    categories: ['Concepts'],
+    parents: ['Computer Graphics'],
+    related: ['GLSL', 'WebGL'],
+  },
+  {
+    canonical: 'Software Architecture',
+    categories: ['Concepts'],
+    related: ['Microservices', 'Software Design', 'UML'],
+  },
+  {
+    canonical: 'Software Design',
+    categories: ['Concepts'],
+    related: ['Software Architecture', 'UML'],
   },
   {
     // NOTE: this is not a real technology, but a placeholder for empty spaces in the UI
@@ -666,8 +1094,50 @@ const INTERNAL_TAXONOMY = [
     related: ['Fractal', 'TypeScript', 'Web Components'],
   },
   {
+    canonical: 'SVN',
+    categories: ['DevOps & Build & CI/CD'],
+    children: ['TortoiseSVN'],
+    related: ['GitHub'],
+    synonyms: [/subversion/i, /svn/i],
+  },
+  {
     canonical: 'Swiper',
     categories: ['Frontend', 'Tools & Libraries'],
+  },
+  {
+    canonical: 'Systematic Test Generation',
+    categories: ['Concepts', 'Testing and QA'],
+    parents: ['Model-based testing'],
+  },
+  {
+    canonical: 'TeddyMocks',
+    categories: ['Testing and QA'],
+    parents: ['Testing'],
+    related: ['chai', 'Jest', 'mocha'],
+  },
+  {
+    canonical: 'Testing',
+    categories: ['Concepts'],
+    children: [
+      'chai',
+      'Custom Test Framework',
+      'FRUIT',
+      'Jasmine',
+      'Jest',
+      'JUnit',
+      'Karma',
+      'mocha',
+      'mockito',
+      'Model-based testing',
+      'TeddyMocks',
+      'TESTONA',
+      'UI Testing',
+    ],
+  },
+  {
+    canonical: 'TESTONA',
+    categories: ['Testing and QA', 'Tools & Libraries'],
+    parents: ['Testing'],
   },
   {
     canonical: 'TFS',
@@ -675,10 +1145,69 @@ const INTERNAL_TAXONOMY = [
     synonyms: [/^tfs$/i, /team foundation server/i],
   },
   {
+    canonical: 'TortoiseSVN',
+    categories: ['DevOps & Build & CI/CD'],
+    parents: ['SVN'],
+  },
+  {
+    canonical: 'Travis CI',
+    categories: ['DevOps & Build & CI/CD'],
+    related: ['GitHub', 'GitLab', 'Jenkins'],
+    synonyms: [/travis/i],
+  },
+  {
+    canonical: 'tsd',
+    categories: ['DevOps & Build & CI/CD'],
+    related: ['npm', 'TypeScript'],
+    synonyms: [/^tsd$/i],
+  },
+  {
+    canonical: 'Twitter API',
+    categories: ['Tools & Libraries'],
+    parents: ['Twitter'],
+    related: ['OAuth2', 'REST'],
+  },
+  {
+    canonical: 'Twitter',
+    categories: ['Tools & Libraries'],
+    children: ['Twitter API'],
+    related: ['OAuth2'],
+  },
+  {
     canonical: 'TypeScript',
     categories: ['Backend', 'Frontend'],
     parents: ['JavaScript'],
     synonyms: [/^ts$/i, /typescript/i],
+  },
+  {
+    canonical: 'UI Testing',
+    categories: ['Concepts', 'Testing and QA'],
+    children: ['Capture-and-Replay', 'Cypress', 'QF-Test', 'Widget Trees'],
+    parents: ['Testing'],
+    related: ['Puppeteer'],
+  },
+  {
+    canonical: 'UML state machine',
+    categories: ['Concepts'],
+    parents: ['UML'],
+    related: ['DOORS'],
+  },
+  {
+    canonical: 'UML',
+    categories: ['Concepts'],
+    children: ['UML state machine'],
+    related: ['Software Architecture', 'Software Design'],
+  },
+  {
+    canonical: 'Underscore',
+    categories: ['Tools & Libraries'],
+    includes: ['JavaScript'],
+    related: ['Lodash'],
+  },
+  {
+    canonical: 'USB Monitor',
+    categories: ['Tools & Libraries'],
+    related: ['Raspberry Pi'],
   },
   {
     canonical: 'Various Technologies',
@@ -705,8 +1234,26 @@ const INTERNAL_TAXONOMY = [
     related: ['Lighthouse'],
   },
   {
+    canonical: 'WebGL',
+    categories: ['Frontend'],
+    parents: ['OpenGL'],
+    related: ['GLSL', 'HTML Canvas'],
+    synonyms: [/^webgl$/i],
+  },
+  {
     canonical: 'Webpack',
     categories: ['DevOps & Build & CI/CD'],
+  },
+  {
+    canonical: 'Widget Trees',
+    categories: ['Testing and QA'],
+    parents: ['UI Testing'],
+  },
+  {
+    canonical: 'Wikipedia API',
+    categories: ['Tools & Libraries'],
+    includes: ['JSON', 'REST'],
+    synonyms: [/wikipedia/i],
   },
   {
     canonical: 'XCode',
@@ -714,9 +1261,32 @@ const INTERNAL_TAXONOMY = [
     includes: ['iOS'],
   },
   {
+    canonical: 'XML',
+    categories: ['Concepts'],
+    related: ['JSON', 'XSD'],
+  },
+  {
+    canonical: 'XSD',
+    categories: ['Concepts'],
+    includes: ['XML'],
+    related: ['XML'],
+  },
+  {
     canonical: 'yarn',
     categories: ['DevOps & Build & CI/CD'],
     related: ['npm'],
+  },
+  {
+    canonical: 'Yeoman',
+    categories: ['DevOps & Build & CI/CD', 'Tools & Libraries'],
+    children: ['yo'],
+    related: ['npm'],
+  },
+  {
+    canonical: 'yo',
+    categories: ['DevOps & Build & CI/CD', 'Tools & Libraries'],
+    parents: ['Yeoman'],
+    synonyms: [/^yo$/i],
   },
   {
     canonical: 'Zeplin',

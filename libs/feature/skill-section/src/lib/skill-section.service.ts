@@ -13,7 +13,6 @@ export class SkillSectionService {
   private technologyMatchingService = inject(TechnologyMatchingService);
 
   private static readonly SKILLS_WITHOUT_PROJECT: TagName[] = [
-    'REST',
     'SCRUM',
     'Agile',
   ];
