@@ -71,6 +71,33 @@ describe('ColorChipComponent', () => {
     expect(iconElement).toBeFalsy();
   });
 
+  it('should show spinner in indeterminate mode when progress is 0', () => {
+    component.progress = 0;
+    fixture.detectChanges();
+    const spinner = fixture.nativeElement.querySelector('.chip-spinner');
+    expect(spinner).toBeTruthy();
+    // indeterminate mode has no aria-valuenow attribute
+    expect(spinner.getAttribute('role')).toBe('progressbar');
+  });
+
+  it('should show spinner in determinate mode when progress > 0', () => {
+    component.progress = 50;
+    fixture.detectChanges();
+    const spinner = fixture.nativeElement.querySelector('.chip-spinner');
+    expect(spinner).toBeTruthy();
+  });
+
+  it('should hide icon when progress is set', () => {
+    component.icon = 'star';
+    component.progress = 30;
+    fixture.detectChanges();
+    const iconElement =
+      fixture.nativeElement.querySelector('mat-icon.chip-icon');
+    expect(iconElement).toBeFalsy();
+    const spinner = fixture.nativeElement.querySelector('.chip-spinner');
+    expect(spinner).toBeTruthy();
+  });
+
   it('should display close button when showCloseButton is true', () => {
     component.showCloseButton = true;
     fixture.detectChanges();

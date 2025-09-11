@@ -63,6 +63,14 @@ const meta: Meta<ColorChipComponent> = {
         defaultValue: { summary: 'medium' },
       },
     },
+    progress: {
+      control: 'number',
+      description: 'Progress between 0 and 100',
+      table: {
+        type: { summary: 'number' },
+        defaultValue: { summary: 'undefined' },
+      },
+    },
     showCloseButton: {
       control: 'boolean',
       table: {
@@ -94,9 +102,9 @@ export const Default: Story = {};
 export const AllPermutations: Story = createPermutationStory({
   meta,
   splitProperty: 'color',
-  excludeUndefined: ['color', 'showCloseButton', 'spacing'],
+  excludeUndefined: ['color', 'showCloseButton', 'spacing', 'progress'],
   // includeUndefined: ['showCloseButton'],
-  columnOrder: ['icon', 'showCloseButton', 'spacing'],
+  columnOrder: ['icon', 'progress', 'showCloseButton', 'spacing'],
   displayConfig: { alignment: 'center-left' },
   textGenerators: {
     text: {
@@ -105,3 +113,19 @@ export const AllPermutations: Story = createPermutationStory({
     },
   },
 });
+
+export const WithProgress: Story = {
+  args: {
+    color: 'green',
+    progress: 50,
+    text: 'Loading 50%',
+  },
+};
+
+export const WithIndeterminateProgress: Story = {
+  args: {
+    color: 'yellow',
+    progress: 0,
+    text: 'Loading...',
+  },
+};
