@@ -1,14 +1,14 @@
-import { expect, test } from '@playwright/test';
+import { expect, type Locator, type Page, test } from '@playwright/test';
 
 test.describe('About Me Section', () => {
   test('displays the about me section', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/', { waitUntil: 'domcontentloaded' });
     const aboutMeSection = await getAboutMeSection(page);
     await expect(aboutMeSection.getByText('Oliver Stadie')).toBeVisible();
   });
 
   test('displays profile image', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/', { waitUntil: 'domcontentloaded' });
     const aboutMeSection = await getAboutMeSection(page);
 
     await expect(
@@ -17,7 +17,7 @@ test.describe('About Me Section', () => {
   });
 
   test('displays hero content', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/', { waitUntil: 'domcontentloaded' });
     const hero = await getSubSection(page, /Oliver Stadie.*Well-organized/);
 
     await expect(hero.getByText('Oliver Stadie')).toBeVisible();
@@ -32,7 +32,7 @@ test.describe('About Me Section', () => {
   });
 
   test('displays Personal Information', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/', { waitUntil: 'domcontentloaded' });
     const personalInfo = await getSubSection(
       page,
       /Personal Information.*1984.*German/
@@ -46,7 +46,7 @@ test.describe('About Me Section', () => {
   });
 
   test('displays Education', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/', { waitUntil: 'domcontentloaded' });
     const education = await getSubSection(page, /Education.*Very Good/);
 
     await expect(education.getByText('Education')).toBeVisible();
@@ -60,7 +60,7 @@ test.describe('About Me Section', () => {
   });
 
   test('displays Community & Writing', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/', { waitUntil: 'domcontentloaded' });
     const comAndWriting = await getSubSection(page, /Community.*Meetup.*Blog/);
 
     await expect(comAndWriting.getByText('Community & Writing')).toBeVisible();
@@ -71,7 +71,7 @@ test.describe('About Me Section', () => {
   });
 
   test('displays Professional Focus', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/', { waitUntil: 'domcontentloaded' });
     const profFocus = await getSubSection(
       page,
       /Professional Focus.*planning.*testing/

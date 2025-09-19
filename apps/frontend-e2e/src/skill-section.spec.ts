@@ -2,7 +2,7 @@ import { expect, type Locator, type Page, test } from '@playwright/test';
 
 test.describe('Skills Section', () => {
   test('displays some categories', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/', { waitUntil: 'domcontentloaded' });
 
     const skillsSection = await getSkillsSection(page);
     await expect(skillsSection.getByText(/^Frontend:$/)).toBeVisible();
@@ -11,7 +11,9 @@ test.describe('Skills Section', () => {
   });
 
   test('displays frontend technologies', async ({ page }) => {
-    await page.goto('/?searchTags=Angular,React');
+    await page.goto('/?searchTags=Angular,React', {
+      waitUntil: 'domcontentloaded',
+    });
 
     const skillsSection = await getSkillsSection(page);
 
@@ -20,7 +22,9 @@ test.describe('Skills Section', () => {
   });
 
   test('displays backend technologies', async ({ page }) => {
-    await page.goto('/?searchTags=Node,Java');
+    await page.goto('/?searchTags=Node,Java', {
+      waitUntil: 'domcontentloaded',
+    });
 
     const skillsSection = await getSkillsSection(page);
 

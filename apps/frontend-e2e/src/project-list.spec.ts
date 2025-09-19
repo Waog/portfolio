@@ -4,7 +4,7 @@ test.describe('Project List Section', () => {
   test('displays all projects by default (when no search tags)', async ({
     page,
   }) => {
-    await page.goto('/');
+    await page.goto('/', { waitUntil: 'domcontentloaded' });
 
     const projectList = await getProjectListSection(page);
 
@@ -16,7 +16,7 @@ test.describe('Project List Section', () => {
   });
 
   test('displays project titles', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/', { waitUntil: 'domcontentloaded' });
 
     const projectList = await getProjectListSection(page);
 
@@ -30,7 +30,7 @@ test.describe('Project List Section', () => {
   });
 
   test('displays team information', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/', { waitUntil: 'domcontentloaded' });
 
     const llsProject = await getLlsProjectItem(page);
 
@@ -38,7 +38,7 @@ test.describe('Project List Section', () => {
   });
 
   test('displays duration information', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/', { waitUntil: 'domcontentloaded' });
 
     const lotteryProject = await getLotteryProjectItem(page);
 
@@ -46,7 +46,7 @@ test.describe('Project List Section', () => {
   });
 
   test('displays location information', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/', { waitUntil: 'domcontentloaded' });
 
     const llsProject = await getLlsProjectItem(page);
 
@@ -54,7 +54,7 @@ test.describe('Project List Section', () => {
   });
 
   test('displays industry information', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/', { waitUntil: 'domcontentloaded' });
 
     const llsProject = await getLlsProjectItem(page);
 
@@ -62,7 +62,7 @@ test.describe('Project List Section', () => {
   });
 
   test('displays technology chips', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/', { waitUntil: 'domcontentloaded' });
 
     const llsProject = await getLlsProjectItem(page);
 
@@ -73,7 +73,9 @@ test.describe('Project List Section', () => {
   test('shows up to 3 top matching projects when search tags are active', async ({
     page,
   }) => {
-    await page.goto('/?searchTags=TypeScript');
+    await page.goto('/?searchTags=TypeScript', {
+      waitUntil: 'domcontentloaded',
+    });
 
     const topMatchingProjects = await getTopMatchingProjectsList(page);
 
@@ -91,7 +93,9 @@ test.describe('Project List Section', () => {
   test('allows showing more projects when search tags are active', async ({
     page,
   }) => {
-    await page.goto('/?searchTags=TypeScript');
+    await page.goto('/?searchTags=TypeScript', {
+      waitUntil: 'domcontentloaded',
+    });
 
     const projectList = await getProjectListSection(page);
 
@@ -101,7 +105,9 @@ test.describe('Project List Section', () => {
   });
 
   test('toggle functionality shows/hides all projects', async ({ page }) => {
-    await page.goto('/?searchTags=TypeScript');
+    await page.goto('/?searchTags=TypeScript', {
+      waitUntil: 'domcontentloaded',
+    });
 
     await expect(
       page.getByRole('heading', { name: 'All Projects' })
@@ -127,7 +133,9 @@ test.describe('Project List Section', () => {
   test('projects with matching technologies have green border', async ({
     page,
   }) => {
-    await page.goto('/?searchTags=TypeScript');
+    await page.goto('/?searchTags=TypeScript', {
+      waitUntil: 'domcontentloaded',
+    });
 
     const topMatchingProjects = await getTopMatchingProjectsList(page);
 

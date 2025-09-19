@@ -5,7 +5,7 @@ test.describe('Tag Input Functionality', () => {
     page,
   }) => {
     // Navigate to the homepage
-    await page.goto('/');
+    await page.goto('/', { waitUntil: 'domcontentloaded' });
 
     // Step 1: Add "Spring Boot" as a search term
     const tagInput = page.locator('input[matInput]');
@@ -20,7 +20,8 @@ test.describe('Tag Input Functionality', () => {
     await expect(page).toHaveURL(/searchTags=Spring%20Boot/);
 
     // Step 4: Refresh the browser
-    await page.reload(); // Step 5: Check if "Spring Boot" still occurs as a tag after refresh
+    await page.reload({ waitUntil: 'domcontentloaded' });
+    // Step 5: Check if "Spring Boot" still occurs as a tag after refresh
     const refreshedSpringBootTag = searchTagsContainer
       .getByText('Spring Boot')
       .first();
@@ -40,7 +41,8 @@ test.describe('Tag Input Functionality', () => {
   });
 
   test('should handle multiple tags correctly', async ({ page }) => {
-    await page.goto('/'); // Add multiple tags
+    await page.goto('/', { waitUntil: 'domcontentloaded' });
+    // Add multiple tags
     const tagInput = page.locator('input[matInput]');
     const addButton = page.locator('button:has-text("Add")');
     const searchTagsContainer = page.locator('lib-tag-input');
@@ -80,7 +82,7 @@ test.describe('Tag Input Functionality', () => {
     await expect(page).not.toHaveURL(/searchTags=.*Angular/);
   });
   test('should not add duplicate tags', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/', { waitUntil: 'domcontentloaded' });
     const tagInput = page.locator('input[matInput]');
     const addButton = page.locator('button:has-text("Add")');
     const searchTagsContainer = page.locator('lib-tag-input');
@@ -99,7 +101,8 @@ test.describe('Tag Input Functionality', () => {
   });
 
   test('should handle Enter key to add tags', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/', { waitUntil: 'domcontentloaded' });
+
     const tagInput = page.locator('input[matInput]');
     const searchTagsContainer = page.locator('lib-tag-input');
 
@@ -118,7 +121,9 @@ test.describe('Tag Input Functionality', () => {
     page,
   }) => {
     // Navigate directly to URL with search tags
-    await page.goto('/?searchTags=Node.js,Express');
+    await page.goto('/?searchTags=Node.js,Express', {
+      waitUntil: 'domcontentloaded',
+    });
 
     const searchTagsContainer = page.locator('lib-tag-input');
 
