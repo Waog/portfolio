@@ -1,4 +1,9 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {
+  ComponentFixture,
+  fakeAsync,
+  TestBed,
+  tick,
+} from '@angular/core/testing';
 import { TechnologyMatchingService } from '@portfolio/projects';
 import { SearchTagService } from '@portfolio/search-tags';
 import { Tag } from '@portfolio/taxonomy';
@@ -55,7 +60,7 @@ describe('KeywordListComponent', () => {
   });
 
   describe('tagsWithMatchType', () => {
-    it('should update when tags$ emits', () => {
+    it('should update when tags$ emits', fakeAsync(() => {
       mockTechnologyMatchingService.getBestMatchTypeForKeywordTag.mockImplementation(
         ({ keywordTag }: { keywordTag: Tag }) => {
           switch (keywordTag) {
@@ -73,6 +78,7 @@ describe('KeywordListComponent', () => {
       expect(component.tagsWithMatchType).toEqual([]);
 
       tagsSubject.next([]); // simulate tags$ emission
+      tick(); // allow deferred update (setTimeout) to run
       fixture.detectChanges();
 
       expect(component.tagsWithMatchType).toEqual([
@@ -95,6 +101,6 @@ describe('KeywordListComponent', () => {
         keywordTag: Tag.get('TypeScript'),
         searchTags: [],
       });
-    });
+    }));
   });
 });
