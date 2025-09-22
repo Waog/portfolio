@@ -18,6 +18,7 @@ type InternalTagName =
   | 'Ant'
   | 'API Gateway'
   | 'AppConfig'
+  | 'Artemis-ODB'
   | 'Atlassian'
   | 'AWS'
   | 'AWS Organizations'
@@ -56,6 +57,7 @@ type InternalTagName =
   | 'Eclipse PDE'
   | 'Eclipse RCP'
   | 'Elastic Beanstalk'
+  | 'Entity Component System'
   | 'Expo'
   | 'Express'
   | 'Facebook'
@@ -65,12 +67,14 @@ type InternalTagName =
   | 'Framework'
   | 'Frontend Framework'
   | 'FRUIT'
+  | 'Game Development'
   | 'GitHub'
   | 'GitHub API'
   | 'GitLab'
   | 'GLSL'
   | 'Google Analytics'
   | 'Google App Engine'
+  | 'Google Code'
   | 'Gradle'
   | 'GraphQL'
   | 'Grunt'
@@ -91,10 +95,12 @@ type InternalTagName =
   | 'Jenkins'
   | 'Jest'
   | 'Jira'
+  | 'jMonkeyEngine'
   | 'JNativeHook'
   | 'jQuery.qrcode'
   | 'jQuery'
   | 'jQuery UI'
+  | 'JSci'
   | 'JSON'
   | 'JUnit'
   | 'Karma'
@@ -113,6 +119,7 @@ type InternalTagName =
   | 'Nao'
   | 'NestJS'
   | 'Netbeans'
+  | 'Nifty GUI'
   | 'Node.js'
   | 'npm'
   | 'Nx'
@@ -313,6 +320,14 @@ const INTERNAL_TAXONOMY = [
     parents: ['AWS'],
   },
   {
+    canonical: 'Artemis-ODB',
+    categories: ['Tools & Libraries'],
+    includes: ['Java'],
+    parents: ['Entity Component System'],
+    related: ['jMonkeyEngine'],
+    synonyms: [/^artemis(-?odb)?$/i],
+  },
+  {
     canonical: 'Atlassian',
     categories: ['Tools & Libraries'],
     children: ['BitBucket', 'Confluence', 'Jira'],
@@ -432,7 +447,8 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'Custom Game Engine',
     categories: ['Misc'],
-    related: ['Framework'],
+    parents: ['Game Development'],
+    related: ['Entity Component System', 'Framework'],
   },
   {
     canonical: 'Custom Scripts',
@@ -539,6 +555,19 @@ const INTERNAL_TAXONOMY = [
     parents: ['AWS'],
   },
   {
+    canonical: 'Entity Component System',
+    categories: ['Concepts'],
+    children: ['Artemis-ODB'],
+    parents: ['Game Development', 'Software Architecture'],
+    related: ['Custom Game Engine'],
+    synonyms: [
+      /^ecs$/i,
+      /component[- ]based\s*game\s*engine/i,
+      /entity\s*component\s*system/i,
+      /entity\s*system\s*framework/i,
+    ],
+  },
+  {
     canonical: 'Expo',
     categories: ['Cloud & Infrastructure', 'Tools & Libraries'],
     includes: ['React Native'],
@@ -591,6 +620,12 @@ const INTERNAL_TAXONOMY = [
     parents: ['Testing'],
   },
   {
+    canonical: 'Game Development',
+    categories: ['Concepts'],
+    children: ['Custom Game Engine', 'Entity Component System'],
+    synonyms: [/game dev/i],
+  },
+  {
     canonical: 'GitHub API',
     categories: [
       'Cloud & Infrastructure',
@@ -634,6 +669,15 @@ const INTERNAL_TAXONOMY = [
     categories: ['Cloud & Infrastructure'],
     parents: ['Cloud Platforms'],
     synonyms: [/^google app engine/i, /gae/i],
+  },
+  {
+    canonical: 'Google Code',
+    categories: [
+      'Cloud & Infrastructure',
+      'DevOps & Build & CI/CD',
+      'Tools & Libraries',
+    ],
+    related: ['BitBucket', 'GitHub', 'GitLab', 'SVN'],
   },
   {
     canonical: 'Gradle',
@@ -746,6 +790,13 @@ const INTERNAL_TAXONOMY = [
     parents: ['Atlassian'],
   },
   {
+    canonical: 'jMonkeyEngine',
+    categories: ['Frontend', 'Tools & Libraries'],
+    includes: ['Java', 'OpenGL'],
+    related: ['3D', 'Artemis-ODB', 'GLSL', 'Nifty GUI', 'OpenGL'],
+    synonyms: [/^jme$/i],
+  },
+  {
     canonical: 'JNativeHook',
     categories: ['Tools & Libraries'],
     parents: ['Java'],
@@ -769,6 +820,12 @@ const INTERNAL_TAXONOMY = [
     categories: ['Frontend', 'Tools & Libraries'],
     children: ['jQuery UI', 'jQuery.qrcode'],
     includes: ['JavaScript'],
+  },
+  {
+    canonical: 'JSci',
+    categories: ['Tools & Libraries'],
+    includes: ['Java'],
+    related: ['Java'],
   },
   {
     canonical: 'JSON',
@@ -869,6 +926,12 @@ const INTERNAL_TAXONOMY = [
     categories: ['Tools & Libraries'],
     includes: ['Java'],
     related: ['Eclipse', 'IntelliJ IDEA', 'Maven'],
+  },
+  {
+    canonical: 'Nifty GUI',
+    categories: ['Frontend', 'Tools & Libraries'],
+    includes: ['Java'],
+    related: ['jMonkeyEngine'],
   },
   {
     canonical: 'Node.js',
@@ -1061,6 +1124,7 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'Software Architecture',
     categories: ['Concepts'],
+    children: ['Entity Component System'],
     related: ['Microservices', 'Software Design', 'UML'],
   },
   {
