@@ -129,6 +129,9 @@ type InternalTagName =
   | 'OSGI'
   | 'Pattern Recognition'
   | 'PayPal API'
+  | 'Peer-to-Peer'
+  | 'peerJS'
+  | 'Phaser'
   | 'Polly'
   | 'Project Management'
   | 'Prototyping'
@@ -144,6 +147,7 @@ type InternalTagName =
   | 'React Web'
   | 'Redash'
   | 'Redux'
+  | 'requireJS'
   | 'REST'
   | 'Robotics Control Systems'
   | 'RxJS'
@@ -186,6 +190,7 @@ type InternalTagName =
   | 'Web Development'
   | 'WebGL'
   | 'Webpack'
+  | 'WebRTC'
   | 'Web Vitals'
   | 'Widget Trees'
   | 'Wikipedia API'
@@ -622,7 +627,7 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'Game Development',
     categories: ['Concepts'],
-    children: ['Custom Game Engine', 'Entity Component System'],
+    children: ['Custom Game Engine', 'Entity Component System', 'Phaser'],
     synonyms: [/game dev/i],
   },
   {
@@ -986,6 +991,23 @@ const INTERNAL_TAXONOMY = [
     includes: ['OAuth2', 'REST'],
   },
   {
+    canonical: 'Peer-to-Peer',
+    categories: ['Concepts'],
+    children: ['WebRTC'],
+    synonyms: [/^p2p$/i, /peer[- ]to[- ]peer/i],
+  },
+  {
+    canonical: 'peerJS',
+    categories: ['Frontend', 'Tools & Libraries'],
+    parents: ['WebRTC'],
+  },
+  {
+    canonical: 'Phaser',
+    categories: ['Frontend', 'Tools & Libraries'],
+    includes: ['JavaScript', 'WebGL'],
+    parents: ['Game Development'],
+  },
+  {
     canonical: 'Polly',
     categories: ['Cloud & Infrastructure'],
     parents: ['AWS'],
@@ -1064,6 +1086,12 @@ const INTERNAL_TAXONOMY = [
     canonical: 'Redux',
     categories: ['Frontend', 'Tools & Libraries'],
     includes: ['React'],
+  },
+  {
+    canonical: 'requireJS',
+    categories: ['DevOps & Build & CI/CD', 'Tools & Libraries'],
+    includes: ['JavaScript'],
+    related: ['Webpack'],
   },
   {
     canonical: 'REST',
@@ -1307,6 +1335,13 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'Webpack',
     categories: ['DevOps & Build & CI/CD'],
+  },
+  {
+    canonical: 'WebRTC',
+    categories: ['Backend', 'Concepts', 'Frontend'],
+    children: ['peerJS'],
+    includes: ['JavaScript'],
+    parents: ['Peer-to-Peer'],
   },
   {
     canonical: 'Widget Trees',
