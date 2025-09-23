@@ -13,6 +13,7 @@ type InternalTagName =
   | '3D'
   | 'Agile'
   | 'AJAX'
+  | 'Android'
   | 'Angular'
   | 'AngularJS'
   | 'Angular Material'
@@ -40,6 +41,7 @@ type InternalTagName =
   | 'Computer Graphics'
   | 'Computer Vision'
   | 'Confluence'
+  | 'Construct 2'
   | 'Cordova'
   | 'CSS'
   | 'Custom Game Engine'
@@ -71,6 +73,7 @@ type InternalTagName =
   | 'Frontend Framework'
   | 'FRUIT'
   | 'Game Development'
+  | 'Git'
   | 'GitHub'
   | 'GitHub API'
   | 'GitLab'
@@ -89,6 +92,7 @@ type InternalTagName =
   | 'IAM Identity Center'
   | 'Image Processing'
   | 'IntelliJ IDEA'
+  | 'Intel XDK'
   | 'Ionic'
   | 'iOS'
   | 'Jasmine'
@@ -125,6 +129,7 @@ type InternalTagName =
   | 'Netbeans'
   | 'Nifty GUI'
   | 'Node.js'
+  | 'Notepad++'
   | 'npm'
   | 'Nx'
   | 'OAuth2'
@@ -170,6 +175,7 @@ type InternalTagName =
   | 'Spring Boot'
   | 'SQL'
   | 'Stencil'
+  | 'Sublime Text'
   | 'SVN'
   | 'Swiper'
   | 'Systematic Test Generation'
@@ -297,6 +303,12 @@ const INTERNAL_TAXONOMY = [
     synonyms: [/^ajax$/i, /xmlhttprequest/i],
   },
   {
+    canonical: 'Android',
+    categories: ['DevOps & Build & CI/CD'],
+    parents: ['Mobile Development'],
+    related: ['Java'],
+  },
+  {
     canonical: 'Angular Material',
     categories: ['Frontend', 'Tools & Libraries'],
     parents: ['Angular'],
@@ -382,7 +394,7 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'BitBucket',
     categories: ['DevOps & Build & CI/CD', 'Tools & Libraries'],
-    parents: ['Atlassian'],
+    parents: ['Atlassian', 'Git'],
   },
   {
     canonical: 'Blender',
@@ -465,8 +477,15 @@ const INTERNAL_TAXONOMY = [
     parents: ['Atlassian'],
   },
   {
+    canonical: 'Construct 2',
+    categories: ['Frontend', 'Tools & Libraries'],
+    parents: ['Game Development'],
+    related: ['HTML5', 'Phaser', 'Unity'],
+  },
+  {
     canonical: 'Cordova',
     categories: ['DevOps & Build & CI/CD'],
+    related: ['Intel XDK'],
   },
   {
     canonical: 'CSS',
@@ -653,12 +672,19 @@ const INTERNAL_TAXONOMY = [
     canonical: 'Game Development',
     categories: ['Concepts'],
     children: [
+      'Construct 2',
       'Custom Game Engine',
       'Entity Component System',
       'Phaser',
       'Unity',
     ],
     synonyms: [/game dev/i],
+  },
+  {
+    canonical: 'Git',
+    categories: ['DevOps & Build & CI/CD'],
+    children: ['BitBucket', 'GitHub', 'GitLab'],
+    related: ['SVN', 'TFS'],
   },
   {
     canonical: 'GitHub API',
@@ -678,6 +704,7 @@ const INTERNAL_TAXONOMY = [
       'Tools & Libraries',
     ],
     children: ['GitHub API'],
+    parents: ['Git'],
   },
   {
     canonical: 'GitLab',
@@ -686,6 +713,7 @@ const INTERNAL_TAXONOMY = [
       'DevOps & Build & CI/CD',
       'Tools & Libraries',
     ],
+    parents: ['Git'],
   },
   {
     canonical: 'GLSL',
@@ -712,7 +740,7 @@ const INTERNAL_TAXONOMY = [
       'DevOps & Build & CI/CD',
       'Tools & Libraries',
     ],
-    related: ['BitBucket', 'GitHub', 'GitLab', 'SVN'],
+    related: ['BitBucket', 'Git', 'GitHub', 'GitLab', 'SVN'],
   },
   {
     canonical: 'Gradle',
@@ -769,6 +797,12 @@ const INTERNAL_TAXONOMY = [
     related: ['Computer Vision', 'Pattern Recognition'],
   },
   {
+    canonical: 'Intel XDK',
+    categories: ['DevOps & Build & CI/CD', 'Tools & Libraries'],
+    includes: ['Cordova', 'HTML5'],
+    related: ['Ionic', 'React Native'],
+  },
+  {
     canonical: 'IntelliJ IDEA',
     categories: ['Tools & Libraries'],
     related: ['Eclipse', 'Gradle', 'Java', 'Maven', 'Netbeans'],
@@ -778,11 +812,12 @@ const INTERNAL_TAXONOMY = [
     canonical: 'Ionic',
     categories: ['Frontend', 'Tools & Libraries'],
     includes: ['CSS', 'HTML', 'JavaScript'],
-    related: ['Angular', 'React', 'Vue.js'],
+    related: ['Angular', 'Intel XDK', 'React', 'Vue.js'],
   },
   {
     canonical: 'iOS',
     categories: ['DevOps & Build & CI/CD'],
+    parents: ['Mobile Development'],
   },
   {
     canonical: 'Jasmine',
@@ -915,6 +950,7 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'Mobile Development',
     categories: ['Misc'],
+    children: ['Android', 'iOS'],
     synonyms: [/mobile dev/i],
   },
   {
@@ -948,7 +984,16 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'MonoDevelop',
     categories: ['Tools & Libraries'],
-    related: ['C#', 'Eclipse', 'IntelliJ IDEA', 'Netbeans', 'Unity', 'XCode'],
+    related: [
+      'C#',
+      'Eclipse',
+      'IntelliJ IDEA',
+      'Netbeans',
+      'Notepad++',
+      'Sublime Text',
+      'Unity',
+      'XCode',
+    ],
   },
   {
     canonical: 'Nao',
@@ -979,6 +1024,12 @@ const INTERNAL_TAXONOMY = [
     children: ['Express'],
     includes: ['JavaScript'],
     synonyms: [/node/i],
+  },
+  {
+    canonical: 'Notepad++',
+    categories: ['Tools & Libraries'],
+    related: ['MonoDevelop', 'Sublime Text', 'Visual Studio'],
+    synonyms: [/^notepad\+\+$/i, /notepad plus plus/i],
   },
   {
     canonical: 'npm',
@@ -1221,10 +1272,16 @@ const INTERNAL_TAXONOMY = [
     related: ['Fractal', 'TypeScript', 'Web Components'],
   },
   {
+    canonical: 'Sublime Text',
+    categories: ['Tools & Libraries'],
+    related: ['MonoDevelop', 'Notepad++', 'Visual Studio'],
+    synonyms: [/^sublime(\s*text)?$/i],
+  },
+  {
     canonical: 'SVN',
     categories: ['DevOps & Build & CI/CD'],
     children: ['TortoiseSVN'],
-    related: ['GitHub'],
+    related: ['Git', 'GitHub'],
     synonyms: [/subversion/i, /svn/i],
   },
   {
@@ -1269,6 +1326,7 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'TFS',
     categories: ['DevOps & Build & CI/CD', 'Tools & Libraries'],
+    related: ['Git'],
     synonyms: [/^tfs$/i, /team foundation server/i],
   },
   {
@@ -1351,7 +1409,16 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'Visual Studio',
     categories: ['Tools & Libraries'],
-    related: ['C#', 'C++', 'Eclipse', 'IntelliJ IDEA', 'Netbeans', 'XCode'],
+    related: [
+      'C#',
+      'C++',
+      'Eclipse',
+      'IntelliJ IDEA',
+      'Netbeans',
+      'Notepad++',
+      'Sublime Text',
+      'XCode',
+    ],
     synonyms: [/^visual studio$/i, /^vs$/i],
   },
   {
