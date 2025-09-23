@@ -9,6 +9,7 @@ export type Category =
   | 'Tools & Libraries';
 
 type InternalTagName =
+  | '2D'
   | '3D'
   | 'Agile'
   | 'AJAX'
@@ -189,6 +190,7 @@ type InternalTagName =
   | 'Unity'
   | 'USB Monitor'
   | 'Various Technologies'
+  | 'Visual Studio'
   | 'Vue.js'
   | 'Web Components'
   | 'Web Development'
@@ -270,11 +272,18 @@ export type TaxonomyData = {
 // @keep-sorted { "keys": ["canonical"] }
 const INTERNAL_TAXONOMY = [
   {
+    canonical: '2D',
+    categories: ['Concepts', 'Frontend'],
+    parents: ['Computer Graphics'],
+    related: ['3D', 'HTML Canvas', 'Unity'],
+    synonyms: [/^2d$/i, /two-?d/i],
+  },
+  {
     canonical: '3D',
     categories: ['Concepts', 'Frontend'],
     children: ['Blender', 'First-person camera'],
     parents: ['Computer Graphics'],
-    related: ['Unity', 'WebGL'],
+    related: ['2D', 'Unity', 'WebGL'],
     synonyms: [/^3d$/i, /three-?d/i],
   },
   {
@@ -443,7 +452,7 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'Computer Graphics',
     categories: ['Concepts'],
-    children: ['3D', 'HTML Canvas', 'OpenGL', 'Shader programming'],
+    children: ['2D', '3D', 'HTML Canvas', 'OpenGL', 'Shader programming'],
   },
   {
     canonical: 'Computer Vision',
@@ -730,7 +739,7 @@ const INTERNAL_TAXONOMY = [
     categories: ['Frontend'],
     includes: ['HTML', 'JavaScript'],
     parents: ['Computer Graphics'],
-    related: ['WebGL'],
+    related: ['2D', 'WebGL'],
     synonyms: [/^canvas$/i, /^html canvas/i],
   },
   {
@@ -1338,6 +1347,12 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'Various Technologies',
     categories: ['Misc'],
+  },
+  {
+    canonical: 'Visual Studio',
+    categories: ['Tools & Libraries'],
+    related: ['C#', 'C++', 'Eclipse', 'IntelliJ IDEA', 'Netbeans', 'XCode'],
+    synonyms: [/^visual studio$/i, /^vs$/i],
   },
   {
     canonical: 'Vue.js',
