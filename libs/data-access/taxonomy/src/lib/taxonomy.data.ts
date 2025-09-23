@@ -11,6 +11,7 @@ export type Category =
 type InternalTagName =
   | '2D'
   | '3D'
+  | 'ActionScript'
   | 'Agile'
   | 'AJAX'
   | 'Android'
@@ -67,7 +68,9 @@ type InternalTagName =
   | 'Express'
   | 'Facebook'
   | 'Facebook API'
+  | 'Facebook Games'
   | 'First-person camera'
+  | 'Flash'
   | 'Fractal'
   | 'Framework'
   | 'Frontend Framework'
@@ -291,6 +294,12 @@ const INTERNAL_TAXONOMY = [
     parents: ['Computer Graphics'],
     related: ['2D', 'Unity', 'WebGL'],
     synonyms: [/^3d$/i, /three-?d/i],
+  },
+  {
+    canonical: 'ActionScript',
+    categories: ['Frontend'],
+    related: ['JavaScript'],
+    synonyms: [/^as3?$/i, /actionscript/i],
   },
   {
     canonical: 'Agile',
@@ -634,9 +643,16 @@ const INTERNAL_TAXONOMY = [
     related: ['OAuth2', 'REST'],
   },
   {
+    canonical: 'Facebook Games',
+    categories: ['Frontend', 'Tools & Libraries'],
+    parents: ['Facebook', 'Game Development'],
+    related: ['Flash', 'Unity'],
+    synonyms: [/facebook games?/i],
+  },
+  {
     canonical: 'Facebook',
     categories: ['Tools & Libraries'],
-    children: ['Facebook API'],
+    children: ['Facebook API', 'Facebook Games'],
     related: ['OAuth2'],
   },
   {
@@ -645,6 +661,13 @@ const INTERNAL_TAXONOMY = [
     parents: ['3D'],
     related: ['Computer Graphics'],
     synonyms: [/first-?person camera/i, /fps camera/i],
+  },
+  {
+    canonical: 'Flash',
+    categories: ['Frontend', 'Tools & Libraries'],
+    includes: ['ActionScript'],
+    parents: ['Game Development'],
+    synonyms: [/^flash$/i, /adobe flash/i],
   },
   {
     canonical: 'Fractal',
@@ -675,6 +698,8 @@ const INTERNAL_TAXONOMY = [
       'Construct 2',
       'Custom Game Engine',
       'Entity Component System',
+      'Facebook Games',
+      'Flash',
       'Phaser',
       'Unity',
     ],
