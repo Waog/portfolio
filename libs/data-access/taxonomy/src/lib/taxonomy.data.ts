@@ -24,8 +24,10 @@ type InternalTagName =
   | 'AWS Organizations'
   | 'Backend Systems'
   | 'BitBucket'
+  | 'Blender'
   | 'Bootstrap'
   | 'Bower'
+  | 'C#'
   | 'C++'
   | 'Capture-and-Replay'
   | 'CDK'
@@ -115,6 +117,7 @@ type InternalTagName =
   | 'mockito'
   | 'Model-based testing'
   | 'MongoDB'
+  | 'MonoDevelop'
   | 'Mono Repo'
   | 'Nao'
   | 'NestJS'
@@ -183,6 +186,7 @@ type InternalTagName =
   | 'UML'
   | 'UML state machine'
   | 'Underscore'
+  | 'Unity'
   | 'USB Monitor'
   | 'Various Technologies'
   | 'Vue.js'
@@ -268,9 +272,9 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: '3D',
     categories: ['Concepts', 'Frontend'],
-    children: ['First-person camera'],
+    children: ['Blender', 'First-person camera'],
     parents: ['Computer Graphics'],
-    related: ['WebGL'],
+    related: ['Unity', 'WebGL'],
     synonyms: [/^3d$/i, /three-?d/i],
   },
   {
@@ -372,6 +376,12 @@ const INTERNAL_TAXONOMY = [
     parents: ['Atlassian'],
   },
   {
+    canonical: 'Blender',
+    categories: ['Tools & Libraries'],
+    parents: ['3D'],
+    related: ['Unity'],
+  },
+  {
     canonical: 'Bootstrap',
     categories: ['Frontend', 'Tools & Libraries'],
     includes: ['CSS', 'HTML', 'JavaScript'],
@@ -381,6 +391,12 @@ const INTERNAL_TAXONOMY = [
     canonical: 'Bower',
     categories: ['DevOps & Build & CI/CD'],
     related: ['npm', 'yarn'],
+  },
+  {
+    canonical: 'C#',
+    categories: ['Backend', 'Frontend'],
+    related: ['Unity'],
+    synonyms: [/^c[- ]sharp$/i, /^c#$/i],
   },
   {
     canonical: 'C++',
@@ -627,7 +643,12 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'Game Development',
     categories: ['Concepts'],
-    children: ['Custom Game Engine', 'Entity Component System', 'Phaser'],
+    children: [
+      'Custom Game Engine',
+      'Entity Component System',
+      'Phaser',
+      'Unity',
+    ],
     synonyms: [/game dev/i],
   },
   {
@@ -914,6 +935,11 @@ const INTERNAL_TAXONOMY = [
     categories: ['Concepts'],
     children: ['Nx'],
     related: ['Microservices'],
+  },
+  {
+    canonical: 'MonoDevelop',
+    categories: ['Tools & Libraries'],
+    related: ['C#', 'Eclipse', 'IntelliJ IDEA', 'Netbeans', 'Unity', 'XCode'],
   },
   {
     canonical: 'Nao',
@@ -1295,6 +1321,14 @@ const INTERNAL_TAXONOMY = [
     categories: ['Tools & Libraries'],
     includes: ['JavaScript'],
     related: ['Lodash'],
+  },
+  {
+    canonical: 'Unity',
+    categories: ['Frontend', 'Tools & Libraries'],
+    includes: ['C#'],
+    parents: ['Game Development'],
+    related: ['3D', 'Blender', 'jMonkeyEngine', 'MonoDevelop'],
+    synonyms: [/^unity$/i, /^unity3d$/i],
   },
   {
     canonical: 'USB Monitor',
