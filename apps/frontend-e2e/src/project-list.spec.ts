@@ -8,7 +8,7 @@ test.describe('Project List Section', () => {
 
     const projectList = await getProjectListSection(page);
 
-    await expect(projectList.locator('lib-project-item')).toHaveCount(25);
+    await expect(projectList.locator('lib-project-item')).toHaveCount(31);
 
     await expect(
       page.getByRole('heading', { name: 'Top Matching Projects' })

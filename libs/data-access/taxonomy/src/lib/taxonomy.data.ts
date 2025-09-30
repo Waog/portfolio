@@ -139,6 +139,7 @@ type InternalTagName =
   | 'OpenAI'
   | 'OpenGL'
   | 'OSGI'
+  | 'Panda.js'
   | 'Pattern Recognition'
   | 'PayPal API'
   | 'Peer-to-Peer'
@@ -700,6 +701,7 @@ const INTERNAL_TAXONOMY = [
       'Entity Component System',
       'Facebook Games',
       'Flash',
+      'Panda.js',
       'Phaser',
       'Unity',
     ],
@@ -1090,6 +1092,13 @@ const INTERNAL_TAXONOMY = [
     categories: ['Tools & Libraries'],
     includes: ['Java'],
     related: ['Eclipse EMF', 'Eclipse PDE', 'Eclipse RCP'],
+  },
+  {
+    canonical: 'Panda.js',
+    categories: ['Frontend', 'Tools & Libraries'],
+    includes: ['HTML5', 'JavaScript'],
+    parents: ['Game Development'],
+    related: ['HTML Canvas', 'Phaser'],
   },
   {
     canonical: 'Pattern Recognition',
