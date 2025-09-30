@@ -125,6 +125,7 @@ type InternalTagName =
   | 'mockito'
   | 'Model-based testing'
   | 'MongoDB'
+  | 'Mongoose'
   | 'MonoDevelop'
   | 'Mono Repo'
   | 'Nao'
@@ -1001,6 +1002,12 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'MongoDB',
     categories: ['Backend', 'Cloud & Infrastructure'],
+    synonyms: [/^mongo$/i, /mongodb/i],
+  },
+  {
+    canonical: 'Mongoose',
+    categories: ['Backend', 'Tools & Libraries'],
+    includes: ['MongoDB', 'Node.js'],
   },
   {
     canonical: 'Mono Repo',

@@ -508,6 +508,7 @@ export const ALL_PROJECT_DATA: ProjectData[] = [
       'Node.js',
       'Express',
       'MongoDB',
+      'Mongoose',
       'AWS',
       'Docker',
       'Webpack',
