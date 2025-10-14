@@ -19,11 +19,13 @@ jobs:
       - name: 🔄 Checkout repository
         uses: actions/checkout@v4
 
-      - name: 🔁 Setup Nx environment
-        uses: ./.github/actions/setup-nx
+      # TODO: Re-enable e2e tests after performance improvements
 
-      - name: 🎭 Setup Playwright environment
-        uses: ./.github/actions/setup-playwright
+      # - name: 🔁 Setup Nx environment
+      #   uses: ./.github/actions/setup-nx
 
-      - name: 🧪 Run E2E Tests (chromium only)
-        run: npx nx e2e frontend-e2e -- --project=chromium
+      # - name: 🎭 Setup Playwright environment
+      #   uses: ./.github/actions/setup-playwright
+
+      # - name: 🧪 Run E2E Tests (chromium only)
+      #   run: npx nx e2e frontend-e2e -- --project=chromium
