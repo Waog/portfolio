@@ -27,7 +27,7 @@
   }
 
   <!-- Other projects section -->
-  @if (showAllProjects || topProjects.length === 0 || isPrintMode()) {
+  @if (showAllProjects || topProjects.length === 0 || printMode) {
   <main class="all-projects-list">
     @if (topProjects.length > 0) {
     <lib-section-header text="Other Projects" />
@@ -36,13 +36,11 @@
     }
     <lib-project-item
       *ngFor="
-        let project of isPrintMode()
-          ? topProjectsService.getNonTopProjects().slice(0, 5)
-          : topProjectsService.getNonTopProjects();
+        let project of printMode ? limitedNonTopProjects : nonTopProjects;
         trackBy: trackByProjectId
       "
       [project]="project"
-      [isTopProject]="isTopProject(project)"
+      [isTopProject]="false"
       [compact]="true"
     >
     </lib-project-item>

@@ -2,7 +2,15 @@
 <span
   [class]="'color-chip color-chip-' + color + ' color-chip-spacing-' + spacing"
 >
-  @if (icon) {
+  @if (progress !== undefined && progress >= 0 && progress < 100) {
+  <mat-progress-spinner
+    class="chip-spinner"
+    [mode]="progress === 0 ? 'indeterminate' : 'determinate'"
+    [value]="progress"
+    diameter="16"
+    strokeWidth="3"
+  ></mat-progress-spinner>
+  } @else if (icon) {
   <mat-icon class="chip-icon">{{ icon }}</mat-icon>
   }
   <span class="chip-text">{{ text }}</span>

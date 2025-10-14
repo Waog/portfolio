@@ -32,21 +32,40 @@ export class ProjectListComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
 
   topProjects: Project[] = [];
+  nonTopProjects: Project[] = [];
+  limitedNonTopProjects: Project[] = [];
   showAllProjects = false;
+  printMode = false;
+
+  private beforePrintHandler = () => (this.printMode = true);
+  private afterPrintHandler = () => (this.printMode = false);
 
   ngOnInit(): void {
+    this.printMode = this.isPrintMode();
+    if (typeof window !== 'undefined') {
+      window.addEventListener('beforeprint', this.beforePrintHandler);
+      window.addEventListener('afterprint', this.afterPrintHandler);
+    }
     // Subscribe to search tag changes to update top projects
     this.searchTagService.tags$.pipe(takeUntil(this.destroy$)).subscribe(() => {
       this.topProjects = this.topProjectsService.getTopProjects();
+      this.nonTopProjects = this.topProjectsService.getNonTopProjects();
+      this.limitedNonTopProjects = this.nonTopProjects.slice(0, 5);
     });
 
     // Initialize top projects
     this.topProjects = this.topProjectsService.getTopProjects();
+    this.nonTopProjects = this.topProjectsService.getNonTopProjects();
+    this.limitedNonTopProjects = this.nonTopProjects.slice(0, 5);
   }
 
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
+    if (typeof window !== 'undefined') {
+      window.removeEventListener('beforeprint', this.beforePrintHandler);
+      window.removeEventListener('afterprint', this.afterPrintHandler);
+    }
   }
 
   trackByProjectId(index: number, project: Project): string {

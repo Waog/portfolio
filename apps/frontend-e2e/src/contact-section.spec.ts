@@ -2,7 +2,7 @@ import { expect, type Locator, type Page, test } from '@playwright/test';
 
 test.describe('Contact Section', () => {
   test('displays the contact section', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/', { waitUntil: 'domcontentloaded' });
 
     const contactSection = await getContactSection(page);
     await expect(contactSection.getByText('Contact Me')).toBeVisible();

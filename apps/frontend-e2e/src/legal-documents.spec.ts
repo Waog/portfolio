@@ -56,8 +56,7 @@ const legalDocuments = [
 
 test.describe('Legal Documents E2E Tests', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/');
-    await page.waitForLoadState('domcontentloaded');
+    await page.goto('/', { waitUntil: 'domcontentloaded' });
   });
 
   test.describe('Footer Links Navigation', () => {
@@ -69,7 +68,9 @@ test.describe('Legal Documents E2E Tests', () => {
           .locator('footer')
           .getByRole('link', { name: doc.footerLinkText });
         await expect(footerLink).toBeVisible();
-        await footerLink.click();
+        // Ensure footer is in view and click without waiting for navigation (SPA route)
+        await page.locator('footer').scrollIntoViewIfNeeded();
+        await footerLink.click({ noWaitAfter: true });
         await expect(
           page.getByRole('heading', { name: doc.englishTitle }).first()
         ).toBeVisible();
@@ -84,8 +85,11 @@ test.describe('Legal Documents E2E Tests', () => {
           const footerLink = page
             .locator('footer')
             .getByRole('link', { name: doc.footerLinkText });
-          await footerLink.click();
-          await page.waitForLoadState('domcontentloaded');
+          await page.locator('footer').scrollIntoViewIfNeeded();
+          await footerLink.click({ noWaitAfter: true });
+          await expect(
+            page.getByRole('heading', { name: doc.englishTitle }).first()
+          ).toBeVisible();
         });
         test('should display English content by default', async ({ page }) => {
           await expect(
@@ -170,8 +174,8 @@ test.describe('Legal Documents E2E Tests', () => {
         const footerLink = page
           .locator('footer')
           .getByRole('link', { name: doc.footerLinkText });
-        await footerLink.click();
-        await page.waitForLoadState('domcontentloaded');
+        await page.locator('footer').scrollIntoViewIfNeeded();
+        await footerLink.click({ noWaitAfter: true });
         await expect(
           page.getByRole('heading', { name: doc.englishTitle })
         ).toBeVisible();
@@ -195,8 +199,8 @@ test.describe('Legal Documents E2E Tests', () => {
         const footerLink = page
           .locator('footer')
           .getByRole('link', { name: doc.footerLinkText });
-        await footerLink.click();
-        await page.waitForLoadState('domcontentloaded');
+        await page.locator('footer').scrollIntoViewIfNeeded();
+        await footerLink.click({ noWaitAfter: true });
         const headings = await page.locator('h1, h2, h3, h4, h5, h6').count();
         expect(headings).toBeGreaterThan(0);
         await expect(

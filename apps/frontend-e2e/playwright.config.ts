@@ -16,9 +16,17 @@ const baseURL = process.env['BASE_URL'] || 'http://localhost:4200';
  */
 export default defineConfig({
   ...nxE2EPreset(__filename, { testDir: './src' }),
+  // Allow longer-running tests globally
+  timeout: 60_000, // per-test timeout
+  expect: {
+    timeout: 20_000, // default expect timeout
+  },
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     baseURL,
+    // Give actions and navigations more time on slower dev machines
+    actionTimeout: 20_000,
+    navigationTimeout: 30_000,
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
   },
@@ -27,6 +35,7 @@ export default defineConfig({
     command: 'npx nx run frontend:serve',
     url: baseURL,
     reuseExistingServer: !process.env['CI'],
+    timeout: 120_000,
     cwd: workspaceRoot,
   },
   projects: [

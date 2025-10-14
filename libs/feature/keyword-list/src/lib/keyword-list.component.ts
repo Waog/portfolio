@@ -25,22 +25,39 @@ export class KeywordListComponent implements OnInit, OnDestroy {
   greenTechnologies: string[] = [];
   yellowTechnologies: string[] = [];
   grayTechnologies: string[] = [];
+  loading = true;
 
   private technologyMatchingService = inject(TechnologyMatchingService);
   private searchTagService = inject(SearchTagService);
   private destroy$ = new Subject<void>();
+  private updateTimeout: ReturnType<typeof setTimeout> | null = null;
 
   ngOnInit(): void {
     this.searchTagService.tags$
       .pipe(takeUntil(this.destroy$))
       .subscribe(searchTags => {
-        this.updateSearchTagMatches(searchTags);
+        this.scheduleUpdate(searchTags);
       });
   }
 
   ngOnDestroy(): void {
+    if (this.updateTimeout) {
+      clearTimeout(this.updateTimeout);
+      this.updateTimeout = null;
+    }
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  private scheduleUpdate(searchTags: string[]): void {
+    // Debounce and yield to the browser to render "Loading..." first
+    if (this.updateTimeout) clearTimeout(this.updateTimeout);
+    this.loading = true;
+    this.updateTimeout = setTimeout(() => {
+      this.updateTimeout = null;
+      this.updateSearchTagMatches(searchTags);
+      this.loading = false;
+    });
   }
 
   @MemoizeAllArgs
