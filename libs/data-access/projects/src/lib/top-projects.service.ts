@@ -22,18 +22,24 @@ export class TopProjectsService {
   private projectService = inject(ProjectService);
 
   /**
-   * Returns the top 3 projects based on technology matches with current search tags.
-   * Sorting criteria:
+   * Returns all projects in prioritized order.
+   * When search tags are active, projects are sorted by:
    * 1. Number of full matches (descending)
    * 2. Number of indirect matches (descending) - tie breaker
    * 3. Original order in projects.data.ts (ascending) - final tie breaker
+   *
+   * When no search tags are active, returns all projects in their original order.
    */
-  getTopProjects(): Project[] {
+  getPrioritizedProjects(): Project[] {
     const searchTags = this.searchTagService.currentTags;
+    return this.getPrioritizedProjectsMemoized(searchTags);
+  }
 
-    // If no search tags, return empty array
+  @MemoizeAllArgs
+  private getPrioritizedProjectsMemoized(searchTags: string[]): Project[] {
+    // If no search tags, return all projects in original order
     if (searchTags.length === 0) {
-      return [];
+      return this.projectService.getAll();
     }
 
     // Score all projects
@@ -46,13 +52,8 @@ export class TopProjectsService {
         originalIndex: index,
       }));
 
-    // Filter projects that have at least one match
-    const projectsWithMatches = projectScores.filter(
-      score => score.fullMatches > 0 || score.indirectMatches > 0
-    );
-
-    // Sort by criteria
-    const sortedProjects = projectsWithMatches.sort((a, b) => {
+    // Sort by criteria (projects with matches will naturally float to the top)
+    const sortedProjects = projectScores.sort((a, b) => {
       // Primary: full matches (descending)
       if (a.fullMatches !== b.fullMatches) {
         return b.fullMatches - a.fullMatches;
@@ -67,14 +68,8 @@ export class TopProjectsService {
       return a.originalIndex - b.originalIndex;
     });
 
-    // Return top 3
-    return sortedProjects.slice(0, 3).map(score => score.project);
-  }
-
-  getNonTopProjects(): Project[] {
-    return this.projectService
-      .getAll()
-      .filter(project => !this.getTopProjects().includes(project));
+    // Return all projects in prioritized order
+    return sortedProjects.map(score => score.project);
   }
 
   @MemoizeAllArgs

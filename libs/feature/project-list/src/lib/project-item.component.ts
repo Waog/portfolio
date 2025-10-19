@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
@@ -31,10 +31,21 @@ export class ProjectItemComponent {
   project = input.required<Project>();
   isTopProject = input<boolean>(false);
   compact = input<boolean>(false);
+  customIndex = input<number>();
+  moveUp = output<string>();
+  moveDown = output<string>();
 
   showExpandedContent = false;
 
   toggleContent() {
     this.showExpandedContent = !this.showExpandedContent;
+  }
+
+  handleMoveUp(): void {
+    this.moveUp.emit(this.project().id);
+  }
+
+  handleMoveDown(): void {
+    this.moveDown.emit(this.project().id);
   }
 }
