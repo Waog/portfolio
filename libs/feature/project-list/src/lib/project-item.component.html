@@ -1,4 +1,26 @@
 <div class="project-card no-page-break" [class.top-project]="isTopProject()">
+  <aside class="order-controls screen-only">
+    <button
+      mat-icon-button
+      color="primary"
+      (click)="handleMoveUp()"
+      class="move-up-btn"
+      aria-label="Move project up"
+    >
+      <mat-icon>arrow_upward</mat-icon>
+    </button>
+    <span class="custom-index">{{ customIndex() }}</span>
+    <button
+      mat-icon-button
+      color="primary"
+      (click)="handleMoveDown()"
+      class="move-down-btn"
+      aria-label="Move project down"
+    >
+      <mat-icon>arrow_downward</mat-icon>
+    </button>
+  </aside>
+
   <header class="header-content">
     <h3 [class.compact]="compact()">{{ project().title }}</h3>
     <mat-chip color="accent" highlighted class="project-type-chip">

@@ -1,18 +1,23 @@
 <section id="projects" class="projects-container">
-  <!-- Top matching projects section -->
-  @if (topProjects.length > 0) {
+  <!-- Top 3 projects section -->
   <section class="top-projects-section page-break-after">
     <lib-section-header text="Top Matching Projects" />
     <lib-project-item
-      *ngFor="let project of topProjects; trackBy: trackByProjectId"
+      *ngFor="
+        let project of allProjectsInOrder.slice(0, 3);
+        let i = index;
+        trackBy: trackByProjectId
+      "
       [project]="project"
       [isTopProject]="true"
+      [customIndex]="i + 1"
+      (moveUp)="moveProjectUp($event)"
+      (moveDown)="moveProjectDown($event)"
     >
     </lib-project-item>
   </section>
-  }
+
   <!-- Other projects toggle button -->
-  @if (topProjects.length > 0) {
   <section class="all-projects-toggle">
     <button
       mat-button
@@ -24,26 +29,26 @@
       {{ showAllProjects ? 'Hide All Projects' : 'Show All Projects' }}
     </button>
   </section>
-  }
 
   <!-- Other projects section -->
-  @if (showAllProjects || topProjects.length === 0 || isPrintMode()) {
+  @if (showAllProjects || isPrintModeActive) {
   <main class="all-projects-list">
-    @if (topProjects.length > 0) {
     <lib-section-header text="Other Projects" />
-    } @else {
-    <lib-section-header text="My Projects" />
-    }
     <lib-project-item
       *ngFor="
-        let project of isPrintMode()
-          ? topProjectsService.getNonTopProjects().slice(0, 5)
-          : topProjectsService.getNonTopProjects();
+        let project of allProjectsInOrder.slice(
+          3,
+          isPrintModeActive ? 8 : undefined
+        );
+        let i = index;
         trackBy: trackByProjectId
       "
       [project]="project"
-      [isTopProject]="isTopProject(project)"
+      [isTopProject]="false"
       [compact]="true"
+      [customIndex]="i + 4"
+      (moveUp)="moveProjectUp($event)"
+      (moveDown)="moveProjectDown($event)"
     >
     </lib-project-item>
   </main>
