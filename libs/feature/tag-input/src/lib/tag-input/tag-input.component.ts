@@ -28,8 +28,19 @@ export class TagInputComponent implements OnDestroy {
   private destroy$ = new Subject<void>();
 
   placeholder = 'Add search term, e.g. "Angular"';
-  currentInput = '';
+  private _currentInput = '';
   tags: string[] = [];
+
+  get currentInput(): string {
+    return this._currentInput;
+  }
+
+  set currentInput(value: string) {
+    this._currentInput = value;
+    this.isInputEmpty = !value.trim();
+  }
+
+  isInputEmpty = true;
 
   constructor() {
     // Subscribe to tag changes from the service
