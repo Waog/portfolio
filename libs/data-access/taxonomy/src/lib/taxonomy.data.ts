@@ -22,6 +22,7 @@ type InternalTagName =
   | 'API Gateway'
   | 'AppConfig'
   | 'Artemis-ODB'
+  | 'Artificial Intelligence'
   | 'Atlassian'
   | 'AWS'
   | 'AWS Organizations'
@@ -369,6 +370,18 @@ const INTERNAL_TAXONOMY = [
     synonyms: [/^artemis(-?odb)?$/i],
   },
   {
+    canonical: 'Artificial Intelligence',
+    categories: ['Concepts'],
+    children: [
+      'Computer Vision',
+      'OpenAI',
+      'Pattern Recognition',
+      'Robotics Control Systems',
+      'Sensor Fusion',
+    ],
+    synonyms: [/^ai$/i, /artificial intelligence/i],
+  },
+  {
     canonical: 'Atlassian',
     categories: ['Tools & Libraries'],
     children: ['BitBucket', 'Confluence', 'Jira'],
@@ -480,7 +493,8 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'Computer Vision',
     categories: ['Concepts'],
-    related: ['Image Processing', 'Pattern Recognition'],
+    parents: ['Artificial Intelligence'],
+    related: ['Image Processing'],
   },
   {
     canonical: 'Confluence',
@@ -1085,6 +1099,7 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'OpenAI',
     categories: ['Tools & Libraries'],
+    parents: ['Artificial Intelligence'],
   },
   {
     canonical: 'OpenGL',
@@ -1110,7 +1125,8 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'Pattern Recognition',
     categories: ['Concepts'],
-    related: ['Computer Vision', 'Image Processing'],
+    parents: ['Artificial Intelligence'],
+    related: ['Image Processing'],
   },
   {
     canonical: 'PayPal API',
@@ -1229,6 +1245,7 @@ const INTERNAL_TAXONOMY = [
     canonical: 'Robotics Control Systems',
     categories: ['Misc'],
     children: ['Nao'],
+    parents: ['Artificial Intelligence'],
   },
   {
     canonical: 'RxJS',
@@ -1265,6 +1282,7 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'Sensor Fusion',
     categories: ['Concepts'],
+    parents: ['Artificial Intelligence'],
   },
   {
     canonical: 'Sentry',
