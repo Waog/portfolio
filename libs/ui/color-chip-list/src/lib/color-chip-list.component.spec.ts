@@ -25,6 +25,11 @@ describe('ColorChipListComponent', () => {
       component.greenItems = ['React', 'Angular'];
       component.yellowItems = ['TypeScript'];
       component.grayItems = ['CSS'];
+      component.ngOnChanges({
+        greenItems: {} as any,
+        yellowItems: {} as any,
+        grayItems: {} as any,
+      });
 
       const allItems = component.allItems;
 
@@ -53,6 +58,11 @@ describe('ColorChipListComponent', () => {
       component.greenItems = ['React', 'Angular'];
       component.yellowItems = ['TypeScript', 'JavaScript', 'Node.js'];
       component.grayItems = ['CSS', 'HTML', 'SCSS', 'Bootstrap', 'Tailwind'];
+      component.ngOnChanges({
+        greenItems: {} as any,
+        yellowItems: {} as any,
+        grayItems: {} as any,
+      });
     });
 
     it('should show green items first', () => {
@@ -62,7 +72,7 @@ describe('ColorChipListComponent', () => {
     });
 
     it('should show all items when expanded', () => {
-      component.showAllItems = true;
+      component.toggleItems(); // This will set showAllItems to true and update cached properties
       const visibleItems = component.visibleItems;
       expect(visibleItems).toHaveLength(component.allItems.length);
     });
@@ -74,6 +84,11 @@ describe('ColorChipListComponent', () => {
       component.yellowItems = ['TypeScript', 'JavaScript', 'Node.js'];
       component.grayItems = ['CSS', 'HTML', 'SCSS', 'Bootstrap', 'Tailwind'];
       component.showAllItems = false;
+      component.ngOnChanges({
+        greenItems: {} as any,
+        yellowItems: {} as any,
+        grayItems: {} as any,
+      });
 
       const hiddenCount = component.hiddenItemsCount;
       expect(hiddenCount).toBe(
