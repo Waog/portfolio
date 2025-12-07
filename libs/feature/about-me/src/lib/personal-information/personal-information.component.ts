@@ -12,7 +12,9 @@ import { SubSectionComponent } from '../sub-section/sub-section.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PersonalInformationComponent {
-  get currentAge(): number {
+  readonly currentAge: number = this.calculateAge();
+
+  private calculateAge(): number {
     const today = new Date();
     const birthDate = new Date(1984, 10, 14); // Month is 0-indexed, so 10 = November
     let age = today.getFullYear() - birthDate.getFullYear();

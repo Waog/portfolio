@@ -14,7 +14,7 @@
         matSuffix
         type="button"
         (click)="addTag()"
-        [disabled]="!currentInput.trim()"
+        [disabled]="isInputEmpty"
         aria-label="Add search term"
         class="add-button"
       >
