@@ -36,6 +36,7 @@ type InternalTagName =
   | 'Capture-and-Replay'
   | 'CDK'
   | 'chai'
+  | 'CI/CD'
   | 'Classification Tree Method'
   | 'CloudFormation'
   | 'Cloud Platforms'
@@ -44,6 +45,7 @@ type InternalTagName =
   | 'Computer Vision'
   | 'Confluence'
   | 'Construct 2'
+  | 'Container'
   | 'Cordova'
   | 'CSS'
   | 'Custom Game Engine'
@@ -79,8 +81,10 @@ type InternalTagName =
   | 'Game Development'
   | 'Git'
   | 'GitHub'
+  | 'GitHub Actions'
   | 'GitHub API'
   | 'GitLab'
+  | 'GitLab CI'
   | 'GLSL'
   | 'Google Analytics'
   | 'Google App Engine'
@@ -114,6 +118,7 @@ type InternalTagName =
   | 'JSci'
   | 'JSON'
   | 'JUnit'
+  | 'Kanban'
   | 'Karma'
   | 'Kubernetes'
   | 'Lighthouse'
@@ -307,6 +312,7 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'Agile',
     categories: ['Concepts'],
+    children: ['Kanban', 'SCRUM'],
   },
   {
     canonical: 'AJAX',
@@ -318,7 +324,7 @@ const INTERNAL_TAXONOMY = [
     canonical: 'Android',
     categories: ['DevOps & Build & CI/CD'],
     parents: ['Mobile Development'],
-    related: ['Java'],
+    related: ['CI/CD', 'Java'],
   },
   {
     canonical: 'Angular Material',
@@ -349,7 +355,7 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'Ant',
     categories: ['DevOps & Build & CI/CD'],
-    related: ['Gradle', 'Maven'],
+    related: ['CI/CD', 'Gradle', 'Maven'],
   },
   {
     canonical: 'API Gateway',
@@ -408,6 +414,7 @@ const INTERNAL_TAXONOMY = [
       'Polly',
       'S3',
     ],
+    parents: ['Cloud Platforms'],
     synonyms: [/^aws$/i, /amazon web services/i],
   },
   {
@@ -419,6 +426,7 @@ const INTERNAL_TAXONOMY = [
     canonical: 'BitBucket',
     categories: ['DevOps & Build & CI/CD', 'Tools & Libraries'],
     parents: ['Atlassian', 'Git'],
+    related: ['CI/CD'],
   },
   {
     canonical: 'Blender',
@@ -435,7 +443,7 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'Bower',
     categories: ['DevOps & Build & CI/CD'],
-    related: ['npm', 'yarn'],
+    related: ['CI/CD', 'npm', 'yarn'],
   },
   {
     canonical: 'C#',
@@ -456,12 +464,56 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'CDK',
     categories: ['Cloud & Infrastructure', 'DevOps & Build & CI/CD'],
-    parents: ['AWS'],
+    parents: ['AWS', 'CI/CD'],
   },
   {
     canonical: 'chai',
     categories: ['Testing and QA'],
     parents: ['Testing'],
+  },
+  {
+    canonical: 'CI/CD',
+    categories: ['Concepts', 'DevOps & Build & CI/CD'],
+    children: [
+      'CDK',
+      'Container',
+      'GitHub Actions',
+      'GitLab CI',
+      'Jenkins',
+      'Travis CI',
+    ],
+    related: [
+      'Android',
+      'Ant',
+      'BitBucket',
+      'Bower',
+      'CloudFormation',
+      'Cordova',
+      'Custom Scripts',
+      'Docker',
+      'Git',
+      'GitHub',
+      'GitHub API',
+      'GitLab',
+      'Google Code',
+      'Gradle',
+      'Grunt',
+      'Intel XDK',
+      'iOS',
+      'Kubernetes',
+      'Maven',
+      'npm',
+      'Nx',
+      'SVN',
+      'TFS',
+      'tsd',
+      'Webpack',
+      'XCode',
+      'yarn',
+      'Yeoman',
+      'yo',
+    ],
+    synonyms: [/^ci\/cd$/i, /continuous delivery/i, /continuous integration/i],
   },
   {
     canonical: 'Classification Tree Method',
@@ -472,13 +524,14 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'Cloud Platforms',
     categories: ['Misc'],
-    children: ['Google App Engine'],
+    children: ['AWS', 'Google App Engine'],
     synonyms: [/^cloud$/i, /cloud platform/i],
   },
   {
     canonical: 'CloudFormation',
     categories: ['Cloud & Infrastructure', 'DevOps & Build & CI/CD'],
     parents: ['AWS'],
+    related: ['CI/CD'],
   },
   {
     canonical: 'CloudWatch',
@@ -508,9 +561,21 @@ const INTERNAL_TAXONOMY = [
     related: ['HTML5', 'Phaser', 'Unity'],
   },
   {
+    canonical: 'Container',
+    categories: [
+      'Cloud & Infrastructure',
+      'Concepts',
+      'DevOps & Build & CI/CD',
+    ],
+    children: ['Docker', 'Kubernetes'],
+    parents: ['CI/CD'],
+    related: ['Microservices'],
+    synonyms: [/container/i],
+  },
+  {
     canonical: 'Cordova',
     categories: ['DevOps & Build & CI/CD'],
-    related: ['Intel XDK'],
+    related: ['CI/CD', 'Intel XDK'],
   },
   {
     canonical: 'CSS',
@@ -527,6 +592,7 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'Custom Scripts',
     categories: ['DevOps & Build & CI/CD'],
+    related: ['CI/CD'],
   },
   {
     canonical: 'Custom Test Framework',
@@ -561,7 +627,8 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'Docker',
     categories: ['Cloud & Infrastructure', 'DevOps & Build & CI/CD'],
-    related: ['Kubernetes'],
+    parents: ['Container'],
+    related: ['CI/CD', 'Kubernetes'],
   },
   {
     canonical: 'DOORS',
@@ -726,7 +793,12 @@ const INTERNAL_TAXONOMY = [
     canonical: 'Git',
     categories: ['DevOps & Build & CI/CD'],
     children: ['BitBucket', 'GitHub', 'GitLab'],
-    related: ['SVN', 'TFS'],
+    related: ['CI/CD', 'SVN', 'TFS'],
+  },
+  {
+    canonical: 'GitHub Actions',
+    categories: ['DevOps & Build & CI/CD'],
+    parents: ['CI/CD', 'GitHub'],
   },
   {
     canonical: 'GitHub API',
@@ -736,7 +808,7 @@ const INTERNAL_TAXONOMY = [
       'Tools & Libraries',
     ],
     parents: ['GitHub'],
-    related: ['OAuth2', 'REST'],
+    related: ['CI/CD', 'OAuth2', 'REST'],
   },
   {
     canonical: 'GitHub',
@@ -745,8 +817,14 @@ const INTERNAL_TAXONOMY = [
       'DevOps & Build & CI/CD',
       'Tools & Libraries',
     ],
-    children: ['GitHub API'],
+    children: ['GitHub Actions', 'GitHub API'],
     parents: ['Git'],
+    related: ['CI/CD'],
+  },
+  {
+    canonical: 'GitLab CI',
+    categories: ['DevOps & Build & CI/CD'],
+    parents: ['CI/CD', 'GitLab'],
   },
   {
     canonical: 'GitLab',
@@ -755,7 +833,9 @@ const INTERNAL_TAXONOMY = [
       'DevOps & Build & CI/CD',
       'Tools & Libraries',
     ],
+    children: ['GitLab CI'],
     parents: ['Git'],
+    related: ['CI/CD'],
   },
   {
     canonical: 'GLSL',
@@ -782,21 +862,22 @@ const INTERNAL_TAXONOMY = [
       'DevOps & Build & CI/CD',
       'Tools & Libraries',
     ],
-    related: ['BitBucket', 'Git', 'GitHub', 'GitLab', 'SVN'],
+    related: ['BitBucket', 'CI/CD', 'Git', 'GitHub', 'GitLab', 'SVN'],
   },
   {
     canonical: 'Gradle',
     categories: ['DevOps & Build & CI/CD'],
-    related: ['Ant', 'Maven'],
+    related: ['Ant', 'CI/CD', 'Maven'],
   },
   {
     canonical: 'GraphQL',
     categories: ['Backend', 'Concepts', 'Frontend', 'Tools & Libraries'],
+    related: ['REST'],
   },
   {
     canonical: 'Grunt',
     categories: ['DevOps & Build & CI/CD'],
-    related: ['npm', 'yarn'],
+    related: ['CI/CD', 'npm', 'yarn'],
   },
   {
     canonical: 'GTM',
@@ -842,7 +923,7 @@ const INTERNAL_TAXONOMY = [
     canonical: 'Intel XDK',
     categories: ['DevOps & Build & CI/CD', 'Tools & Libraries'],
     includes: ['Cordova', 'HTML5'],
-    related: ['Ionic', 'React Native'],
+    related: ['CI/CD', 'Ionic', 'React Native'],
   },
   {
     canonical: 'IntelliJ IDEA',
@@ -860,6 +941,7 @@ const INTERNAL_TAXONOMY = [
     canonical: 'iOS',
     categories: ['DevOps & Build & CI/CD'],
     parents: ['Mobile Development'],
+    related: ['CI/CD'],
   },
   {
     canonical: 'Jasmine',
@@ -889,6 +971,7 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'Jenkins',
     categories: ['DevOps & Build & CI/CD', 'Tools & Libraries'],
+    parents: ['CI/CD'],
   },
   {
     canonical: 'Jest',
@@ -950,6 +1033,11 @@ const INTERNAL_TAXONOMY = [
     parents: ['Testing'],
   },
   {
+    canonical: 'Kanban',
+    categories: ['Concepts'],
+    parents: ['Agile'],
+  },
+  {
     canonical: 'Karma',
     categories: ['Testing and QA'],
     includes: ['JavaScript'],
@@ -959,7 +1047,8 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'Kubernetes',
     categories: ['Cloud & Infrastructure', 'DevOps & Build & CI/CD'],
-    related: ['Docker'],
+    parents: ['Container'],
+    related: ['CI/CD', 'Docker'],
     synonyms: [/^k8s$/i, /^kubernetes$/i],
   },
   {
@@ -976,7 +1065,7 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'Maven',
     categories: ['DevOps & Build & CI/CD'],
-    related: ['Ant', 'Gradle'],
+    related: ['Ant', 'CI/CD', 'Gradle'],
   },
   {
     canonical: 'Micro Frontends',
@@ -1082,13 +1171,14 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'npm',
     categories: ['DevOps & Build & CI/CD'],
+    related: ['CI/CD'],
   },
   {
     canonical: 'Nx',
     categories: ['DevOps & Build & CI/CD', 'Tools & Libraries'],
     includes: ['npm'],
     parents: ['Mono Repo'],
-    related: ['JavaScript', 'TypeScript'],
+    related: ['CI/CD', 'JavaScript', 'TypeScript'],
     synonyms: [/^nrwl nx$/i, /^nx$/i],
   },
   {
@@ -1239,6 +1329,7 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'REST',
     categories: ['Concepts'],
+    related: ['GraphQL'],
     synonyms: [/^rest$/i, /rest api/i, /restful/i],
   },
   {
@@ -1272,6 +1363,7 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'SCRUM',
     categories: ['Concepts'],
+    parents: ['Agile'],
   },
   {
     canonical: 'SCSS',
@@ -1340,7 +1432,7 @@ const INTERNAL_TAXONOMY = [
     canonical: 'SVN',
     categories: ['DevOps & Build & CI/CD'],
     children: ['TortoiseSVN'],
-    related: ['Git', 'GitHub'],
+    related: ['CI/CD', 'Git', 'GitHub'],
     synonyms: [/subversion/i, /svn/i],
   },
   {
@@ -1385,7 +1477,7 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'TFS',
     categories: ['DevOps & Build & CI/CD', 'Tools & Libraries'],
-    related: ['Git'],
+    related: ['CI/CD', 'Git'],
     synonyms: [/^tfs$/i, /team foundation server/i],
   },
   {
@@ -1396,13 +1488,14 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'Travis CI',
     categories: ['DevOps & Build & CI/CD'],
+    parents: ['CI/CD'],
     related: ['GitHub', 'GitLab', 'Jenkins'],
     synonyms: [/travis/i],
   },
   {
     canonical: 'tsd',
     categories: ['DevOps & Build & CI/CD'],
-    related: ['npm', 'TypeScript'],
+    related: ['CI/CD', 'npm', 'TypeScript'],
     synonyms: [/^tsd$/i],
   },
   {
@@ -1510,6 +1603,7 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'Webpack',
     categories: ['DevOps & Build & CI/CD'],
+    related: ['CI/CD'],
   },
   {
     canonical: 'WebRTC',
@@ -1533,6 +1627,7 @@ const INTERNAL_TAXONOMY = [
     canonical: 'XCode',
     categories: ['DevOps & Build & CI/CD'],
     includes: ['iOS'],
+    related: ['CI/CD'],
   },
   {
     canonical: 'XML',
@@ -1548,18 +1643,19 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'yarn',
     categories: ['DevOps & Build & CI/CD'],
-    related: ['npm'],
+    related: ['CI/CD', 'npm'],
   },
   {
     canonical: 'Yeoman',
     categories: ['DevOps & Build & CI/CD', 'Tools & Libraries'],
     children: ['yo'],
-    related: ['npm'],
+    related: ['CI/CD', 'npm'],
   },
   {
     canonical: 'yo',
     categories: ['DevOps & Build & CI/CD', 'Tools & Libraries'],
     parents: ['Yeoman'],
+    related: ['CI/CD'],
     synonyms: [/^yo$/i],
   },
   {

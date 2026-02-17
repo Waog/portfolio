@@ -7,7 +7,7 @@ describe('Taxonomy Data', () => {
     const canonicalNames = TAXONOMY.map(term => term.canonical);
     const uniqueCanonicalNames = new Set(canonicalNames);
 
-    expect(canonicalNames.length).toBe(uniqueCanonicalNames.size);
+    expect(canonicalNames).toEqual(Array.from(uniqueCanonicalNames));
   });
 
   it('`includes` elements exist as another TAXONOMY element', () => {
