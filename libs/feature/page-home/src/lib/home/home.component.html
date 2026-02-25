@@ -19,4 +19,16 @@
   <lib-section class="contact-section screen-only">
     <lib-contact-section />
   </lib-section>
+  <lib-section class="contact-section screen-only">
+    <div
+      class="worker-result screen-only"
+      data-testid="worker-result"
+      aria-label="Web Worker result"
+      style="display: flex; justify-content: center"
+    >
+      <div style="border: 1px solid #e0e0e0; border-radius: 8px; padding: 1rem">
+        {{ workerResult$ | async | json }}
+      </div>
+    </div>
+  </lib-section>
 </div>
