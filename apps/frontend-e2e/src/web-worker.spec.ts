@@ -9,6 +9,6 @@ test.describe('Web Worker', () => {
     const result = page.locator('[data-testid="worker-result"]');
 
     // transform('hello') === { result: 'hello' }, displayed via json pipe
-    await expect(result).toHaveText('{"result":"hello"}');
+    await expect(result).toHaveText('{ "result": "hello" }');
   });
 });
