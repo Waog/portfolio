@@ -28,6 +28,6 @@ describe('HomeComponent', () => {
     );
     // In Jest, Worker is unavailable so the sync fallback runs:
     // transform('hello') === { result: 'hello' }
-    expect(el.textContent?.trim()).toBe('{"result":"hello"}');
+    expect(el.textContent?.replace(/\s+/g, '')).toBe('{"result":"hello"}');
   });
 });
