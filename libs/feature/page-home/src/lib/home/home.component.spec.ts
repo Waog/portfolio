@@ -21,4 +21,13 @@ describe('HomeComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should display the web worker result via ProofOfConceptWorkerService', () => {
+    const el: HTMLElement = fixture.nativeElement.querySelector(
+      '[data-testid="worker-result"]'
+    );
+    // In Jest, Worker is unavailable so the sync fallback runs:
+    // transform('hello') === { result: 'hello' }
+    expect(el.textContent?.replace(/\s+/g, '')).toBe('{"result":"hello"}');
+  });
 });

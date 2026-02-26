@@ -1,8 +1,9 @@
 export default {
-  displayName: 'page-home',
+  displayName: 'proof-of-concept-webworker',
   preset: '../../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
-  coverageDirectory: '../../../coverage/libs/feature/page-home',
+  coverageDirectory:
+    '../../../coverage/libs/data-access/proof-of-concept-webworker',
   transform: {
     '^.+\\.(ts|mjs|js|html)$': [
       'jest-preset-angular',
