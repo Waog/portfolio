@@ -4,7 +4,10 @@ import { AboutMeComponent } from '@portfolio/about-me';
 import { ContactSectionComponent } from '@portfolio/contact-section';
 import { MatchesOverviewComponent } from '@portfolio/matches-overview';
 import { ProjectListComponent } from '@portfolio/project-list';
-import { ProofOfConceptWorkerService } from '@portfolio/proof-of-concept-webworker';
+import {
+  ProofOfConceptMemoizeWorkerService,
+  ProofOfConceptWorkerService,
+} from '@portfolio/proof-of-concept-webworker';
 import { SearchTagService } from '@portfolio/search-tags';
 import { SectionComponent } from '@portfolio/section';
 import { SkillSectionComponent } from '@portfolio/skill-section';
@@ -28,4 +31,8 @@ import { TagInputComponent } from '@portfolio/tag-input';
 export class HomeComponent {
   protected searchTagService = inject(SearchTagService);
   protected workerResult$ = inject(ProofOfConceptWorkerService).run('hello');
+
+  private memoizeWorkerService = inject(ProofOfConceptMemoizeWorkerService);
+  protected memoizeResult1$ = this.memoizeWorkerService.run('hello');
+  protected memoizeResult2$ = this.memoizeWorkerService.run('hello');
 }
