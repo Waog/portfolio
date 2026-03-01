@@ -41,6 +41,9 @@
       "@portfolio/search-engine-angular": [
         "libs/data-access/search-engine-angular/src/index.ts"
       ],
+      "@portfolio/search-engine-worker": [
+        "libs/data-access/search-engine-worker/src/index.ts"
+      ],
       "@portfolio/search-tags": ["libs/data-access/search-tags/src/index.ts"],
       "@portfolio/section": ["libs/ui/section/src/index.ts"],
       "@portfolio/section-header": ["libs/ui/section-header/src/index.ts"],
