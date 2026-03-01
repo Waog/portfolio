@@ -8,6 +8,7 @@ import {
   ProofOfConceptMemoizeWorkerService,
   ProofOfConceptWorkerService,
 } from '@portfolio/proof-of-concept-webworker';
+import { SearchEngineService } from '@portfolio/search-engine-angular';
 import { SearchTagService } from '@portfolio/search-tags';
 import { SectionComponent } from '@portfolio/section';
 import { SkillSectionComponent } from '@portfolio/skill-section';
@@ -30,6 +31,7 @@ import { TagInputComponent } from '@portfolio/tag-input';
 })
 export class HomeComponent {
   protected searchTagService = inject(SearchTagService);
+  protected searchResult$ = inject(SearchEngineService).searchResult$;
   protected workerResult$ = inject(ProofOfConceptWorkerService).run('hello');
 
   private memoizeWorkerService = inject(ProofOfConceptMemoizeWorkerService);

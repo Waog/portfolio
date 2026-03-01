@@ -6,6 +6,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { ColorChipComponent } from '@portfolio/color-chip';
+import { SearchEngineService } from '@portfolio/search-engine-angular';
 import { SearchTagService } from '@portfolio/search-tags';
 import { Subject, takeUntil } from 'rxjs';
 
@@ -25,6 +26,7 @@ import { Subject, takeUntil } from 'rxjs';
 })
 export class TagInputComponent implements OnDestroy {
   private searchTagService = inject(SearchTagService);
+  private searchEngine = inject(SearchEngineService);
   private destroy$ = new Subject<void>();
 
   placeholder = 'Add search term, e.g. "Angular"';
@@ -48,6 +50,7 @@ export class TagInputComponent implements OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe(tags => {
         this.tags = tags;
+        this.searchEngine.setQuery(tags);
       });
   }
 
@@ -58,7 +61,8 @@ export class TagInputComponent implements OnDestroy {
 
   addTag(): void {
     if (this.currentInput.trim()) {
-      this.searchTagService.addTag(this.currentInput);
+      const added = this.currentInput;
+      this.searchTagService.addTag(added);
       this.currentInput = '';
     }
   }

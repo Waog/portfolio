@@ -1,31 +1,32 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, distinctUntilChanged, map, Observable } from 'rxjs';
 
-interface SearchResult {
-  id: string;
-  query: string;
+export interface SearchResult {
+  id: number;
+  query: string[];
 }
 
 @Injectable({
   providedIn: 'root',
 })
 export class SearchEngineService {
-  private readonly querySubject = new BehaviorSubject<string>('');
+  private readonly querySubject = new BehaviorSubject<string[]>([]);
+  private resultIdCounter = 0;
 
   readonly searchResult$: Observable<SearchResult> = this.querySubject.pipe(
     distinctUntilChanged(),
     map(query => this.getDummyResult(query))
   );
 
-  setQuery(query: string): void {
+  setQuery(query: string[]): void {
     this.querySubject.next(query);
   }
 
-  private getDummyResult(query: string): SearchResult {
-    if (!query.trim()) {
-      return { id: '0', query: 'No result' };
+  private getDummyResult(query: string[]): SearchResult {
+    if (!query.length) {
+      return { id: this.resultIdCounter++, query: [] };
     }
 
-    return { id: '1', query };
+    return { id: this.resultIdCounter++, query };
   }
 }
