@@ -21,34 +21,4 @@ export class ProjectService {
   getAll(): Project[] {
     return this.allProjectsFactory.getAll();
   }
-
-  getBy(filterConfig: ProjectFilterConfig): Project[] {
-    const {
-      isFullMatchFor: fullMatchSearchTag,
-      isPartialFor: partialMatchSearchTag,
-    } = filterConfig;
-
-    if (fullMatchSearchTag) {
-      return this.getAll().filter(
-        project =>
-          this.technologyMatchingService.getBestMatchTypeForSearchTag({
-            searchTag: fullMatchSearchTag,
-            keywordTags: project.technologies,
-          }) === 'full'
-      );
-    } else if (partialMatchSearchTag) {
-      return this.getAll().filter(
-        project =>
-          this.technologyMatchingService.getBestMatchTypeForSearchTag({
-            searchTag: partialMatchSearchTag,
-            keywordTags: project.technologies,
-          }) === 'indirect'
-      );
-    } else {
-      throw new Error(
-        'ProjectService.getBy invalid filterConfig: ' +
-          JSON.stringify(filterConfig)
-      );
-    }
-  }
 }

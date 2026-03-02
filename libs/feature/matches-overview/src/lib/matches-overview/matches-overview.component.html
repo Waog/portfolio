@@ -2,29 +2,30 @@
   <lib-section-header text="Experience by Keywords" />
 
   <div class="grid">
-    @for (tagMatch of tagMatches; track tagMatch.searchTag) {
-    <span class="search-term">{{ tagMatch.searchTag }}:</span>
+    @for (matchItem of matchesOverview$ | async; track matchItem.keyword) {
+    <span class="search-term">{{ matchItem.keyword }}:</span>
 
     <div class="match-results">
-      @if (tagMatch.fullMatches > 0) {
+      @if (matchItem.fullMatchesCount > 0) {
       <lib-color-chip
         [text]="
-          tagMatch.fullMatches +
+          matchItem.fullMatchesCount +
           ' project' +
-          (tagMatch.fullMatches !== 1 ? 's' : '')
+          (matchItem.fullMatchesCount !== 1 ? 's' : '')
         "
         color="green"
       />
-      } @if (tagMatch.partialMatches > 0) {
+      } @if (matchItem.partialMatchesCount > 0) {
       <lib-color-chip
         [text]="
-          tagMatch.partialMatches +
+          matchItem.partialMatchesCount +
           ' related project' +
-          (tagMatch.partialMatches !== 1 ? 's' : '')
+          (matchItem.partialMatchesCount !== 1 ? 's' : '')
         "
         color="yellow"
       />
-      } @if (tagMatch.fullMatches === 0 && tagMatch.partialMatches === 0) {
+      } @if (matchItem.fullMatchesCount === 0 && matchItem.partialMatchesCount
+      === 0) {
       <lib-color-chip text="no related projects" color="red" />
       }
     </div>
