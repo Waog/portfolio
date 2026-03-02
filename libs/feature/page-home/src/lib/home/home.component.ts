@@ -13,6 +13,7 @@ import { SearchTagService } from '@portfolio/search-tags';
 import { SectionComponent } from '@portfolio/section';
 import { SkillSectionComponent } from '@portfolio/skill-section';
 import { TagInputComponent } from '@portfolio/tag-input';
+import { NgxJsonViewerModule } from 'ngx-json-viewer';
 
 @Component({
   selector: 'lib-home',
@@ -25,6 +26,7 @@ import { TagInputComponent } from '@portfolio/tag-input';
     SkillSectionComponent,
     ContactSectionComponent,
     SectionComponent,
+    NgxJsonViewerModule,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
