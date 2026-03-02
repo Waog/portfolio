@@ -5,7 +5,12 @@ export class SearchEngineDomain {
     return {
       query: input,
       modifiedQuery: input?.map(word => `${word}-modified`),
-      random: Math.floor(Math.random() * Number.MAX_SAFE_INTEGER),
+      domainRandom: Math.floor(Math.random() * Number.MAX_SAFE_INTEGER),
+      matchesOverview: input?.map(word => ({
+        keyword: word,
+        fullMatchesCount: word.length % 10, // TODO: implement actual matching logic
+        partialMatchesCount: word.length % 6, // TODO: implement actual matching logic
+      })),
     };
   }
 }

@@ -17,14 +17,14 @@ addEventListener(
       const result: SearchEngineWorkerResult = {
         queryId: data.queryId,
         query: data.query,
-        random: Math.floor(Math.random() * Number.MAX_SAFE_INTEGER),
+        workerRandom: Math.floor(Math.random() * Number.MAX_SAFE_INTEGER),
         durationMs: performance.now() - startTime,
         workerFinishedTimestamp: performance.timeOrigin + performance.now(),
         domainResult: searchEngineDomain.get(data.query),
       };
 
       postMessage(result);
-    }, 20000);
+    }, 0);
   }
 );
 

@@ -1,17 +1,20 @@
 import { Injectable, OnDestroy } from '@angular/core';
+import { SearchEngineDomainResult } from '@portfolio/search-engine-domain';
 import {
   createSearchEngineWorker,
   SearchEngineWorkerResult,
 } from '@portfolio/search-engine-worker';
-import { BehaviorSubject, filter, map, Observable } from 'rxjs';
+import { BehaviorSubject, filter, map, Observable, tap } from 'rxjs';
 
 // TODO web-worker: ensure import boundaries for new nx `runtime:*` tags
 
-export type SearchResult =
-  | {
-      loading: boolean;
-    }
-  | SearchEngineWorkerResult;
+export type SearchResult = {
+  loading: boolean;
+  ui?: { matchesOverview: SearchEngineDomainResult['matchesOverview'] };
+  ngService?: { loading: boolean; workerMessageLatencyMs?: number };
+  worker?: SearchEngineWorkerResult;
+  domain?: SearchEngineDomainResult;
+};
 
 @Injectable({
   providedIn: 'root',
@@ -20,21 +23,36 @@ export class SearchEngineService implements OnDestroy {
   private worker?: Worker;
   private queryIdCounter = 0;
   // undefined = loading
-  private readonly workerResultSubject = new BehaviorSubject<
-    SearchEngineWorkerResult | undefined
-  >(undefined);
+  private readonly resultSubject = new BehaviorSubject<{
+    workerResult?: SearchEngineWorkerResult;
+    serviceData: { loading: boolean; workerMessageLatencyMs?: number };
+  }>({ serviceData: { loading: true } });
 
-  readonly searchResult$: Observable<SearchResult> =
-    this.workerResultSubject.pipe(
-      filter(
-        (result: SearchEngineWorkerResult | undefined) =>
-          !result || result.queryId === this.queryIdCounter
-      ),
-      map(workerResult => ({
-        loading: !workerResult,
-        ...workerResult,
-      }))
-    );
+  readonly searchResult$: Observable<SearchResult> = this.resultSubject.pipe(
+    tap(result => {
+      console.log('SearchEngineService resultSubject emitted:', result, {
+        queryIdCounter: this.queryIdCounter,
+      });
+    }),
+    filter(
+      result =>
+        result.serviceData.loading ||
+        result.workerResult?.queryId === this.queryIdCounter
+    ),
+    map(result => ({
+      loading: result.serviceData.loading,
+      ...(!result.serviceData.loading && result.workerResult
+        ? {
+            ngService: result.serviceData,
+            ui: {
+              matchesOverview: result.workerResult.domainResult.matchesOverview,
+            },
+            domain: result.workerResult.domainResult,
+            worker: result.workerResult,
+          }
+        : {}),
+    }))
+  );
 
   setQuery(query: string[]): void {
     if (typeof Worker === 'undefined') {
@@ -43,7 +61,7 @@ export class SearchEngineService implements OnDestroy {
       throw new Error('Web Workers are not supported in this environment.');
     }
 
-    this.workerResultSubject.next(undefined);
+    this.resultSubject.next({ serviceData: { loading: true } });
 
     const worker = this.getOrCreateWorker();
     this.queryIdCounter++;
@@ -72,7 +90,10 @@ export class SearchEngineService implements OnDestroy {
         console.log('TODO web-worker: received from web-worker:', data, {
           workerMessageLatencyMs,
         });
-        this.workerResultSubject.next(data);
+        this.resultSubject.next({
+          workerResult: data,
+          serviceData: { loading: false, workerMessageLatencyMs },
+        });
       };
 
       this.worker.onerror = error => {
