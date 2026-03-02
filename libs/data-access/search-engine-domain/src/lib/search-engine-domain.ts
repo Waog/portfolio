@@ -4,10 +4,20 @@ import {
   Project,
   TechnologyMatcher,
 } from '@portfolio/projects';
+import { Tag } from '@portfolio/taxonomy';
 
 import { SearchEngineDomainResult } from './search-engine-domain.types';
 
 // TODO web-worker: DRY: define reusable types/interfaces instead of defining them inline repeatedly
+
+type ProjectItems = { [projectId: string]: ProjectItem };
+
+type ProjectItem = {
+  fullMatches: Tag[];
+  partialMatches: Tag[];
+  nonMatches: Tag[];
+  rankingScore: number;
+};
 
 export class SearchEngineDomain {
   private initialized = false;
@@ -24,30 +34,17 @@ export class SearchEngineDomain {
   get(searchTerms: string[]): SearchEngineDomainResult {
     this.init();
 
-    // TODO web-worker: extract to method
+    const termTagMap: { [term: string]: Tag | null } =
+      this.initTermTagMap(searchTerms);
+
     const matchesOverview: {
       [searchTerm: string]: SearchEngineDomainResult['matchesOverview'][1];
-    } = searchTerms.reduce<{
-      [searchTerm: string]: SearchEngineDomainResult['matchesOverview'][1];
-    }>((result, word) => {
-      result[word] = {
-        keyword: word,
-        fullMatchesCount: 0,
-        partialMatchesCount: 0,
-      };
-      return result;
-    }, {});
+    } = this.initMatchesOverview(searchTerms);
 
-    const rankingScores: {
-      [projectId: string]: {
-        fullMatchesCount: number;
-        partialMatchesCount: number;
-        totalScore: number;
-      };
-    } = {};
+    const projectItems: ProjectItems = {};
 
     for (const project of this.allProjects) {
-      this.initializeProjectRankingScoreFor(rankingScores, project);
+      this.initializeProjectItem(projectItems, project);
       for (const searchTerm of searchTerms) {
         let bestMatchType: MatchType = 'none';
 
@@ -57,15 +54,19 @@ export class SearchEngineDomain {
             searchTag: searchTerm,
           });
           bestMatchType = this.getBetterMatchType(bestMatchType, matchType);
-          this.updateRankingScore(rankingScores[project.id], matchType);
+          this.updateProjectItem(
+            projectItems[project.id],
+            technology,
+            matchType
+          );
         }
 
         this.updateMatchesOverview(matchesOverview[searchTerm], bestMatchType);
       }
-      this.finalizeProjectRankingScore(rankingScores[project.id]);
+      this.finalizeProjectRankingScore(projectItems[project.id]);
     }
 
-    const sortedProjects = this.toSortedProjects(rankingScores);
+    const sortedProjects = this.toSortedProjects(projectItems);
 
     return {
       query: searchTerms,
@@ -76,24 +77,48 @@ export class SearchEngineDomain {
     };
   }
 
-  private initializeProjectRankingScoreFor(
-    rankingScores: {
-      [projectId: string]: {
-        fullMatchesCount: number;
-        partialMatchesCount: number;
-        totalScore: number;
+  private initTermTagMap(searchTerms: string[]): {
+    [term: string]: Tag | null;
+  } {
+    const searchTermTagMap: { [term: string]: Tag | null } = {};
+    for (const searchTerm of searchTerms) {
+      searchTermTagMap[searchTerm] = Tag.find(searchTerm) ?? null;
+    }
+    return searchTermTagMap;
+  }
+
+  private initMatchesOverview(searchTerms: string[]): {
+    [searchTerm: string]: SearchEngineDomainResult['matchesOverview'][1];
+  } {
+    const matchesOverview: {
+      [searchTerm: string]: SearchEngineDomainResult['matchesOverview'][1];
+    } = {};
+    for (const searchTerm of searchTerms) {
+      matchesOverview[searchTerm] = {
+        keyword: searchTerm,
+        fullMatchesCount: 0,
+        partialMatchesCount: 0,
       };
-    },
+    }
+    return matchesOverview;
+  }
+
+  private initializeProjectItem(
+    projectItems: ProjectItems,
     project: Project
-  ) {
-    rankingScores[project.id] = {
-      fullMatchesCount: 0,
-      partialMatchesCount: 0,
-      totalScore: 0,
+  ): void {
+    projectItems[project.id] = {
+      fullMatches: [],
+      partialMatches: [],
+      nonMatches: project.technologies,
+      rankingScore: 0,
     };
   }
 
-  private getBetterMatchType(matchTypeA: MatchType, matchTypeB: MatchType) {
+  private getBetterMatchType(
+    matchTypeA: MatchType,
+    matchTypeB: MatchType
+  ): MatchType {
     if (matchTypeA === 'full' || matchTypeB === 'full') {
       return 'full';
     } else if (matchTypeA === 'indirect' || matchTypeB === 'indirect') {
@@ -102,17 +127,31 @@ export class SearchEngineDomain {
     return 'none';
   }
 
-  private updateRankingScore(
-    currentRankingScores: {
-      fullMatchesCount: number;
-      partialMatchesCount: number;
-    },
+  private updateProjectItem(
+    projectItem: ProjectItem,
+    tag: Tag | null,
     matchType: MatchType
-  ) {
-    if (matchType === 'full') {
-      currentRankingScores.fullMatchesCount++;
-    } else if (matchType === 'indirect') {
-      currentRankingScores.partialMatchesCount++;
+  ): void {
+    if (!tag) {
+      return;
+    }
+    if (matchType === 'full' && !projectItem.fullMatches.includes(tag)) {
+      projectItem.fullMatches.push(tag);
+      projectItem.partialMatches = projectItem.partialMatches.filter(
+        t => t.canonical !== tag.canonical
+      );
+      projectItem.nonMatches = projectItem.nonMatches.filter(
+        t => t.canonical !== tag.canonical
+      );
+    } else if (
+      matchType === 'indirect' &&
+      !projectItem.partialMatches.includes(tag) &&
+      !projectItem.fullMatches.includes(tag)
+    ) {
+      projectItem.partialMatches.push(tag);
+      projectItem.nonMatches = projectItem.nonMatches.filter(
+        t => t.canonical !== tag.canonical
+      );
     }
   }
 
@@ -127,28 +166,24 @@ export class SearchEngineDomain {
     }
   }
 
-  private finalizeProjectRankingScore(currentRankingScores: {
-    fullMatchesCount: number;
-    partialMatchesCount: number;
-    totalScore: number;
-  }) {
-    currentRankingScores.totalScore =
-      currentRankingScores.fullMatchesCount * 1000 +
-      currentRankingScores.partialMatchesCount;
+  private finalizeProjectRankingScore(projectItem: ProjectItem): void {
+    projectItem.rankingScore =
+      projectItem.fullMatches.length * 1000 + projectItem.partialMatches.length;
   }
 
-  private toSortedProjects(rankingScores: {
-    [projectId: string]: {
-      fullMatchesCount: number;
-      partialMatchesCount: number;
-      totalScore: number;
-    };
-  }) {
-    return Object.entries(rankingScores)
-      .sort(([, scoreA], [, scoreB]) => scoreB.totalScore - scoreA.totalScore)
-      .map(([projectId, scores]) => ({
+  private toSortedProjects(
+    projectItems: ProjectItems
+  ): SearchEngineDomainResult['projects'] {
+    return Object.entries(projectItems)
+      .sort(([, itemA], [, itemB]) => itemB.rankingScore - itemA.rankingScore)
+      .map(([projectId, item]) => ({
         id: projectId,
-        totalScore: scores.totalScore,
+        totalScore: item.rankingScore,
+        technologies: {
+          fullMatches: item.fullMatches.map(tag => tag.canonical),
+          partialMatches: item.partialMatches.map(tag => tag.canonical),
+          nonMatches: item.nonMatches.map(tag => tag.canonical),
+        },
       }));
   }
 }

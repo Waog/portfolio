@@ -9,5 +9,10 @@ export type SearchEngineDomainResult = {
   }>;
   projects: Array<{
     id: string;
+    technologies: {
+      fullMatches: string[];
+      partialMatches: string[];
+      nonMatches: string[];
+    };
   }>;
 };
