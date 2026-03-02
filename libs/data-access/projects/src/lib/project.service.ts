@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { MemoizeAllArgs } from '@portfolio/memoize';
 
 import { Project } from './project';
-import { ALL_PROJECT_DATA } from './project.data';
+import { getProjectsFactory } from './projects-factory';
 import { TechnologyMatchingService } from './technology-matching.service';
 
 export interface ProjectFilterConfig {
@@ -15,10 +15,11 @@ export interface ProjectFilterConfig {
 })
 export class ProjectService {
   private technologyMatchingService = inject(TechnologyMatchingService);
+  private allProjectsFactory = getProjectsFactory();
 
   @MemoizeAllArgs
   getAll(): Project[] {
-    return ALL_PROJECT_DATA.map(data => new Project(data));
+    return this.allProjectsFactory.getAll();
   }
 
   getBy(filterConfig: ProjectFilterConfig): Project[] {

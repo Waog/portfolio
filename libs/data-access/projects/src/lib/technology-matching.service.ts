@@ -3,37 +3,14 @@ import { MemoizeAllArgs } from '@portfolio/memoize';
 import { SearchTagService } from '@portfolio/search-tags';
 import { Tag } from '@portfolio/taxonomy';
 
-export type MatchType = 'full' | 'indirect' | 'none';
+import { MatchType, TechnologyMatcher } from './technology-matcher';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TechnologyMatchingService {
   private searchTagService = inject(SearchTagService);
-
-  /**
-   * Determines the match type between a technology name and a search tag
-   */
-  @MemoizeAllArgs
-  getMatchType({
-    keywordTag,
-    searchTag,
-  }: {
-    keywordTag: Tag;
-    searchTag: string;
-  }): MatchType {
-    if (keywordTag.is(searchTag)) {
-      return 'full';
-    }
-
-    const minDistanceToAncestor =
-      keywordTag.getMinDistanceToLowestCommonAncestor(searchTag) ?? Infinity;
-    if (minDistanceToAncestor == 0 || keywordTag.isRelated(searchTag)) {
-      return 'indirect';
-    }
-
-    return 'none';
-  }
+  private technologyMatcher = new TechnologyMatcher();
 
   /**
    * Finds the best match type for a technology against multiple search tags
@@ -48,14 +25,20 @@ export class TechnologyMatchingService {
   }): MatchType {
     // First check for any full matches
     for (const searchTag of searchTags) {
-      if (this.getMatchType({ keywordTag, searchTag }) === 'full') {
+      if (
+        this.technologyMatcher.getMatchType({ keywordTag, searchTag }) ===
+        'full'
+      ) {
         return 'full';
       }
     }
 
     // Then check for any indirect matches
     for (const searchTag of searchTags) {
-      if (this.getMatchType({ keywordTag, searchTag }) === 'indirect') {
+      if (
+        this.technologyMatcher.getMatchType({ keywordTag, searchTag }) ===
+        'indirect'
+      ) {
         return 'indirect';
       }
     }
@@ -75,14 +58,20 @@ export class TechnologyMatchingService {
   }): MatchType {
     // First check for any full matches
     for (const keywordTag of keywordTags) {
-      if (this.getMatchType({ keywordTag, searchTag }) === 'full') {
+      if (
+        this.technologyMatcher.getMatchType({ keywordTag, searchTag }) ===
+        'full'
+      ) {
         return 'full';
       }
     }
 
     // Then check for any indirect matches
     for (const keywordTag of keywordTags) {
-      if (this.getMatchType({ keywordTag, searchTag }) === 'indirect') {
+      if (
+        this.technologyMatcher.getMatchType({ keywordTag, searchTag }) ===
+        'indirect'
+      ) {
         return 'indirect';
       }
     }
