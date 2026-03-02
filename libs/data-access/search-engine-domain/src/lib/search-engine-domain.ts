@@ -19,6 +19,17 @@ type ProjectItem = {
   rankingScore: number;
 };
 
+type SkillCategoryItems = {
+  [category: string]: SkillCategoryItem;
+};
+
+type SkillCategoryItem = {
+  fullMatches: Tag[];
+  partialMatches: Tag[];
+  nonMatches: Tag[];
+  rankingScore: number;
+};
+
 export class SearchEngineDomain {
   private initialized = false;
   private allProjects: Project[] = [];
@@ -43,6 +54,8 @@ export class SearchEngineDomain {
 
     const projectItems: ProjectItems = {};
 
+    const skillCategoryItems: SkillCategoryItems = {};
+
     for (const project of this.allProjects) {
       this.initializeProjectItem(projectItems, project);
       for (const searchTerm of searchTerms) {
@@ -59,14 +72,21 @@ export class SearchEngineDomain {
             technology,
             matchType
           );
+          this.updateSkillCategoryItems(
+            skillCategoryItems,
+            technology,
+            matchType
+          );
         }
 
         this.updateMatchesOverview(matchesOverview[searchTerm], bestMatchType);
       }
       this.finalizeProjectRankingScore(projectItems[project.id]);
     }
-
     const sortedProjects = this.toSortedProjects(projectItems);
+
+    this.finalizeSkillCategoriesRankingScore(skillCategoryItems);
+    const sortedSkills = this.toSortedSkills(skillCategoryItems);
 
     return {
       query: searchTerms,
@@ -74,6 +94,7 @@ export class SearchEngineDomain {
       domainRandom: Math.floor(Math.random() * Number.MAX_SAFE_INTEGER),
       matchesOverview: searchTerms.map(word => matchesOverview[word]),
       projects: sortedProjects,
+      skills: sortedSkills,
     };
   }
 
@@ -166,9 +187,65 @@ export class SearchEngineDomain {
     }
   }
 
+  private updateSkillCategoryItems(
+    skillCategoryItems: SkillCategoryItems,
+    technology: Tag,
+    matchType: MatchType
+  ): void {
+    for (const category of technology.categories) {
+      if (!skillCategoryItems[category]) {
+        skillCategoryItems[category] = {
+          fullMatches: [],
+          partialMatches: [],
+          nonMatches: [],
+          rankingScore: 0,
+        };
+      }
+      const categoryItem = skillCategoryItems[category];
+      if (
+        matchType === 'full' &&
+        !categoryItem.fullMatches.includes(technology)
+      ) {
+        categoryItem.fullMatches.push(technology);
+        categoryItem.partialMatches = categoryItem.partialMatches.filter(
+          tag => tag !== technology
+        );
+        categoryItem.nonMatches = categoryItem.nonMatches.filter(
+          tag => tag !== technology
+        );
+      } else if (
+        matchType === 'indirect' &&
+        !categoryItem.partialMatches.includes(technology) &&
+        !categoryItem.fullMatches.includes(technology)
+      ) {
+        categoryItem.partialMatches.push(technology);
+        categoryItem.nonMatches = categoryItem.nonMatches.filter(
+          tag => tag !== technology
+        );
+      } else if (
+        matchType === 'none' &&
+        !categoryItem.nonMatches.includes(technology) &&
+        !categoryItem.partialMatches.includes(technology) &&
+        !categoryItem.fullMatches.includes(technology)
+      ) {
+        categoryItem.nonMatches.push(technology);
+      }
+    }
+  }
+
   private finalizeProjectRankingScore(projectItem: ProjectItem): void {
     projectItem.rankingScore =
       projectItem.fullMatches.length * 1000 + projectItem.partialMatches.length;
+  }
+
+  private finalizeSkillCategoriesRankingScore(
+    skillCategoryItems: SkillCategoryItems
+  ): void {
+    for (const skillCategoryItem of Object.values(skillCategoryItems)) {
+      skillCategoryItem.rankingScore =
+        skillCategoryItem.fullMatches.length * 1000 +
+        skillCategoryItem.partialMatches.length;
+    }
   }
 
   private toSortedProjects(
@@ -185,5 +262,26 @@ export class SearchEngineDomain {
           nonMatches: item.nonMatches.map(tag => tag.canonical),
         },
       }));
+  }
+
+  private toSortedSkills(
+    skillCategoryItems: SkillCategoryItems
+  ): SearchEngineDomainResult['skills'] {
+    return Object.entries(skillCategoryItems)
+      .map(([category, skillCategoryItem]) => ({
+        category,
+        tagLists: {
+          fullMatches: skillCategoryItem.fullMatches.map(tag => tag.canonical),
+          partialMatches: skillCategoryItem.partialMatches.map(
+            tag => tag.canonical
+          ),
+          nonMatches: skillCategoryItem.nonMatches.map(tag => tag.canonical),
+        },
+        rankingScore: skillCategoryItem.rankingScore,
+      }))
+      .sort(
+        (skillCategoryItemA, skillCategoryItemB) =>
+          skillCategoryItemB.rankingScore - skillCategoryItemA.rankingScore
+      );
   }
 }

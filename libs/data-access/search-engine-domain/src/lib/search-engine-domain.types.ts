@@ -9,10 +9,17 @@ export type SearchEngineDomainResult = {
   }>;
   projects: Array<{
     id: string;
-    technologies: {
-      fullMatches: string[];
-      partialMatches: string[];
-      nonMatches: string[];
-    };
+    technologies: TagLists;
   }>;
+  skills: Array<{
+    category: string;
+    tagLists: TagLists;
+    rankingScore: number;
+  }>;
+};
+
+export type TagLists = {
+  fullMatches: string[];
+  partialMatches: string[];
+  nonMatches: string[];
 };
