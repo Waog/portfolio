@@ -118,4 +118,12 @@ describe('Memoize Self-Test', () => {
       instance.oneObjectParamMethodWithAllArgsHasher(paramB)
     );
   });
+
+  it('cache returns a reference, not a copy', () => {
+    const instance = new SomeMemoizeClass();
+    const firstResult = instance.noParamMethod();
+    firstResult.rnd = 1234;
+    const secondResult = instance.noParamMethod();
+    expect(secondResult.rnd).toBe(firstResult.rnd);
+  });
 });

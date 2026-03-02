@@ -175,6 +175,14 @@ describe('MemoizeAllArgs', () => {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     expect(error1!.message).not.toBe(error2!.message);
   });
+
+  it('returns reference, not a copy', () => {
+    const instance = new SomeMemoizeClass();
+    const firstResult = instance.noParamMethod();
+    firstResult.rnd = 1234;
+    const secondResult = instance.noParamMethod();
+    expect(secondResult.rnd).toBe(firstResult.rnd);
+  });
 });
 
 class SomeMemoizeClass {
