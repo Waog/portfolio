@@ -15,6 +15,7 @@ addEventListener(
         query: data.query,
         random: Math.floor(Math.random() * Number.MAX_SAFE_INTEGER),
         durationMs: performance.now() - startTime,
+        workerFinishedTimestamp: performance.timeOrigin + performance.now(),
       };
 
       postMessage(result);

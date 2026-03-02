@@ -8,4 +8,5 @@ export interface SearchEngineWorkerResult {
   query: string[];
   random: number;
   durationMs: number;
+  workerFinishedTimestamp: number;
 }

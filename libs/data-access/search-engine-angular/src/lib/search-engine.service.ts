@@ -65,7 +65,13 @@ export class SearchEngineService implements OnDestroy {
       this.worker.onmessage = ({
         data,
       }: MessageEvent<SearchEngineWorkerResult>) => {
-        console.log('TODO web-worker: received from web-worker:', data);
+        const workerResultReceivedTimestamp =
+          performance.timeOrigin + performance.now();
+        const workerMessageLatencyMs =
+          workerResultReceivedTimestamp - data.workerFinishedTimestamp;
+        console.log('TODO web-worker: received from web-worker:', data, {
+          workerMessageLatencyMs,
+        });
         this.workerResultSubject.next(data);
       };
 
