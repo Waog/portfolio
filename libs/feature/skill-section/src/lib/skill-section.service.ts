@@ -1,63 +1,23 @@
 import { inject, Injectable } from '@angular/core';
 import { MemoizeAllArgs } from '@portfolio/memoize';
-import { ProjectService, TechnologyMatchingService } from '@portfolio/projects';
+import {
+  getSkillCategoriesFactory,
+  TechnologyMatchingService,
+} from '@portfolio/projects';
 import { SearchTagService } from '@portfolio/search-tags';
-import { Category, Tag, TagName } from '@portfolio/taxonomy';
+import { Category, Tag } from '@portfolio/taxonomy';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SkillSectionService {
-  private projectService = inject(ProjectService);
   private searchTagService = inject(SearchTagService);
   private technologyMatchingService = inject(TechnologyMatchingService);
 
-  private static readonly SKILLS_WITHOUT_PROJECT: TagName[] = [
-    'SCRUM',
-    'Agile',
-  ];
-
   getSkillCategories(): Map<Category, Tag[]> {
-    const unsortedCategories = this.getUnsortedSkillCategories();
+    const unsortedCategories = getSkillCategoriesFactory().getAll();
     const searchTags = this.searchTagService.currentTags;
     return this.sortCategoriesByMatchCount({ unsortedCategories, searchTags });
-  }
-
-  @MemoizeAllArgs
-  private getUnsortedSkillCategories(): Map<Category, Tag[]> {
-    const result: Map<Category, Tag[]> = new Map();
-
-    for (const project of this.projectService.getAll()) {
-      for (const tag of project.technologies) {
-        for (const category of tag.categories) {
-          if (!result.has(category)) {
-            result.set(category, []);
-          }
-          if (!result.get(category)?.includes(tag)) {
-            result.get(category)?.push(tag);
-          }
-        }
-      }
-    }
-
-    for (const tagName of SkillSectionService.SKILLS_WITHOUT_PROJECT) {
-      const tag = Tag.get(tagName);
-      for (const category of tag.categories) {
-        if (!result.has(category)) {
-          result.set(category, []);
-        }
-        if (!result.get(category)?.includes(tag)) {
-          result.get(category)?.push(tag);
-        } else {
-          console.warn(
-            'SkillSectionService.SKILLS_WITHOUT_PROJECT contains a tag which is already present in the project tags:',
-            tagName
-          );
-        }
-      }
-    }
-
-    return result;
   }
 
   /**
