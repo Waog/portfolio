@@ -1,3 +1,5 @@
+import { SearchEngineDomainResult } from '@portfolio/search-engine-domain';
+
 export interface SearchEngineWorkerInput {
   queryId: number;
   query: string[];
@@ -9,4 +11,5 @@ export interface SearchEngineWorkerResult {
   random: number;
   durationMs: number;
   workerFinishedTimestamp: number;
+  domainResult: SearchEngineDomainResult;
 }

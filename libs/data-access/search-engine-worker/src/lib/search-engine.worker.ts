@@ -1,7 +1,11 @@
+import { SearchEngineDomain } from '@portfolio/search-engine-domain';
+
 import {
   SearchEngineWorkerInput,
   SearchEngineWorkerResult,
 } from './search-engine.types';
+
+const searchEngineDomain = new SearchEngineDomain();
 
 addEventListener(
   'message',
@@ -16,6 +20,7 @@ addEventListener(
         random: Math.floor(Math.random() * Number.MAX_SAFE_INTEGER),
         durationMs: performance.now() - startTime,
         workerFinishedTimestamp: performance.timeOrigin + performance.now(),
+        domainResult: searchEngineDomain.get(data.query),
       };
 
       postMessage(result);
