@@ -2,6 +2,7 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { SearchEngineDomainResult } from '@portfolio/search-engine-domain';
 import {
   createSearchEngineWorker,
+  SEARCH_ENGINE_WORKER_REQUEST_KIND,
   SearchEngineWorkerResult,
 } from '@portfolio/search-engine-worker';
 import { BehaviorSubject, filter, map, Observable, tap } from 'rxjs';
@@ -65,7 +66,11 @@ export class SearchEngineService implements OnDestroy {
 
     const worker = this.getOrCreateWorker();
     this.queryIdCounter++;
-    worker.postMessage({ queryId: this.queryIdCounter, query });
+    worker.postMessage({
+      kind: SEARCH_ENGINE_WORKER_REQUEST_KIND,
+      queryId: this.queryIdCounter,
+      query,
+    });
     console.log('TODO web-worker: sent to web-worker:', {
       queryId: this.queryIdCounter,
       query,
