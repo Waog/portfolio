@@ -7,4 +7,7 @@ export type SearchEngineDomainResult = {
     fullMatchesCount: number;
     partialMatchesCount: number;
   }>;
+  projects: Array<{
+    id: string;
+  }>;
 };

@@ -7,6 +7,8 @@ import {
 
 import { SearchEngineDomainResult } from './search-engine-domain.types';
 
+// TODO web-worker: DRY: define reusable types/interfaces instead of defining them inline repeatedly
+
 export class SearchEngineDomain {
   private initialized = false;
   private allProjects: Project[] = [];
@@ -22,6 +24,7 @@ export class SearchEngineDomain {
   get(searchTerms: string[]): SearchEngineDomainResult {
     this.init();
 
+    // TODO web-worker: extract to method
     const matchesOverview: {
       [searchTerm: string]: SearchEngineDomainResult['matchesOverview'][1];
     } = searchTerms.reduce<{
@@ -35,7 +38,16 @@ export class SearchEngineDomain {
       return result;
     }, {});
 
+    const rankingScores: {
+      [projectId: string]: {
+        fullMatchesCount: number;
+        partialMatchesCount: number;
+        totalScore: number;
+      };
+    } = {};
+
     for (const project of this.allProjects) {
+      this.initializeProjectRankingScoreFor(rankingScores, project);
       for (const searchTerm of searchTerms) {
         let bestMatchType: MatchType = 'none';
 
@@ -45,17 +57,39 @@ export class SearchEngineDomain {
             searchTag: searchTerm,
           });
           bestMatchType = this.getBetterMatchType(bestMatchType, matchType);
+          this.updateRankingScore(rankingScores[project.id], matchType);
         }
 
         this.updateMatchesOverview(matchesOverview[searchTerm], bestMatchType);
       }
+      this.finalizeProjectRankingScore(rankingScores[project.id]);
     }
+
+    const sortedProjects = this.toSortedProjects(rankingScores);
 
     return {
       query: searchTerms,
       modifiedQuery: searchTerms?.map(word => `${word}-modified`),
       domainRandom: Math.floor(Math.random() * Number.MAX_SAFE_INTEGER),
       matchesOverview: searchTerms.map(word => matchesOverview[word]),
+      projects: sortedProjects,
+    };
+  }
+
+  private initializeProjectRankingScoreFor(
+    rankingScores: {
+      [projectId: string]: {
+        fullMatchesCount: number;
+        partialMatchesCount: number;
+        totalScore: number;
+      };
+    },
+    project: Project
+  ) {
+    rankingScores[project.id] = {
+      fullMatchesCount: 0,
+      partialMatchesCount: 0,
+      totalScore: 0,
     };
   }
 
@@ -68,6 +102,20 @@ export class SearchEngineDomain {
     return 'none';
   }
 
+  private updateRankingScore(
+    currentRankingScores: {
+      fullMatchesCount: number;
+      partialMatchesCount: number;
+    },
+    matchType: MatchType
+  ) {
+    if (matchType === 'full') {
+      currentRankingScores.fullMatchesCount++;
+    } else if (matchType === 'indirect') {
+      currentRankingScores.partialMatchesCount++;
+    }
+  }
+
   private updateMatchesOverview(
     matchesOverviewEntry: SearchEngineDomainResult['matchesOverview'][1],
     bestMatchType: MatchType
@@ -77,5 +125,30 @@ export class SearchEngineDomain {
     } else if (bestMatchType === 'indirect') {
       matchesOverviewEntry.partialMatchesCount++;
     }
+  }
+
+  private finalizeProjectRankingScore(currentRankingScores: {
+    fullMatchesCount: number;
+    partialMatchesCount: number;
+    totalScore: number;
+  }) {
+    currentRankingScores.totalScore =
+      currentRankingScores.fullMatchesCount * 1000 +
+      currentRankingScores.partialMatchesCount;
+  }
+
+  private toSortedProjects(rankingScores: {
+    [projectId: string]: {
+      fullMatchesCount: number;
+      partialMatchesCount: number;
+      totalScore: number;
+    };
+  }) {
+    return Object.entries(rankingScores)
+      .sort(([, scoreA], [, scoreB]) => scoreB.totalScore - scoreA.totalScore)
+      .map(([projectId, scores]) => ({
+        id: projectId,
+        totalScore: scores.totalScore,
+      }));
   }
 }
