@@ -60,8 +60,10 @@ export class SkillSectionComponent implements AfterViewInit, OnDestroy {
   constructor(@Inject(PLATFORM_ID) private platformId: object) {}
 
   ngAfterViewInit(): void {
-    setTimeout(() => {
-      this.handleExceedingRows();
+    this.showSkeletons$.pipe(takeUntil(this.destroy$)).subscribe(show => {
+      if (!show) {
+        this.handleExceedingRows();
+      }
     });
   }
 
