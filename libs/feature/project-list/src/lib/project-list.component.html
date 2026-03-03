@@ -1,12 +1,16 @@
 <section id="projects" class="projects-container">
-  <!-- TODO web-worker: handle loading state and display skeleton -->
-
   <!-- Top 3 projects section -->
   <section class="top-projects-section page-break-after">
     <lib-section-header text="Top Matching Projects" />
 
-    @for (project of (projectsOrder$ | async)?.slice(0, 3); track project.id;
-    let i = $index) {
+    @if (showSkeletons$ | async) { @for (skeleton of topProjectSkeletons; track
+    skeleton) {
+    <ngx-skeleton-loader
+      class="project-item-skeleton project-item-skeleton--top"
+      appearance="line"
+    />
+    } } @else { @for (project of (projectsOrder$ | async)?.slice(0, 3); track
+    project.id; let i = $index) {
     <lib-project-item
       [project]="project"
       [isTopProject]="true"
@@ -14,7 +18,7 @@
       (moveUp)="moveProjectUp($event)"
       (moveDown)="moveProjectDown($event)"
     />
-    }
+    } }
   </section>
 
   <!-- Other projects toggle button -->
@@ -34,8 +38,15 @@
   @if (showAllProjects || isPrintModeActive) {
   <main class="all-projects-list">
     <lib-section-header text="Other Projects" />
-    @for (project of (projectsOrder$ | async)?.slice( 3, isPrintModeActive ? 8 :
-    undefined ); track project.id; let i = $index) {
+
+    @if (showSkeletons$ | async) { @for (skeleton of otherProjectSkeletons;
+    track skeleton) {
+    <ngx-skeleton-loader
+      class="project-item-skeleton project-item-skeleton--compact"
+      appearance="line"
+    />
+    } } @else { @for (project of (projectsOrder$ | async)?.slice( 3,
+    isPrintModeActive ? 8 : undefined ); track project.id; let i = $index) {
     <lib-project-item
       [project]="project"
       [isTopProject]="false"
@@ -44,7 +55,7 @@
       (moveUp)="moveProjectUp($event)"
       (moveDown)="moveProjectDown($event)"
     />
-    }
+    } }
   </main>
   }
 </section>

@@ -16,6 +16,19 @@ lib-project-item {
   margin-bottom: spacing.xl();
 }
 
+ngx-skeleton-loader.project-item-skeleton {
+  display: block;
+  margin-bottom: spacing.xl();
+
+  &.project-item-skeleton--top {
+    height: 280px;
+  }
+
+  &.project-item-skeleton--compact {
+    height: 197px;
+  }
+}
+
 .all-projects-toggle {
   text-align: center;
   margin-bottom: spacing.xl();
@@ -46,4 +59,8 @@ lib-project-item {
       margin-bottom: spacing.lg();
     }
   }
+}
+
+:host ::ng-deep ngx-skeleton-loader.project-item-skeleton .skeleton-loader {
+  height: 100%;
 }
