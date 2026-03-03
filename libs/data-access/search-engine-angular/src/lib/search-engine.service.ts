@@ -75,10 +75,6 @@ export class SearchEngineService implements OnDestroy {
       queryId: this.queryIdCounter,
       query,
     });
-    console.log('TODO web-worker: sent to web-worker:', {
-      queryId: this.queryIdCounter,
-      query,
-    });
   }
 
   ngOnDestroy(): void {
@@ -96,9 +92,6 @@ export class SearchEngineService implements OnDestroy {
           performance.timeOrigin + performance.now();
         const workerMessageLatencyMs =
           workerResultReceivedTimestamp - data.workerFinishedTimestamp;
-        console.log('TODO web-worker: received from web-worker:', data, {
-          workerMessageLatencyMs,
-        });
         this.resultSubject.next({
           workerResult: data,
           serviceData: { loading: false, workerMessageLatencyMs },
@@ -106,7 +99,6 @@ export class SearchEngineService implements OnDestroy {
       };
 
       this.worker.onerror = error => {
-        // TODO web-worker: implement proper error handling
         console.error('Worker error:', error);
       };
     }

@@ -2,7 +2,6 @@
   <lib-section-header text="Skills" />
 
   <!-- TODO web-worker: handle loading state and display skeleton -->
-  <!-- TODO web-worker: fix: for no search terms, no categories are displayed -->
   <div class="grid">
     @for (categoryRow of categoryRow$ | async; track categoryRow.category) {
     <span class="skill-category" #categoryRef>{{ categoryRow.category }}:</span>

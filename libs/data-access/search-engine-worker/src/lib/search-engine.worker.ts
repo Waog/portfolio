@@ -20,11 +20,12 @@ addEventListener('message', ({ data }: MessageEvent<unknown>) => {
     const result: SearchEngineWorkerResult = {
       queryId: data.queryId,
       query: data.query,
-      workerRandom: Math.floor(Math.random() * Number.MAX_SAFE_INTEGER),
-      durationMs: performance.now() - startTime,
-      workerFinishedTimestamp: performance.timeOrigin + performance.now(),
+      durationMs: 0,
+      workerFinishedTimestamp: 0,
       domainResult: searchEngineDomain.get(data.query),
     };
+    result.workerFinishedTimestamp = performance.timeOrigin + performance.now();
+    result.durationMs = performance.now() - startTime;
 
     postMessage(result);
   }, 0);

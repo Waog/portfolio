@@ -12,7 +12,6 @@ export interface SearchEngineWorkerInput {
 export interface SearchEngineWorkerResult {
   queryId: number;
   query: string[];
-  workerRandom: number; // TODO web-worker: remove debug field
   durationMs: number;
   workerFinishedTimestamp: number;
   domainResult: SearchEngineDomainResult;

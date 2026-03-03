@@ -47,6 +47,7 @@ export class SearchEngineDomain {
     this.init();
 
     // TODO web-worker: this is unused. delete or use it.
+    // consider: do we want to display canonical tags in the skill-matrix, or search terms?
     const termTagMap: { [term: string]: Tag | null } =
       this.initTermTagMap(searchTerms);
 
@@ -97,8 +98,6 @@ export class SearchEngineDomain {
 
     return {
       query: searchTerms,
-      modifiedQuery: searchTerms?.map(word => `${word}-modified`),
-      domainRandom: Math.floor(Math.random() * Number.MAX_SAFE_INTEGER),
       matchesOverview: searchTerms.map(word => matchesOverview[word]),
       projects: sortedProjects,
       skills: sortedSkills,
