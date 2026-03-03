@@ -6,8 +6,8 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
-import { KeywordListComponent } from '@portfolio/keyword-list';
-import { Project } from '@portfolio/projects';
+import { ColorChipListComponent } from '@portfolio/color-chip-list';
+import { Project } from '@portfolio/search-engine-domain';
 
 import { ProjectItemMetaTilesComponent } from './project-item-meta-tiles.component';
 
@@ -21,8 +21,8 @@ import { ProjectItemMetaTilesComponent } from './project-item-meta-tiles.compone
     MatDividerModule,
     MatIconModule,
     MatListModule,
-    KeywordListComponent,
     ProjectItemMetaTilesComponent,
+    ColorChipListComponent,
   ],
   templateUrl: './project-item.component.html',
   styleUrl: './project-item.component.scss',

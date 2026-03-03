@@ -17,6 +17,7 @@ type ProjectItem = {
   partialMatches: Tag[];
   nonMatches: Tag[];
   rankingScore: number;
+  project: Project;
 };
 
 type SkillCategoryItems = {
@@ -133,6 +134,7 @@ export class SearchEngineDomain {
       partialMatches: [],
       nonMatches: project.technologies,
       rankingScore: 0,
+      project,
     };
   }
 
@@ -255,6 +257,7 @@ export class SearchEngineDomain {
     return Object.entries(projectItems)
       .sort(([, itemA], [, itemB]) => itemB.rankingScore - itemA.rankingScore)
       .map(([projectId, item]) => ({
+        ...item.project.toDTO(),
         id: projectId,
         totalScore: item.rankingScore,
         technologies: {

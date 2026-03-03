@@ -4,4 +4,3 @@ export * from './lib/projects-factory';
 export * from './lib/skill-categories-factory';
 export * from './lib/technology-matcher';
 export * from './lib/technology-matching.service';
-export * from './lib/top-projects.service';

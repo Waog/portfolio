@@ -13,6 +13,7 @@ export type SearchResult = {
   loading: boolean;
   ui?: {
     matchesOverview: SearchEngineDomainResult['matchesOverview'];
+    projects: SearchEngineDomainResult['projects'];
     skills: SearchEngineDomainResult['skills'];
   };
   ngService?: { loading: boolean; workerMessageLatencyMs?: number };
@@ -50,6 +51,7 @@ export class SearchEngineService implements OnDestroy {
             ngService: result.serviceData,
             ui: {
               matchesOverview: result.workerResult.domainResult.matchesOverview,
+              projects: result.workerResult.domainResult.projects,
               skills: result.workerResult.domainResult.skills,
             },
             domain: result.workerResult.domainResult,

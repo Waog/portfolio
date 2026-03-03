@@ -1,3 +1,5 @@
+import { Project as ProjectObject } from '@portfolio/projects';
+
 export type SearchEngineDomainResult = {
   query: string[];
   modifiedQuery: string[]; // TODO web-worker: remove debug field
@@ -7,10 +9,7 @@ export type SearchEngineDomainResult = {
     fullMatchesCount: number;
     partialMatchesCount: number;
   }>;
-  projects: Array<{
-    id: string;
-    technologies: TagLists;
-  }>;
+  projects: Array<ProjectMsgDTO>;
   skills: Array<{
     category: string;
     tagLists: TagLists;
@@ -23,3 +22,10 @@ export type TagLists = {
   partialMatches: string[];
   nonMatches: string[];
 };
+
+type ProjectMsgDTO = {
+  id: string;
+  technologies: TagLists;
+} & Omit<ReturnType<ProjectObject['toDTO']>, 'technologies'>;
+
+export type { ProjectMsgDTO as Project };

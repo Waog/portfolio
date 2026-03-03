@@ -75,4 +75,13 @@ export class Project {
 
     return Array.from(resultSet);
   }
+
+  public toDTO(): Omit<ProjectData, 'technologies'> & {
+    technologies: string[];
+  } {
+    return {
+      ...this.data,
+      technologies: this.technologies.map(tag => tag.canonical),
+    };
+  }
 }
