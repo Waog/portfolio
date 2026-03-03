@@ -46,6 +46,7 @@ export class SearchEngineDomain {
   get(searchTerms: string[]): SearchEngineDomainResult {
     this.init();
 
+    // TODO web-worker: this is unused. delete or use it.
     const termTagMap: { [term: string]: Tag | null } =
       this.initTermTagMap(searchTerms);
 
@@ -81,6 +82,11 @@ export class SearchEngineDomain {
         }
 
         this.updateMatchesOverview(matchesOverview[searchTerm], bestMatchType);
+      }
+      if (searchTerms.length === 0) {
+        for (const technology of project.technologies) {
+          this.updateSkillCategoryItems(skillCategoryItems, technology, 'none');
+        }
       }
       this.finalizeProjectRankingScore(projectItems[project.id]);
     }
@@ -246,8 +252,9 @@ export class SearchEngineDomain {
   ): void {
     for (const skillCategoryItem of Object.values(skillCategoryItems)) {
       skillCategoryItem.rankingScore =
-        skillCategoryItem.fullMatches.length * 1000 +
-        skillCategoryItem.partialMatches.length;
+        skillCategoryItem.fullMatches.length * 1_000_000 +
+        skillCategoryItem.partialMatches.length * 1_000 +
+        skillCategoryItem.nonMatches.length;
     }
   }
 
