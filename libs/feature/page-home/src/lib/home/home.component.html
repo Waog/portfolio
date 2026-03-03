@@ -2,14 +2,6 @@
   <lib-section class="tag-input screen-only">
     <lib-tag-input />
   </lib-section>
-  <lib-section class="tag-input screen-only">
-    <div class="search-result" *ngIf="searchResult$ | async as result">
-      <strong>Search Engine Debug:</strong>
-      <!-- TODO web-worker: remove JSON viewer library -->
-      <ngx-json-viewer [json]="result" [expanded]="false"></ngx-json-viewer>
-      <!-- <pre>{{ result | json }}</pre> -->
-    </div>
-  </lib-section>
   @if ((searchTagService.tags$ | async)?.length) {
   <lib-section class="matches-overview no-page-break">
     <lib-matches-overview />
@@ -60,5 +52,13 @@
       </div>
     </div>
     } }
+  </lib-section>
+  <lib-section class="tag-input screen-only">
+    <div class="search-result" *ngIf="searchResult$ | async as result">
+      <strong>Search Engine Debug:</strong>
+      <!-- TODO web-worker: remove JSON viewer library -->
+      <ngx-json-viewer [json]="result" [expanded]="false"></ngx-json-viewer>
+      <!-- <pre>{{ result | json }}</pre> -->
+    </div>
   </lib-section>
 </div>
