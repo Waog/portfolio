@@ -1,9 +1,23 @@
 <div id="skills" class="container">
   <lib-section-header text="Skills" />
 
-  <!-- TODO web-worker: handle loading state and display skeleton -->
   <div class="grid">
-    @for (categoryRow of categoryRow$ | async; track categoryRow.category) {
+    @if (showSkeletons$ | async) { @for (skeletonRow of skillSkeletonRows; track
+    skeletonRow) {
+    <span class="skill-category" #categoryRef
+      ><ngx-skeleton-loader
+        class="skill-skeleton skill-skeleton--label"
+        appearance="line"
+    /></span>
+
+    <div class="skill-category-content-container" #keywordListRef>
+      <ngx-skeleton-loader
+        class="skill-category-content skill-skeleton skill-skeleton--chips"
+        appearance="line"
+      />
+    </div>
+    } } @else { @for (categoryRow of categoryRow$ | async; track
+    categoryRow.category) {
     <span class="skill-category" #categoryRef>{{ categoryRow.category }}:</span>
 
     <div class="skill-category-content-container" #keywordListRef>
@@ -21,5 +35,6 @@
       class="skill-category-content print-only and-more spacer"
       [grayItems]="['spacer']"
     />
+    }
   </div>
 </div>

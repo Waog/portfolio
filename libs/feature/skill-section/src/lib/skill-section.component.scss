@@ -34,6 +34,24 @@
       width: 100%;
     }
 
+    ngx-skeleton-loader.skill-skeleton {
+      display: block;
+      height: 40px;
+
+      &.skill-skeleton--label {
+        width: 174px;
+      }
+
+      @include breakpoints.mobile-only {
+        &.skill-skeleton--label {
+          height: 19px;
+        }
+        &.skill-skeleton--content {
+          height: 31px;
+        }
+      }
+    }
+
     .and-more.spacer {
       visibility: hidden;
     }
@@ -46,4 +64,8 @@
       }
     }
   }
+}
+
+:host ::ng-deep ngx-skeleton-loader.skill-skeleton .skeleton-loader {
+  height: 100%;
 }

@@ -17,6 +17,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { ColorChipListComponent } from '@portfolio/color-chip-list';
 import { SearchEngineService } from '@portfolio/search-engine-angular';
 import { SectionHeaderComponent } from '@portfolio/section-header';
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { map, Subject, takeUntil } from 'rxjs';
 
 @Component({
@@ -27,6 +28,7 @@ import { map, Subject, takeUntil } from 'rxjs';
     MatIconModule,
     SectionHeaderComponent,
     ColorChipListComponent,
+    NgxSkeletonLoaderModule,
   ],
   templateUrl: './skill-section.component.html',
   styleUrl: './skill-section.component.scss',
@@ -37,9 +39,20 @@ export class SkillSectionComponent implements AfterViewInit, OnDestroy {
   keywordListElementRefs!: QueryList<ElementRef>;
 
   private destroy$ = new Subject<void>();
-  protected categoryRow$ = inject(SearchEngineService).searchResult$.pipe(
+  private readonly searchEngineService = inject(SearchEngineService);
+  protected readonly skillSkeletonRows = [0, 1, 2, 3, 4, 5, 6, 7];
+
+  protected categoryRow$ = this.searchEngineService.searchResult$.pipe(
     takeUntil(this.destroy$),
     map(searchResult => searchResult.ui?.skills)
+  );
+
+  protected showSkeletons$ = this.searchEngineService.searchResult$.pipe(
+    takeUntil(this.destroy$),
+    map(
+      searchResult =>
+        searchResult.loading || searchResult.ui?.skills === undefined
+    )
   );
 
   private renderer = inject(Renderer2);
