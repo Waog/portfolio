@@ -238,6 +238,7 @@ export class SearchEngineDomain {
       projectItem.fullMatches.length * 1000 + projectItem.partialMatches.length;
   }
 
+  // TODO web-worker: previously we had some consistency check to ensure no tag/category is forgotten or duplicated. re-establish it.
   private finalizeSkillCategoriesRankingScore(
     skillCategoryItems: SkillCategoryItems
   ): void {

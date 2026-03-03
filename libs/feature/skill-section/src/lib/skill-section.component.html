@@ -1,22 +1,25 @@
 <div id="skills" class="container">
   <lib-section-header text="Skills" />
 
+  <!-- TODO web-worker: handle loading state and display skeleton -->
   <div class="grid">
-    @for (category of skillCategories; track category[0]) {
-    <span class="skill-category" #categoryRef>{{ category[0] }}:</span>
+    @for (categoryRow of categoryRow$ | async; track categoryRow.category) {
+    <span class="skill-category" #categoryRef>{{ categoryRow.category }}:</span>
 
     <div class="skill-category-content-container" #keywordListRef>
-      <lib-keyword-list
+      <lib-color-chip-list
         class="skill-category-content"
-        [keywordTags]="category[1]"
+        [greenItems]="categoryRow.tagLists.fullMatches"
+        [yellowItems]="categoryRow.tagLists.partialMatches"
+        [grayItems]="categoryRow.tagLists.nonMatches"
       />
     </div>
     }
 
     <span class="skill-category print-only and-more">and more...</span>
-    <lib-keyword-list
+    <lib-color-chip-list
       class="skill-category-content print-only and-more spacer"
-      [keywordTags]="SPACER_TAGS"
+      [grayItems]="['spacer']"
     />
   </div>
 </div>

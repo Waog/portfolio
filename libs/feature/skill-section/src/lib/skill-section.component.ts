@@ -6,6 +6,7 @@ import {
   HostListener,
   Inject,
   inject,
+  OnDestroy,
   PLATFORM_ID,
   QueryList,
   Renderer2,
@@ -13,11 +14,10 @@ import {
 } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
-import { KeywordListComponent } from '@portfolio/keyword-list';
+import { ColorChipListComponent } from '@portfolio/color-chip-list';
+import { SearchEngineService } from '@portfolio/search-engine-angular';
 import { SectionHeaderComponent } from '@portfolio/section-header';
-import { Category, Tag } from '@portfolio/taxonomy';
-
-import { SkillSectionService } from './skill-section.service';
+import { map, Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'lib-skill-section',
@@ -25,24 +25,24 @@ import { SkillSectionService } from './skill-section.service';
     CommonModule,
     MatCardModule,
     MatIconModule,
-    KeywordListComponent,
     SectionHeaderComponent,
+    ColorChipListComponent,
   ],
   templateUrl: './skill-section.component.html',
   styleUrl: './skill-section.component.scss',
 })
-export class SkillSectionComponent implements AfterViewInit {
+export class SkillSectionComponent implements AfterViewInit, OnDestroy {
   @ViewChildren('categoryRef') categoryElementRefs!: QueryList<ElementRef>;
   @ViewChildren('keywordListRef')
   keywordListElementRefs!: QueryList<ElementRef>;
 
-  readonly SPACER_TAGS: Tag[] = [Tag.get('Spacer')];
+  private destroy$ = new Subject<void>();
+  protected categoryRow$ = inject(SearchEngineService).searchResult$.pipe(
+    takeUntil(this.destroy$),
+    map(searchResult => searchResult.ui?.skills)
+  );
 
-  private skillSectionService = inject(SkillSectionService);
   private renderer = inject(Renderer2);
-
-  skillCategories: Map<Category, Tag[]> =
-    this.skillSectionService.getSkillCategories();
 
   constructor(@Inject(PLATFORM_ID) private platformId: object) {}
 
@@ -50,6 +50,11 @@ export class SkillSectionComponent implements AfterViewInit {
     setTimeout(() => {
       this.handleExceedingRows();
     });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   @HostListener('window:resize')

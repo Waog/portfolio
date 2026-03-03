@@ -11,7 +11,10 @@ import { BehaviorSubject, filter, map, Observable, tap } from 'rxjs';
 
 export type SearchResult = {
   loading: boolean;
-  ui?: { matchesOverview: SearchEngineDomainResult['matchesOverview'] };
+  ui?: {
+    matchesOverview: SearchEngineDomainResult['matchesOverview'];
+    skills: SearchEngineDomainResult['skills'];
+  };
   ngService?: { loading: boolean; workerMessageLatencyMs?: number };
   worker?: SearchEngineWorkerResult;
   domain?: SearchEngineDomainResult;
@@ -47,6 +50,7 @@ export class SearchEngineService implements OnDestroy {
             ngService: result.serviceData,
             ui: {
               matchesOverview: result.workerResult.domainResult.matchesOverview,
+              skills: result.workerResult.domainResult.skills,
             },
             domain: result.workerResult.domainResult,
             worker: result.workerResult,
