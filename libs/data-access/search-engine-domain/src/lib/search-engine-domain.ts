@@ -6,7 +6,10 @@ import {
 } from '@portfolio/projects';
 import { Tag } from '@portfolio/taxonomy';
 
-import { SearchEngineDomainResult } from './search-engine-domain.types';
+import {
+  SearchEngineDomainChunkResult,
+  SearchEngineDomainResult,
+} from './search-engine-domain.types';
 
 type ProjectItems = { [projectId: string]: ProjectItem };
 
@@ -29,10 +32,6 @@ type SkillCategoryItem = {
   rankingScore: number;
 };
 
-type SearchTermTagMap = {
-  [term: string]: Tag | null;
-};
-
 type MatchesOverviewMap = {
   [searchTerm: string]: MatchesOverviewItem;
 };
@@ -40,82 +39,147 @@ type MatchesOverviewMap = {
 type MatchesOverviewItem = SearchEngineDomainResult['matchesOverview'][1];
 
 export class SearchEngineDomain {
-  private initialized = false;
-  private allProjects: Project[] = [];
+  private allProjects: Project[] = getProjectsFactory().getAll();
   private technologyMatcher = new TechnologyMatcher();
 
-  init(): void {
-    if (!this.initialized) {
-      this.allProjects = getProjectsFactory().getAll();
-      this.initialized = true;
-    }
-  }
+  private activeSearchTerms: string[] = [];
+  private activeMatchesOverview: MatchesOverviewMap = {};
+  private activeProjectItems: ProjectItems = {};
+  private activeSkillCategoryItems: SkillCategoryItems = {};
+  private activeProjectIndex = 0;
+  private activeProcessInitialized = false;
 
   get(searchTerms: string[]): SearchEngineDomainResult {
-    this.init();
+    this.initialize(searchTerms);
 
-    // TODO web-worker: this is unused. delete or use it.
-    // consider: do we want to display canonical tags in the skill-matrix, or search terms?
-    const termTagMap: SearchTermTagMap = this.initTermTagMap(searchTerms);
-
-    const matchesOverview: MatchesOverviewMap =
-      this.initMatchesOverview(searchTerms);
-
-    const projectItems: ProjectItems = {};
-
-    const skillCategoryItems: SkillCategoryItems = {};
-
-    for (const project of this.allProjects) {
-      this.initializeProjectItem(projectItems, project);
-      for (const searchTerm of searchTerms) {
-        let bestMatchType: MatchType = 'none';
-
-        for (const technology of project.technologies) {
-          const matchType = this.technologyMatcher.getMatchType({
-            keywordTag: technology,
-            searchTag: searchTerm,
-          });
-          bestMatchType = this.getBetterMatchType(bestMatchType, matchType);
-          this.updateProjectItem(
-            projectItems[project.id],
-            technology,
-            matchType
-          );
-          this.updateSkillCategoryItems(
-            skillCategoryItems,
-            technology,
-            matchType
-          );
-        }
-
-        this.updateMatchesOverview(matchesOverview[searchTerm], bestMatchType);
-      }
-      if (searchTerms.length === 0) {
-        for (const technology of project.technologies) {
-          this.updateSkillCategoryItems(skillCategoryItems, technology, 'none');
-        }
-      }
-      this.finalizeProjectRankingScore(projectItems[project.id]);
+    while (!this.processChunk().done) {
+      // synchronous convenience API keeps previous behavior
     }
-    const sortedProjects = this.toSortedProjects(projectItems);
 
-    this.finalizeSkillCategoriesRankingScore(skillCategoryItems);
-    const sortedSkills = this.toSortedSkills(skillCategoryItems);
+    return this.finalize();
+  }
+
+  initialize(searchTerms: string[]): void {
+    this.activeSearchTerms = [...searchTerms];
+    this.activeMatchesOverview = this.initMatchesOverview(searchTerms);
+    this.activeProjectItems = {};
+    this.activeSkillCategoryItems = {};
+    this.activeProjectIndex = 0;
+    this.activeProcessInitialized = true;
+  }
+
+  processChunk(): SearchEngineDomainChunkResult {
+    this.ensureChunkInitialized();
+
+    if (this.isAllChunksProcessed()) {
+      return {
+        done: true,
+        progressPercent: 100,
+      };
+    }
+
+    const project = this.allProjects[this.activeProjectIndex];
+    this.processProject(
+      this.activeProjectItems,
+      this.activeSkillCategoryItems,
+      this.activeMatchesOverview,
+      project,
+      this.activeSearchTerms
+    );
+
+    this.activeProjectIndex++;
 
     return {
-      query: searchTerms,
-      matchesOverview: searchTerms.map(word => matchesOverview[word]),
-      projects: sortedProjects,
-      skills: sortedSkills,
+      done: this.isAllChunksProcessed(),
+      progressPercent: this.toProgressPercent(
+        this.activeProjectIndex,
+        this.allProjects.length
+      ),
     };
   }
 
-  private initTermTagMap(searchTerms: string[]): SearchTermTagMap {
-    const searchTermTagMap: SearchTermTagMap = {};
-    for (const searchTerm of searchTerms) {
-      searchTermTagMap[searchTerm] = Tag.find(searchTerm) ?? null;
+  finalize(): SearchEngineDomainResult {
+    this.ensureChunkInitialized();
+    this.ensureAllChunksProcessed();
+
+    this.finalizeSkillCategoriesRankingScore(this.activeSkillCategoryItems);
+
+    return {
+      query: this.activeSearchTerms,
+      matchesOverview: this.activeSearchTerms.map(
+        word => this.activeMatchesOverview[word]
+      ),
+      projects: this.toSortedProjects(this.activeProjectItems),
+      skills: this.toSortedSkills(this.activeSkillCategoryItems),
+    };
+  }
+
+  private ensureChunkInitialized(): void {
+    if (!this.activeProcessInitialized) {
+      throw new Error(
+        'SearchEngineDomain was not initialized. Call initialize(searchTerms) before processChunk()/finalize().'
+      );
     }
-    return searchTermTagMap;
+  }
+
+  private ensureAllChunksProcessed(): void {
+    if (!this.isAllChunksProcessed()) {
+      throw new Error(
+        'Not all chunks have been processed. Call processChunk() until it returns done=true before finalize().'
+      );
+    }
+  }
+
+  private isAllChunksProcessed(): boolean {
+    return this.activeProjectIndex >= this.allProjects.length;
+  }
+
+  private toProgressPercent(
+    processedProjects: number,
+    totalProjects: number
+  ): number {
+    if (totalProjects === 0) {
+      return 100;
+    }
+
+    return Math.round((processedProjects / totalProjects) * 100);
+  }
+
+  private processProject(
+    projectItems: ProjectItems,
+    skillCategoryItems: SkillCategoryItems,
+    matchesOverview: MatchesOverviewMap,
+    project: Project,
+    searchTerms: string[]
+  ): void {
+    this.initializeProjectItem(projectItems, project);
+    for (const searchTerm of searchTerms) {
+      let bestMatchType: MatchType = 'none';
+
+      for (const technology of project.technologies) {
+        const matchType = this.technologyMatcher.getMatchType({
+          keywordTag: technology,
+          searchTag: searchTerm,
+        });
+        bestMatchType = this.getBetterMatchType(bestMatchType, matchType);
+        this.updateProjectItem(projectItems[project.id], technology, matchType);
+        this.updateSkillCategoryItems(
+          skillCategoryItems,
+          technology,
+          matchType
+        );
+      }
+
+      this.updateMatchesOverview(matchesOverview[searchTerm], bestMatchType);
+    }
+
+    if (searchTerms.length === 0) {
+      for (const technology of project.technologies) {
+        this.updateSkillCategoryItems(skillCategoryItems, technology, 'none');
+      }
+    }
+
+    this.finalizeProjectRankingScore(projectItems[project.id]);
   }
 
   private initMatchesOverview(searchTerms: string[]): MatchesOverviewMap {

@@ -15,6 +15,11 @@ export type SearchEngineDomainResult = {
   }>;
 };
 
+export type SearchEngineDomainChunkResult = {
+  done: boolean;
+  progressPercent: number;
+};
+
 export type TagLists = {
   fullMatches: string[];
   partialMatches: string[];

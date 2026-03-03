@@ -2,7 +2,10 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { SearchEngineDomainResult } from '@portfolio/search-engine-domain';
 import {
   createSearchEngineWorker,
+  SEARCH_ENGINE_WORKER_PROGRESS_KIND,
   SEARCH_ENGINE_WORKER_REQUEST_KIND,
+  SearchEngineWorkerOutput,
+  SearchEngineWorkerProgress,
   SearchEngineWorkerResult,
 } from '@portfolio/search-engine-worker';
 import { BehaviorSubject, filter, map, Observable, tap } from 'rxjs';
@@ -14,7 +17,11 @@ export type SearchResult = {
     projects: SearchEngineDomainResult['projects'];
     skills: SearchEngineDomainResult['skills'];
   };
-  ngService?: { loading: boolean; workerMessageLatencyMs?: number };
+  ngService?: {
+    loading: boolean;
+    progressPercent: number;
+    workerMessageLatencyMs?: number;
+  };
   worker?: SearchEngineWorkerResult;
   domain?: SearchEngineDomainResult;
 };
@@ -27,9 +34,14 @@ export class SearchEngineService implements OnDestroy {
   private queryIdCounter = 0;
   // undefined = loading
   private readonly resultSubject = new BehaviorSubject<{
+    queryId?: number;
     workerResult?: SearchEngineWorkerResult;
-    serviceData: { loading: boolean; workerMessageLatencyMs?: number };
-  }>({ serviceData: { loading: true } });
+    serviceData: {
+      loading: boolean;
+      progressPercent: number;
+      workerMessageLatencyMs?: number;
+    };
+  }>({ serviceData: { loading: true, progressPercent: 0 } });
 
   readonly searchResult$: Observable<SearchResult> = this.resultSubject.pipe(
     tap(result => {
@@ -39,14 +51,15 @@ export class SearchEngineService implements OnDestroy {
     }),
     filter(
       result =>
-        result.serviceData.loading ||
+        (result.serviceData.loading &&
+          result.queryId === this.queryIdCounter) ||
         result.workerResult?.queryId === this.queryIdCounter
     ),
     map(result => ({
       loading: result.serviceData.loading,
+      ngService: result.serviceData,
       ...(!result.serviceData.loading && result.workerResult
         ? {
-            ngService: result.serviceData,
             ui: {
               matchesOverview: result.workerResult.domainResult.matchesOverview,
               projects: result.workerResult.domainResult.projects,
@@ -66,10 +79,12 @@ export class SearchEngineService implements OnDestroy {
       throw new Error('Web Workers are not supported in this environment.');
     }
 
-    this.resultSubject.next({ serviceData: { loading: true } });
-
     const worker = this.getOrCreateWorker();
     this.queryIdCounter++;
+    this.resultSubject.next({
+      queryId: this.queryIdCounter,
+      serviceData: { loading: true, progressPercent: 0 },
+    });
     worker.postMessage({
       kind: SEARCH_ENGINE_WORKER_REQUEST_KIND,
       queryId: this.queryIdCounter,
@@ -87,14 +102,30 @@ export class SearchEngineService implements OnDestroy {
 
       this.worker.onmessage = ({
         data,
-      }: MessageEvent<SearchEngineWorkerResult>) => {
+      }: MessageEvent<SearchEngineWorkerOutput>) => {
+        if (isWorkerProgressMessage(data)) {
+          this.resultSubject.next({
+            queryId: data.queryId,
+            serviceData: {
+              loading: true,
+              progressPercent: data.progressPercent,
+            },
+          });
+          return;
+        }
+
         const workerResultReceivedTimestamp =
           performance.timeOrigin + performance.now();
         const workerMessageLatencyMs =
           workerResultReceivedTimestamp - data.workerFinishedTimestamp;
         this.resultSubject.next({
+          queryId: data.queryId,
           workerResult: data,
-          serviceData: { loading: false, workerMessageLatencyMs },
+          serviceData: {
+            loading: false,
+            progressPercent: 100,
+            workerMessageLatencyMs,
+          },
         });
       };
 
@@ -111,4 +142,10 @@ export class SearchEngineService implements OnDestroy {
       this.worker = undefined;
     }
   }
+}
+
+function isWorkerProgressMessage(
+  output: SearchEngineWorkerOutput
+): output is SearchEngineWorkerProgress {
+  return output.kind === SEARCH_ENGINE_WORKER_PROGRESS_KIND;
 }
