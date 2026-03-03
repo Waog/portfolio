@@ -8,8 +8,6 @@ import { Tag } from '@portfolio/taxonomy';
 
 import { SearchEngineDomainResult } from './search-engine-domain.types';
 
-// TODO web-worker: DRY: define reusable types/interfaces instead of defining them inline repeatedly
-
 type ProjectItems = { [projectId: string]: ProjectItem };
 
 type ProjectItem = {
@@ -31,6 +29,16 @@ type SkillCategoryItem = {
   rankingScore: number;
 };
 
+type SearchTermTagMap = {
+  [term: string]: Tag | null;
+};
+
+type MatchesOverviewMap = {
+  [searchTerm: string]: MatchesOverviewItem;
+};
+
+type MatchesOverviewItem = SearchEngineDomainResult['matchesOverview'][1];
+
 export class SearchEngineDomain {
   private initialized = false;
   private allProjects: Project[] = [];
@@ -48,12 +56,10 @@ export class SearchEngineDomain {
 
     // TODO web-worker: this is unused. delete or use it.
     // consider: do we want to display canonical tags in the skill-matrix, or search terms?
-    const termTagMap: { [term: string]: Tag | null } =
-      this.initTermTagMap(searchTerms);
+    const termTagMap: SearchTermTagMap = this.initTermTagMap(searchTerms);
 
-    const matchesOverview: {
-      [searchTerm: string]: SearchEngineDomainResult['matchesOverview'][1];
-    } = this.initMatchesOverview(searchTerms);
+    const matchesOverview: MatchesOverviewMap =
+      this.initMatchesOverview(searchTerms);
 
     const projectItems: ProjectItems = {};
 
@@ -104,22 +110,16 @@ export class SearchEngineDomain {
     };
   }
 
-  private initTermTagMap(searchTerms: string[]): {
-    [term: string]: Tag | null;
-  } {
-    const searchTermTagMap: { [term: string]: Tag | null } = {};
+  private initTermTagMap(searchTerms: string[]): SearchTermTagMap {
+    const searchTermTagMap: SearchTermTagMap = {};
     for (const searchTerm of searchTerms) {
       searchTermTagMap[searchTerm] = Tag.find(searchTerm) ?? null;
     }
     return searchTermTagMap;
   }
 
-  private initMatchesOverview(searchTerms: string[]): {
-    [searchTerm: string]: SearchEngineDomainResult['matchesOverview'][1];
-  } {
-    const matchesOverview: {
-      [searchTerm: string]: SearchEngineDomainResult['matchesOverview'][1];
-    } = {};
+  private initMatchesOverview(searchTerms: string[]): MatchesOverviewMap {
+    const matchesOverview: MatchesOverviewMap = {};
     for (const searchTerm of searchTerms) {
       matchesOverview[searchTerm] = {
         keyword: searchTerm,
@@ -184,7 +184,7 @@ export class SearchEngineDomain {
   }
 
   private updateMatchesOverview(
-    matchesOverviewEntry: SearchEngineDomainResult['matchesOverview'][1],
+    matchesOverviewEntry: MatchesOverviewItem,
     bestMatchType: MatchType
   ) {
     if (bestMatchType === 'full') {
