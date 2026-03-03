@@ -5,10 +5,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ColorChipComponent } from '@portfolio/color-chip';
 import { SearchEngineService } from '@portfolio/search-engine-angular';
 import { SearchTagService } from '@portfolio/search-tags';
-import { Subject, takeUntil } from 'rxjs';
+import { map, Observable, Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'lib-tag-input',
@@ -19,6 +20,7 @@ import { Subject, takeUntil } from 'rxjs';
     MatFormFieldModule,
     MatButtonModule,
     MatIconModule,
+    MatProgressSpinnerModule,
     ColorChipComponent,
   ],
   templateUrl: './tag-input.component.html',
@@ -28,6 +30,12 @@ export class TagInputComponent implements OnDestroy {
   private searchTagService = inject(SearchTagService);
   private searchEngine = inject(SearchEngineService);
   private destroy$ = new Subject<void>();
+
+  protected loadingProgress$: Observable<number> =
+    this.searchEngine.searchResult$.pipe(
+      takeUntil(this.destroy$),
+      map(result => result.ngService?.progressPercent ?? 0)
+    );
 
   placeholder = 'Add search term, e.g. "Angular"';
   private _currentInput = '';
