@@ -8,7 +8,7 @@ import {
   SearchEngineWorkerProgress,
   SearchEngineWorkerResult,
 } from '@portfolio/search-engine-worker';
-import { BehaviorSubject, filter, map, Observable, tap } from 'rxjs';
+import { BehaviorSubject, filter, map, Observable } from 'rxjs';
 
 export type SearchResult = {
   loading: boolean;
@@ -44,11 +44,6 @@ export class SearchEngineService implements OnDestroy {
   }>({ serviceData: { loading: true, progressPercent: 0 } });
 
   readonly searchResult$: Observable<SearchResult> = this.resultSubject.pipe(
-    tap(result => {
-      console.log('SearchEngineService resultSubject emitted:', result, {
-        queryIdCounter: this.queryIdCounter,
-      });
-    }),
     filter(
       result =>
         (result.serviceData.loading &&
