@@ -4,6 +4,7 @@ import {
   withEventReplay,
 } from '@angular/platform-browser';
 import { provideRouter, withInMemoryScrolling } from '@angular/router';
+import { provideNgxSkeletonLoader } from 'ngx-skeleton-loader';
 
 import { appRoutes } from './app.routes';
 
@@ -18,5 +19,10 @@ export const appConfig: ApplicationConfig = {
         anchorScrolling: 'enabled',
       })
     ),
+    provideNgxSkeletonLoader({
+      theme: {
+        extendsFromRoot: true,
+      },
+    }),
   ],
 };

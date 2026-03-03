@@ -1,9 +1,16 @@
 <div class="container">
   <lib-section-header text="Experience by Keywords" />
 
-  <!-- TODO web-worker: handle loading state and display skeleton -->
   <div class="grid">
-    @for (matchItem of matchesOverview$ | async; track matchItem.keyword) {
+    @if (showSkeletons$ | async) { @for (tag of (tags$ | async) ?? []; track
+    tag) {
+    <span class="search-term">{{ tag }}:</span>
+
+    <div class="match-results match-results--loading">
+      <ngx-skeleton-loader class="match-skeleton-line" appearance="line" />
+    </div>
+    } } @else { @for (matchItem of (matchesOverview$ | async) ?? []; track
+    matchItem.keyword) {
     <span class="search-term">{{ matchItem.keyword }}:</span>
 
     <div class="match-results">
@@ -30,6 +37,6 @@
       <lib-color-chip text="no related projects" color="red" />
       }
     </div>
-    }
+    } }
   </div>
 </div>
