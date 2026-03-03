@@ -54,6 +54,18 @@ export default [
               sourceTag: 'layer:util',
               onlyDependOnLibsWithTags: ['layer:util'],
             },
+            {
+              sourceTag: 'runtime:angular',
+              notDependOnLibsWithTags: [],
+            },
+            {
+              sourceTag: 'runtime:worker',
+              notDependOnLibsWithTags: ['runtime:angular'],
+            },
+            {
+              sourceTag: 'runtime:agnostic',
+              notDependOnLibsWithTags: ['runtime:angular', 'runtime:worker'],
+            },
           ],
         },
       ],

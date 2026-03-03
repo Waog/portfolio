@@ -7,8 +7,6 @@ import {
 } from '@portfolio/search-engine-worker';
 import { BehaviorSubject, filter, map, Observable, tap } from 'rxjs';
 
-// TODO web-worker: ensure import boundaries for new nx `runtime:*` tags
-
 export type SearchResult = {
   loading: boolean;
   ui?: {
