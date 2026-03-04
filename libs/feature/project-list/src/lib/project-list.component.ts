@@ -7,7 +7,6 @@ import { SearchEngineService } from '@portfolio/search-engine-angular';
 import { Project } from '@portfolio/search-engine-domain';
 import { SearchTagService } from '@portfolio/search-tags';
 import { SectionHeaderComponent } from '@portfolio/section-header';
-import { NgxJsonViewerModule } from 'ngx-json-viewer';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { map, Observable } from 'rxjs';
 
@@ -22,7 +21,6 @@ import { ProjectListCustomOrderService } from './project-list-custom-order.servi
     MatButtonModule,
     MatIconModule,
     SectionHeaderComponent,
-    NgxJsonViewerModule,
     NgxSkeletonLoaderModule,
   ],
   templateUrl: './project-list.component.html',

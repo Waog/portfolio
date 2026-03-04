@@ -144,7 +144,7 @@ describe('SkillSectionComponent', () => {
     );
   });
 
-  it('should pass keywords to keyword-list components', () => {
+  it('should pass keywords to color-chip-list components', () => {
     const keywordListElements = fixture.debugElement.queryAll(
       By.css('lib-color-chip-list.skill-category-content:not(.and-more)')
     );
