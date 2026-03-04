@@ -3,8 +3,8 @@ import { Tag } from '@portfolio/taxonomy';
 
 import type { ProjectData } from './project.data';
 
-// TODO web-worker: we have 2 types called `Project` now. Have distinct names for them, to avoid confusion and accidental wrong imports.
-export class Project {
+export type ProjectDTOWithoutTechnologies = Omit<ProjectData, 'technologies'>;
+export class AnalyzableProject {
   private readonly data: ProjectData;
 
   constructor(data: ProjectData) {
@@ -77,12 +77,10 @@ export class Project {
     return Array.from(resultSet);
   }
 
-  public toDTO(): Omit<ProjectData, 'technologies'> & {
-    technologies: string[];
-  } {
-    return {
-      ...this.data,
-      technologies: this.technologies.map(tag => tag.canonical),
-    };
+  public toDtoWithoutTechnologies(): ProjectDTOWithoutTechnologies {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { technologies, ...rest } = this.data;
+
+    return rest;
   }
 }

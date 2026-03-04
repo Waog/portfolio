@@ -1,8 +1,8 @@
 import {
+  AnalyzableProject,
   getProjectsFactory,
   getSkillsWithoutProjectsFactory,
   MatchType,
-  Project,
   TechnologyMatcher,
 } from '@portfolio/projects';
 import { Tag } from '@portfolio/taxonomy';
@@ -19,7 +19,7 @@ type ProjectItem = {
   partialMatches: Tag[];
   nonMatches: Tag[];
   rankingScore: number;
-  project: Project;
+  project: AnalyzableProject;
 };
 
 type SkillCategoryItems = {
@@ -40,7 +40,7 @@ type MatchesOverviewMap = {
 type MatchesOverviewItem = SearchEngineDomainResult['matchesOverview'][1];
 
 export class SearchEngineDomain {
-  private allProjects: Project[] = getProjectsFactory().getAll();
+  private allProjects: AnalyzableProject[] = getProjectsFactory().getAll();
   private technologyMatcher = new TechnologyMatcher();
 
   private activeSearchTerms: string[] = [];
@@ -151,7 +151,7 @@ export class SearchEngineDomain {
     projectItems: ProjectItems,
     skillCategoryItems: SkillCategoryItems,
     matchesOverview: MatchesOverviewMap,
-    project: Project,
+    project: AnalyzableProject,
     searchTerms: string[]
   ): void {
     this.initializeProjectItem(projectItems, project);
@@ -198,7 +198,7 @@ export class SearchEngineDomain {
 
   private initializeProjectItem(
     projectItems: ProjectItems,
-    project: Project
+    project: AnalyzableProject
   ): void {
     projectItems[project.id] = {
       fullMatches: [],
@@ -351,7 +351,7 @@ export class SearchEngineDomain {
     return Object.entries(projectItems)
       .sort(([, itemA], [, itemB]) => itemB.rankingScore - itemA.rankingScore)
       .map(([projectId, item]) => ({
-        ...item.project.toDTO(),
+        ...item.project.toDtoWithoutTechnologies(),
         id: projectId,
         totalScore: item.rankingScore,
         technologies: {

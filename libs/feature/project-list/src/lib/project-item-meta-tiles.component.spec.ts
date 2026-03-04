@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Project } from '@portfolio/projects';
+import { AnalyzableProject } from '@portfolio/projects';
 
 import { ProjectItemMetaTilesComponent } from './project-item-meta-tiles.component';
 
@@ -7,7 +7,7 @@ describe('ProjectItemMetaTilesComponent', () => {
   let component: ProjectItemMetaTilesComponent;
   let fixture: ComponentFixture<ProjectItemMetaTilesComponent>;
 
-  const mockProject: Project = new Project({
+  const mockProject: AnalyzableProject = new AnalyzableProject({
     id: 'test-project',
     title: 'Test Project',
     projectType: 'Web Application',

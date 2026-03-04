@@ -1,4 +1,4 @@
-import { Project as ProjectObject } from '@portfolio/projects';
+import { ProjectDTOWithoutTechnologies } from '@portfolio/projects';
 
 export type SearchEngineDomainResult = {
   query: string[];
@@ -7,7 +7,7 @@ export type SearchEngineDomainResult = {
     fullMatchesCount: number;
     partialMatchesCount: number;
   }>;
-  projects: Array<ProjectMsgDTO>;
+  projects: Array<ProjectDTO>;
   skills: Array<{
     category: string;
     tagLists: TagLists;
@@ -26,9 +26,8 @@ export type TagLists = {
   nonMatches: string[];
 };
 
-type ProjectMsgDTO = {
-  id: string;
+type ProjectDTO = ProjectDTOWithoutTechnologies & {
   technologies: TagLists;
-} & Omit<ReturnType<ProjectObject['toDTO']>, 'technologies'>;
+};
 
-export type { ProjectMsgDTO as Project };
+export type { ProjectDTO as Project };
