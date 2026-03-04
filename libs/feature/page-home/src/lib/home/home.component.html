@@ -53,12 +53,4 @@
     </div>
     } }
   </lib-section>
-  <lib-section class="tag-input screen-only">
-    <div class="search-result" *ngIf="searchResult$ | async as result">
-      <strong>Search Engine Debug:</strong>
-      <!-- TODO web-worker: remove JSON viewer library -->
-      <ngx-json-viewer [json]="result" [expanded]="false"></ngx-json-viewer>
-      <!-- <pre>{{ result | json }}</pre> -->
-    </div>
-  </lib-section>
 </div>

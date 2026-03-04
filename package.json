@@ -22,7 +22,6 @@
     "@fontsource/material-icons": "^5.2.5",
     "@fontsource/roboto": "^5.2.6",
     "express": "^4.21.2",
-    "ngx-json-viewer": "^3.2.1",
     "ngx-skeleton-loader": "^12.0.0",
     "object-hash": "^3.0.0",
     "rxjs": "~7.8.0",
