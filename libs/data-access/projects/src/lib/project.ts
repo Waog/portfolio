@@ -3,6 +3,7 @@ import { Tag } from '@portfolio/taxonomy';
 
 import type { ProjectData } from './project.data';
 
+// TODO web-worker: we have 2 types called `Project` now. Have distinct names for them, to avoid confusion and accidental wrong imports.
 export class Project {
   private readonly data: ProjectData;
 

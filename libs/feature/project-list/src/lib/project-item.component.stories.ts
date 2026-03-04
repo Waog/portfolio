@@ -1,4 +1,4 @@
-import { Project } from '@portfolio/projects';
+import { Project } from '@portfolio/search-engine-domain';
 import type { Meta, StoryObj } from '@storybook/angular';
 import { componentWrapperDecorator } from '@storybook/angular';
 
@@ -44,7 +44,7 @@ const meta: Meta<ProjectItemComponent> = {
 export default meta;
 type Story = StoryObj<ProjectItemComponent>;
 
-const mockProject: Project = new Project({
+const mockProject: Project = {
   id: 'angular-portfolio',
   title: 'Portfolio Website Development',
   projectType: 'Web Application',
@@ -68,18 +68,11 @@ const mockProject: Project = new Project({
     'Built reusable component library',
     'Integrated automated testing suite',
   ],
-  technologies: [
-    'Angular',
-    'TypeScript',
-    'Jest',
-    'SCSS',
-    'RxJS',
-    'Nx',
-    'Mono Repo',
-    'Nx',
-    'Jest',
-    'Angular Material',
-  ],
+  technologies: {
+    fullMatches: ['Angular', 'TypeScript'],
+    partialMatches: ['Jest', 'SCSS', 'RxJS'],
+    nonMatches: ['Nx', 'Mono Repo', 'Angular Material'],
+  },
   role: 'Full-Stack Developer',
   team: 'Solo Project',
   fromTo: 'Jan 2024 - Present',
@@ -88,7 +81,7 @@ const mockProject: Project = new Project({
   workMode: 'Remote',
   company: 'Personal Project',
   industry: 'Technology',
-});
+};
 
 export const Default: Story = {
   args: {

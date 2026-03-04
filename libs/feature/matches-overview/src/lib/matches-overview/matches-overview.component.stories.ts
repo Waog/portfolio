@@ -1,10 +1,25 @@
-import { ProjectService } from '@portfolio/projects';
+import { SearchEngineService } from '@portfolio/search-engine-angular';
 import { SearchTagService } from '@portfolio/search-tags';
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
 import { BehaviorSubject } from 'rxjs';
 
 import { MatchesOverviewComponent } from './matches-overview.component';
+
+const manyTags = [
+  'Angular',
+  'Python',
+  'TypeScript',
+  'React',
+  'Rust',
+  'Vue.js',
+  'JavaScript',
+  'Node.js',
+  'Express',
+  'Go',
+];
+
+const noMatchTags = ['Rust', 'Go', 'Kotlin'];
 
 // Mock SearchTagService for Storybook
 class MockSearchTagService {
@@ -16,8 +31,21 @@ class MockSearchTagService {
   }
 }
 
-// Mock ProjectService for Storybook
-class MockProjectService {
+// Mock SearchEngineService for Storybook
+class MockSearchEngineService {
+  private searchResultSubject = new BehaviorSubject({
+    loading: false,
+    ui: {
+      matchesOverview: [] as Array<{
+        keyword: string;
+        fullMatchesCount: number;
+        partialMatchesCount: number;
+      }>,
+    },
+  });
+
+  public readonly searchResult$ = this.searchResultSubject.asObservable();
+
   private mockProjects = [
     {
       id: '1',
@@ -35,7 +63,20 @@ class MockProjectService {
     },
   ];
 
-  getBy(filterConfig: {
+  public initializeWithTags(tags: string[]): void {
+    const matchesOverview = tags.map(tag => ({
+      keyword: tag,
+      fullMatchesCount: this.getBy({ isFullMatchFor: tag }).length,
+      partialMatchesCount: this.getBy({ isPartialFor: tag }).length,
+    }));
+
+    this.searchResultSubject.next({
+      loading: false,
+      ui: { matchesOverview },
+    });
+  }
+
+  private getBy(filterConfig: {
     isFullMatchFor?: string;
     isPartialFor?: string;
   }): { id: string; title: string; technologies: string[] }[] {
@@ -74,7 +115,7 @@ const meta: Meta<MatchesOverviewComponent> = {
     moduleMetadata({
       providers: [
         { provide: SearchTagService, useClass: MockSearchTagService },
-        { provide: ProjectService, useClass: MockProjectService },
+        { provide: SearchEngineService, useClass: MockSearchEngineService },
       ],
     }),
   ],
@@ -115,7 +156,14 @@ export const WithSingleTag: Story = {
             return service;
           },
         },
-        { provide: ProjectService, useClass: MockProjectService },
+        {
+          provide: SearchEngineService,
+          useFactory: () => {
+            const service = new MockSearchEngineService();
+            service.initializeWithTags(['Angular']);
+            return service;
+          },
+        },
       ],
     }),
   ],
@@ -137,22 +185,18 @@ export const WithManyTags: Story = {
           provide: SearchTagService,
           useFactory: () => {
             const service = new MockSearchTagService();
-            service.initializeWithTags([
-              'Angular',
-              'Python',
-              'TypeScript',
-              'React',
-              'Rust',
-              'Vue.js',
-              'JavaScript',
-              'Node.js',
-              'Express',
-              'Go',
-            ]);
+            service.initializeWithTags(manyTags);
             return service;
           },
         },
-        { provide: ProjectService, useClass: MockProjectService },
+        {
+          provide: SearchEngineService,
+          useFactory: () => {
+            const service = new MockSearchEngineService();
+            service.initializeWithTags(manyTags);
+            return service;
+          },
+        },
       ],
     }),
   ],
@@ -174,11 +218,18 @@ export const WithNoMatches: Story = {
           provide: SearchTagService,
           useFactory: () => {
             const service = new MockSearchTagService();
-            service.initializeWithTags(['Rust', 'Go', 'Kotlin']);
+            service.initializeWithTags(noMatchTags);
             return service;
           },
         },
-        { provide: ProjectService, useClass: MockProjectService },
+        {
+          provide: SearchEngineService,
+          useFactory: () => {
+            const service = new MockSearchEngineService();
+            service.initializeWithTags(noMatchTags);
+            return service;
+          },
+        },
       ],
     }),
   ],
