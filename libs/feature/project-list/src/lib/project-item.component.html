@@ -94,6 +94,10 @@
       [compact]="compact() && !showExpandedContent"
     />
 
-    <lib-keyword-list [keywordTags]="project().technologies" />
+    <lib-color-chip-list
+      [greenItems]="project().technologies.fullMatches"
+      [yellowItems]="project().technologies.partialMatches"
+      [grayItems]="project().technologies.nonMatches"
+    />
   </div>
 </div>

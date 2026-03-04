@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, input } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
-import { Project } from '@portfolio/projects';
+import { Project } from '@portfolio/search-engine-domain';
 
 @Component({
   selector: 'lib-project-item-meta-tiles',

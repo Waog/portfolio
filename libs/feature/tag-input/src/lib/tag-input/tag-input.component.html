@@ -30,6 +30,15 @@
         (closeClick)="removeTag(tag)"
         class="search-tag"
       ></lib-color-chip>
+      @if((loadingProgress$ | async); as progress) { @if(progress < 100) {
+      <mat-progress-spinner
+        class="progress-indicator"
+        mode="determinate"
+        [value]="progress"
+        [diameter]="20"
+        [strokeWidth]="2"
+      />
+      } }
     </div>
   </div>
 </div>

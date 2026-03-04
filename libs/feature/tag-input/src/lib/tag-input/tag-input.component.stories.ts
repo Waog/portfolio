@@ -1,4 +1,5 @@
 import { provideRouter } from '@angular/router';
+import { SearchEngineService } from '@portfolio/search-engine-angular';
 import { SearchTagService } from '@portfolio/search-tags';
 import type { Meta, StoryObj } from '@storybook/angular';
 import { applicationConfig, moduleMetadata } from '@storybook/angular';
@@ -35,6 +36,22 @@ class MockSearchTagService {
   }
 }
 
+class MockSearchEngineService {
+  private searchResultSubject = new BehaviorSubject({
+    loading: true,
+    ngService: {
+      loading: true,
+      progressPercent: 75,
+    },
+  });
+
+  public readonly searchResult$ = this.searchResultSubject.asObservable();
+
+  public setQuery(query: string[]): void {
+    void query;
+  }
+}
+
 const meta: Meta<TagInputComponent> = {
   component: TagInputComponent,
   title: 'Feature/Tag Input',
@@ -43,6 +60,7 @@ const meta: Meta<TagInputComponent> = {
     moduleMetadata({
       providers: [
         { provide: SearchTagService, useClass: MockSearchTagService },
+        { provide: SearchEngineService, useClass: MockSearchEngineService },
       ],
     }),
     applicationConfig({

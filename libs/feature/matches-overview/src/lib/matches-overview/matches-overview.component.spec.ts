@@ -1,18 +1,50 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ProjectService } from '@portfolio/projects';
+import {
+  SearchEngineService,
+  type SearchResult,
+} from '@portfolio/search-engine-angular';
+import type { Project as SearchEngineProject } from '@portfolio/search-engine-domain';
 import { SearchTagService } from '@portfolio/search-tags';
 import { BehaviorSubject } from 'rxjs';
 
 import { MatchesOverviewComponent } from './matches-overview.component';
+
+jest.mock('@portfolio/search-engine-angular', () => ({
+  SearchEngineService: class {
+    searchResult$ = new BehaviorSubject({
+      loading: false,
+      ui: {
+        matchesOverview: [],
+        projects: [],
+        skills: [],
+      },
+      ngService: {
+        loading: false,
+        progressPercent: 100,
+      },
+    });
+  },
+}));
 
 // Mock SearchTagService
 const mockSearchTagService = {
   tags$: new BehaviorSubject<string[]>([]),
 };
 
-// Mock ProjectService
-const mockProjectService = {
-  getBy: jest.fn().mockReturnValue([]),
+// Mock SearchEngineService
+const mockSearchEngineService = {
+  searchResult$: new BehaviorSubject<SearchResult>({
+    loading: false,
+    ui: {
+      matchesOverview: [],
+      projects: [] as SearchEngineProject[],
+      skills: [],
+    },
+    ngService: {
+      loading: false,
+      progressPercent: 100,
+    },
+  }),
 };
 
 describe('MatchesOverviewComponent', () => {
@@ -24,7 +56,7 @@ describe('MatchesOverviewComponent', () => {
       imports: [MatchesOverviewComponent],
       providers: [
         { provide: SearchTagService, useValue: mockSearchTagService },
-        { provide: ProjectService, useValue: mockProjectService },
+        { provide: SearchEngineService, useValue: mockSearchEngineService },
       ],
     }).compileComponents();
 
@@ -38,46 +70,54 @@ describe('MatchesOverviewComponent', () => {
   });
 
   it('should display matches overview when tags are present', () => {
-    // Mock the getBy method to return different arrays for full and partial matches
-    mockProjectService.getBy
-      .mockReturnValueOnce([{}, {}]) // 2 full matches for 'Angular'
-      .mockReturnValueOnce([{}]) // 1 partial match for 'Angular'
-      .mockReturnValueOnce([{}, {}, {}]) // 3 full matches for 'TypeScript'
-      .mockReturnValueOnce([{}, {}]); // 2 partial matches for 'TypeScript'
-
     mockSearchTagService.tags$.next(['Angular', 'TypeScript']);
+    mockSearchEngineService.searchResult$.next({
+      loading: false,
+      ui: {
+        matchesOverview: [
+          { keyword: 'Angular', fullMatchesCount: 2, partialMatchesCount: 1 },
+          {
+            keyword: 'TypeScript',
+            fullMatchesCount: 3,
+            partialMatchesCount: 2,
+          },
+        ],
+        projects: [] as SearchEngineProject[],
+        skills: [],
+      },
+      ngService: {
+        loading: false,
+        progressPercent: 100,
+      },
+    });
     fixture.detectChanges();
 
-    expect(component.tagMatches.length).toBe(2);
-    expect(mockProjectService.getBy).toHaveBeenCalledWith({
-      isFullMatchFor: 'Angular',
-    });
-    expect(mockProjectService.getBy).toHaveBeenCalledWith({
-      isPartialFor: 'Angular',
-    });
-    expect(mockProjectService.getBy).toHaveBeenCalledWith({
-      isFullMatchFor: 'TypeScript',
-    });
-    expect(mockProjectService.getBy).toHaveBeenCalledWith({
-      isPartialFor: 'TypeScript',
-    });
-
-    expect(component.tagMatches[0]).toEqual({
-      searchTag: 'Angular',
-      fullMatches: 2,
-      partialMatches: 1,
-    });
-    expect(component.tagMatches[1]).toEqual({
-      searchTag: 'TypeScript',
-      fullMatches: 3,
-      partialMatches: 2,
-    });
+    const text = fixture.nativeElement.textContent;
+    expect(text).toContain('Angular:');
+    expect(text).toContain('TypeScript:');
+    expect(text).toContain('2 projects');
+    expect(text).toContain('1 related project');
+    expect(text).toContain('3 projects');
+    expect(text).toContain('2 related projects');
   });
 
   it('should not display anything when no tags are present', () => {
     mockSearchTagService.tags$.next([]);
+    mockSearchEngineService.searchResult$.next({
+      loading: false,
+      ui: {
+        matchesOverview: [],
+        projects: [] as SearchEngineProject[],
+        skills: [],
+      },
+      ngService: {
+        loading: false,
+        progressPercent: 100,
+      },
+    });
     fixture.detectChanges();
 
-    expect(component.tagMatches.length).toBe(0);
+    const tags = fixture.nativeElement.querySelectorAll('.search-term');
+    expect(tags.length).toBe(0);
   });
 });

@@ -13,7 +13,7 @@ export class Tag {
   }
 
   @MemoizeAllArgs
-  private static find(searchTerm: string): Tag | undefined {
+  public static find(searchTerm: string): Tag | undefined {
     const matchByCanonical = TAXONOMY.find(
       data => searchTerm === data.canonical
     );

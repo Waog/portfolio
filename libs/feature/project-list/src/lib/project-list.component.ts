@@ -1,11 +1,14 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { Project } from '@portfolio/projects';
+import { SearchEngineService } from '@portfolio/search-engine-angular';
+import { Project } from '@portfolio/search-engine-domain';
 import { SearchTagService } from '@portfolio/search-tags';
 import { SectionHeaderComponent } from '@portfolio/section-header';
-import { Subject, takeUntil } from 'rxjs';
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
+import { map, Observable } from 'rxjs';
 
 import { ProjectItemComponent } from './project-item.component';
 import { ProjectListCustomOrderService } from './project-list-custom-order.service';
@@ -18,48 +21,49 @@ import { ProjectListCustomOrderService } from './project-list-custom-order.servi
     MatButtonModule,
     MatIconModule,
     SectionHeaderComponent,
+    NgxSkeletonLoaderModule,
   ],
   templateUrl: './project-list.component.html',
   styleUrl: './project-list.component.scss',
 })
-export class ProjectListComponent implements OnInit, OnDestroy {
-  private searchTagService = inject(SearchTagService);
-  private customOrderService = inject(ProjectListCustomOrderService);
-  private destroy$ = new Subject<void>();
+export class ProjectListComponent implements OnInit {
+  private readonly customOrderService = inject(ProjectListCustomOrderService);
+  private readonly searchEngineService = inject(SearchEngineService);
+  private readonly searchTagService = inject(SearchTagService);
+  private readonly destroyRef = inject(DestroyRef);
 
-  showAllProjects = false;
+  protected readonly projectsOrder$: Observable<Project[]> =
+    this.customOrderService.projectsInOrder$;
 
-  // Single prioritized list of all projects
-  allProjectsInOrder: Project[] = [];
-  isPrintModeActive = false;
+  protected readonly showSkeletons$ =
+    this.searchEngineService.searchResult$.pipe(
+      map(searchResult => searchResult.loading)
+    );
+
+  protected readonly topProjectSkeletons = [0, 1, 2];
+  protected readonly otherProjectSkeletons = [0, 1, 2, 3, 4, 5, 6];
+
+  protected showAllProjects = false;
+  protected isPrintModeActive = false;
+
+  constructor() {
+    this.searchTagService.tags$
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => {
+        this.showAllProjects = false;
+      });
+  }
 
   ngOnInit(): void {
-    // Subscribe to search tag changes to update prioritized projects
-    this.searchTagService.tags$.pipe(takeUntil(this.destroy$)).subscribe(() => {
-      this.allProjectsInOrder = this.customOrderService.getOrderedProjects();
-    });
-
-    // Initialize projects list
-    this.allProjectsInOrder = this.customOrderService.getOrderedProjects();
-
     // Check print mode (this doesn't change dynamically in most cases)
     this.isPrintModeActive = this.checkPrintMode();
   }
 
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
-  }
-
-  trackByProjectId(index: number, project: Project): string {
-    return project.id;
-  }
-
-  toggleAllProjects(): void {
+  protected toggleAllProjects(): void {
     this.showAllProjects = !this.showAllProjects;
   }
 
-  checkPrintMode(): boolean {
+  private checkPrintMode(): boolean {
     return (
       typeof window !== 'undefined' &&
       window.matchMedia &&
@@ -70,15 +74,14 @@ export class ProjectListComponent implements OnInit, OnDestroy {
   /**
    * Moves a project up in the custom order.
    */
-  moveProjectUp(projectId: string): void {
-    this.allProjectsInOrder = this.customOrderService.moveProjectUp(projectId);
+  protected moveProjectUp(projectId: string): void {
+    this.customOrderService.moveProjectUp(projectId);
   }
 
   /**
    * Moves a project down in the custom order.
    */
-  moveProjectDown(projectId: string): void {
-    this.allProjectsInOrder =
-      this.customOrderService.moveProjectDown(projectId);
+  protected moveProjectDown(projectId: string): void {
+    this.customOrderService.moveProjectDown(projectId);
   }
 }

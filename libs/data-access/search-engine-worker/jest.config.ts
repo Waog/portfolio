@@ -1,8 +1,8 @@
 export default {
-  displayName: 'keyword-list',
+  displayName: 'search-engine-worker',
   preset: '../../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
-  coverageDirectory: '../../../coverage/libs/feature/keyword-list',
+  coverageDirectory: '../../../coverage/libs/data-access/search-engine-worker',
   transform: {
     '^.+\\.(ts|mjs|js|html)$': [
       'jest-preset-angular',

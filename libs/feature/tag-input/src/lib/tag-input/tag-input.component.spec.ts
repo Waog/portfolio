@@ -1,7 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Router } from '@angular/router';
+import { SearchEngineService } from '@portfolio/search-engine-angular';
 import { SearchTagService } from '@portfolio/search-tags';
 import { of } from 'rxjs';
+
+jest.mock('@portfolio/search-engine-angular', () => ({
+  SearchEngineService: class {
+    searchResult$ = of({
+      loading: false,
+      ngService: { loading: false, progressPercent: 0 },
+    });
+    setQuery = jest.fn();
+  },
+}));
 
 import { TagInputComponent } from './tag-input.component';
 
@@ -11,7 +21,7 @@ describe('TagInputComponent', () => {
   let mockSearchTagService: Partial<SearchTagService> & {
     currentTags: string[];
   };
-  let mockRouter: Partial<Router>;
+  let mockSearchEngineService: Partial<SearchEngineService>;
 
   beforeEach(async () => {
     mockSearchTagService = {
@@ -23,17 +33,19 @@ describe('TagInputComponent', () => {
       tags$: of([]),
     };
 
-    mockRouter = {
-      navigate: jest.fn(),
-      parseUrl: jest.fn(),
-      url: '/',
+    mockSearchEngineService = {
+      searchResult$: of({
+        loading: false,
+        ngService: { loading: false, progressPercent: 0 },
+      }),
+      setQuery: jest.fn(),
     };
 
     await TestBed.configureTestingModule({
       imports: [TagInputComponent],
       providers: [
         { provide: SearchTagService, useValue: mockSearchTagService },
-        { provide: Router, useValue: mockRouter },
+        { provide: SearchEngineService, useValue: mockSearchEngineService },
       ],
     }).compileComponents();
 
@@ -117,7 +129,7 @@ describe('TagInputComponent', () => {
       imports: [TagInputComponent],
       providers: [
         { provide: SearchTagService, useValue: mockServiceWithTags },
-        { provide: Router, useValue: mockRouter },
+        { provide: SearchEngineService, useValue: mockSearchEngineService },
       ],
     }).compileComponents();
 

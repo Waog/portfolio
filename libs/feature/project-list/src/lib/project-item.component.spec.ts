@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Project } from '@portfolio/projects';
+import { Project } from '@portfolio/search-engine-domain';
 
 import { ProjectItemComponent } from './project-item.component';
 
@@ -7,7 +7,7 @@ describe('ProjectItemComponent', () => {
   let component: ProjectItemComponent;
   let fixture: ComponentFixture<ProjectItemComponent>;
 
-  const mockProject: Project = new Project({
+  const mockProject: Project = {
     id: 'test-project',
     title: 'Test Project',
     projectType: 'Web Application',
@@ -16,7 +16,11 @@ describe('ProjectItemComponent', () => {
     fullDescription: 'This is a full description of the test project',
     features: ['Feature 1', 'Feature 2'],
     highlights: ['Highlight 1', 'Highlight 2'],
-    technologies: ['Angular', 'TypeScript'],
+    technologies: {
+      fullMatches: ['Angular', 'TypeScript'],
+      partialMatches: [],
+      nonMatches: [],
+    },
     role: 'Developer',
     team: 'Development Team',
     fromTo: '2024-01-01 to 2024-12-31',
@@ -25,7 +29,7 @@ describe('ProjectItemComponent', () => {
     workMode: 'Remote',
     company: 'Test Company',
     industry: 'Technology',
-  });
+  };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({

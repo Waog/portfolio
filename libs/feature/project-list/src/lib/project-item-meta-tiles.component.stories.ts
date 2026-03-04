@@ -1,4 +1,4 @@
-import { Project } from '@portfolio/projects';
+import { Project } from '@portfolio/search-engine-domain';
 import type { Meta, StoryObj } from '@storybook/angular';
 
 import { ProjectItemMetaTilesComponent } from './project-item-meta-tiles.component';
@@ -26,7 +26,7 @@ const meta: Meta<ProjectItemMetaTilesComponent> = {
 export default meta;
 type Story = StoryObj<ProjectItemMetaTilesComponent>;
 
-const mockProjectData = {
+const mockProjectData: Project = {
   role: 'Project Manager & Full-Stack Developer',
   team: 'Solo development',
   fromTo: '08/2023 – Present',
@@ -43,20 +43,23 @@ const mockProjectData = {
   fullDescription: '',
   features: [],
   highlights: [],
-  technologies: [],
+  technologies: {
+    fullMatches: [],
+    partialMatches: [],
+    nonMatches: [],
+  },
 };
-const mockProject: Project = new Project(mockProjectData);
 
 export const Default: Story = {
   args: {
-    project: mockProject,
+    project: mockProjectData,
     compact: false,
   },
 };
 
 export const LongerTexts: Story = {
   args: {
-    project: new Project({
+    project: {
       ...mockProjectData,
       role: 'Senior Frontend Web and App Developer',
       team: 'Cross-functional Team (5 members)',
@@ -66,13 +69,13 @@ export const LongerTexts: Story = {
       workMode: 'Hybrid',
       company: 'FinTech Startup in Accelerator Phase',
       industry: 'FinTech',
-    }),
+    },
   },
 };
 
 export const CompactMode: Story = {
   args: {
-    project: mockProject,
+    project: mockProjectData,
     compact: true,
   },
 };

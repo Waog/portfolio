@@ -1,50 +1,38 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ColorChipComponent } from '@portfolio/color-chip';
-import { ProjectService } from '@portfolio/projects';
+import { SearchEngineService } from '@portfolio/search-engine-angular';
 import { SearchTagService } from '@portfolio/search-tags';
 import { SectionHeaderComponent } from '@portfolio/section-header';
-import { Subject, takeUntil } from 'rxjs';
-
-interface TagMatchInfo {
-  searchTag: string;
-  fullMatches: number;
-  partialMatches: number;
-}
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'lib-matches-overview',
-  imports: [CommonModule, ColorChipComponent, SectionHeaderComponent],
+  imports: [
+    CommonModule,
+    ColorChipComponent,
+    SectionHeaderComponent,
+    NgxSkeletonLoaderModule,
+  ],
   templateUrl: './matches-overview.component.html',
   styleUrl: './matches-overview.component.scss',
 })
-export class MatchesOverviewComponent implements OnInit, OnDestroy {
-  private searchTagService = inject(SearchTagService);
-  private projectService = inject(ProjectService);
-  private destroy$ = new Subject<void>();
+export class MatchesOverviewComponent {
+  private readonly searchEngineService = inject(SearchEngineService);
+  private readonly searchTagService = inject(SearchTagService);
+  private readonly searchResult$ = this.searchEngineService.searchResult$;
 
-  tagMatches: TagMatchInfo[] = [];
+  protected readonly tags$ = this.searchTagService.tags$;
 
-  ngOnInit(): void {
-    this.searchTagService.tags$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(searchTags => {
-        this.updateSearchTagMatches(searchTags);
-      });
-  }
+  protected readonly matchesOverview$ = this.searchResult$.pipe(
+    map(searchResult => searchResult.ui?.matchesOverview)
+  );
 
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
-  }
-
-  private updateSearchTagMatches(searchTags: string[]): void {
-    this.tagMatches = searchTags.map(searchTag => ({
-      searchTag,
-      fullMatches: this.projectService.getBy({ isFullMatchFor: searchTag })
-        .length,
-      partialMatches: this.projectService.getBy({ isPartialFor: searchTag })
-        .length,
-    }));
-  }
+  protected readonly showSkeletons$ = this.searchResult$.pipe(
+    map(
+      searchResult =>
+        searchResult.loading || searchResult.ui?.matchesOverview === undefined
+    )
+  );
 }

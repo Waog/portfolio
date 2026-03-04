@@ -74,9 +74,13 @@ mat-form-field {
   // Ensure tags are left-aligned
   display: flex;
   flex-wrap: wrap;
-  align-items: flex-start;
+  align-items: center;
   justify-content: flex-start;
   gap: 4px; // Add gap between color chips
+}
+
+.progress-indicator {
+  flex: 0 0 auto;
 }
 
 @media (max-width: 768px) {

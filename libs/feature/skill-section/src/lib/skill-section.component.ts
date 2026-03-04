@@ -6,6 +6,7 @@ import {
   HostListener,
   Inject,
   inject,
+  OnDestroy,
   PLATFORM_ID,
   QueryList,
   Renderer2,
@@ -13,11 +14,11 @@ import {
 } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
-import { KeywordListComponent } from '@portfolio/keyword-list';
+import { ColorChipListComponent } from '@portfolio/color-chip-list';
+import { SearchEngineService } from '@portfolio/search-engine-angular';
 import { SectionHeaderComponent } from '@portfolio/section-header';
-import { Category, Tag } from '@portfolio/taxonomy';
-
-import { SkillSectionService } from './skill-section.service';
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
+import { map, Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'lib-skill-section',
@@ -25,31 +26,50 @@ import { SkillSectionService } from './skill-section.service';
     CommonModule,
     MatCardModule,
     MatIconModule,
-    KeywordListComponent,
     SectionHeaderComponent,
+    ColorChipListComponent,
+    NgxSkeletonLoaderModule,
   ],
   templateUrl: './skill-section.component.html',
   styleUrl: './skill-section.component.scss',
 })
-export class SkillSectionComponent implements AfterViewInit {
+export class SkillSectionComponent implements AfterViewInit, OnDestroy {
   @ViewChildren('categoryRef') categoryElementRefs!: QueryList<ElementRef>;
   @ViewChildren('keywordListRef')
   keywordListElementRefs!: QueryList<ElementRef>;
 
-  readonly SPACER_TAGS: Tag[] = [Tag.get('Spacer')];
+  private destroy$ = new Subject<void>();
+  private readonly searchEngineService = inject(SearchEngineService);
+  protected readonly skillSkeletonRows = [0, 1, 2, 3, 4, 5, 6, 7];
 
-  private skillSectionService = inject(SkillSectionService);
+  protected categoryRow$ = this.searchEngineService.searchResult$.pipe(
+    takeUntil(this.destroy$),
+    map(searchResult => searchResult.ui?.skills)
+  );
+
+  protected showSkeletons$ = this.searchEngineService.searchResult$.pipe(
+    takeUntil(this.destroy$),
+    map(
+      searchResult =>
+        searchResult.loading || searchResult.ui?.skills === undefined
+    )
+  );
+
   private renderer = inject(Renderer2);
-
-  skillCategories: Map<Category, Tag[]> =
-    this.skillSectionService.getSkillCategories();
 
   constructor(@Inject(PLATFORM_ID) private platformId: object) {}
 
   ngAfterViewInit(): void {
-    setTimeout(() => {
-      this.handleExceedingRows();
+    this.showSkeletons$.pipe(takeUntil(this.destroy$)).subscribe(show => {
+      if (!show) {
+        this.handleExceedingRows();
+      }
     });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   @HostListener('window:resize')
