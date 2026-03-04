@@ -1,5 +1,6 @@
 import {
   getProjectsFactory,
+  getSkillsWithoutProjectsFactory,
   MatchType,
   Project,
   TechnologyMatcher,
@@ -102,6 +103,7 @@ export class SearchEngineDomain {
     this.ensureChunkInitialized();
     this.ensureAllChunksProcessed();
 
+    this.finalizeAddSkillsWithoutProjects(this.activeSkillCategoryItems);
     this.finalizeSkillCategoriesRankingScore(this.activeSkillCategoryItems);
 
     return {
@@ -309,7 +311,29 @@ export class SearchEngineDomain {
       projectItem.fullMatches.length * 1000 + projectItem.partialMatches.length;
   }
 
-  // TODO web-worker: previously we had some consistency check to ensure no tag/category is forgotten or duplicated. re-establish it.
+  private finalizeAddSkillsWithoutProjects(
+    skillCategoryItems: SkillCategoryItems
+  ): void {
+    const skillsWithoutProjects = getSkillsWithoutProjectsFactory().getAll();
+
+    for (const skillTag of skillsWithoutProjects) {
+      let bestMatchType: MatchType = 'none';
+      for (const searchTerm of this.activeSearchTerms) {
+        const matchType = this.technologyMatcher.getMatchType({
+          keywordTag: skillTag,
+          searchTag: searchTerm,
+        });
+        bestMatchType = this.getBetterMatchType(bestMatchType, matchType);
+      }
+
+      this.updateSkillCategoryItems(
+        skillCategoryItems,
+        skillTag,
+        bestMatchType
+      );
+    }
+  }
+
   private finalizeSkillCategoriesRankingScore(
     skillCategoryItems: SkillCategoryItems
   ): void {
