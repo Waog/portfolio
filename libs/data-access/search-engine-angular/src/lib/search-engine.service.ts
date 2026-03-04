@@ -4,6 +4,7 @@ import {
   createSearchEngineWorker,
   SEARCH_ENGINE_WORKER_PROGRESS_KIND,
   SEARCH_ENGINE_WORKER_REQUEST_KIND,
+  SearchEngineWorker,
   SearchEngineWorkerOutput,
   SearchEngineWorkerProgress,
   SearchEngineWorkerResult,
@@ -30,7 +31,7 @@ export type SearchResult = {
   providedIn: 'root',
 })
 export class SearchEngineService implements OnDestroy {
-  private worker?: Worker;
+  private worker?: SearchEngineWorker;
   private queryIdCounter = 0;
   // undefined = loading
   private readonly resultSubject = new BehaviorSubject<{
@@ -68,12 +69,6 @@ export class SearchEngineService implements OnDestroy {
   );
 
   setQuery(query: string[]): void {
-    if (typeof Worker === 'undefined') {
-      // TODO web-worker: implement fallback logic for environments without web worker support
-      // consider *where* to implement fallback (in runtime:angular or in runtime:worker)
-      throw new Error('Web Workers are not supported in this environment.');
-    }
-
     const worker = this.getOrCreateWorker();
     this.queryIdCounter++;
     this.resultSubject.next({
@@ -91,13 +86,9 @@ export class SearchEngineService implements OnDestroy {
     this.destroyWorker();
   }
 
-  private getOrCreateWorker(): Worker {
+  private getOrCreateWorker(): SearchEngineWorker {
     if (!this.worker) {
-      this.worker = createSearchEngineWorker();
-
-      this.worker.onmessage = ({
-        data,
-      }: MessageEvent<SearchEngineWorkerOutput>) => {
+      const handleMsg = (data: SearchEngineWorkerOutput) => {
         if (isWorkerProgressMessage(data)) {
           this.resultSubject.next({
             queryId: data.queryId,
@@ -124,9 +115,11 @@ export class SearchEngineService implements OnDestroy {
         });
       };
 
-      this.worker.onerror = error => {
+      const handleErr = (error: ErrorEvent) => {
         console.error('Worker error:', error);
       };
+
+      this.worker = createSearchEngineWorker(handleMsg, handleErr);
     }
     return this.worker;
   }
