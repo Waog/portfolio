@@ -1,9 +1,9 @@
-import { runTask } from './search-engine-worker-task';
 import {
   SEARCH_ENGINE_WORKER_REQUEST_KIND,
   SearchEngineWorkerInput,
   SearchEngineWorkerOutput,
 } from './search-engine.types';
+import { runTask } from './search-engine-worker-task';
 
 addEventListener('message', ({ data }: MessageEvent<unknown>) => {
   if (!isSearchEngineWorkerInput(data)) {

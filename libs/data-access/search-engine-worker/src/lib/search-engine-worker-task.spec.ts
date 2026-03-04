@@ -1,6 +1,5 @@
 import 'jest-expect-message';
 
-import { runTask } from './search-engine-worker-task';
 import {
   SEARCH_ENGINE_WORKER_PROGRESS_KIND,
   SEARCH_ENGINE_WORKER_REQUEST_KIND,
@@ -8,6 +7,7 @@ import {
   SearchEngineWorkerOutput,
   SearchEngineWorkerResult,
 } from './search-engine.types';
+import { runTask } from './search-engine-worker-task';
 
 describe('SearchEngineWorkerTask.runTask()', () => {
   it('creates', () => {

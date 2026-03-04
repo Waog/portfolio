@@ -1,8 +1,8 @@
-import { runTask } from './search-engine-worker-task';
 import {
   SearchEngineWorkerInput,
   SearchEngineWorkerOutput,
 } from './search-engine.types';
+import { runTask } from './search-engine-worker-task';
 
 export interface SearchEngineWorker {
   postMessage(input: SearchEngineWorkerInput): void;
