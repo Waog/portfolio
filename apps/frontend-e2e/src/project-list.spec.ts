@@ -1,17 +1,21 @@
 import { expect, Locator, Page, test } from '@playwright/test';
 
 test.describe('Project List Section', () => {
-  test('displays all projects by default (when no search tags)', async ({
+  test('displays the top 3 projects by default (when no search tags)', async ({
     page,
   }) => {
     await page.goto('/');
 
     const projectList = await getProjectListSection(page);
 
-    await expect(projectList.locator('lib-project-item')).toHaveCount(31);
+    await expect(projectList.locator('lib-project-item')).toHaveCount(3);
 
     await expect(
       page.getByRole('heading', { name: 'Top Matching Projects' })
+    ).toBeVisible();
+
+    await expect(
+      page.getByRole('heading', { name: 'Other Projects' })
     ).toBeHidden();
   });
 
