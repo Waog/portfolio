@@ -46,6 +46,7 @@ type InternalTagName =
   | 'Confluence'
   | 'Construct 2'
   | 'Container'
+  | 'Conventional Commits'
   | 'Cordova'
   | 'CSS'
   | 'Custom Game Engine'
@@ -59,6 +60,7 @@ type InternalTagName =
   | 'Docker'
   | 'DOORS'
   | 'DynamoDB'
+  | 'E2E Testing'
   | 'Eclipse'
   | 'Eclipse EMF'
   | 'Eclipse GMF'
@@ -152,6 +154,7 @@ type InternalTagName =
   | 'Peer-to-Peer'
   | 'peerJS'
   | 'Phaser'
+  | 'Playwright'
   | 'Polly'
   | 'Project Management'
   | 'Prototyping'
@@ -176,6 +179,7 @@ type InternalTagName =
   | 'Scientific Paper'
   | 'SCRUM'
   | 'SCSS'
+  | 'SemVer'
   | 'Sensor Fusion'
   | 'Sentry'
   | 'Shader programming'
@@ -356,6 +360,7 @@ const INTERNAL_TAXONOMY = [
     canonical: 'Ant',
     categories: ['DevOps & Build & CI/CD'],
     related: ['CI/CD', 'Gradle', 'Maven'],
+    synonyms: [/^ant$/i, /apache ant/i],
   },
   {
     canonical: 'API Gateway',
@@ -573,6 +578,12 @@ const INTERNAL_TAXONOMY = [
     synonyms: [/container/i],
   },
   {
+    canonical: 'Conventional Commits',
+    categories: ['Concepts', 'DevOps & Build & CI/CD'],
+    related: ['Git', 'SemVer'],
+    synonyms: [/^conventional commits?$/i],
+  },
+  {
     canonical: 'Cordova',
     categories: ['DevOps & Build & CI/CD'],
     related: ['CI/CD', 'Intel XDK'],
@@ -639,6 +650,19 @@ const INTERNAL_TAXONOMY = [
     categories: ['Backend', 'Cloud & Infrastructure'],
     parents: ['AWS'],
     synonyms: [/dynamo/i],
+  },
+  {
+    canonical: 'E2E Testing',
+    categories: ['Concepts', 'Testing and QA'],
+    children: ['Playwright'],
+    parents: ['Testing'],
+    related: ['UI Testing'],
+    synonyms: [
+      'e2e testing',
+      'e2e tests',
+      'end-to-end testing',
+      'end-to-end tests',
+    ],
   },
   {
     canonical: 'Eclipse EMF',
@@ -793,7 +817,7 @@ const INTERNAL_TAXONOMY = [
     canonical: 'Git',
     categories: ['DevOps & Build & CI/CD'],
     children: ['BitBucket', 'GitHub', 'GitLab'],
-    related: ['CI/CD', 'SVN', 'TFS'],
+    related: ['CI/CD', 'Conventional Commits', 'SVN', 'TFS'],
   },
   {
     canonical: 'GitHub Actions',
@@ -1171,7 +1195,7 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'npm',
     categories: ['DevOps & Build & CI/CD'],
-    related: ['CI/CD'],
+    related: ['CI/CD', 'SemVer'],
   },
   {
     canonical: 'Nx',
@@ -1239,6 +1263,12 @@ const INTERNAL_TAXONOMY = [
     categories: ['Frontend', 'Tools & Libraries'],
     includes: ['JavaScript', 'WebGL'],
     parents: ['Game Development'],
+  },
+  {
+    canonical: 'Playwright',
+    categories: ['Testing and QA', 'Tools & Libraries'],
+    parents: ['E2E Testing'],
+    related: ['UI Testing'],
   },
   {
     canonical: 'Polly',
@@ -1372,6 +1402,12 @@ const INTERNAL_TAXONOMY = [
     related: ['SASS'],
   },
   {
+    canonical: 'SemVer',
+    categories: ['Concepts', 'DevOps & Build & CI/CD'],
+    related: ['Conventional Commits', 'npm'],
+    synonyms: [/^semver$/i, /semantic versioning/i],
+  },
+  {
     canonical: 'Sensor Fusion',
     categories: ['Concepts'],
     parents: ['Artificial Intelligence'],
@@ -1456,6 +1492,7 @@ const INTERNAL_TAXONOMY = [
     children: [
       'chai',
       'Custom Test Framework',
+      'E2E Testing',
       'FRUIT',
       'Jasmine',
       'Jest',
@@ -1521,7 +1558,7 @@ const INTERNAL_TAXONOMY = [
     categories: ['Concepts', 'Testing and QA'],
     children: ['Capture-and-Replay', 'Cypress', 'QF-Test', 'Widget Trees'],
     parents: ['Testing'],
-    related: ['Puppeteer'],
+    related: ['E2E Testing', 'Puppeteer'],
   },
   {
     canonical: 'UML state machine',
