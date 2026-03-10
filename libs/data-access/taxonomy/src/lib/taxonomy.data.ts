@@ -818,6 +818,7 @@ const INTERNAL_TAXONOMY = [
     categories: ['DevOps & Build & CI/CD'],
     children: ['BitBucket', 'GitHub', 'GitLab'],
     related: ['CI/CD', 'Conventional Commits', 'SVN', 'TFS'],
+    synonyms: [/^git$/i],
   },
   {
     canonical: 'GitHub Actions',
@@ -844,6 +845,7 @@ const INTERNAL_TAXONOMY = [
     children: ['GitHub Actions', 'GitHub API'],
     parents: ['Git'],
     related: ['CI/CD'],
+    synonyms: [/^github$/i],
   },
   {
     canonical: 'GitLab CI',
