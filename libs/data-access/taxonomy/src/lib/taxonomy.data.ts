@@ -41,6 +41,7 @@ type InternalTagName =
   | 'CloudFormation'
   | 'Cloud Platforms'
   | 'CloudWatch'
+  | 'Component Library'
   | 'Computer Graphics'
   | 'Computer Vision'
   | 'Confluence'
@@ -49,6 +50,7 @@ type InternalTagName =
   | 'Conventional Commits'
   | 'Cordova'
   | 'CSS'
+  | 'Custom Elements'
   | 'Custom Game Engine'
   | 'Custom Scripts'
   | 'Custom Test Framework'
@@ -124,6 +126,7 @@ type InternalTagName =
   | 'Karma'
   | 'Kubernetes'
   | 'Lighthouse'
+  | 'Lit'
   | 'Lodash'
   | 'Maven'
   | 'Micro Frontends'
@@ -183,6 +186,7 @@ type InternalTagName =
   | 'Sensor Fusion'
   | 'Sentry'
   | 'Shader programming'
+  | 'Shadow DOM'
   | 'Software Architecture'
   | 'Software Design'
   | 'Spacer'
@@ -190,6 +194,7 @@ type InternalTagName =
   | 'Spring Boot'
   | 'SQL'
   | 'Stencil'
+  | 'Storybook'
   | 'Sublime Text'
   | 'SVN'
   | 'Swiper'
@@ -544,6 +549,11 @@ const INTERNAL_TAXONOMY = [
     parents: ['AWS'],
   },
   {
+    canonical: 'Component Library',
+    categories: ['Concepts', 'Frontend'],
+    related: ['Fractal', 'Storybook', 'Web Components'],
+  },
+  {
     canonical: 'Computer Graphics',
     categories: ['Concepts'],
     children: ['2D', '3D', 'HTML Canvas', 'OpenGL', 'Shader programming'],
@@ -593,6 +603,12 @@ const INTERNAL_TAXONOMY = [
     categories: ['Frontend'],
     related: ['SASS', 'SCSS'],
     synonyms: [/^css/i],
+  },
+  {
+    canonical: 'Custom Elements',
+    categories: ['Frontend'],
+    parents: ['Web Components'],
+    related: ['Shadow DOM'],
   },
   {
     canonical: 'Custom Game Engine',
@@ -1083,6 +1099,13 @@ const INTERNAL_TAXONOMY = [
     related: ['Web Vitals'],
   },
   {
+    canonical: 'Lit',
+    categories: ['Frontend', 'Tools & Libraries'],
+    includes: ['Web Components'],
+    related: ['Custom Elements', 'Shadow DOM', 'Stencil'],
+    synonyms: [/^lit$/i, /lit-html/i],
+  },
+  {
     canonical: 'Lodash',
     categories: ['Tools & Libraries'],
     includes: ['JavaScript'],
@@ -1425,6 +1448,12 @@ const INTERNAL_TAXONOMY = [
     related: ['GLSL', 'WebGL'],
   },
   {
+    canonical: 'Shadow DOM',
+    categories: ['Frontend'],
+    parents: ['Web Components'],
+    related: ['Custom Elements'],
+  },
+  {
     canonical: 'Software Architecture',
     categories: ['Concepts'],
     children: ['Entity Component System'],
@@ -1458,7 +1487,13 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'Stencil',
     categories: ['Frontend', 'Tools & Libraries'],
-    related: ['Fractal', 'TypeScript', 'Web Components'],
+    includes: ['TypeScript', 'Web Components'],
+    related: ['Component Library', 'Fractal', 'Storybook'],
+  },
+  {
+    canonical: 'Storybook',
+    categories: ['Frontend', 'Tools & Libraries'],
+    related: ['Component Library', 'Web Components'],
   },
   {
     canonical: 'Sublime Text',
@@ -1621,6 +1656,7 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'Web Components',
     categories: ['Concepts', 'Frontend'],
+    children: ['Custom Elements', 'Shadow DOM'],
   },
   {
     canonical: 'Web Development',
