@@ -31,12 +31,6 @@
       "@portfolio/page-legal": ["libs/feature/page-legal/src/index.ts"],
       "@portfolio/project-list": ["libs/feature/project-list/src/index.ts"],
       "@portfolio/projects": ["libs/data-access/projects/src/index.ts"],
-      "@portfolio/proof-of-concept": [
-        "libs/data-access/proof-of-concept/src/index.ts"
-      ],
-      "@portfolio/proof-of-concept-webworker": [
-        "libs/data-access/proof-of-concept-webworker/src/index.ts"
-      ],
       "@portfolio/search-engine-angular": [
         "libs/data-access/search-engine-angular/src/index.ts"
       ],
