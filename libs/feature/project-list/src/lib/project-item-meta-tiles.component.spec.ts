@@ -19,12 +19,17 @@ describe('ProjectItemMetaTilesComponent', () => {
     technologies: ['Angular', 'TypeScript'],
     role: 'Developer',
     team: 'Development Team',
+    teamSize: 3,
     fromTo: '2024-01-01 to 2024-12-31',
     duration: '12 months',
     location: 'Remote',
     workMode: 'Remote',
     company: 'Test Company',
     industry: 'Technology',
+    engagementType: 'Client',
+    commercialContext: 'Paid',
+    usageScope: 'Public',
+    maturity: 'Production',
   });
 
   beforeEach(async () => {

@@ -1,7 +1,7 @@
 import { MemoizeAllArgs } from '@portfolio/memoize';
 import { Tag } from '@portfolio/taxonomy';
 
-import type { ProjectData } from './project.data';
+import type { ProjectData } from './project.types';
 
 export type ProjectDTOWithoutTechnologies = Omit<ProjectData, 'technologies'>;
 export class AnalyzableProject {

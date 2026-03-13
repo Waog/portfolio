@@ -29,6 +29,7 @@ type Story = StoryObj<ProjectItemMetaTilesComponent>;
 const mockProjectData: Project = {
   role: 'Project Manager & Full-Stack Developer',
   team: 'Solo development',
+  teamSize: 1,
   fromTo: '08/2023 – Present',
   duration: '1 year 10 months',
   location: 'Remote',
@@ -48,6 +49,10 @@ const mockProjectData: Project = {
     partialMatches: [],
     nonMatches: [],
   },
+  engagementType: 'Self-Initiated',
+  commercialContext: 'Indirect',
+  usageScope: 'Self',
+  maturity: 'Prototype',
 };
 
 export const Default: Story = {

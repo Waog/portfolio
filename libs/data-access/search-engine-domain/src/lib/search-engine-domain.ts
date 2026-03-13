@@ -11,6 +11,13 @@ import {
   SearchEngineDomainChunkResult,
   SearchEngineDomainResult,
 } from './search-engine-domain.types';
+import {
+  commercialContextWeights,
+  engagementTypeWeights,
+  maturityWeights,
+  teamSizeWeights,
+  usageScopeWeights,
+} from './search-engine-order-weights';
 
 type ProjectItems = { [projectId: string]: ProjectItem };
 
@@ -307,8 +314,28 @@ export class SearchEngineDomain {
   }
 
   private finalizeProjectRankingScore(projectItem: ProjectItem): void {
-    projectItem.rankingScore =
+    const nonWeightedRankingScore =
       projectItem.fullMatches.length * 1000 + projectItem.partialMatches.length;
+
+    projectItem.rankingScore =
+      nonWeightedRankingScore *
+      this.getProjectRankingWeight(projectItem.project);
+  }
+
+  private getProjectRankingWeight(project: AnalyzableProject): number {
+    const projectData = project.toDtoWithoutTechnologies();
+
+    return (
+      this.getTeamSizeWeight(projectData.teamSize) *
+      engagementTypeWeights[projectData.engagementType] *
+      commercialContextWeights[projectData.commercialContext] *
+      usageScopeWeights[projectData.usageScope] *
+      maturityWeights[projectData.maturity]
+    );
+  }
+
+  private getTeamSizeWeight(teamSize: number): number {
+    return teamSizeWeights[teamSize] ?? teamSizeWeights.Else;
   }
 
   private finalizeAddSkillsWithoutProjects(

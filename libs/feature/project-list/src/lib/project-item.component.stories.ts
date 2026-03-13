@@ -75,12 +75,17 @@ const mockProject: Project = {
   },
   role: 'Full-Stack Developer',
   team: 'Solo Project',
+  teamSize: 1,
   fromTo: 'Jan 2024 - Present',
   duration: '6+ months',
   location: 'Berlin, Germany',
   workMode: 'Remote',
   company: 'Personal Project',
   industry: 'Technology',
+  engagementType: 'Self-Initiated',
+  commercialContext: 'Indirect',
+  usageScope: 'Self',
+  maturity: 'Prototype',
 };
 
 export const Default: Story = {
