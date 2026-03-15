@@ -17,6 +17,7 @@ import {
   durationWeights,
   engagementTypeWeights,
   maturityWeights,
+  projectSpecificWeights,
   teamSizeWeights,
   usageScopeWeights,
 } from './search-engine-order-weights';
@@ -333,8 +334,8 @@ export class SearchEngineDomain {
       commercialContextWeights[projectData.commercialContext] *
       usageScopeWeights[projectData.usageScope] *
       maturityWeights[projectData.maturity] *
-      this.getDurationWeight(projectData.duration)
-      // TODO #75: add lower weight for the general 20+ years "freelancer" experience "project"
+      this.getDurationWeight(projectData.duration) *
+      (projectSpecificWeights[projectData.id] ?? 1)
     );
   }
 

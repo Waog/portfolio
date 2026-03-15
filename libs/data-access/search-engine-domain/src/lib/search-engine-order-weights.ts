@@ -45,3 +45,12 @@ export const durationWeights: Record<string, number> = {
   '1 month': 0.85,
   Else: 0.8,
 };
+
+export const projectSpecificWeights: Record<string, number> = {
+  /**
+   * The project `Freelancing IT Professional` isn't a real project, but a general summary of the whole IT career.
+   * It should normally be displayed lower than the real projects, but if search terms match the general experience
+   * better, it should still not be forced to the bottom of the search results.
+   */
+  'freelancing-it-professional': 0.7,
+};
