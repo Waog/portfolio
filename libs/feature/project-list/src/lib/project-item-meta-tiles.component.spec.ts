@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { AnalyzableProject } from '@portfolio/projects';
+import { Project } from '@portfolio/search-engine-domain';
 
 import { ProjectItemMetaTilesComponent } from './project-item-meta-tiles.component';
 
@@ -7,25 +7,17 @@ describe('ProjectItemMetaTilesComponent', () => {
   let component: ProjectItemMetaTilesComponent;
   let fixture: ComponentFixture<ProjectItemMetaTilesComponent>;
 
-  const mockProject: AnalyzableProject = new AnalyzableProject({
-    id: 'test-project',
-    title: 'Test Project',
-    projectType: 'Web Application',
-    compactDescription: 'A test project for unit testing',
-    keyAchievements: 'Successfully implemented testing',
-    fullDescription: 'This is a full description of the test project',
-    features: ['Feature 1', 'Feature 2'],
-    highlights: ['Highlight 1', 'Highlight 2'],
-    technologies: ['Angular', 'TypeScript'],
+  const mockProject: Partial<Project> = {
     role: 'Developer',
     team: 'Development Team',
-    fromTo: '2024-01-01 to 2024-12-31',
-    duration: '12 months',
+    fromText: '01/2024',
+    toText: '06/2025',
+    durationText: '1+ year',
     location: 'Remote',
     workMode: 'Remote',
     company: 'Test Company',
     industry: 'Technology',
-  });
+  } as Partial<Project>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -56,8 +48,8 @@ describe('ProjectItemMetaTilesComponent', () => {
 
   it('should display duration and time information', () => {
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.textContent).toContain('2024-01-01 to 2024-12-31');
-    expect(compiled.textContent).toContain('12 months');
+    expect(compiled.textContent).toContain('01/2024 - 06/2025');
+    expect(compiled.textContent).toContain('1+ year');
   });
 
   it('should display work mode and location information', () => {

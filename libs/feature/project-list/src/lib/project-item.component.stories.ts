@@ -45,7 +45,6 @@ export default meta;
 type Story = StoryObj<ProjectItemComponent>;
 
 const mockProject: Project = {
-  id: 'angular-portfolio',
   title: 'Portfolio Website Development',
   projectType: 'Web Application',
   compactDescription:
@@ -75,13 +74,14 @@ const mockProject: Project = {
   },
   role: 'Full-Stack Developer',
   team: 'Solo Project',
-  fromTo: 'Jan 2024 - Present',
-  duration: '6+ months',
+  fromText: '01/2024',
+  toText: 'Present',
+  durationText: '2+ years',
   location: 'Berlin, Germany',
   workMode: 'Remote',
   company: 'Personal Project',
   industry: 'Technology',
-};
+} as Partial<Project> as Project;
 
 export const Default: Story = {
   args: {

@@ -27,28 +27,16 @@ export default meta;
 type Story = StoryObj<ProjectItemMetaTilesComponent>;
 
 const mockProjectData: Project = {
-  role: 'Project Manager & Full-Stack Developer',
-  team: 'Solo development',
-  fromTo: '08/2023 – Present',
-  duration: '1 year 10 months',
+  role: 'Developer',
+  team: 'Development Team',
+  fromText: '01/2024',
+  toText: '12/2024',
+  durationText: '1 year',
   location: 'Remote',
   workMode: 'Remote',
   company: 'Oliver Stadie IT GmbH',
   industry: 'Education Technology',
-  id: '',
-  title: '',
-  projectType: '',
-  compactDescription: '',
-  keyAchievements: '',
-  fullDescription: '',
-  features: [],
-  highlights: [],
-  technologies: {
-    fullMatches: [],
-    partialMatches: [],
-    nonMatches: [],
-  },
-};
+} as Partial<Project> as Project;
 
 export const Default: Story = {
   args: {
@@ -63,8 +51,6 @@ export const LongerTexts: Story = {
       ...mockProjectData,
       role: 'Senior Frontend Web and App Developer',
       team: 'Cross-functional Team (5 members)',
-      fromTo: 'Mar 2023 - Dec 2023',
-      duration: '10 months',
       location: 'Multiple Cities',
       workMode: 'Hybrid',
       company: 'FinTech Startup in Accelerator Phase',

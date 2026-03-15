@@ -15,10 +15,10 @@
     <mat-icon [class.compact]="compact()">schedule</mat-icon>
     <div class="tile-content">
       <div class="primary-text" [class.compact]="compact()">
-        {{ project().fromTo }}
+        {{ project().fromText }} - {{ project().toText }}
       </div>
       <div class="secondary-text" [class.compact]="compact()">
-        {{ project().duration }}
+        {{ project().durationText }}
       </div>
     </div>
   </section>
