@@ -18,8 +18,10 @@ export interface ProjectData {
   role: string;
   team: string;
   teamSize: number;
-  fromTo: string;
-  duration: string;
+  /** inclusive, start date of the project */
+  from: Date;
+  /** exclusive, end date of the project */
+  to?: Date;
   location: string;
   workMode: string;
   company: string;

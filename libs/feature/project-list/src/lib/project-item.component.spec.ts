@@ -23,12 +23,21 @@ describe('ProjectItemComponent', () => {
     },
     role: 'Developer',
     team: 'Development Team',
-    fromTo: '2024-01-01 to 2024-12-31',
-    duration: '12 months',
+    from: new Date(Date.UTC(2024, 0)),
+    fromText: '01/2024',
+    to: new Date(Date.UTC(2024, 11)),
+    toText: '12/2024',
+    duration: { years: 1 },
+    durationText: '1 year',
     location: 'Remote',
     workMode: 'Remote',
     company: 'Test Company',
     industry: 'Technology',
+    teamSize: 3,
+    engagementType: 'Client',
+    commercialContext: 'Paid',
+    usageScope: 'Public',
+    maturity: 'Production',
   };
 
   beforeEach(async () => {

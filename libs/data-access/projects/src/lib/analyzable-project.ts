@@ -1,14 +1,56 @@
 import { MemoizeAllArgs } from '@portfolio/memoize';
 import { Tag } from '@portfolio/taxonomy';
+import { Duration, formatDistance, intervalToDuration, sub } from 'date-fns';
 
 import type { ProjectData } from './project.types';
 
-export type ProjectDTOWithoutTechnologies = Omit<ProjectData, 'technologies'>;
+export type ProjectDTOWithoutTechnologies = Omit<ProjectData, 'technologies'> &
+  TimeFrame;
+
+type TimeFrame = {
+  fromText: string;
+  toText: string;
+  duration: Duration;
+  durationText: string;
+};
+
 export class AnalyzableProject {
   private readonly data: ProjectData;
 
+  private timeFrame: TimeFrame = {} as TimeFrame;
+
   constructor(data: ProjectData) {
     this.data = data;
+    this.initTimeFrame(data);
+  }
+
+  private initTimeFrame(data: ProjectData) {
+    this.timeFrame.fromText = this.toDateText(data.from);
+    // NOTE: the project `to` date is exclusive. subtract one second to simulate the last inclusive point in time.
+    // since we want to display the last month working in the project inclusive.
+    const toInclusive: Date | undefined = data.to
+      ? sub(data.to, { seconds: 1 })
+      : undefined;
+    this.timeFrame.toText = toInclusive
+      ? this.toDateText(toInclusive)
+      : 'Present';
+    this.timeFrame.duration = intervalToDuration({
+      start: data.from,
+      end: data.to || new Date(),
+    });
+    this.timeFrame.durationText = formatDistance(
+      data.to || new Date(),
+      data.from
+    )
+      .replace('about ', '~')
+      .replace('almost ', '~')
+      .replace(/over (\d+)/, '$1+');
+  }
+
+  private toDateText(date: Date): string {
+    return `${(date.getUTCMonth() + 1)
+      .toString()
+      .padStart(2, '0')}/${date.getUTCFullYear()}`;
   }
 
   get id() {
@@ -41,11 +83,11 @@ export class AnalyzableProject {
   get team() {
     return this.data.team;
   }
-  get fromTo() {
-    return this.data.fromTo;
+  get from() {
+    return this.data.from;
   }
-  get duration() {
-    return this.data.duration;
+  get to() {
+    return this.data.to;
   }
   get location() {
     return this.data.location;
@@ -81,6 +123,9 @@ export class AnalyzableProject {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { technologies, ...rest } = this.data;
 
-    return rest;
+    return {
+      ...rest,
+      ...this.timeFrame,
+    };
   }
 }
