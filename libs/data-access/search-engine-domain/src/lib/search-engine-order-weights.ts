@@ -37,3 +37,11 @@ export const maturityWeights: Record<Maturity, number> = {
   Prototype: 0.85,
   'Proof-Of-Concept': 0.8,
 };
+
+export const durationWeights: Record<string, number> = {
+  '1+ year': 1,
+  '6+ months': 0.95,
+  '2+ months': 0.9,
+  '1 month': 0.85,
+  Else: 0.8,
+};

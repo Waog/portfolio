@@ -6,6 +6,7 @@ import {
   TechnologyMatcher,
 } from '@portfolio/projects';
 import { Tag } from '@portfolio/taxonomy';
+import { Duration } from 'date-fns';
 
 import {
   SearchEngineDomainChunkResult,
@@ -13,6 +14,7 @@ import {
 } from './search-engine-domain.types';
 import {
   commercialContextWeights,
+  durationWeights,
   engagementTypeWeights,
   maturityWeights,
   teamSizeWeights,
@@ -330,12 +332,28 @@ export class SearchEngineDomain {
       engagementTypeWeights[projectData.engagementType] *
       commercialContextWeights[projectData.commercialContext] *
       usageScopeWeights[projectData.usageScope] *
-      maturityWeights[projectData.maturity]
+      maturityWeights[projectData.maturity] *
+      this.getDurationWeight(projectData.duration)
+      // TODO #75: add lower weight for the general 20+ years "freelancer" experience "project"
     );
   }
 
   private getTeamSizeWeight(teamSize: number): number {
     return teamSizeWeights[teamSize] ?? teamSizeWeights.Else;
+  }
+
+  private getDurationWeight(duration: Duration): number {
+    if (duration.years ?? 0 >= 1) {
+      return durationWeights['1+ year'];
+    } else if (duration.months ?? 0 >= 6) {
+      return durationWeights['6+ months'];
+    } else if (duration.months ?? 0 >= 2) {
+      return durationWeights['2+ months'];
+    } else if (duration.months ?? 0 >= 1) {
+      return durationWeights['1 month'];
+    } else {
+      return durationWeights['Else'];
+    }
   }
 
   private finalizeAddSkillsWithoutProjects(
