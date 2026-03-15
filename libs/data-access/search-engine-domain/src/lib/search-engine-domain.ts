@@ -18,6 +18,7 @@ import {
   engagementTypeWeights,
   maturityWeights,
   projectSpecificWeights,
+  searchTermOrderWeights,
   teamSizeWeights,
   usageScopeWeights,
 } from './search-engine-order-weights';
@@ -25,12 +26,14 @@ import {
 type ProjectItems = { [projectId: string]: ProjectItem };
 
 type ProjectItem = {
-  fullMatches: Tag[];
-  partialMatches: Tag[];
-  nonMatches: Tag[];
+  fullMatches: TagWithSearchTerm[];
+  partialMatches: TagWithSearchTerm[];
+  nonMatches: TagWithSearchTerm[];
   rankingScore: number;
   project: AnalyzableProject;
 };
+
+type TagWithSearchTerm = { tag: Tag; searchTerm?: string };
 
 type SkillCategoryItems = {
   [category: string]: SkillCategoryItem;
@@ -54,6 +57,7 @@ export class SearchEngineDomain {
   private technologyMatcher = new TechnologyMatcher();
 
   private activeSearchTerms: string[] = [];
+  private activeSearchTermWeights: { [searchTerm: string]: number } = {};
   private activeMatchesOverview: MatchesOverviewMap = {};
   private activeProjectItems: ProjectItems = {};
   private activeSkillCategoryItems: SkillCategoryItems = {};
@@ -72,11 +76,26 @@ export class SearchEngineDomain {
 
   initialize(searchTerms: string[]): void {
     this.activeSearchTerms = [...searchTerms];
+    this.activeSearchTermWeights = this.initSearchTermWeights(searchTerms);
     this.activeMatchesOverview = this.initMatchesOverview(searchTerms);
     this.activeProjectItems = {};
     this.activeSkillCategoryItems = {};
     this.activeProjectIndex = 0;
     this.activeProcessInitialized = true;
+  }
+
+  private initSearchTermWeights(searchTerms: string[]): {
+    [searchTerm: string]: number;
+  } {
+    const result: { [searchTerm: string]: number } = {};
+    for (let i = 0; i < searchTerms.length; i++) {
+      const percent = i / searchTerms.length;
+      // interpolate between searchTermOrderWeights.first and searchTermOrderWeights.last based on percent
+      result[searchTerms[i]] =
+        (1 - percent) * searchTermOrderWeights.first +
+        percent * searchTermOrderWeights.last;
+    }
+    return result;
   }
 
   processChunk(): SearchEngineDomainChunkResult {
@@ -174,7 +193,12 @@ export class SearchEngineDomain {
           searchTag: searchTerm,
         });
         bestMatchType = this.getBetterMatchType(bestMatchType, matchType);
-        this.updateProjectItem(projectItems[project.id], technology, matchType);
+        this.updateProjectItem(
+          projectItems[project.id],
+          technology,
+          matchType,
+          searchTerm
+        );
         this.updateSkillCategoryItems(
           skillCategoryItems,
           technology,
@@ -213,7 +237,7 @@ export class SearchEngineDomain {
     projectItems[project.id] = {
       fullMatches: [],
       partialMatches: [],
-      nonMatches: project.technologies,
+      nonMatches: project.technologies.map(tag => ({ tag })),
       rankingScore: 0,
       project,
     };
@@ -233,28 +257,32 @@ export class SearchEngineDomain {
 
   private updateProjectItem(
     projectItem: ProjectItem,
-    tag: Tag | null,
-    matchType: MatchType
+    tech: Tag | null,
+    matchType: MatchType,
+    searchTerm: string
   ): void {
-    if (!tag) {
+    if (!tech) {
       return;
     }
-    if (matchType === 'full' && !projectItem.fullMatches.includes(tag)) {
-      projectItem.fullMatches.push(tag);
+    if (
+      matchType === 'full' &&
+      !projectItem.fullMatches.find(t => t.tag === tech)
+    ) {
+      projectItem.fullMatches.push({ tag: tech, searchTerm });
       projectItem.partialMatches = projectItem.partialMatches.filter(
-        t => t.canonical !== tag.canonical
+        t => t.tag !== tech
       );
       projectItem.nonMatches = projectItem.nonMatches.filter(
-        t => t.canonical !== tag.canonical
+        t => t.tag !== tech
       );
     } else if (
       matchType === 'indirect' &&
-      !projectItem.partialMatches.includes(tag) &&
-      !projectItem.fullMatches.includes(tag)
+      !projectItem.partialMatches.find(t => t.tag === tech) &&
+      !projectItem.fullMatches.find(t => t.tag === tech)
     ) {
-      projectItem.partialMatches.push(tag);
+      projectItem.partialMatches.push({ tag: tech, searchTerm });
       projectItem.nonMatches = projectItem.nonMatches.filter(
-        t => t.canonical !== tag.canonical
+        t => t.tag !== tech
       );
     }
   }
@@ -317,12 +345,40 @@ export class SearchEngineDomain {
   }
 
   private finalizeProjectRankingScore(projectItem: ProjectItem): void {
-    const nonWeightedRankingScore =
-      projectItem.fullMatches.length * 1000 + projectItem.partialMatches.length;
-
     projectItem.rankingScore =
-      nonWeightedRankingScore *
+      this.getSearchTermMatchingWeight(projectItem) *
       this.getProjectRankingWeight(projectItem.project);
+  }
+
+  getSearchTermMatchingWeight(projectItem: ProjectItem) {
+    const FULL_MATCH_MULTIPLIER = 1000;
+    const PARTIAL_MATCH_MULTIPLIER = 1;
+    let result = 0;
+    for (const fullMatchTag of projectItem.fullMatches) {
+      if (!fullMatchTag.searchTerm) {
+        console.warn(
+          'full match tag without attached search term:',
+          fullMatchTag.tag.canonical
+        );
+        continue;
+      }
+      result +=
+        FULL_MATCH_MULTIPLIER *
+        this.activeSearchTermWeights[fullMatchTag.searchTerm];
+    }
+    for (const partialMatchTag of projectItem.partialMatches) {
+      if (!partialMatchTag.searchTerm) {
+        console.warn(
+          'partial match tag without attached search term:',
+          partialMatchTag.tag.canonical
+        );
+        continue;
+      }
+      result +=
+        PARTIAL_MATCH_MULTIPLIER *
+        this.activeSearchTermWeights[partialMatchTag.searchTerm];
+    }
+    return result;
   }
 
   private getProjectRankingWeight(project: AnalyzableProject): number {
@@ -401,9 +457,9 @@ export class SearchEngineDomain {
         id: projectId,
         totalScore: item.rankingScore,
         technologies: {
-          fullMatches: item.fullMatches.map(tag => tag.canonical),
-          partialMatches: item.partialMatches.map(tag => tag.canonical),
-          nonMatches: item.nonMatches.map(tag => tag.canonical),
+          fullMatches: item.fullMatches.map(({ tag }) => tag.canonical),
+          partialMatches: item.partialMatches.map(({ tag }) => tag.canonical),
+          nonMatches: item.nonMatches.map(({ tag }) => tag.canonical),
         },
       }));
   }

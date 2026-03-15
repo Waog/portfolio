@@ -5,6 +5,15 @@ import {
   UsageScope,
 } from '@portfolio/projects';
 
+/**
+ * Search terms are weighted by their order of appearance.
+ * First and last weight are defined, the rest is interpolated linearly.
+ */
+export const searchTermOrderWeights: Record<'first' | 'last', number> = {
+  first: 1,
+  last: 0.6,
+};
+
 export const teamSizeWeights: Record<number | 'Else', number> = {
   Else: 1,
   2: 0.95,
