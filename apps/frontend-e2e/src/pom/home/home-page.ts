@@ -1,5 +1,6 @@
 import { type Page } from '@playwright/test';
 
+import { AboutMe } from './about-me';
 import { TagInput } from './tag-input';
 
 export class HomePage {
@@ -11,6 +12,10 @@ export class HomePage {
 
   tagInput() {
     return new TagInput(this.page);
+  }
+
+  aboutMe() {
+    return new AboutMe(this.page);
   }
 
   currentUrl(): URL {

@@ -1,55 +1,47 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from '../fixtures/app.fixture';
 
 test.describe('About Me Section', () => {
-  test('displays the about me section', async ({ page }) => {
-    await page.goto('/');
-    const aboutMeSection = await getAboutMeSection(page);
-    await expect(aboutMeSection.getByText('Oliver Stadie')).toBeVisible();
+  test('displays the about me section', async ({ homePage }) => {
+    const aboutMe = homePage.aboutMe();
+    await expect(aboutMe.locator).toBeVisible();
+    await expect(aboutMe.locator).toContainText('Oliver Stadie');
   });
 
-  test('displays profile image', async ({ page }) => {
-    await page.goto('/');
-    const aboutMeSection = await getAboutMeSection(page);
-
-    await expect(
-      aboutMeSection.locator('img[alt*="profile photo" i]')
-    ).toBeVisible();
+  test('displays profile image', async ({ homePage }) => {
+    const aboutMe = homePage.aboutMe();
+    await expect(aboutMe.heroProfileImage).toBeVisible();
   });
 
-  test('displays hero content', async ({ page }) => {
-    await page.goto('/');
-    const hero = await getSubSection(page, /Oliver Stadie.*Well-organized/);
-
-    await expect(hero.getByText('Oliver Stadie')).toBeVisible();
-    await expect(
-      hero.getByText('Full-Stack Web and App Developer')
-    ).toBeVisible();
-    await expect(hero.getByText('Berlin')).toBeVisible();
-    await expect(hero.getByText('Germany')).toBeVisible();
-    await expect(
-      hero.getByText(/Well-organized.*professional.*business/s)
-    ).toBeVisible();
-  });
-
-  test('displays Personal Information', async ({ page }) => {
-    await page.goto('/');
-    const personalInfo = await getSubSection(
-      page,
-      /Personal Information.*1984.*German/
+  test('displays hero content', async ({ homePage }) => {
+    const aboutMe = homePage.aboutMe();
+    await expect(aboutMe.hero).toBeVisible();
+    await expect(aboutMe.heroName).toHaveText('Oliver Stadie');
+    await expect(aboutMe.heroRole).toHaveText(
+      'Full-Stack Web and App Developer'
     );
-
-    await expect(personalInfo.getByText('Personal Information')).toBeVisible();
-    await expect(personalInfo.getByText('1984')).toBeVisible();
-    await expect(personalInfo.getByText(/^German$/)).toBeVisible();
-    await expect(personalInfo.getByText('English')).toBeVisible();
-    await expect(personalInfo.getByText('Chinese')).toBeVisible();
+    await expect(aboutMe.heroLocation).toHaveText('Berlin (Germany)');
+    await expect(aboutMe.heroSummary).toHaveText(
+      /Well-organized.*professional.*business/s
+    );
   });
 
-  test('displays Education', async ({ page }) => {
-    await page.goto('/');
-    const education = await getSubSection(page, /Education.*Very Good/);
+  test('displays Personal Information', async ({ homePage }) => {
+    const aboutMe = homePage.aboutMe();
+    await expect(aboutMe.personalInfo).toBeVisible();
+    await expect(aboutMe.personalInfoTitle).toHaveText('Personal Information');
+    await expect(aboutMe.personalInfoBirthYear).toContainText('1984');
+    await expect(aboutMe.personalInfoLanguageChips).toHaveCount(3);
+    await expect(aboutMe.personalInfoLanguageChip('German')).toBeVisible();
+    await expect(aboutMe.personalInfoLanguageChip('English')).toBeVisible();
+    await expect(aboutMe.personalInfoLanguageChip('Chinese')).toBeVisible();
+  });
 
-    await expect(education.getByText('Education')).toBeVisible();
+  test('displays Education', async ({ homePage }) => {
+    const aboutMe = homePage.aboutMe();
+    const education = aboutMe.education;
+
+    await expect(education).toBeVisible();
+    await expect(aboutMe.educationTitle).toHaveText('Education');
     // cSpell: disable-next-line
     await expect(education.getByText('Diplom Degree')).toBeVisible();
     await expect(education.getByText('Computer Science')).toBeVisible();
@@ -59,25 +51,29 @@ test.describe('About Me Section', () => {
     await expect(education.getByText('Engineering Science')).toBeVisible();
   });
 
-  test('displays Community & Writing', async ({ page }) => {
-    await page.goto('/');
-    const comAndWriting = await getSubSection(page, /Community.*Meetup.*Blog/);
+  test('displays Community & Writing', async ({ homePage }) => {
+    const aboutMe = homePage.aboutMe();
+    const comAndWriting = aboutMe.communityAndWriting;
 
-    await expect(comAndWriting.getByText('Community & Writing')).toBeVisible();
+    await expect(comAndWriting).toBeVisible();
+    await expect(aboutMe.communityAndWritingTitle).toHaveText(
+      'Community & Writing'
+    );
+
     await expect(comAndWriting.getByText('Meetup')).toBeVisible();
     await expect(comAndWriting.getByText('Founder & Organizer')).toBeVisible();
-    await expect(comAndWriting.getByText('Founder')).toBeVisible();
     await expect(comAndWriting.getByText('Blogger')).toBeVisible();
   });
 
-  test('displays Professional Focus', async ({ page }) => {
-    await page.goto('/');
-    const profFocus = await getSubSection(
-      page,
-      /Professional Focus.*planning.*testing/
+  test('displays Professional Focus', async ({ homePage }) => {
+    const aboutMe = homePage.aboutMe();
+    const profFocus = aboutMe.professionalFocus;
+
+    await expect(profFocus).toBeVisible();
+    await expect(aboutMe.professionalFocusTitle).toHaveText(
+      'Professional Focus'
     );
 
-    await expect(profFocus.getByText('Professional Focus')).toBeVisible();
     await expect(profFocus.getByText('experience')).toBeVisible();
     await expect(profFocus.getByText('planning')).toBeVisible();
     await expect(profFocus.getByText('design')).toBeVisible();
@@ -87,21 +83,3 @@ test.describe('About Me Section', () => {
     await expect(profFocus.getByText('maintain')).toBeVisible();
   });
 });
-
-async function getAboutMeSection(page: Page): Promise<Locator> {
-  const aboutMeSection = page.getByText(
-    /Oliver Stadie.*Personal Information.*Community & Writing/s
-  );
-  await expect(aboutMeSection).toBeVisible();
-  return aboutMeSection;
-}
-
-async function getSubSection(
-  page: Page,
-  content: string | RegExp
-): Promise<Locator> {
-  const aboutMeSection = await getAboutMeSection(page);
-  const subSection = aboutMeSection.getByText(content);
-  await expect(subSection).toBeVisible();
-  return subSection;
-}
