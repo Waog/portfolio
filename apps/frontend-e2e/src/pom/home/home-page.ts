@@ -1,6 +1,7 @@
 import { type Page } from '@playwright/test';
 
 import { AboutMe } from './about-me';
+import { ContactMe } from './contact-me';
 import { TagInput } from './tag-input';
 
 export class HomePage {
@@ -16,6 +17,10 @@ export class HomePage {
 
   aboutMe() {
     return new AboutMe(this.page);
+  }
+
+  contactMe() {
+    return new ContactMe(this.page);
   }
 
   currentUrl(): URL {
