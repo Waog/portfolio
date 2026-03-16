@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { DestroyRef, inject, Injectable } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
@@ -48,6 +49,7 @@ const initialState: State = { orderIds: null };
 export class ProjectListCustomOrderService {
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
+  private readonly location = inject(Location);
   private readonly searchEngineService = inject(SearchEngineService);
   private readonly destroyRef = inject(DestroyRef);
 
@@ -150,12 +152,13 @@ export class ProjectListCustomOrderService {
   }
 
   private navigateWithOrderParam(orderParam: string | null): void {
-    this.router.navigate([], {
+    const urlTree = this.router.createUrlTree([], {
       relativeTo: this.route,
       queryParams: { order: orderParam },
       queryParamsHandling: 'merge',
-      replaceUrl: true,
     });
+
+    this.location.replaceState(this.router.serializeUrl(urlTree));
   }
 }
 
