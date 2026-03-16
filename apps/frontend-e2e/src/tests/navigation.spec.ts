@@ -1,97 +1,85 @@
-import { expect, type Locator, type Page, test } from '@playwright/test';
+import { expect, test } from '../fixtures/app.fixture';
 
 test.describe('Navigation', () => {
-  test('navigates to Projects and checks URL', async ({ page }) => {
-    await page.goto('/');
-    const navigation = await getNavigation(page);
-    await navigation.getByText('Projects').click();
-    expect(page.url()).toContain('#projects');
+  test('is visible', async ({ navigation }) => {
+    await expect(navigation.locator).toBeVisible();
   });
 
-  test('navigates to Skills and checks URL', async ({ page }) => {
-    await page.goto('/');
-    const navigation = await getNavigation(page);
-    await navigation.getByText('Skills').click();
-    expect(page.url()).toContain('#skills');
+  test('navigates to Projects and updates URL', async ({
+    homePage,
+    navigation,
+    urlHelper,
+  }) => {
+    await navigation.getNavItem('Projects').click();
+    await expect(homePage.locator).toBeVisible();
+    expect(urlHelper.isHomePage()).toBe(true);
+    expect(urlHelper.hasProjectsFragment()).toBe(true);
   });
 
-  test('navigates to About Me and checks URL', async ({ page }) => {
-    await page.goto('/');
-    const navigation = await getNavigation(page);
-    await navigation.getByText('About me').click();
-    expect(page.url()).toContain('#about-me');
+  test('navigates to Skills and updates URL', async ({
+    homePage,
+    navigation,
+    urlHelper,
+  }) => {
+    await navigation.getNavItem('Skills').click();
+    await expect(homePage.locator).toBeVisible();
+    expect(urlHelper.isHomePage()).toBe(true);
+    expect(urlHelper.hasSkillsFragment()).toBe(true);
   });
 
-  test('navigates to Contact and checks URL', async ({ page }) => {
-    await page.goto('/');
-    const navigation = await getNavigation(page);
-    await navigation.getByText('Contact').click();
-    expect(page.url()).toContain('#contact');
+  test('navigates to About Me and updates URL', async ({
+    homePage,
+    navigation,
+    urlHelper,
+  }) => {
+    await navigation.getNavItem('About me').click();
+    await expect(homePage.locator).toBeVisible();
+    expect(urlHelper.isHomePage()).toBe(true);
+    expect(urlHelper.hasAboutMeFragment()).toBe(true);
+  });
+
+  test('navigates to Contact and updates URL', async ({
+    homePage,
+    navigation,
+    urlHelper,
+  }) => {
+    await navigation.getNavItem('Contact').click();
+    await expect(homePage.locator).toBeVisible();
+    expect(urlHelper.isHomePage()).toBe(true);
+    expect(urlHelper.hasContactFragment()).toBe(true);
   });
 });
 
 test.describe('Viewport Checks', () => {
-  test('checks if Projects section is in the viewport', async ({ page }) => {
-    await page.goto('/');
-    const navigation = await getNavigation(page);
-    await navigation.getByText('Projects').click();
-    const isInViewport = await isElementInViewport(page, '#projects');
-    expect(isInViewport).toBeTruthy();
+  test('checks if Projects section is in the viewport', async ({
+    homePage,
+    navigation,
+  }) => {
+    await navigation.getNavItem('Projects').click();
+    await expect(homePage.projectList().locator).toBeInViewport();
   });
 
-  test('checks if Skills section is in the viewport', async ({ page }) => {
-    await page.goto('/');
-    const navigation = await getNavigation(page);
-    await navigation.getByText('Skills').click();
-    const isInViewport = await isElementInViewport(page, '#skills');
-    expect(isInViewport).toBeTruthy();
+  test('checks if Skills section is in the viewport', async ({
+    homePage,
+    navigation,
+  }) => {
+    await navigation.getNavItem('Skills').click();
+    await expect(homePage.skills().locator).toBeInViewport();
   });
 
-  test('checks if About Me section is in the viewport', async ({ page }) => {
-    await page.goto('/');
-    const navigation = await getNavigation(page);
-    await navigation.getByText('About me').click();
-    const isInViewport = await isElementInViewport(page, '#about-me');
-    expect(isInViewport).toBeTruthy();
+  test('checks if About Me section is in the viewport', async ({
+    homePage,
+    navigation,
+  }) => {
+    await navigation.getNavItem('About me').click();
+    await expect(homePage.aboutMe().locator).toBeInViewport();
   });
 
-  test('checks if Contact section is in the viewport', async ({ page }) => {
-    await page.goto('/');
-    const navigation = await getNavigation(page);
-    await navigation.getByText('Contact').click();
-    const isInViewport = await isElementInViewport(page, '#contact');
-    expect(isInViewport).toBeTruthy();
+  test('checks if Contact section is in the viewport', async ({
+    homePage,
+    navigation,
+  }) => {
+    await navigation.getNavItem('Contact').click();
+    await expect(homePage.contactMe().locator).toBeInViewport();
   });
 });
-
-async function getNavigation(page: Page): Promise<Locator> {
-  const navigation = page.getByText(
-    /Oliver Stadie.*Portfolio.*Projects.*Skills.*About me.*Contact/s
-  );
-  await expect(navigation).toBeVisible();
-  return navigation;
-}
-
-async function isElementInViewport(
-  page: Page,
-  selector: string
-): Promise<boolean> {
-  await expect(page.locator(selector)).toBeVisible();
-
-  const isInViewportHandle = await page.waitForFunction(
-    selector => {
-      const el = document.querySelector(selector);
-      if (!el) return false;
-      const rect = el.getBoundingClientRect();
-      return (
-        rect.top >= 0 &&
-        rect.top <=
-          (window.innerHeight || document.documentElement.clientHeight)
-      );
-    },
-    selector,
-    { timeout: 1000 } // Wait for smooth scrolling to complete
-  );
-
-  return await isInViewportHandle.jsonValue();
-}

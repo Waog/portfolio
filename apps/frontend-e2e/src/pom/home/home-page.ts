@@ -1,11 +1,17 @@
-import { type Page } from '@playwright/test';
+import { Locator, type Page } from '@playwright/test';
 
 import { AboutMe } from './about-me';
 import { ContactMe } from './contact-me';
+import { ProjectList } from './project-list';
+import { Skills } from './skills';
 import { TagInput } from './tag-input';
 
 export class HomePage {
-  constructor(private page: Page) {}
+  readonly locator: Locator;
+
+  constructor(private page: Page) {
+    this.locator = page.locator('lib-home');
+  }
 
   async goto() {
     await this.page.goto('/');
@@ -13,6 +19,14 @@ export class HomePage {
 
   tagInput() {
     return new TagInput(this.page);
+  }
+
+  projectList() {
+    return new ProjectList(this.page);
+  }
+
+  skills() {
+    return new Skills(this.page);
   }
 
   aboutMe() {
