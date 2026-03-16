@@ -1,6 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable } from 'rxjs';
+import isEqual from 'lodash/isEqual';
+import { BehaviorSubject, distinctUntilChanged, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +11,9 @@ export class SearchTagService {
   private tagsSubject = new BehaviorSubject<string[]>([]);
 
   // Public observable for components to subscribe to
-  public readonly tags$: Observable<string[]> = this.tagsSubject.asObservable();
+  public readonly tags$: Observable<string[]> = this.tagsSubject
+    .asObservable()
+    .pipe(distinctUntilChanged((a, b) => isEqual(a, b)));
 
   constructor() {
     this.initializeFromUrl();

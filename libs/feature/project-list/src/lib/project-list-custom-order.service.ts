@@ -4,6 +4,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { SearchEngineService } from '@portfolio/search-engine-angular';
 import { Project } from '@portfolio/search-engine-domain';
+import { SearchTagService } from '@portfolio/search-tags';
+import isEqual from 'lodash/isEqual';
 import {
   combineLatest,
   distinctUntilChanged,
@@ -18,17 +20,19 @@ import {
   withLatestFrom,
 } from 'rxjs';
 
-// TODO: reset order when search terms change
-
 interface CustomOrderDiff {
   projectId: string;
   customIndex: number;
 }
 
-type UserAction = { type: 'up'; id: string } | { type: 'down'; id: string };
+type UserAction =
+  | { type: 'up'; id: string }
+  | { type: 'down'; id: string }
+  | { type: 'reset' };
 
 type Action =
   | { type: 'setOrderFromUrl'; orderIds: string[] | null }
+  | { type: 'reset' }
   | { type: 'up'; id: string; baseIds: string[] }
   | { type: 'down'; id: string; baseIds: string[] };
 
@@ -51,6 +55,7 @@ export class ProjectListCustomOrderService {
   private readonly route = inject(ActivatedRoute);
   private readonly location = inject(Location);
   private readonly searchEngineService = inject(SearchEngineService);
+  private readonly searchTagService = inject(SearchTagService);
   private readonly destroyRef = inject(DestroyRef);
 
   private readonly actions$ = new Subject<UserAction>();
@@ -74,6 +79,7 @@ export class ProjectListCustomOrderService {
 
   constructor() {
     this.setupUrlSyncEffect();
+    this.setupResetOnSearchTagChangeEffect();
   }
 
   /**
@@ -105,10 +111,14 @@ export class ProjectListCustomOrderService {
 
     const userAction$ = this.actions$.pipe(
       withLatestFrom(this.originalProjects$),
-      map(([action, projects]) => ({
-        ...action,
-        baseIds: projects.map(project => project.id),
-      }))
+      map(([action, projects]) =>
+        action.type === 'reset'
+          ? ({ type: 'reset' } as Action)
+          : {
+              ...action,
+              baseIds: projects.map(project => project.id),
+            }
+      )
     );
 
     return merge(urlAction$, userAction$).pipe(
@@ -151,6 +161,15 @@ export class ProjectListCustomOrderService {
       .subscribe();
   }
 
+  private setupResetOnSearchTagChangeEffect(): void {
+    this.searchTagService.tags$
+      .pipe(
+        tap(() => this.actions$.next({ type: 'reset' })),
+        takeUntilDestroyed(this.destroyRef)
+      )
+      .subscribe();
+  }
+
   private navigateWithOrderParam(orderParam: string | null): void {
     const urlTree = this.router.createUrlTree([], {
       relativeTo: this.route,
@@ -167,6 +186,10 @@ function reduceState(state: State, action: Action): State {
     return { orderIds: action.orderIds };
   }
 
+  if (action.type === 'reset') {
+    return { orderIds: null };
+  }
+
   const currentIds = normalizeOrderIds(action.baseIds, state.orderIds);
   const nextIds =
     action.type === 'up'
@@ -174,7 +197,7 @@ function reduceState(state: State, action: Action): State {
       : moveId(currentIds, action.id, 1);
 
   return {
-    orderIds: arraysEqual(nextIds, action.baseIds) ? null : nextIds,
+    orderIds: isEqual(nextIds, action.baseIds) ? null : nextIds,
   };
 }
 
@@ -194,7 +217,7 @@ function decodeOrderFromQuery(
     }
 
     const orderIds = applyCustomDiffsToIds(baseIds, customDiffs);
-    return arraysEqual(orderIds, baseIds) ? null : orderIds;
+    return isEqual(orderIds, baseIds) ? null : orderIds;
   } catch (error) {
     console.warn(
       `Failed to load custom order from URL. Order param: "${orderParam}". Error: ${
@@ -362,7 +385,7 @@ function arraysNullableEqual(
     return false;
   }
 
-  return arraysEqual(a, b);
+  return isEqual(a, b);
 }
 
 function areProjectArraysEqualById(
@@ -379,24 +402,6 @@ function areProjectArraysEqualById(
 
   for (let i = 0; i < a.length; i++) {
     if (a[i].id !== b[i].id) {
-      return false;
-    }
-  }
-
-  return true;
-}
-
-function arraysEqual(a: readonly string[], b: readonly string[]): boolean {
-  if (a === b) {
-    return true;
-  }
-
-  if (a.length !== b.length) {
-    return false;
-  }
-
-  for (let i = 0; i < a.length; i++) {
-    if (a[i] !== b[i]) {
       return false;
     }
   }
