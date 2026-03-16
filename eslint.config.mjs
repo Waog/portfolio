@@ -6,6 +6,15 @@ export default [
   ...nx.configs['flat/base'],
   ...nx.configs['flat/typescript'],
   ...nx.configs['flat/javascript'],
+  // TODO: add await rules
+  // ...tseslint.configs.recommendedTypeChecked,
+  // {
+  //   languageOptions: {
+  //     parserOptions: {
+  //       projectService: true,
+  //     },
+  //   },
+  // },
   prettier,
   {
     ignores: [
@@ -83,6 +92,10 @@ export default [
       '**/*.mjs',
     ],
     // Override or add rules here
-    rules: {},
+    rules: {
+      // TODO: add await rules
+      // '@typescript-eslint/no-floating-promises': 'error',
+      // '@typescript-eslint/no-misused-promises': 'error',
+    },
   },
 ];
