@@ -22,7 +22,7 @@
   </section>
 
   <!-- Other projects toggle button -->
-  <section class="all-projects-toggle">
+  <section class="other-projects-toggle">
     <button
       mat-button
       color="primary"
@@ -36,7 +36,7 @@
 
   <!-- Other projects section -->
   @if (showAllProjects || isPrintModeActive) {
-  <main class="all-projects-list">
+  <section class="other-projects-section">
     <lib-section-header text="Other Projects" />
 
     @if (showSkeletons$ | async) { @for (skeleton of otherProjectSkeletons;
@@ -56,6 +56,6 @@
       (moveDown)="moveProjectDown($event)"
     />
     } }
-  </main>
+  </section>
   }
 </section>

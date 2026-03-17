@@ -29,7 +29,7 @@ ngx-skeleton-loader.project-item-skeleton {
   }
 }
 
-.all-projects-toggle {
+.other-projects-toggle {
   text-align: center;
   margin-bottom: spacing.xl();
 
@@ -54,7 +54,7 @@ ngx-skeleton-loader.project-item-skeleton {
     break-after: page;
   }
 
-  .all-projects-list {
+  .other-projects-section {
     lib-project-item {
       margin-bottom: spacing.lg();
     }
