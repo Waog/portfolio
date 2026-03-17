@@ -21,8 +21,8 @@ export const test = base.extend<MyFixtures>({
     await page.goto('/');
     await use(navigation);
   },
-  urlHelper: async ({ page }, use) => {
-    const urlHelper = new UrlHelper(page);
+  urlHelper: async ({ page, homePage }, use) => {
+    const urlHelper = new UrlHelper(page, homePage);
     await use(urlHelper);
   },
 });

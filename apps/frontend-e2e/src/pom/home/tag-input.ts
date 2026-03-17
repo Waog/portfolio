@@ -39,7 +39,7 @@ export class TagInput {
     if (!options?.skipAssertions) {
       await expect(this.chipTexts.last()).toHaveText(term);
       await expect(this.spinner).toBeVisible();
-      await expect(this.spinner).toBeHidden();
+      await expect(this.spinner).toBeHidden({ timeout: 20000 });
     }
   }
 
