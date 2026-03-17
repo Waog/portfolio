@@ -155,4 +155,78 @@ test.describe('Project List Section', () => {
       expect(await item.hasGreenBorder()).toBe(true);
     }
   });
+
+  test('changing custom order of projects is encoded in URL', async ({
+    homePage,
+    urlHelper,
+    page,
+  }) => {
+    await urlHelper.gotoHomePage({
+      searchTags: ['Ionic', 'iOS'],
+    });
+
+    const projectItems = await homePage.projectList().topProjectItems();
+    await expect(projectItems[0].title).toHaveText(/Self-Driving Car/);
+    await expect(projectItems[1].title).toHaveText(/Towel Defence/);
+
+    await expect(page).not.toHaveURL(/order=/);
+
+    await projectItems[0].decreaseCustomOrder();
+
+    await expect(page).toHaveURL(
+      /order=towel-defence:0,self-driving-car-demo:1/
+    );
+  });
+
+  test('undoing the custom order of projects removes them from the URL', async ({
+    homePage,
+    urlHelper,
+    page,
+  }) => {
+    await urlHelper.gotoHomePage({
+      searchTags: ['Ionic', 'iOS'],
+      order: ['towel-defence', 'self-driving-car-demo'],
+    });
+
+    const projectItems = await homePage.projectList().topProjectItems();
+    await expect(projectItems[0].title).toHaveText(/Towel Defence/);
+    await expect(projectItems[1].title).toHaveText(/Self-Driving Car/);
+
+    await expect(page).toHaveURL(
+      /order=towel-defence:0,self-driving-car-demo:1/
+    );
+
+    await projectItems[0].decreaseCustomOrder();
+
+    await expect(page).not.toHaveURL(/order=/);
+  });
+
+  test('changing custom order of projects changes displayed project order, preserves viewport', async ({
+    homePage,
+    urlHelper,
+  }) => {
+    await urlHelper.gotoHomePage({
+      searchTags: ['Angular'],
+    });
+
+    const projectItems = await homePage.projectList().topProjectItems();
+
+    const title0: string | null = await projectItems[0].title.textContent();
+    const title1: string | null = await projectItems[1].title.textContent();
+    const title2: string | null = await projectItems[2].title.textContent();
+
+    await expect(projectItems[2].locator).not.toBeInViewport();
+    await projectItems[2].locator.scrollIntoViewIfNeeded();
+    await expect(projectItems[2].locator).toBeInViewport();
+
+    await projectItems[1].increaseCustomOrder();
+
+    const newItems = await homePage.projectList().topProjectItems();
+
+    await expect(newItems[0].title).toHaveText(title1 || 'ERROR: no title1');
+    await expect(newItems[1].title).toHaveText(title0 || 'ERROR: no title0');
+    await expect(newItems[2].title).toHaveText(title2 || 'ERROR: no title2');
+
+    await expect(newItems[2].locator).toBeInViewport();
+  });
 });

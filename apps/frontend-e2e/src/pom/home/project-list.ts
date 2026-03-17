@@ -81,12 +81,14 @@ export class ProjectItem {
   readonly chips: Locator;
   readonly greenChips: Locator;
   readonly greenChipTexts: Locator;
+  readonly decreaseCustomOrderButton: Locator;
+  readonly increaseCustomOrderButton: Locator;
 
   public static toTitleLocator(itemLocator: Locator): Locator {
     return itemLocator.locator('.header-content').getByRole('heading');
   }
 
-  constructor(private locator: Locator) {
+  constructor(public locator: Locator) {
     this.title = ProjectItem.toTitleLocator(this.locator);
     this.team = this.locator.locator(this.getMetaTextSelector(1));
     this.duration = this.locator.locator(this.getMetaTextSelector(2));
@@ -95,6 +97,10 @@ export class ProjectItem {
     this.chips = this.locator.locator('lib-color-chip.chip-item');
     this.greenChips = this.chips.locator('.color-chip-green');
     this.greenChipTexts = this.greenChips.locator('.chip-text');
+    this.decreaseCustomOrderButton = this.locator.locator(
+      'button.move-down-btn'
+    );
+    this.increaseCustomOrderButton = this.locator.locator('button.move-up-btn');
   }
 
   private getMetaTextSelector(index: number): string {
@@ -116,5 +122,13 @@ export class ProjectItem {
     if (!match) throw new Error(`Invalid color format: ${color}`);
     const [, r, g, b] = match.map(Number);
     return g > r && g > b;
+  }
+
+  async decreaseCustomOrder() {
+    await this.decreaseCustomOrderButton.click();
+  }
+
+  async increaseCustomOrder() {
+    await this.increaseCustomOrderButton.click();
   }
 }
