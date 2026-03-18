@@ -2,7 +2,11 @@
   <div class="nav-content">
     <!-- Logo/Brand Section -->
     <div class="nav-brand">
-      <a routerLink="/" class="brand-link">
+      <a
+        routerLink="/"
+        [queryParams]="{ searchTags: null, order: null }"
+        class="brand-link"
+      >
         <div class="brand-text">
           <div class="brand-name">Oliver Stadie</div>
           <div class="brand-subtitle">Portfolio</div>
@@ -12,16 +16,40 @@
 
     <!-- Navigation Items - Desktop -->
     <div class="nav-items-desktop">
-      <a mat-button class="nav-item" routerLink="/" [fragment]="'projects'">
+      <a
+        mat-button
+        class="nav-item"
+        routerLink="/"
+        [fragment]="'projects'"
+        queryParamsHandling="merge"
+      >
         Projects
       </a>
-      <a mat-button class="nav-item" routerLink="/" [fragment]="'skills'">
+      <a
+        mat-button
+        class="nav-item"
+        routerLink="/"
+        [fragment]="'skills'"
+        queryParamsHandling="merge"
+      >
         Skills
       </a>
-      <a mat-button class="nav-item" routerLink="/" [fragment]="'about-me'">
+      <a
+        mat-button
+        class="nav-item"
+        routerLink="/"
+        [fragment]="'about-me'"
+        queryParamsHandling="merge"
+      >
         About me
       </a>
-      <a mat-button class="nav-item" routerLink="/" [fragment]="'contact'">
+      <a
+        mat-button
+        class="nav-item"
+        routerLink="/"
+        [fragment]="'contact'"
+        queryParamsHandling="merge"
+      >
         Contact
       </a>
     </div>
@@ -66,19 +94,39 @@
       </button>
 
       <mat-menu #mobileMenu="matMenu" class="mobile-menu">
-        <a mat-menu-item routerLink="/" [fragment]="'projects'">
+        <a
+          mat-menu-item
+          routerLink="/"
+          [fragment]="'projects'"
+          queryParamsHandling="merge"
+        >
           <mat-icon>work</mat-icon>
           <span>Projects</span>
         </a>
-        <a mat-menu-item routerLink="/" [fragment]="'skills'">
+        <a
+          mat-menu-item
+          routerLink="/"
+          [fragment]="'skills'"
+          queryParamsHandling="merge"
+        >
           <mat-icon>star</mat-icon>
           <span>Skills</span>
         </a>
-        <a mat-menu-item routerLink="/" [fragment]="'about-me'">
+        <a
+          mat-menu-item
+          routerLink="/"
+          [fragment]="'about-me'"
+          queryParamsHandling="merge"
+        >
           <mat-icon>person</mat-icon>
           <span>About me</span>
         </a>
-        <a mat-menu-item routerLink="/" [fragment]="'contact'">
+        <a
+          mat-menu-item
+          routerLink="/"
+          [fragment]="'contact'"
+          queryParamsHandling="merge"
+        >
           <mat-icon>contact_mail</mat-icon>
           <span>Contact</span>
         </a>

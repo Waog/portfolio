@@ -1,19 +1,40 @@
-import { inject, Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { DestroyRef, inject, Injectable } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { NavigationEnd, Router } from '@angular/router';
+import { UrlStateService } from '@portfolio/url-state';
+import isEqual from 'lodash/isEqual';
+import {
+  BehaviorSubject,
+  distinctUntilChanged,
+  filter,
+  map,
+  Observable,
+} from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SearchTagService {
-  private router = inject(Router);
-  private tagsSubject = new BehaviorSubject<string[]>([]);
+  private readonly router = inject(Router);
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly urlStateService = inject(UrlStateService);
+  private readonly tagsSubject = new BehaviorSubject<string[]>([]);
 
   // Public observable for components to subscribe to
-  public readonly tags$: Observable<string[]> = this.tagsSubject.asObservable();
+  public readonly tags$: Observable<string[]> = this.tagsSubject
+    .asObservable()
+    .pipe(distinctUntilChanged((a, b) => isEqual(a, b)));
 
   constructor() {
     this.initializeFromUrl();
+    this.router.events
+      .pipe(
+        filter(event => event instanceof NavigationEnd),
+        map(() => this.getTagsFromCurrentUrl()),
+        distinctUntilChanged(isEqual),
+        takeUntilDestroyed(this.destroyRef)
+      )
+      .subscribe(tags => this.tagsSubject.next(tags));
   }
 
   // Get current tags synchronously
@@ -48,39 +69,33 @@ export class SearchTagService {
 
   // Initialize tags from URL on service creation
   private initializeFromUrl(): void {
+    this.tagsSubject.next(this.getTagsFromCurrentUrl());
+  }
+
+  private getTagsFromCurrentUrl(): string[] {
     const urlTree = this.router.parseUrl(this.router.url);
     const searchTagsParam = urlTree.queryParams['searchTags'];
 
-    if (searchTagsParam) {
-      const tags = searchTagsParam
-        .split(',')
-        .map((tag: string) => tag.trim())
-        .filter((tag: string) => tag);
-      this.tagsSubject.next(tags);
+    if (!searchTagsParam) {
+      return [];
     }
+
+    return searchTagsParam
+      .split(',')
+      .map((tag: string) => tag.trim())
+      .filter((tag: string) => tag);
   }
 
   // Update both internal state and URL
   private updateTagsAndUrl(tags: string[]): void {
-    this.tagsSubject.next(tags);
     this.updateUrl(tags);
+    this.tagsSubject.next(tags);
   }
 
   // Update URL query parameters without adding to browser history
   private updateUrl(tags: string[]): void {
-    const queryParams: { [key: string]: string | undefined } = {};
-
-    if (tags.length > 0) {
-      queryParams['searchTags'] = tags.join(',');
-    } else {
-      queryParams['searchTags'] = undefined; // Remove parameter when no tags
-    }
-
-    this.router.navigate([], {
-      relativeTo: null,
-      queryParams,
-      queryParamsHandling: 'merge',
-      replaceUrl: true, // This prevents adding to browser history
+    this.urlStateService.updateValue({
+      searchTags: tags.length > 0 ? tags.join(',') : null,
     });
   }
 }
