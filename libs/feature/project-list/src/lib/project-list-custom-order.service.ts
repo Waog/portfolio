@@ -6,7 +6,7 @@ import { Project } from '@portfolio/search-engine-domain';
 import { SearchTagService } from '@portfolio/search-tags';
 import { UrlStateService } from '@portfolio/url-state';
 import { arrayMoveMutable } from 'array-move';
-import { isEqual } from 'lodash';
+import isEqual from 'lodash/isEqual';
 import {
   distinctUntilChanged,
   filter,
