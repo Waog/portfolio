@@ -67,7 +67,7 @@ export class ProjectList {
       }
     }
     throw new Error(
-      `Project with title "${title}" not found in ${items.length} items}`
+      `Project with title "${title}" not found in ${items.length} items`
     );
   }
 }
