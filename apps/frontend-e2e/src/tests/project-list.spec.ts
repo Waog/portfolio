@@ -229,4 +229,66 @@ test.describe('Project List Section', () => {
 
     await expect(newItems[2].locator).toBeInViewport();
   });
+
+  test('changing custom order of projects preserves searchTags in URL, chips, original order', async ({
+    homePage,
+    urlHelper,
+    page,
+  }) => {
+    await urlHelper.gotoHomePage({
+      searchTags: ['Ionic', 'iOS'],
+    });
+    const tagInput = homePage.tagInput();
+    await expect(tagInput.chipTexts).toHaveText(['Ionic', 'iOS']);
+    await expect(page).toHaveURL(/searchTags=Ionic,iOS/);
+    await expect(page).not.toHaveURL(/order=/);
+
+    const projectItems = await homePage.projectList().topProjectItems();
+    await expect(projectItems[0].title).toHaveText(/Self-Driving Car/);
+    await expect(projectItems[1].title).toHaveText(/Towel Defence/);
+    const title2: string | null = await projectItems[2].title.textContent();
+
+    await projectItems[0].decreaseCustomOrder();
+
+    await expect(tagInput.chipTexts).toHaveText(['Ionic', 'iOS']);
+    await expect(page).toHaveURL(/searchTags=Ionic,iOS/);
+    await expect(page).toHaveURL(
+      /order=towel-defence:0,self-driving-car-demo:1/
+    );
+
+    const newItems = await homePage.projectList().topProjectItems();
+
+    await expect(projectItems[0].title).toHaveText(/Towel Defence/);
+    await expect(projectItems[1].title).toHaveText(/Self-Driving Car/);
+    await expect(newItems[2].title).toHaveText(title2 || 'ERROR: no title2');
+  });
+
+  test('changing custom order of projects preserves fragment', async ({
+    homePage,
+    urlHelper,
+    page,
+  }) => {
+    await urlHelper.gotoHomePage({
+      fragment: 'skills',
+    });
+    await expect(page).toHaveURL(/#skills/);
+    await expect(page).not.toHaveURL(/order=/);
+
+    const projectItems = await homePage.projectList().topProjectItems();
+
+    const title0: string | null = await projectItems[0].title.textContent();
+    const title1: string | null = await projectItems[1].title.textContent();
+    const title2: string | null = await projectItems[2].title.textContent();
+
+    await projectItems[0].decreaseCustomOrder();
+
+    const newItems = await homePage.projectList().topProjectItems();
+
+    await expect(newItems[0].title).toHaveText(title1 || 'ERROR: no title1');
+    await expect(newItems[1].title).toHaveText(title0 || 'ERROR: no title0');
+    await expect(newItems[2].title).toHaveText(title2 || 'ERROR: no title2');
+
+    await expect(page).toHaveURL(/#skills/);
+    await expect(page).toHaveURL(/order=/);
+  });
 });

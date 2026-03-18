@@ -7,8 +7,8 @@ import { BehaviorSubject, distinctUntilChanged, Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class SearchTagService {
-  private router = inject(Router);
-  private tagsSubject = new BehaviorSubject<string[]>([]);
+  private readonly router = inject(Router);
+  private readonly tagsSubject = new BehaviorSubject<string[]>([]);
 
   // Public observable for components to subscribe to
   public readonly tags$: Observable<string[]> = this.tagsSubject
@@ -29,19 +29,19 @@ export class SearchTagService {
     const trimmedTag = tag.trim();
     if (trimmedTag && !this.currentTags.includes(trimmedTag)) {
       const updatedTags = [...this.currentTags, trimmedTag];
-      this.updateTagsAndUrl(updatedTags);
+      void this.updateTagsAndUrl(updatedTags);
     }
   }
 
   // Remove a tag
   public removeTag(tagToRemove: string): void {
     const updatedTags = this.currentTags.filter(tag => tag !== tagToRemove);
-    this.updateTagsAndUrl(updatedTags);
+    void this.updateTagsAndUrl(updatedTags);
   }
 
   // Clear all tags
   public clearAllTags(): void {
-    this.updateTagsAndUrl([]);
+    void this.updateTagsAndUrl([]);
   }
 
   // Check if a tag exists
@@ -64,26 +64,18 @@ export class SearchTagService {
   }
 
   // Update both internal state and URL
-  private updateTagsAndUrl(tags: string[]): void {
+  private async updateTagsAndUrl(tags: string[]): Promise<void> {
+    await this.updateUrl(tags);
     this.tagsSubject.next(tags);
-    this.updateUrl(tags);
   }
 
   // Update URL query parameters without adding to browser history
-  private updateUrl(tags: string[]): void {
-    const queryParams: { [key: string]: string | undefined } = {};
-
-    if (tags.length > 0) {
-      queryParams['searchTags'] = tags.join(',');
-    } else {
-      queryParams['searchTags'] = undefined; // Remove parameter when no tags
-    }
-
-    this.router.navigate([], {
-      relativeTo: null,
-      queryParams,
+  private updateUrl(tags: string[]): Promise<boolean> {
+    return this.router.navigate([], {
+      queryParams: { searchTags: tags.length > 0 ? tags.join(',') : null },
       queryParamsHandling: 'merge',
-      replaceUrl: true, // This prevents adding to browser history
+      replaceUrl: true,
+      preserveFragment: true,
     });
   }
 }

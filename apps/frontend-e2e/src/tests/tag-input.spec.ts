@@ -130,4 +130,86 @@ test.describe('Tag Input Functionality', () => {
     await expect(tagInput.chipTexts.last()).toHaveText('Vue');
     await expect(page).toHaveURL(/searchTags=Vue/);
   });
+
+  test('adding a search term resets the custom project ordering', async ({
+    homePage,
+    urlHelper,
+    page,
+  }) => {
+    await urlHelper.gotoHomePage({
+      searchTags: ['ionic', 'iOS'],
+      order: ['towel-defence', 'self-driving-car-demo'],
+    });
+    await expect(page).toHaveURL(/searchTags=ionic,iOS/);
+    await expect(page).toHaveURL(
+      /order=towel-defence:0,self-driving-car-demo:1/
+    );
+
+    const tagInput = homePage.tagInput();
+    await expect(tagInput.chipTexts).toHaveText(['ionic', 'iOS']);
+
+    const projects = await homePage.projectList().topProjectItems();
+    await expect(projects[0].title).toContainText('Towel Defence');
+    await expect(projects[1].title).toContainText('Self-Driving Car');
+
+    await tagInput.addSearchTerm('TypeScript');
+
+    await expect(page).toHaveURL(/searchTags=ionic,iOS,TypeScript/);
+    await expect(page).not.toHaveURL(/order=/);
+    const newProjects = await homePage.projectList().topProjectItems();
+    await expect(newProjects[0].title).toContainText('Self-Driving Car');
+    await expect(newProjects[1].title).toContainText('Custom E-Commerce');
+    await expect(newProjects[2].title).toContainText('Towel Defence');
+  });
+
+  test('removing a search term resets the custom project ordering', async ({
+    homePage,
+    urlHelper,
+    page,
+  }) => {
+    await urlHelper.gotoHomePage({
+      searchTags: ['ionic', 'iOS'],
+      order: ['towel-defence', 'self-driving-car-demo'],
+    });
+    await expect(page).toHaveURL(/searchTags=ionic,iOS/);
+    await expect(page).toHaveURL(
+      /order=towel-defence:0,self-driving-car-demo:1/
+    );
+
+    const tagInput = homePage.tagInput();
+    await expect(tagInput.chipTexts).toHaveText(['ionic', 'iOS']);
+
+    const projects = await homePage.projectList().topProjectItems();
+    await expect(projects[0].title).toContainText('Towel Defence');
+    await expect(projects[1].title).toContainText('Self-Driving Car');
+
+    await tagInput.removeSearchTerm('iOS');
+
+    await expect(page).toHaveURL(/searchTags=ionic/);
+    await expect(page).not.toHaveURL(/iOS/);
+    await expect(page).not.toHaveURL(/order=/);
+    const newProjects = await homePage.projectList().topProjectItems();
+    await expect(newProjects[0].title).toContainText('Self-Driving Car');
+    await expect(newProjects[1].title).toContainText('Towel Defence');
+  });
+
+  test('adding a search term preserves the fragment', async ({
+    homePage,
+    urlHelper,
+    page,
+  }) => {
+    await urlHelper.gotoHomePage({
+      fragment: 'skills',
+    });
+    await expect(page).not.toHaveURL(/searchTags=/);
+    await expect(page).toHaveURL(/#skills/);
+
+    const tagInput = homePage.tagInput();
+    await expect(tagInput.chips).toHaveCount(0);
+
+    await tagInput.addSearchTerm('Angular');
+
+    await expect(page).toHaveURL(/searchTags=Angular/);
+    await expect(page).toHaveURL(/#skills/);
+  });
 });

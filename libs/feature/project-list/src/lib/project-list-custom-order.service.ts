@@ -1,23 +1,21 @@
 import { Location } from '@angular/common';
 import { DestroyRef, inject, Injectable } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SearchEngineService } from '@portfolio/search-engine-angular';
 import { Project } from '@portfolio/search-engine-domain';
 import { SearchTagService } from '@portfolio/search-tags';
-import isEqual from 'lodash/isEqual';
+import { arrayMoveMutable } from 'array-move';
+import _ from 'lodash';
 import {
-  combineLatest,
   distinctUntilChanged,
-  filter,
   map,
-  merge,
   Observable,
+  ReplaySubject,
   scan,
   shareReplay,
-  Subject,
+  skip,
   tap,
-  withLatestFrom,
 } from 'rxjs';
 
 interface CustomOrderDiff {
@@ -25,22 +23,22 @@ interface CustomOrderDiff {
   customIndex: number;
 }
 
-type UserAction =
-  | { type: 'up'; id: string }
-  | { type: 'down'; id: string }
-  | { type: 'reset' };
-
 type Action =
-  | { type: 'setOrderFromUrl'; orderIds: string[] | null }
-  | { type: 'reset' }
-  | { type: 'up'; id: string; baseIds: string[] }
-  | { type: 'down'; id: string; baseIds: string[] };
+  | { type: 'setOriginalProjects'; projects: Project[] }
+  | { type: 'setCustomOrder'; customOrderDiff: CustomOrderDiff[] }
+  | { type: 'resetCustomOrder' }
+  | { type: 'up'; projectId: string }
+  | { type: 'down'; projectId: string };
 
 type State = {
-  orderIds: string[] | null;
+  originalProjects: Project[];
+  customOrderDiff: CustomOrderDiff[];
 };
 
-const initialState: State = { orderIds: null };
+const initialState: State = {
+  originalProjects: [],
+  customOrderDiff: [],
+};
 
 /**
  * Service responsible for managing custom project ordering.
@@ -58,104 +56,68 @@ export class ProjectListCustomOrderService {
   private readonly searchTagService = inject(SearchTagService);
   private readonly destroyRef = inject(DestroyRef);
 
-  private readonly actions$ = new Subject<UserAction>();
+  private readonly actions$ = new ReplaySubject<Action>(1);
 
-  private readonly originalProjects$: Observable<Project[]> =
-    this.searchEngineService.searchResult$.pipe(
-      map(searchResult => searchResult.ui?.projects ?? []),
-      distinctUntilChanged((a, b) => areProjectArraysEqualById(a, b)),
-      shareReplay({ bufferSize: 1, refCount: true })
-    );
+  private readonly state$: Observable<State> = this.actions$.pipe(
+    scan(
+      (state: State, action: Action) => this.reduceState(state, action),
+      initialState
+    ),
+    shareReplay({ bufferSize: 1, refCount: true })
+  );
 
-  private readonly state$: Observable<State> = this.createStateStream();
-
-  readonly projectsInOrder$: Observable<Project[]> = combineLatest([
-    this.originalProjects$,
-    this.state$,
-  ]).pipe(
-    map(([projects, state]) => applyOrderIds(projects, state.orderIds)),
+  readonly projectsInOrder$: Observable<Project[]> = this.state$.pipe(
+    map(state => this.toCustomOrderedProjects(state)),
     shareReplay({ bufferSize: 1, refCount: true })
   );
 
   constructor() {
-    this.setupUrlSyncEffect();
+    this.setupSearchResultsUpdateState();
+    this.setupUrlSetsCustomOrderOnLoad();
+    this.setupStateChangeChangesUrl();
     this.setupResetOnSearchTagChangeEffect();
   }
 
-  /**
-   * Moves a project up in the custom order.
-   */
-  moveProjectUp(projectId: string): void {
-    this.actions$.next({ type: 'up', id: projectId });
-  }
-
-  /**
-   * Moves a project down in the custom order.
-   */
-  moveProjectDown(projectId: string): void {
-    this.actions$.next({ type: 'down', id: projectId });
-  }
-
-  private createStateStream(): Observable<State> {
-    const urlAction$ = combineLatest([
-      this.route.queryParamMap,
-      this.originalProjects$,
-    ]).pipe(
-      map(([queryParamMap, projects]) => {
-        const baseIds = projects.map(project => project.id);
-        return decodeOrderFromQuery(queryParamMap, baseIds);
-      }),
-      distinctUntilChanged((a, b) => arraysNullableEqual(a, b)),
-      map(orderIds => ({ type: 'setOrderFromUrl', orderIds } as Action))
-    );
-
-    const userAction$ = this.actions$.pipe(
-      withLatestFrom(this.originalProjects$),
-      map(([action, projects]) =>
-        action.type === 'reset'
-          ? ({ type: 'reset' } as Action)
-          : {
-              ...action,
-              baseIds: projects.map(project => project.id),
-            }
-      )
-    );
-
-    return merge(urlAction$, userAction$).pipe(
-      scan(
-        (state: State, action: Action) => reduceState(state, action),
-        initialState
-      ),
-      distinctUntilChanged((a, b) => stateEquals(a, b)),
-      shareReplay({ bufferSize: 1, refCount: true })
-    );
-  }
-
-  private setupUrlSyncEffect(): void {
-    combineLatest([
-      this.originalProjects$,
-      this.state$,
-      this.route.queryParamMap,
-    ])
+  private setupSearchResultsUpdateState() {
+    this.searchEngineService.searchResult$
       .pipe(
-        map(([projects, state, queryParamMap]) => {
-          const baseIds = projects.map(project => project.id);
-          const nextOrderParam = encodeOrderParam(baseIds, state.orderIds);
-          const currentOrderParam = queryParamMap.get('order');
-
-          return { baseIds, nextOrderParam, currentOrderParam };
-        }),
-        filter(
-          ({ baseIds, nextOrderParam, currentOrderParam }) =>
-            !(
-              baseIds.length === 0 &&
-              nextOrderParam === null &&
-              currentOrderParam !== null
-            )
+        map(searchResult => searchResult.ui?.projects || []),
+        distinctUntilChanged((projectsA, projectsB) =>
+          _.isEqual(projectsA, projectsB)
         ),
-        map(({ nextOrderParam }) => nextOrderParam),
+        map(projects => ({ type: 'setOriginalProjects', projects } as Action)),
+        tap(action => this.actions$.next(action)),
+        takeUntilDestroyed(this.destroyRef)
+      )
+      .subscribe();
+  }
+
+  private setupUrlSetsCustomOrderOnLoad(): void {
+    this.route.queryParamMap
+      .pipe(
+        map(queryParamMap => {
+          return queryParamMap.get('order');
+        }),
         distinctUntilChanged(),
-        tap(orderParam => this.navigateWithOrderParam(orderParam)),
+        map(orderUrlParam => this.toCustomOrderDiff(orderUrlParam)),
+        map(
+          customOrderDiff =>
+            ({ type: 'setCustomOrder', customOrderDiff } as Action)
+        ),
+        tap(action => this.actions$.next(action)),
+        takeUntilDestroyed(this.destroyRef)
+      )
+      .subscribe();
+  }
+
+  private setupStateChangeChangesUrl(): void {
+    this.state$
+      .pipe(
+        map(({ customOrderDiff }) => customOrderDiff),
+        distinctUntilChanged(),
+        map(customOrderDiff => this.toUrlParam(customOrderDiff)),
+        distinctUntilChanged(),
+        tap(urlParam => this.setOrderUrlParam(urlParam)),
         takeUntilDestroyed(this.destroyRef)
       )
       .subscribe();
@@ -164,247 +126,138 @@ export class ProjectListCustomOrderService {
   private setupResetOnSearchTagChangeEffect(): void {
     this.searchTagService.tags$
       .pipe(
-        tap(() => this.actions$.next({ type: 'reset' })),
+        skip(1), // Skip the initial value to avoid resetting on service initialization
+        tap(() => this.actions$.next({ type: 'resetCustomOrder' })),
         takeUntilDestroyed(this.destroyRef)
       )
       .subscribe();
   }
 
-  private navigateWithOrderParam(orderParam: string | null): void {
-    const urlTree = this.router.createUrlTree([], {
-      relativeTo: this.route,
-      queryParams: { order: orderParam },
-      queryParamsHandling: 'merge',
-    });
-
-    this.location.replaceState(this.router.serializeUrl(urlTree));
-  }
-}
-
-function reduceState(state: State, action: Action): State {
-  if (action.type === 'setOrderFromUrl') {
-    return { orderIds: action.orderIds };
+  /**
+   * Moves a project up in the custom order.
+   */
+  moveProjectUp(projectId: string): void {
+    this.actions$.next({ type: 'up', projectId });
   }
 
-  if (action.type === 'reset') {
-    return { orderIds: null };
+  /**
+   * Moves a project down in the custom order.
+   */
+  moveProjectDown(projectId: string): void {
+    this.actions$.next({ type: 'down', projectId });
   }
 
-  const currentIds = normalizeOrderIds(action.baseIds, state.orderIds);
-  const nextIds =
-    action.type === 'up'
-      ? moveId(currentIds, action.id, -1)
-      : moveId(currentIds, action.id, 1);
-
-  return {
-    orderIds: isEqual(nextIds, action.baseIds) ? null : nextIds,
-  };
-}
-
-function decodeOrderFromQuery(
-  queryParamMap: ParamMap,
-  baseIds: string[]
-): string[] | null {
-  const orderParam = queryParamMap.get('order');
-  if (!orderParam || orderParam.trim() === '') {
-    return null;
+  private toCustomOrderDiff(orderParam: string | null): CustomOrderDiff[] {
+    if (!orderParam) {
+      return [];
+    }
+    return orderParam
+      .trim()
+      .split(',')
+      .map(part => ({
+        projectId: part.split(':')[0],
+        customIndex: parseInt(part.split(':')[1], 10),
+      }));
   }
 
-  try {
-    const customDiffs = parseOrderParam(orderParam);
-    if (customDiffs.length === 0) {
+  private toUrlParam(customOrderDiff: CustomOrderDiff[]): string | null {
+    if (customOrderDiff.length === 0) {
       return null;
     }
-
-    const orderIds = applyCustomDiffsToIds(baseIds, customDiffs);
-    return isEqual(orderIds, baseIds) ? null : orderIds;
-  } catch (error) {
-    console.warn(
-      `Failed to load custom order from URL. Order param: "${orderParam}". Error: ${
-        error instanceof Error ? error.message : error
-      }`
-    );
-    return null;
-  }
-}
-
-function encodeOrderParam(
-  baseIds: string[],
-  orderIds: string[] | null
-): string | null {
-  if (!orderIds) {
-    return null;
+    return customOrderDiff
+      .map(diff => `${diff.projectId}:${diff.customIndex}`)
+      .join(',');
   }
 
-  const normalizedOrderIds = normalizeOrderIds(baseIds, orderIds);
-  const customDiffs = calculateCustomDiffs(normalizedOrderIds, baseIds);
-  if (customDiffs.length === 0) {
-    return null;
+  private setOrderUrlParam(orderParam: string | null): void {
+    const urlTree = this.router.createUrlTree([], {
+      queryParams: { order: orderParam },
+      queryParamsHandling: 'merge',
+      preserveFragment: true,
+    });
+    this.location.replaceState(this.router.serializeUrl(urlTree));
   }
 
-  return customDiffs
-    .map(diff => `${diff.projectId}:${diff.customIndex}`)
-    .join(',');
-}
+  private toDiff(
+    originalProjects: Project[],
+    customOrderedProjects: Project[]
+  ): CustomOrderDiff[] {
+    if (originalProjects.length !== customOrderedProjects.length) {
+      throw new Error(
+        'Original and custom ordered project lists must have the same length'
+      );
+    }
+    const result: CustomOrderDiff[] = [];
+    for (let i = 0; i < originalProjects.length; i++) {
+      if (originalProjects[i].id !== customOrderedProjects[i].id) {
+        result.push({ projectId: customOrderedProjects[i].id, customIndex: i });
+      }
+    }
+    return result;
+  }
 
-function parseOrderParam(orderParam: string): CustomOrderDiff[] {
-  return orderParam
-    .split(',')
-    .filter(part => part.trim() !== '')
-    .map(part => {
-      const [projectId = '', indexString = ''] = part.split(':');
+  private reduceState(state: State, action: Action): State {
+    if (action.type === 'setOriginalProjects') {
+      return { ...state, originalProjects: action.projects };
+    }
+
+    if (action.type === 'setCustomOrder') {
+      return { ...state, customOrderDiff: action.customOrderDiff };
+    }
+
+    if (action.type === 'resetCustomOrder') {
+      return { ...state, customOrderDiff: [] };
+    }
+
+    if (action.type === 'up') {
+      const customOrderedProjects = this.toCustomOrderedProjects(state);
+      const fromIndex = customOrderedProjects.findIndex(
+        project => project.id === action.projectId
+      );
+      const toIndex = Math.max(0, fromIndex - 1);
+      arrayMoveMutable(customOrderedProjects, fromIndex, toIndex);
       return {
-        projectId: projectId.trim(),
-        customIndex: parseInt(indexString.trim(), 10),
+        ...state,
+        customOrderDiff: this.toDiff(
+          state.originalProjects,
+          customOrderedProjects
+        ),
       };
-    })
-    .filter(
-      diff => diff.projectId !== '' && Number.isInteger(diff.customIndex)
-    );
-}
-
-function calculateCustomDiffs(
-  customOrder: string[],
-  defaultOrder: string[]
-): CustomOrderDiff[] {
-  const diffs: CustomOrderDiff[] = [];
-  for (let i = 0; i < customOrder.length; i++) {
-    if (customOrder[i] !== defaultOrder[i]) {
-      diffs.push({ projectId: customOrder[i], customIndex: i });
     }
-  }
 
-  return diffs;
-}
-
-function applyCustomDiffsToIds(
-  baseIds: string[],
-  customDiffs: CustomOrderDiff[]
-): string[] {
-  if (customDiffs.length === 0) {
-    return [...baseIds];
-  }
-
-  const existingIds = new Set(baseIds);
-  const validDiffs = customDiffs.filter(diff =>
-    existingIds.has(diff.projectId)
-  );
-  const idsToMove = new Set(validDiffs.map(diff => diff.projectId));
-  const remaining = baseIds.filter(id => !idsToMove.has(id));
-
-  for (const { projectId, customIndex } of validDiffs) {
-    const insertionIndex = clamp(customIndex, 0, remaining.length);
-    remaining.splice(insertionIndex, 0, projectId);
-  }
-
-  return remaining;
-}
-
-function applyOrderIds(
-  projects: Project[],
-  orderIds: string[] | null
-): Project[] {
-  if (!orderIds) {
-    return projects;
-  }
-
-  const projectById = new Map(projects.map(project => [project.id, project]));
-  const knownIds = orderIds.filter(id => projectById.has(id));
-  const orderedKnownIds = unique(knownIds);
-  const remainingIds = projects
-    .map(project => project.id)
-    .filter(id => !orderedKnownIds.includes(id));
-
-  return [...orderedKnownIds, ...remainingIds]
-    .map(id => projectById.get(id))
-    .filter((project): project is Project => project !== undefined);
-}
-
-function moveId(ids: string[], id: string, delta: -1 | 1): string[] {
-  const fromIndex = ids.indexOf(id);
-  if (fromIndex === -1) {
-    return ids;
-  }
-
-  const toIndex = fromIndex + delta;
-  if (toIndex < 0 || toIndex >= ids.length) {
-    return ids;
-  }
-
-  const nextIds = [...ids];
-  [nextIds[fromIndex], nextIds[toIndex]] = [
-    nextIds[toIndex],
-    nextIds[fromIndex],
-  ];
-  return nextIds;
-}
-
-function normalizeOrderIds(
-  baseIds: string[],
-  orderIds: string[] | null
-): string[] {
-  if (!orderIds) {
-    return [...baseIds];
-  }
-
-  const baseIdSet = new Set(baseIds);
-  const knownOrderedIds = unique(orderIds.filter(id => baseIdSet.has(id)));
-  const remainingIds = baseIds.filter(id => !knownOrderedIds.includes(id));
-  return [...knownOrderedIds, ...remainingIds];
-}
-
-function unique(ids: string[]): string[] {
-  const seen = new Set<string>();
-  const result: string[] = [];
-  for (const id of ids) {
-    if (!seen.has(id)) {
-      seen.add(id);
-      result.push(id);
+    if (action.type === 'down') {
+      const customOrderedProjects = this.toCustomOrderedProjects(state);
+      const fromIndex = customOrderedProjects.findIndex(
+        project => project.id === action.projectId
+      );
+      const toIndex = Math.min(customOrderedProjects.length - 1, fromIndex + 1);
+      arrayMoveMutable(customOrderedProjects, fromIndex, toIndex);
+      return {
+        ...state,
+        customOrderDiff: this.toDiff(
+          state.originalProjects,
+          customOrderedProjects
+        ),
+      };
     }
-  }
-  return result;
-}
 
-function clamp(value: number, min: number, max: number): number {
-  return Math.min(Math.max(value, min), max);
-}
-
-function stateEquals(a: State, b: State): boolean {
-  return arraysNullableEqual(a.orderIds, b.orderIds);
-}
-
-function arraysNullableEqual(
-  a: readonly string[] | null,
-  b: readonly string[] | null
-): boolean {
-  if (a === b) {
-    return true;
+    throw new Error(`Unknown action type: ${JSON.stringify(action)}`);
   }
 
-  if (a === null || b === null) {
-    return false;
-  }
-
-  return isEqual(a, b);
-}
-
-function areProjectArraysEqualById(
-  a: readonly Project[],
-  b: readonly Project[]
-): boolean {
-  if (a === b) {
-    return true;
-  }
-
-  if (a.length !== b.length) {
-    return false;
-  }
-
-  for (let i = 0; i < a.length; i++) {
-    if (a[i].id !== b[i].id) {
-      return false;
+  private toCustomOrderedProjects(state: State): Project[] {
+    const { customOrderDiff, originalProjects } = state;
+    if (!customOrderDiff) {
+      return originalProjects;
     }
-  }
 
-  return true;
+    const result = [...originalProjects];
+
+    for (const { projectId, customIndex } of customOrderDiff) {
+      const fromIndex = result.findIndex(project => project.id === projectId);
+      const toIndex = customIndex;
+      arrayMoveMutable(result, fromIndex, toIndex);
+    }
+
+    return result;
+  }
 }

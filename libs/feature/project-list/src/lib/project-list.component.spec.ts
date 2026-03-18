@@ -3,9 +3,6 @@ import { SearchEngineService } from '@portfolio/search-engine-angular';
 import { SearchTagService } from '@portfolio/search-tags';
 import { BehaviorSubject, of } from 'rxjs';
 
-import { ProjectListComponent } from './project-list.component';
-import { ProjectListCustomOrderService } from './project-list-custom-order.service';
-
 jest.mock('@portfolio/search-engine-angular', () => ({
   SearchEngineService: class {
     searchResult$ = new BehaviorSubject({
@@ -22,6 +19,9 @@ jest.mock('@portfolio/search-engine-angular', () => ({
     });
   },
 }));
+
+import { ProjectListCustomOrderService } from './project-list-custom-order.service';
+import { ProjectListComponent } from './project-list.component';
 
 describe('ProjectListComponent', () => {
   let component: ProjectListComponent;
