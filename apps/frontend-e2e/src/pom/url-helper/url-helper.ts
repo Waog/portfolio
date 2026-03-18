@@ -9,7 +9,7 @@ export class UrlHelper {
 
   async gotoHomePage(options?: {
     searchTags?: string[];
-    order?: string[];
+    order?: string[] | { id: string; index: number }[];
     fragment?: string;
     skipWaitingForSpinner?: boolean;
   }): Promise<void> {
@@ -19,21 +19,30 @@ export class UrlHelper {
       fragment = '',
       skipWaitingForSpinner = false,
     } = options ?? {};
-    const url = new URL(UrlHelper.HOME, new URL(this.page.url()).origin);
+    const searchParams = new URLSearchParams();
 
     if (searchTags.length > 0) {
-      url.searchParams.set('searchTags', searchTags.join(','));
+      searchParams.set('searchTags', searchTags.join(','));
     }
     if (order.length > 0) {
-      url.searchParams.set(
+      searchParams.set(
         'order',
-        order.map((id, index) => `${id}:${index}`).join(',')
+        order
+          .map((item, index) =>
+            typeof item === 'string'
+              ? `${item}:${index}`
+              : `${item.id}:${item.index}`
+          )
+          .join(',')
       );
     }
-    if (fragment) {
-      url.hash = fragment;
-    }
-    const relativeUrl = url.pathname + url.search + url.hash;
+
+    const query = searchParams.toString();
+    const relativeUrl =
+      UrlHelper.HOME +
+      (query ? `?${query}` : '') +
+      (fragment ? `#${fragment}` : '');
+
     await this.page.goto(relativeUrl);
     if (!skipWaitingForSpinner && searchTags.length > 0) {
       await expect(this.homePage.tagInput().spinner).toBeVisible();

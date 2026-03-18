@@ -63,35 +63,193 @@ test.describe('Navigation: Viewport Checks', () => {
     await expect(homePage.contactMe().locator).toBeInViewport();
   });
 
-  test('loading page with #projects fragment scrolls projects section into viewport', async ({
-    urlHelper,
+  test.describe('initial fragment loads', () => {
+    test.use({ initialUrl: null });
+
+    test('loading page with #projects fragment scrolls projects section into viewport', async ({
+      urlHelper,
+      homePage,
+    }) => {
+      await urlHelper.gotoHomePage({ fragment: 'projects' });
+      await expect(homePage.projectList().locator).toBeInViewport();
+    });
+
+    test('loading page with #skills fragment scrolls skills section into viewport', async ({
+      urlHelper,
+      homePage,
+    }) => {
+      await urlHelper.gotoHomePage({ fragment: 'skills' });
+      await expect(homePage.skills().locator).toBeInViewport();
+    });
+
+    test('loading page with #about-me fragment scrolls About Me section into viewport', async ({
+      urlHelper,
+      homePage,
+    }) => {
+      await urlHelper.gotoHomePage({ fragment: 'about-me' });
+      await expect(homePage.aboutMe().locator).toBeInViewport();
+    });
+
+    test('loading page with #contact fragment scrolls Contact section into viewport', async ({
+      urlHelper,
+      homePage,
+    }) => {
+      await urlHelper.gotoHomePage({ fragment: 'contact' });
+      await expect(homePage.contactMe().locator).toBeInViewport();
+    });
+  });
+});
+
+test.describe('Navigation: interactions', () => {
+  test('selecting Projects NavItem after loading preserves searchTags and custom order', async ({
     homePage,
+    urlHelper,
+    navigation,
+    page,
   }) => {
-    await urlHelper.gotoHomePage({ fragment: 'projects' });
-    await expect(homePage.projectList().locator).toBeInViewport();
+    await urlHelper.gotoHomePage({
+      searchTags: ['ionic', 'iOS'],
+      order: [
+        { id: 'unicorn-ecommerce', index: 1 },
+        { id: 'towel-defence', index: 2 },
+      ],
+    });
+
+    const projects = await homePage.projectList().topProjectItems();
+    await expect(projects[0].title).toContainText('Self-Driving Car');
+    await expect(projects[1].title).toContainText('Custom E-Commerce');
+    await expect(projects[2].title).toContainText('Towel Defence');
+
+    const tagInput = homePage.tagInput();
+    await expect(tagInput.chipTexts).toHaveText(['ionic', 'iOS']);
+
+    await expect(page).toHaveURL(/searchTags=ionic,iOS/);
+    await expect(page).toHaveURL(/order=unicorn-ecommerce:1,towel-defence:2/);
+    await expect(page).not.toHaveURL(/#/);
+
+    await navigation.getNavItem('Projects').click();
+
+    const newProjects = await homePage.projectList().topProjectItems();
+    await expect(newProjects[0].title).toContainText('Self-Driving Car');
+    await expect(newProjects[1].title).toContainText('Custom E-Commerce');
+    await expect(newProjects[2].title).toContainText('Towel Defence');
+
+    await expect(tagInput.chipTexts).toHaveText(['ionic', 'iOS']);
+
+    await expect(page).toHaveURL(/searchTags=ionic,iOS/);
+    await expect(page).toHaveURL(/order=unicorn-ecommerce:1,towel-defence:2/);
+    await expect(page).toHaveURL(/#projects/);
   });
 
-  test('loading page with #skills fragment scrolls skills section into viewport', async ({
-    urlHelper,
+  test('selecting Projects NavItem after SPA changes preserves searchTags and custom order', async ({
     homePage,
+    navigation,
+    page,
   }) => {
-    await urlHelper.gotoHomePage({ fragment: 'skills' });
-    await expect(homePage.skills().locator).toBeInViewport();
+    const tagInput = homePage.tagInput();
+    await tagInput.addSearchTerm('ionic');
+    await tagInput.addSearchTerm('iOS');
+
+    const projects = await homePage.projectList().topProjectItems();
+    await projects[1].decreaseCustomOrder();
+
+    await expect(projects[0].title).toContainText('Self-Driving Car');
+    await expect(projects[1].title).toContainText('Custom E-Commerce');
+    await expect(projects[2].title).toContainText('Towel Defence');
+
+    await expect(tagInput.chipTexts).toHaveText(['ionic', 'iOS']);
+
+    await expect(page).toHaveURL(/searchTags=ionic,iOS/);
+    await expect(page).toHaveURL(/order=unicorn-ecommerce:1,towel-defence:2/);
+    await expect(page).not.toHaveURL(/#/);
+
+    await navigation.getNavItem('Projects').click();
+
+    const newProjects = await homePage.projectList().topProjectItems();
+    await expect(newProjects[0].title).toContainText('Self-Driving Car');
+    await expect(newProjects[1].title).toContainText('Custom E-Commerce');
+    await expect(newProjects[2].title).toContainText('Towel Defence');
+
+    await expect(tagInput.chipTexts).toHaveText(['ionic', 'iOS']);
+
+    await expect(page).toHaveURL(/searchTags=ionic,iOS/);
+    await expect(page).toHaveURL(/order=unicorn-ecommerce:1,towel-defence:2/);
+    await expect(page).toHaveURL(/#projects/);
   });
 
-  test('loading page with #about-me fragment scrolls About Me section into viewport', async ({
-    urlHelper,
+  test('selecting Brand Logo Link after loading resets searchTags and custom order', async ({
     homePage,
+    urlHelper,
+    navigation,
+    page,
   }) => {
-    await urlHelper.gotoHomePage({ fragment: 'about-me' });
-    await expect(homePage.aboutMe().locator).toBeInViewport();
+    await urlHelper.gotoHomePage({
+      searchTags: ['ionic', 'iOS'],
+      order: [
+        { id: 'unicorn-ecommerce', index: 1 },
+        { id: 'towel-defence', index: 2 },
+      ],
+    });
+
+    const projects = await homePage.projectList().topProjectItems();
+    await expect(projects[0].title).toContainText('Self-Driving Car');
+    await expect(projects[1].title).toContainText('Custom E-Commerce');
+    await expect(projects[2].title).toContainText('Towel Defence');
+
+    const tagInput = homePage.tagInput();
+    await expect(tagInput.chipTexts).toHaveText(['ionic', 'iOS']);
+
+    await expect(page).toHaveURL(/searchTags=ionic,iOS/);
+    await expect(page).toHaveURL(/order=unicorn-ecommerce:1,towel-defence:2/);
+    await expect(page).not.toHaveURL(/#/);
+
+    await navigation.brandLink.click();
+
+    const newProjects = await homePage.projectList().topProjectItems();
+    await expect(newProjects[0].title).toContainText('My Developer Portfolio');
+    await expect(newProjects[1].title).toContainText('AI-Powered Language');
+    await expect(newProjects[2].title).toContainText('Lottery Platform');
+
+    await expect(tagInput.chipTexts).toHaveCount(0);
+
+    await expect(page).not.toHaveURL(/searchTags/);
+    await expect(page).not.toHaveURL(/order/);
+    await expect(page).not.toHaveURL(/#/);
   });
 
-  test('loading page with #contact fragment scrolls Contact section into viewport', async ({
-    urlHelper,
+  test('selecting Brand Logo Link after SPA changes resets searchTags and custom order', async ({
     homePage,
+    navigation,
+    page,
   }) => {
-    await urlHelper.gotoHomePage({ fragment: 'contact' });
-    await expect(homePage.contactMe().locator).toBeInViewport();
+    const tagInput = homePage.tagInput();
+    await tagInput.addSearchTerm('ionic');
+    await tagInput.addSearchTerm('iOS');
+
+    const projects = await homePage.projectList().topProjectItems();
+    await projects[1].decreaseCustomOrder();
+
+    await expect(projects[0].title).toContainText('Self-Driving Car');
+    await expect(projects[1].title).toContainText('Custom E-Commerce');
+    await expect(projects[2].title).toContainText('Towel Defence');
+
+    await expect(tagInput.chipTexts).toHaveText(['ionic', 'iOS']);
+
+    await expect(page).toHaveURL(/searchTags=ionic,iOS/);
+    await expect(page).toHaveURL(/order=unicorn-ecommerce:1,towel-defence:2/);
+    await expect(page).not.toHaveURL(/#/);
+
+    await navigation.brandLink.click();
+
+    const newProjects = await homePage.projectList().topProjectItems();
+    await expect(newProjects[0].title).toContainText('My Developer Portfolio');
+    await expect(newProjects[1].title).toContainText('AI-Powered Language');
+    await expect(newProjects[2].title).toContainText('Lottery Platform');
+
+    await expect(tagInput.chipTexts).toHaveCount(0);
+
+    await expect(page).not.toHaveURL(/searchTags/);
+    await expect(page).not.toHaveURL(/order/);
+    await expect(page).not.toHaveURL(/#/);
   });
 });

@@ -10,15 +10,31 @@ type MyFixtures = {
   urlHelper: UrlHelper;
 };
 
-export const test = base.extend<MyFixtures>({
-  homePage: async ({ page }, use) => {
+type MyOptions = {
+  initialUrl: string | null;
+};
+
+type MyInternalFixtures = MyFixtures & {
+  _initialLoad: void;
+};
+
+export const test = base.extend<MyInternalFixtures & MyOptions>({
+  initialUrl: ['/', { option: true }],
+  // Shared initial navigation that runs once, before any fixture uses the page
+  _initialLoad: async ({ page, initialUrl }, use) => {
+    if (initialUrl !== null) {
+      await page.goto(initialUrl);
+    }
+    await use();
+  },
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  homePage: async ({ _initialLoad, page }, use) => {
     const homePage = new HomePage(page);
-    await homePage.goto();
     await use(homePage);
   },
-  navigation: async ({ page }, use) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  navigation: async ({ _initialLoad, page }, use) => {
     const navigation = new Navigation(page);
-    await page.goto('/');
     await use(navigation);
   },
   urlHelper: async ({ page, homePage }, use) => {

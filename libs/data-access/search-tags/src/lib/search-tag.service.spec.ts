@@ -1,21 +1,32 @@
 import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { Router } from '@angular/router';
+import { UrlStateService } from '@portfolio/url-state';
+import { EMPTY } from 'rxjs';
 
 import { SearchTagService } from './search-tag.service';
 
 describe('SearchTagService', () => {
   let service: SearchTagService;
   let mockRouter: Partial<Router>;
+  let mockUrlStateService: Partial<UrlStateService>;
 
   beforeEach(() => {
     mockRouter = {
       url: '/',
       navigate: jest.fn().mockResolvedValue(true),
+      events: EMPTY,
       parseUrl: jest.fn().mockReturnValue({ queryParams: {} }),
     };
 
+    mockUrlStateService = {
+      updateValue: jest.fn(),
+    };
+
     TestBed.configureTestingModule({
-      providers: [{ provide: Router, useValue: mockRouter }],
+      providers: [
+        { provide: Router, useValue: mockRouter },
+        { provide: UrlStateService, useValue: mockUrlStateService },
+      ],
     });
 
     service = TestBed.inject(SearchTagService);

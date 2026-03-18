@@ -1,14 +1,15 @@
-import { Location } from '@angular/common';
 import { DestroyRef, inject, Injectable } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { ActivatedRoute, Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { SearchEngineService } from '@portfolio/search-engine-angular';
 import { Project } from '@portfolio/search-engine-domain';
 import { SearchTagService } from '@portfolio/search-tags';
+import { UrlStateService } from '@portfolio/url-state';
 import { arrayMoveMutable } from 'array-move';
-import _ from 'lodash';
+import { isEqual } from 'lodash';
 import {
   distinctUntilChanged,
+  filter,
   map,
   Observable,
   ReplaySubject,
@@ -35,11 +36,6 @@ type State = {
   customOrderDiff: CustomOrderDiff[];
 };
 
-const initialState: State = {
-  originalProjects: [],
-  customOrderDiff: [],
-};
-
 /**
  * Service responsible for managing custom project ordering.
  * Provides a self-contained interface for ordered projects.
@@ -50,18 +46,19 @@ const initialState: State = {
 })
 export class ProjectListCustomOrderService {
   private readonly router = inject(Router);
-  private readonly route = inject(ActivatedRoute);
-  private readonly location = inject(Location);
   private readonly searchEngineService = inject(SearchEngineService);
   private readonly searchTagService = inject(SearchTagService);
+  private readonly urlStateService = inject(UrlStateService);
   private readonly destroyRef = inject(DestroyRef);
 
   private readonly actions$ = new ReplaySubject<Action>(1);
 
+  private readonly initialState: State = this.createInitialStateFromUrl();
+
   private readonly state$: Observable<State> = this.actions$.pipe(
     scan(
       (state: State, action: Action) => this.reduceState(state, action),
-      initialState
+      this.initialState
     ),
     shareReplay({ bufferSize: 1, refCount: true })
   );
@@ -73,7 +70,7 @@ export class ProjectListCustomOrderService {
 
   constructor() {
     this.setupSearchResultsUpdateState();
-    this.setupUrlSetsCustomOrderOnLoad();
+    this.setupUrlSetsCustomOrder();
     this.setupStateChangeChangesUrl();
     this.setupResetOnSearchTagChangeEffect();
   }
@@ -82,9 +79,7 @@ export class ProjectListCustomOrderService {
     this.searchEngineService.searchResult$
       .pipe(
         map(searchResult => searchResult.ui?.projects || []),
-        distinctUntilChanged((projectsA, projectsB) =>
-          _.isEqual(projectsA, projectsB)
-        ),
+        distinctUntilChanged(isEqual),
         map(projects => ({ type: 'setOriginalProjects', projects } as Action)),
         tap(action => this.actions$.next(action)),
         takeUntilDestroyed(this.destroyRef)
@@ -92,14 +87,19 @@ export class ProjectListCustomOrderService {
       .subscribe();
   }
 
-  private setupUrlSetsCustomOrderOnLoad(): void {
-    this.route.queryParamMap
+  private createInitialStateFromUrl(): State {
+    return {
+      originalProjects: [],
+      customOrderDiff: this.getCustomOrderDiffFromCurrentUrl(),
+    };
+  }
+
+  private setupUrlSetsCustomOrder(): void {
+    this.router.events
       .pipe(
-        map(queryParamMap => {
-          return queryParamMap.get('order');
-        }),
-        distinctUntilChanged(),
-        map(orderUrlParam => this.toCustomOrderDiff(orderUrlParam)),
+        filter(event => event instanceof NavigationEnd),
+        map(() => this.getCustomOrderDiffFromCurrentUrl()),
+        distinctUntilChanged(isEqual),
         map(
           customOrderDiff =>
             ({ type: 'setCustomOrder', customOrderDiff } as Action)
@@ -110,13 +110,20 @@ export class ProjectListCustomOrderService {
       .subscribe();
   }
 
+  private getCustomOrderDiffFromCurrentUrl(): CustomOrderDiff[] {
+    const urlTree = this.router.parseUrl(this.router.url);
+    const orderParam = urlTree.queryParams['order'];
+
+    return this.toCustomOrderDiff(orderParam ?? null);
+  }
+
   private setupStateChangeChangesUrl(): void {
     this.state$
       .pipe(
         map(({ customOrderDiff }) => customOrderDiff),
-        distinctUntilChanged(),
+        distinctUntilChanged(isEqual),
         map(customOrderDiff => this.toUrlParam(customOrderDiff)),
-        distinctUntilChanged(),
+        distinctUntilChanged(isEqual),
         tap(urlParam => this.setOrderUrlParam(urlParam)),
         takeUntilDestroyed(this.destroyRef)
       )
@@ -170,12 +177,7 @@ export class ProjectListCustomOrderService {
   }
 
   private setOrderUrlParam(orderParam: string | null): void {
-    const urlTree = this.router.createUrlTree([], {
-      queryParams: { order: orderParam },
-      queryParamsHandling: 'merge',
-      preserveFragment: true,
-    });
-    this.location.replaceState(this.router.serializeUrl(urlTree));
+    this.urlStateService.updateValue({ order: orderParam });
   }
 
   private toDiff(

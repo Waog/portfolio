@@ -1,6 +1,7 @@
 import 'jest-expect-message';
 
 import { TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 
 import { UrlStateService } from './url-state.service';
 
@@ -9,7 +10,7 @@ describe('UrlStateService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [UrlStateService],
+      providers: [provideRouter([]), UrlStateService],
     });
 
     service = TestBed.inject(UrlStateService);
