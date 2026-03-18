@@ -20,8 +20,8 @@ jest.mock('@portfolio/search-engine-angular', () => ({
   },
 }));
 
-import { ProjectListCustomOrderService } from './project-list-custom-order.service';
 import { ProjectListComponent } from './project-list.component';
+import { ProjectListCustomOrderService } from './project-list-custom-order.service';
 
 describe('ProjectListComponent', () => {
   let component: ProjectListComponent;
