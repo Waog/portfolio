@@ -56,16 +56,18 @@
     <!-- Action Button and Contact Info -->
     <div class="nav-actions-contact">
       <!-- CV Button - Desktop Only -->
-      <button
-        mat-raised-button
-        color="primary"
-        (click)="downloadCV()"
-        disabled
-        class="cv-button cv-button-desktop"
-      >
-        <mat-icon>download</mat-icon>
-        CV as PDF
-      </button>
+      <div [matTooltip]="'CV download coming soon'">
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="downloadCV()"
+          disabled
+          class="cv-button cv-button-desktop"
+        >
+          <mat-icon>download</mat-icon>
+          CV as PDF
+        </button>
+      </div>
       <!-- Contact Info - Always Visible -->
       <div class="contact-info">
         <a class="contact-item" href="mailto:oliver.stadie+it@gmail.com">
@@ -133,10 +135,12 @@
 
         <mat-divider></mat-divider>
 
-        <button mat-menu-item (click)="downloadCV()" disabled>
-          <mat-icon>download</mat-icon>
-          <span>CV as PDF</span>
-        </button>
+        <div [matTooltip]="'CV download coming soon'">
+          <button mat-menu-item (click)="downloadCV()" disabled>
+            <mat-icon>download</mat-icon>
+            <span>CV as PDF</span>
+          </button>
+        </div>
       </mat-menu>
     </div>
   </div>
