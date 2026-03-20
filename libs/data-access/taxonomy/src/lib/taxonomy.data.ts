@@ -189,6 +189,7 @@ type InternalTagName =
   | 'Shadow DOM'
   | 'Software Architecture'
   | 'Software Design'
+  | 'SPA'
   | 'Spacer'
   | 'Splunk'
   | 'Spring Boot'
@@ -344,7 +345,7 @@ const INTERNAL_TAXONOMY = [
     canonical: 'Angular',
     categories: ['Frontend', 'Tools & Libraries'],
     children: ['Angular Material'],
-    includes: ['CSS', 'HTML', 'TypeScript'],
+    includes: ['CSS', 'HTML', 'SPA', 'TypeScript'],
     parents: ['Frontend Framework'],
     related: ['Angular Material', 'AngularJS', 'RxJS', 'SASS', 'SCSS'],
     synonyms: [
@@ -357,7 +358,7 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'AngularJS',
     categories: ['Frontend', 'Tools & Libraries'],
-    includes: ['CSS', 'HTML', 'TypeScript'],
+    includes: ['CSS', 'HTML', 'SPA', 'TypeScript'],
     parents: ['Frontend Framework'],
     related: ['Angular'],
   },
@@ -1361,7 +1362,7 @@ const INTERNAL_TAXONOMY = [
     canonical: 'React',
     categories: ['Frontend', 'Tools & Libraries'],
     children: ['React Native', 'React Web'],
-    includes: ['CSS', 'HTML', 'TypeScript'],
+    includes: ['CSS', 'HTML', 'SPA', 'TypeScript'],
     parents: ['Frontend Framework'],
     synonyms: [/^react$/i, /react\.js/i],
   },
@@ -1463,6 +1464,11 @@ const INTERNAL_TAXONOMY = [
     canonical: 'Software Design',
     categories: ['Concepts'],
     related: ['Software Architecture', 'UML'],
+  },
+  {
+    canonical: 'SPA',
+    categories: ['Concepts', 'Frontend'],
+    synonyms: [/^spa$/i, /single[- ]page application/i],
   },
   {
     // NOTE: this is not a real technology, but a placeholder for empty spaces in the UI
@@ -1650,6 +1656,7 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'Vue.js',
     categories: ['Frontend', 'Tools & Libraries'],
+    includes: ['SPA'],
     parents: ['Frontend Framework'],
     synonyms: [/^vue/i],
   },
