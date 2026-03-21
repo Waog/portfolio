@@ -1,62 +1,141 @@
-import { expect, test } from '@playwright/test';
+import { type Page } from '@playwright/test';
 
-const homepageTitle = 'Oliver Stadie – Full-Stack Web & App Developer';
+import { expect, test } from '../fixtures/app.fixture';
+import { type WebMetadataPage } from '../pom/web-metadata/web-metadata-page';
 
-const legalPages = [
-  {
-    footerLinkText: 'Imprint',
-    path: '/legal/imprint',
-    title: 'Imprint | Oliver Stadie',
+type ExpectedContent = {
+  defaults: {
+    description: string;
+    imagePath: string;
+    siteName: string;
+    siteOrigin: string;
+    title: string;
+    type: string;
+  };
+  pages: {
+    [key: string]: ExpectedPageContent;
+  };
+};
+
+type ExpectedPageContent = {
+  description: string;
+  title: string;
+  path: string;
+};
+
+export const EXPECTED_CONTENT: ExpectedContent = {
+  defaults: {
+    description:
+      'Portfolio of Oliver Stadie, full-stack web and app developer.',
+    imagePath: '/assets/oli-profile.jpg',
+    siteName: 'Oliver Stadie',
+    siteOrigin: 'https://oliver-stadie.dev',
+    title: 'Oliver Stadie – Full-Stack Web & App Developer',
+    type: 'website',
   },
-  {
-    footerLinkText: 'Privacy',
-    path: '/legal/privacy-policy',
-    title: 'Privacy | Oliver Stadie',
+  pages: {
+    home: {
+      description:
+        'Explore the portfolio of Oliver Stadie, a full-stack web and app developer.',
+      title: 'Oliver Stadie – Full-Stack Web & App Developer',
+      path: '/',
+    },
+    cookiePolicy: {
+      description:
+        'Cookie policy and tracking information for the Oliver Stadie portfolio website.',
+      title: 'Cookies | Oliver Stadie',
+      path: '/legal/cookie-policy',
+    },
+    imprint: {
+      description:
+        'Imprint and legal publisher details for the Oliver Stadie portfolio website.',
+      title: 'Imprint | Oliver Stadie',
+      path: '/legal/imprint',
+    },
+    privacyPolicy: {
+      description:
+        'Privacy policy for the Oliver Stadie portfolio website and related services.',
+      title: 'Privacy | Oliver Stadie',
+      path: '/legal/privacy-policy',
+    },
   },
-  {
-    footerLinkText: 'Cookies',
-    path: '/legal/cookie-policy',
-    title: 'Cookies | Oliver Stadie',
-  },
-] as const;
+} as const;
 
 test.describe('Page Metadata', () => {
-  test('sets the homepage title on initial load', async ({ page }) => {
-    await page.goto('/');
-    await page.waitForLoadState('domcontentloaded');
-
-    await expect(page).toHaveTitle(homepageTitle);
-  });
-
-  for (const legalPage of legalPages) {
-    test(`sets the correct title for ${legalPage.footerLinkText} on direct load`, async ({
+  for (const [pageKey, currentPage] of Object.entries(EXPECTED_CONTENT.pages)) {
+    test(`sets metadata correctly for ${pageKey} on direct load`, async ({
       page,
+      webMetadataPage,
+    }: {
+      page: Page;
+      webMetadataPage: WebMetadataPage;
     }) => {
-      await page.goto(legalPage.path);
-      await page.waitForLoadState('domcontentloaded');
+      await webMetadataPage.goto(currentPage.path);
 
-      await expect(page).toHaveURL(new RegExp(`${legalPage.path}$`));
-      await expect(page).toHaveTitle(legalPage.title);
+      await expect(page).toHaveURL(new RegExp(`${currentPage.path}$`));
+      await expect(page).toHaveTitle(currentPage.title);
+      await expectOpenGraphMetadata(webMetadataPage, currentPage);
+    });
+
+    test(`updates metadata when SPA navigating from home to ${pageKey}`, async ({
+      page,
+      webMetadataPage,
+    }: {
+      page: Page;
+      webMetadataPage: WebMetadataPage;
+    }) => {
+      const homepage = EXPECTED_CONTENT.pages['home'];
+
+      await webMetadataPage.goto(homepage.path);
+      await expect(page).toHaveURL(new RegExp(`${homepage.path}$`));
+
+      const nextPage = EXPECTED_CONTENT.pages[pageKey];
+      await webMetadataPage.linkElementToUrl(nextPage.path).click();
+
+      await expect(page).toHaveURL(new RegExp(`${nextPage.path}$`));
+      await expect(page).toHaveTitle(nextPage.title);
+      await expectOpenGraphMetadata(webMetadataPage, nextPage);
     });
   }
-
-  test('updates the title when navigating between routes in the SPA', async ({
-    page,
-  }) => {
-    await page.goto('/');
-    await page.waitForLoadState('domcontentloaded');
-
-    await expect(page).toHaveTitle(homepageTitle);
-
-    for (const legalPage of legalPages) {
-      const footerLink = page
-        .locator('footer')
-        .getByRole('link', { name: legalPage.footerLinkText });
-
-      await footerLink.click();
-
-      await expect(page).toHaveURL(new RegExp(`${legalPage.path}$`));
-      await expect(page).toHaveTitle(legalPage.title);
-    }
-  });
 });
+
+async function expectOpenGraphMetadata(
+  metadataPage: WebMetadataPage,
+  { path, title, description }: ExpectedPageContent
+): Promise<void> {
+  const pom = metadataPage;
+  const origin = pom.currentOrigin();
+  const expectedUrl = `${origin}${path}`;
+  const expectedDefaults = EXPECTED_CONTENT.defaults;
+
+  await expectMetadataElementToHaveContent(pom, 'og:title', title);
+  await expectMetadataElementToHaveContent(pom, 'og:description', description);
+  await expectMetadataElementToHaveContent(
+    pom,
+    'og:type',
+    expectedDefaults.type
+  );
+  await expectMetadataElementToHaveContent(
+    pom,
+    'og:site_name',
+    expectedDefaults.siteName
+  );
+  await expectMetadataElementToHaveContent(
+    pom,
+    'og:image',
+    `${origin}${expectedDefaults.imagePath}`
+  );
+  await expectMetadataElementToHaveContent(pom, 'og:url', expectedUrl);
+  await expect(pom.canonicalLinkElement()).toHaveAttribute('href', expectedUrl);
+}
+
+async function expectMetadataElementToHaveContent(
+  metadataPage: WebMetadataPage,
+  metadataKey: string,
+  expectedString: string
+): Promise<void> {
+  await expect(metadataPage.metadataElement(metadataKey)).toHaveAttribute(
+    'content',
+    expectedString
+  );
+}

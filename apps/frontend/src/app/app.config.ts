@@ -3,7 +3,12 @@ import {
   provideClientHydration,
   withEventReplay,
 } from '@angular/platform-browser';
-import { provideRouter, withInMemoryScrolling } from '@angular/router';
+import {
+  provideRouter,
+  TitleStrategy,
+  withInMemoryScrolling,
+} from '@angular/router';
+import { WebMetadataTitleStrategy } from '@portfolio/web-metadata';
 import { provideNgxSkeletonLoader } from 'ngx-skeleton-loader';
 
 import { appRoutes } from './app.routes';
@@ -19,6 +24,10 @@ export const appConfig: ApplicationConfig = {
         anchorScrolling: 'enabled',
       })
     ),
+    {
+      provide: TitleStrategy,
+      useClass: WebMetadataTitleStrategy,
+    },
     provideNgxSkeletonLoader({
       theme: {
         extendsFromRoot: true,
