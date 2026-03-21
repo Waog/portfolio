@@ -40,8 +40,8 @@ export const test = base.extend<MyInternalFixtures & MyOptions>({
     await use(navigation);
   },
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  webMetadataPage: async ({ _initialLoad, page }, use) => {
-    const webMetadataPage = new WebMetadataPage(page);
+  webMetadataPage: async ({ _initialLoad, page, request }, use) => {
+    const webMetadataPage = new WebMetadataPage(page, request);
     await use(webMetadataPage);
   },
   urlHelper: async ({ page, homePage }, use) => {

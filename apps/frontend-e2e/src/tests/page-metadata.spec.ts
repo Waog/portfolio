@@ -5,6 +5,10 @@ import { type WebMetadataPage } from '../pom/web-metadata/web-metadata-page';
 
 type ExpectedContent = {
   defaults: {
+    faviconIcoPath: string;
+    faviconSvgPath: string;
+    favicon32Path: string;
+    appleTouchIconPath: string;
     description: string;
     imageAlt: string;
     imageHeight: string;
@@ -28,6 +32,10 @@ type ExpectedPageContent = {
 
 export const EXPECTED_CONTENT: ExpectedContent = {
   defaults: {
+    faviconIcoPath: '/favicon.ico',
+    faviconSvgPath: '/assets/favicon.svg',
+    favicon32Path: '/assets/favicon-32.png',
+    appleTouchIconPath: '/assets/apple-touch-icon.png',
     description:
       'Portfolio of Oliver Stadie, full-stack web and app developer.',
     imageAlt: `Portrait of Oliver Stadie with the text 'Oliver Stadie - Full Stack Developer'`,
@@ -77,11 +85,13 @@ test.describe('Page Metadata', () => {
       webMetadataPage: WebMetadataPage;
     }) => {
       await webMetadataPage.goto(currentPage.path);
-
       await expect(page).toHaveURL(new RegExp(`${currentPage.path}$`));
-      await expect(page).toHaveTitle(currentPage.title);
-      await expectOpenGraphMetadata(webMetadataPage, currentPage);
-      await expectMetaDescription(webMetadataPage, currentPage.description);
+
+      await expectCompleteHtmlHeadElement({
+        page,
+        expectedPageContent: currentPage,
+        pom: webMetadataPage,
+      });
     });
 
     test(`updates metadata when SPA navigating from home to ${pageKey}`, async ({
@@ -92,26 +102,73 @@ test.describe('Page Metadata', () => {
       webMetadataPage: WebMetadataPage;
     }) => {
       const homepage = EXPECTED_CONTENT.pages['home'];
-
       await webMetadataPage.goto(homepage.path);
       await expect(page).toHaveURL(new RegExp(`${homepage.path}$`));
 
-      const nextPage = EXPECTED_CONTENT.pages[pageKey];
-      await webMetadataPage.linkElementToUrl(nextPage.path).click();
+      await webMetadataPage.linkElementToUrl(currentPage.path).click();
+      await expect(page).toHaveURL(new RegExp(`${currentPage.path}$`));
 
-      await expect(page).toHaveURL(new RegExp(`${nextPage.path}$`));
-      await expect(page).toHaveTitle(nextPage.title);
-      await expectOpenGraphMetadata(webMetadataPage, nextPage);
-      await expectMetaDescription(webMetadataPage, nextPage.description);
+      await expectCompleteHtmlHeadElement({
+        page,
+        expectedPageContent: currentPage,
+        pom: webMetadataPage,
+      });
     });
   }
 });
 
-async function expectOpenGraphMetadata(
-  metadataPage: WebMetadataPage,
+async function expectCompleteHtmlHeadElement({
+  page,
+  expectedPageContent,
+  pom,
+}: {
+  page: Page;
+  expectedPageContent: ExpectedPageContent;
+  pom: WebMetadataPage;
+}) {
+  await expect(page).toHaveTitle(expectedPageContent.title);
+  await expectFaviconLinksWork(pom);
+
+  await expectOpenGraphMetadataWorks(pom, expectedPageContent);
+  await expectMetaDescription(pom, expectedPageContent);
+  await expect(pom.canonicalLink).toHaveAttribute(
+    'href',
+    `${pom.currentOrigin()}${expectedPageContent.path}`
+  );
+}
+
+async function expectFaviconLinksWork(pom: WebMetadataPage): Promise<void> {
+  const expected = EXPECTED_CONTENT.defaults;
+
+  await expect(pom.faviconIcoLink).toHaveAttribute(
+    'href',
+    expected.faviconIcoPath
+  );
+  await pom.expectIsServed(expected.faviconIcoPath);
+
+  await expect(pom.faviconSvgLink).toHaveAttribute(
+    'href',
+    expected.faviconSvgPath
+  );
+  await pom.expectIsServed(expected.faviconSvgPath);
+
+  await expect(pom.favicon32Link).toHaveAttribute(
+    'href',
+    expected.favicon32Path
+  );
+  await pom.expectIsServed(expected.favicon32Path);
+
+  await expect(pom.appleTouchIconLink).toHaveAttribute(
+    'href',
+    expected.appleTouchIconPath
+  );
+  await pom.expectIsServed(expected.appleTouchIconPath);
+}
+
+async function expectOpenGraphMetadataWorks(
+  pom: WebMetadataPage,
   { path, title, description }: ExpectedPageContent
 ): Promise<void> {
-  const pom = metadataPage;
   const origin = pom.currentOrigin();
   const expectedUrl = `${origin}${path}`;
   const expectedDefaults = EXPECTED_CONTENT.defaults;
@@ -128,47 +185,59 @@ async function expectOpenGraphMetadata(
     'og:site_name',
     expectedDefaults.siteName
   );
+  await expectMetadataElementToHaveContent(pom, 'og:url', expectedUrl);
+
+  await expectOpenGraphImageToWork(pom);
+}
+
+async function expectMetadataElementToHaveContent(
+  pom: WebMetadataPage,
+  metadataKey: string,
+  expectedString: string
+): Promise<void> {
+  await expect(pom.metadataElement(metadataKey)).toHaveAttribute(
+    'content',
+    expectedString
+  );
+}
+
+async function expectOpenGraphImageToWork(pom: WebMetadataPage): Promise<void> {
+  const expected = EXPECTED_CONTENT.defaults;
   await expectMetadataElementToHaveContent(
     pom,
     'og:image',
-    `${origin}${expectedDefaults.imagePath}`
+    `${pom.currentOrigin()}${expected.imagePath}`
   );
   await expectMetadataElementToHaveContent(
     pom,
     'og:image:alt',
-    expectedDefaults.imageAlt
+    expected.imageAlt
   );
   await expectMetadataElementToHaveContent(
     pom,
     'og:image:height',
-    expectedDefaults.imageHeight
+    expected.imageHeight
   );
   await expectMetadataElementToHaveContent(
     pom,
     'og:image:width',
-    expectedDefaults.imageWidth
+    expected.imageWidth
   );
-  await expectMetadataElementToHaveContent(pom, 'og:url', expectedUrl);
-  await expect(pom.canonicalLinkElement()).toHaveAttribute('href', expectedUrl);
+
+  const image = pom.metadataElement('og:image');
+  await expect(image).toHaveAttribute(
+    'content',
+    `${pom.currentOrigin()}${expected.imagePath}`
+  );
+  await pom.expectIsServed(expected.imagePath);
 }
 
 async function expectMetaDescription(
-  metadataPage: WebMetadataPage,
-  expectedDescription: string
+  pom: WebMetadataPage,
+  expected: ExpectedPageContent
 ): Promise<void> {
-  await expect(metadataPage.descriptionElement()).toHaveAttribute(
+  await expect(pom.descriptionMeta).toHaveAttribute(
     'content',
-    expectedDescription
-  );
-}
-
-async function expectMetadataElementToHaveContent(
-  metadataPage: WebMetadataPage,
-  metadataKey: string,
-  expectedString: string
-): Promise<void> {
-  await expect(metadataPage.metadataElement(metadataKey)).toHaveAttribute(
-    'content',
-    expectedString
+    expected.description
   );
 }
