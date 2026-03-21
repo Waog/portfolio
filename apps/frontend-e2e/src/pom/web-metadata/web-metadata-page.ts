@@ -22,6 +22,10 @@ export class WebMetadataPage {
     return this.page.locator(`a[href="${targetUrl}"]`).first();
   }
 
+  descriptionElement(): Locator {
+    return this.page.locator('head meta[name="description"]');
+  }
+
   currentOrigin(): string {
     return new URL(this.page.url()).origin;
   }

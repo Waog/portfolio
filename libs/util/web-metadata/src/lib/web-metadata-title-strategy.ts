@@ -58,6 +58,9 @@ export class WebMetadataTitleStrategy extends TitleStrategy {
     );
     this.updateOpenGraphTag('og:url', ogUrl);
     this.updateCanonicalLink(ogUrl);
+    this.updateMetaDescription(
+      webMetadata.description ?? WEB_METADATA.defaults.description
+    );
   }
 
   private getCanonicalPath(currentUrl: string): string {
@@ -128,5 +131,9 @@ export class WebMetadataTitleStrategy extends TitleStrategy {
     }
 
     canonicalElement.setAttribute('href', url);
+  }
+
+  private updateMetaDescription(content: string): void {
+    this.meta.updateTag({ name: 'description', content });
   }
 }

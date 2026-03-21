@@ -75,6 +75,7 @@ test.describe('Page Metadata', () => {
       await expect(page).toHaveURL(new RegExp(`${currentPage.path}$`));
       await expect(page).toHaveTitle(currentPage.title);
       await expectOpenGraphMetadata(webMetadataPage, currentPage);
+      await expectMetaDescription(webMetadataPage, currentPage.description);
     });
 
     test(`updates metadata when SPA navigating from home to ${pageKey}`, async ({
@@ -95,6 +96,7 @@ test.describe('Page Metadata', () => {
       await expect(page).toHaveURL(new RegExp(`${nextPage.path}$`));
       await expect(page).toHaveTitle(nextPage.title);
       await expectOpenGraphMetadata(webMetadataPage, nextPage);
+      await expectMetaDescription(webMetadataPage, nextPage.description);
     });
   }
 });
@@ -127,6 +129,16 @@ async function expectOpenGraphMetadata(
   );
   await expectMetadataElementToHaveContent(pom, 'og:url', expectedUrl);
   await expect(pom.canonicalLinkElement()).toHaveAttribute('href', expectedUrl);
+}
+
+async function expectMetaDescription(
+  metadataPage: WebMetadataPage,
+  expectedDescription: string
+): Promise<void> {
+  await expect(metadataPage.descriptionElement()).toHaveAttribute(
+    'content',
+    expectedDescription
+  );
 }
 
 async function expectMetadataElementToHaveContent(
