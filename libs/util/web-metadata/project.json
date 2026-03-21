@@ -4,7 +4,7 @@
   "sourceRoot": "libs/util/web-metadata/src",
   "prefix": "lib",
   "projectType": "library",
-  "tags": ["layer:util"],
+  "tags": ["layer:util", "type:top-level"],
   "targets": {
     "test": {
       "executor": "@nx/jest:jest",
