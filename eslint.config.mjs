@@ -49,7 +49,6 @@ export default [
                 'layer:data-access',
                 'layer:util',
               ],
-              notDependOnLibsWithTags: ['type:top-level'],
             },
             {
               sourceTag: 'layer:ui',
