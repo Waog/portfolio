@@ -3,11 +3,13 @@ import { test as base } from '@playwright/test';
 import { HomePage } from '../pom/home/home-page';
 import { Navigation } from '../pom/navigation/navigation';
 import { UrlHelper } from '../pom/url-helper/url-helper';
+import { WebMetadataPage } from '../pom/web-metadata/web-metadata-page';
 
 type MyFixtures = {
   homePage: HomePage;
   navigation: Navigation;
   urlHelper: UrlHelper;
+  webMetadataPage: WebMetadataPage;
 };
 
 type MyOptions = {
@@ -36,6 +38,11 @@ export const test = base.extend<MyInternalFixtures & MyOptions>({
   navigation: async ({ _initialLoad, page }, use) => {
     const navigation = new Navigation(page);
     await use(navigation);
+  },
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  webMetadataPage: async ({ _initialLoad, page, request }, use) => {
+    const webMetadataPage = new WebMetadataPage(page, request);
+    await use(webMetadataPage);
   },
   urlHelper: async ({ page, homePage }, use) => {
     const urlHelper = new UrlHelper(page, homePage);
