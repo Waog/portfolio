@@ -48,7 +48,7 @@
       "@portfolio/tag-input": ["libs/feature/tag-input/src/index.ts"],
       "@portfolio/taxonomy": ["libs/data-access/taxonomy/src/index.ts"],
       "@portfolio/url-state": ["libs/data-access/url-state/src/index.ts"],
-      "@portfolio/web-metadata": ["libs/util/web-metadata/src/index.ts"]
+      "@portfolio/web-metadata": ["libs/feature/web-metadata/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

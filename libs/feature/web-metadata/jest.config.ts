@@ -2,7 +2,7 @@ export default {
   displayName: 'web-metadata',
   preset: '../../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
-  coverageDirectory: '../../../coverage/libs/util/web-metadata',
+  coverageDirectory: '../../../coverage/libs/feature/web-metadata',
   transform: {
     '^.+\\.(ts|mjs|js|html)$': [
       'jest-preset-angular',

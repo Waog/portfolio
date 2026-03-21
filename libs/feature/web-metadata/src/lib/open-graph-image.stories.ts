@@ -287,7 +287,7 @@ class OpenGraphImageStoryComponent {
 
 const meta: Meta<OpenGraphImageStoryComponent> = {
   component: OpenGraphImageStoryComponent,
-  title: 'Utilities/Open Graph Image Generator',
+  title: 'Feature/Open Graph Image Generator',
   tags: ['autodocs'],
   argTypes: {
     showSafeAreaOverlay: {
