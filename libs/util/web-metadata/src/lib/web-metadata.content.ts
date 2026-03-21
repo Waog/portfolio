@@ -2,9 +2,13 @@ export const WEB_METADATA = {
   defaults: {
     description:
       'Portfolio of Oliver Stadie, full-stack web and app developer.',
-    imagePath: '/assets/oli-profile.jpg',
+    imageAlt:
+      "Portrait of Oliver Stadie with the text 'Oliver Stadie - Full Stack Developer'",
+    imageHeight: '630',
+    imagePath: '/assets/og-image.png',
+    imageWidth: '1200',
     siteName: 'Oliver Stadie',
-    siteOrigin: 'https://oliver-stadie.dev',
+    siteOrigin: 'https://oliverstadie.com',
     title: 'Oliver Stadie – Full-Stack Web & App Developer',
     type: 'website',
   },

@@ -50,6 +50,12 @@ export class WebMetadataTitleStrategy extends TitleStrategy {
       webMetadata.description ?? WEB_METADATA.defaults.description
     );
     this.updateOpenGraphTag('og:image', ogImage);
+    this.updateOpenGraphTag('og:image:width', WEB_METADATA.defaults.imageWidth);
+    this.updateOpenGraphTag(
+      'og:image:height',
+      WEB_METADATA.defaults.imageHeight
+    );
+    this.updateOpenGraphTag('og:image:alt', WEB_METADATA.defaults.imageAlt);
     this.updateOpenGraphTag('og:site_name', WEB_METADATA.defaults.siteName);
     this.updateOpenGraphTag('og:title', pageTitle);
     this.updateOpenGraphTag(

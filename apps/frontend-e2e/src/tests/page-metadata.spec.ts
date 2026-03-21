@@ -6,7 +6,10 @@ import { type WebMetadataPage } from '../pom/web-metadata/web-metadata-page';
 type ExpectedContent = {
   defaults: {
     description: string;
+    imageAlt: string;
+    imageHeight: string;
     imagePath: string;
+    imageWidth: string;
     siteName: string;
     siteOrigin: string;
     title: string;
@@ -27,9 +30,12 @@ export const EXPECTED_CONTENT: ExpectedContent = {
   defaults: {
     description:
       'Portfolio of Oliver Stadie, full-stack web and app developer.',
-    imagePath: '/assets/oli-profile.jpg',
+    imageAlt: `Portrait of Oliver Stadie with the text 'Oliver Stadie - Full Stack Developer'`,
+    imageHeight: '630',
+    imagePath: '/assets/og-image.png',
+    imageWidth: '1200',
     siteName: 'Oliver Stadie',
-    siteOrigin: 'https://oliver-stadie.dev',
+    siteOrigin: 'https://oliverstadie.com',
     title: 'Oliver Stadie – Full-Stack Web & App Developer',
     type: 'website',
   },
@@ -126,6 +132,21 @@ async function expectOpenGraphMetadata(
     pom,
     'og:image',
     `${origin}${expectedDefaults.imagePath}`
+  );
+  await expectMetadataElementToHaveContent(
+    pom,
+    'og:image:alt',
+    expectedDefaults.imageAlt
+  );
+  await expectMetadataElementToHaveContent(
+    pom,
+    'og:image:height',
+    expectedDefaults.imageHeight
+  );
+  await expectMetadataElementToHaveContent(
+    pom,
+    'og:image:width',
+    expectedDefaults.imageWidth
   );
   await expectMetadataElementToHaveContent(pom, 'og:url', expectedUrl);
   await expect(pom.canonicalLinkElement()).toHaveAttribute('href', expectedUrl);
