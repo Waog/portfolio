@@ -48,6 +48,7 @@ export const ALL_PROJECT_DATA: ProjectData[] = [
       'Web Development',
       'Component Library',
       'Storybook',
+      'Cloudflare',
     ],
     role: 'Full-Stack Developer',
     team: 'Solo development',
