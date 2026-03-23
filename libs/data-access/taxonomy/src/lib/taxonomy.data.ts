@@ -38,6 +38,7 @@ type InternalTagName =
   | 'chai'
   | 'CI/CD'
   | 'Classification Tree Method'
+  | 'Cloudflare'
   | 'CloudFormation'
   | 'Cloud Platforms'
   | 'CloudWatch'
@@ -426,6 +427,7 @@ const INTERNAL_TAXONOMY = [
       'S3',
     ],
     parents: ['Cloud Platforms'],
+    related: ['Cloudflare'],
     synonyms: [/^aws$/i, /amazon web services/i],
   },
   {
@@ -535,8 +537,14 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'Cloud Platforms',
     categories: ['Misc'],
-    children: ['AWS', 'Google App Engine'],
+    children: ['AWS', 'Cloudflare', 'Google App Engine'],
     synonyms: [/^cloud$/i, /cloud platform/i],
+  },
+  {
+    canonical: 'Cloudflare',
+    categories: ['Cloud & Infrastructure'],
+    parents: ['Cloud Platforms'],
+    related: ['AWS'],
   },
   {
     canonical: 'CloudFormation',
