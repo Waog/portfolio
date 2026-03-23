@@ -11,6 +11,7 @@ export type Category =
 type InternalTagName =
   | '2D'
   | '3D'
+  | 'Accessibility'
   | 'ActionScript'
   | 'Agile'
   | 'AJAX'
@@ -20,7 +21,9 @@ type InternalTagName =
   | 'Angular Material'
   | 'Ant'
   | 'API Gateway'
+  | 'API Integration'
   | 'AppConfig'
+  | 'ARIA'
   | 'Artemis-ODB'
   | 'Artificial Intelligence'
   | 'Atlassian'
@@ -31,6 +34,7 @@ type InternalTagName =
   | 'Blender'
   | 'Bootstrap'
   | 'Bower'
+  | 'Build Tools'
   | 'C#'
   | 'C++'
   | 'Capture-and-Replay'
@@ -58,6 +62,8 @@ type InternalTagName =
   | 'Cypress'
   | 'Database Systems'
   | 'DataDog'
+  | 'Debugging'
+  | 'Design Patterns'
   | 'DevOps Tools'
   | 'Diploma Thesis'
   | 'Docker'
@@ -94,10 +100,12 @@ type InternalTagName =
   | 'Google Analytics'
   | 'Google App Engine'
   | 'Google Code'
+  | 'Google Maps API'
   | 'Gradle'
   | 'GraphQL'
   | 'Grunt'
   | 'GTM'
+  | 'Gulp'
   | 'HTML'
   | 'HTML5'
   | 'HTML Canvas'
@@ -126,6 +134,7 @@ type InternalTagName =
   | 'Kanban'
   | 'Karma'
   | 'Kubernetes'
+  | 'LESS'
   | 'Lighthouse'
   | 'Lit'
   | 'Lodash'
@@ -133,6 +142,7 @@ type InternalTagName =
   | 'Micro Frontends'
   | 'Microservices'
   | 'Mobile Development'
+  | 'Mobile First'
   | 'mocha'
   | 'mockito'
   | 'Model-based testing'
@@ -140,6 +150,7 @@ type InternalTagName =
   | 'Mongoose'
   | 'MonoDevelop'
   | 'Mono Repo'
+  | 'MVC'
   | 'Nao'
   | 'NestJS'
   | 'Netbeans'
@@ -149,6 +160,7 @@ type InternalTagName =
   | 'npm'
   | 'Nx'
   | 'OAuth2'
+  | 'OOP'
   | 'OpenAI'
   | 'OpenGL'
   | 'OSGI'
@@ -160,6 +172,7 @@ type InternalTagName =
   | 'Phaser'
   | 'Playwright'
   | 'Polly'
+  | 'Preprocessor'
   | 'Project Management'
   | 'Prototyping'
   | 'Puppeteer'
@@ -219,7 +232,9 @@ type InternalTagName =
   | 'USB Monitor'
   | 'Various Technologies'
   | 'Visual Studio'
+  | 'Vite'
   | 'Vue.js'
+  | 'WCAG'
   | 'Web Components'
   | 'Web Development'
   | 'WebGL'
@@ -315,6 +330,13 @@ const INTERNAL_TAXONOMY = [
     synonyms: [/^3d$/i, /three-?d/i],
   },
   {
+    canonical: 'Accessibility',
+    categories: ['Concepts', 'Frontend'],
+    children: ['ARIA', 'WCAG'],
+    related: ['Web Development'],
+    synonyms: [/^a11y$/i, /accessibility/i],
+  },
+  {
     canonical: 'ActionScript',
     categories: ['Frontend'],
     related: ['JavaScript'],
@@ -366,6 +388,7 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'Ant',
     categories: ['DevOps & Build & CI/CD'],
+    parents: ['Build Tools'],
     related: ['CI/CD', 'Gradle', 'Maven'],
     synonyms: [/^ant$/i, /apache ant/i],
   },
@@ -375,9 +398,41 @@ const INTERNAL_TAXONOMY = [
     parents: ['AWS'],
   },
   {
+    canonical: 'API Integration',
+    categories: ['Concepts', 'Frontend'],
+    related: [
+      'Facebook API',
+      'GitHub API',
+      'Google Maps API',
+      'GraphQL',
+      'OAuth2',
+      'PayPal API',
+      'REST',
+      'Twitter API',
+      'Wikipedia API',
+    ],
+  },
+  {
     canonical: 'AppConfig',
     categories: ['Cloud & Infrastructure'],
     parents: ['AWS'],
+  },
+  {
+    canonical: 'ARIA',
+    categories: ['Concepts', 'Frontend'],
+    parents: ['Accessibility'],
+    related: [
+      'Custom Elements',
+      'HTML',
+      'WCAG',
+      'Web Components',
+      'Web Development',
+    ],
+    synonyms: [
+      /^aria$/i,
+      /accessible rich internet applications/i,
+      /wai-?aria/i,
+    ],
   },
   {
     canonical: 'Artemis-ODB',
@@ -451,7 +506,7 @@ const INTERNAL_TAXONOMY = [
     canonical: 'Bootstrap',
     categories: ['Frontend', 'Tools & Libraries'],
     includes: ['CSS', 'HTML', 'JavaScript'],
-    related: ['jQuery', 'SASS', 'SCSS'],
+    related: ['jQuery', 'LESS', 'SASS', 'SCSS'],
   },
   {
     canonical: 'Bower',
@@ -459,14 +514,21 @@ const INTERNAL_TAXONOMY = [
     related: ['CI/CD', 'npm', 'yarn'],
   },
   {
+    canonical: 'Build Tools',
+    categories: ['DevOps & Build & CI/CD'],
+    children: ['Ant', 'Gradle', 'Grunt', 'Gulp', 'Maven', 'Vite', 'Webpack'],
+    related: ['CI/CD', 'npm', 'yarn'],
+  },
+  {
     canonical: 'C#',
     categories: ['Backend', 'Frontend'],
-    related: ['Unity'],
+    related: ['OOP', 'Unity'],
     synonyms: [/^c[- ]sharp$/i, /^c#$/i],
   },
   {
     canonical: 'C++',
     categories: ['Backend'],
+    related: ['OOP'],
     synonyms: [/^c\+\+$/i, /^cpp$/i],
   },
   {
@@ -500,6 +562,7 @@ const INTERNAL_TAXONOMY = [
       'Ant',
       'BitBucket',
       'Bower',
+      'Build Tools',
       'CloudFormation',
       'Cordova',
       'Custom Scripts',
@@ -511,6 +574,7 @@ const INTERNAL_TAXONOMY = [
       'Google Code',
       'Gradle',
       'Grunt',
+      'Gulp',
       'Intel XDK',
       'iOS',
       'Kubernetes',
@@ -520,6 +584,7 @@ const INTERNAL_TAXONOMY = [
       'SVN',
       'TFS',
       'tsd',
+      'Vite',
       'Webpack',
       'XCode',
       'yarn',
@@ -610,14 +675,14 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'CSS',
     categories: ['Frontend'],
-    related: ['SASS', 'SCSS'],
+    related: ['LESS', 'Mobile First', 'SASS', 'SCSS'],
     synonyms: [/^css/i],
   },
   {
     canonical: 'Custom Elements',
     categories: ['Frontend'],
     parents: ['Web Components'],
-    related: ['Shadow DOM'],
+    related: ['ARIA', 'Shadow DOM'],
   },
   {
     canonical: 'Custom Game Engine',
@@ -652,8 +717,21 @@ const INTERNAL_TAXONOMY = [
     related: ['Docker', 'Kubernetes', 'Splunk'],
   },
   {
+    canonical: 'Debugging',
+    categories: ['Concepts', 'Testing and QA'],
+    related: ['DevOps Tools', 'QA', 'Sentry', 'Testing'],
+  },
+  {
+    canonical: 'Design Patterns',
+    categories: ['Concepts'],
+    parents: ['Software Design'],
+    related: ['MVC', 'OOP', 'Software Architecture'],
+    synonyms: [/design patterns?/i],
+  },
+  {
     canonical: 'DevOps Tools',
     categories: ['Misc'],
+    related: ['Debugging'],
   },
   {
     canonical: 'Diploma Thesis',
@@ -771,6 +849,7 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'Facebook API',
     categories: ['Tools & Libraries'],
+    includes: ['API Integration'],
     parents: ['Facebook'],
     related: ['OAuth2', 'REST'],
   },
@@ -810,12 +889,14 @@ const INTERNAL_TAXONOMY = [
     canonical: 'Framework',
     categories: ['Misc'],
     children: ['Frontend Framework'],
+    synonyms: [/^framework$/i],
   },
   {
     canonical: 'Frontend Framework',
     categories: ['Frontend'],
     children: ['Angular', 'AngularJS', 'React', 'Vue.js'],
     parents: ['Framework'],
+    related: ['MVC'],
     synonyms: [/frontend framework/i, /javascript framework/i, /js framework/i],
   },
   {
@@ -857,6 +938,7 @@ const INTERNAL_TAXONOMY = [
       'DevOps & Build & CI/CD',
       'Tools & Libraries',
     ],
+    includes: ['API Integration'],
     parents: ['GitHub'],
     related: ['CI/CD', 'OAuth2', 'REST'],
   },
@@ -916,25 +998,39 @@ const INTERNAL_TAXONOMY = [
     related: ['BitBucket', 'CI/CD', 'Git', 'GitHub', 'GitLab', 'SVN'],
   },
   {
+    canonical: 'Google Maps API',
+    categories: ['Tools & Libraries'],
+    includes: ['API Integration', 'REST'],
+    synonyms: [/google maps? api/i, /maps javascript api/i],
+  },
+  {
     canonical: 'Gradle',
     categories: ['DevOps & Build & CI/CD'],
+    parents: ['Build Tools'],
     related: ['Ant', 'CI/CD', 'Maven'],
   },
   {
     canonical: 'GraphQL',
     categories: ['Backend', 'Concepts', 'Frontend', 'Tools & Libraries'],
-    related: ['REST'],
+    related: ['API Integration', 'REST'],
   },
   {
     canonical: 'Grunt',
     categories: ['DevOps & Build & CI/CD'],
-    related: ['CI/CD', 'npm', 'yarn'],
+    parents: ['Build Tools'],
+    related: ['CI/CD', 'Gulp', 'npm', 'yarn'],
   },
   {
     canonical: 'GTM',
     categories: ['Tools & Libraries'],
     related: ['Google Analytics'],
     synonyms: [/google tag manager/i, /gtm/i],
+  },
+  {
+    canonical: 'Gulp',
+    categories: ['DevOps & Build & CI/CD'],
+    parents: ['Build Tools'],
+    related: ['CI/CD', 'Grunt', 'npm', 'yarn'],
   },
   {
     canonical: 'HTML Canvas',
@@ -947,6 +1043,7 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'HTML',
     categories: ['Frontend'],
+    related: ['ARIA', 'Mobile First', 'WCAG'],
   },
   {
     canonical: 'HTML5',
@@ -1011,6 +1108,7 @@ const INTERNAL_TAXONOMY = [
     canonical: 'Java',
     categories: ['Backend'],
     children: ['Java Servlets', 'JNativeHook', 'Spring Boot'],
+    related: ['OOP'],
     synonyms: [/^java$/i],
   },
   {
@@ -1103,9 +1201,16 @@ const INTERNAL_TAXONOMY = [
     synonyms: [/^k8s$/i, /^kubernetes$/i],
   },
   {
+    canonical: 'LESS',
+    categories: ['Frontend'],
+    includes: ['CSS'],
+    parents: ['Preprocessor'],
+    related: ['Bootstrap', 'CSS', 'SASS', 'SCSS'],
+  },
+  {
     canonical: 'Lighthouse',
     categories: ['Testing and QA', 'Tools & Libraries'],
-    related: ['Web Vitals'],
+    related: ['WCAG', 'Web Vitals'],
   },
   {
     canonical: 'Lit',
@@ -1123,6 +1228,7 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'Maven',
     categories: ['DevOps & Build & CI/CD'],
+    parents: ['Build Tools'],
     related: ['Ant', 'CI/CD', 'Gradle'],
   },
   {
@@ -1140,7 +1246,14 @@ const INTERNAL_TAXONOMY = [
     canonical: 'Mobile Development',
     categories: ['Misc'],
     children: ['Android', 'iOS'],
+    related: ['Mobile First'],
     synonyms: [/mobile dev/i],
+  },
+  {
+    canonical: 'Mobile First',
+    categories: ['Concepts', 'Frontend'],
+    related: ['CSS', 'HTML', 'Mobile Development', 'Web Development'],
+    synonyms: [/mobile-?first/i],
   },
   {
     canonical: 'mocha',
@@ -1191,6 +1304,18 @@ const INTERNAL_TAXONOMY = [
     ],
   },
   {
+    canonical: 'MVC',
+    categories: ['Concepts'],
+    parents: ['Software Design'],
+    related: [
+      'Design Patterns',
+      'Frontend Framework',
+      'OOP',
+      'Software Architecture',
+    ],
+    synonyms: [/^mvc$/i, /model[- ]view[- ]controller/i],
+  },
+  {
     canonical: 'Nao',
     categories: ['Misc'],
     parents: ['Robotics Control Systems'],
@@ -1229,7 +1354,7 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'npm',
     categories: ['DevOps & Build & CI/CD'],
-    related: ['CI/CD', 'SemVer'],
+    related: ['Build Tools', 'CI/CD', 'Gulp', 'SemVer'],
   },
   {
     canonical: 'Nx',
@@ -1242,7 +1367,23 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'OAuth2',
     categories: ['Concepts'],
+    related: ['API Integration'],
     synonyms: [/oauth 2/i, /oauth2/i],
+  },
+  {
+    canonical: 'OOP',
+    categories: ['Concepts'],
+    parents: ['Software Design'],
+    related: [
+      'C#',
+      'C++',
+      'Design Patterns',
+      'Java',
+      'MVC',
+      'TypeScript',
+      'UML',
+    ],
+    synonyms: [/^oop$/i, /object[- ]oriented programming/i],
   },
   {
     canonical: 'OpenAI',
@@ -1279,7 +1420,7 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'PayPal API',
     categories: ['Tools & Libraries'],
-    includes: ['OAuth2', 'REST'],
+    includes: ['API Integration', 'OAuth2', 'REST'],
   },
   {
     canonical: 'Peer-to-Peer',
@@ -1310,6 +1451,12 @@ const INTERNAL_TAXONOMY = [
     parents: ['AWS'],
   },
   {
+    canonical: 'Preprocessor',
+    categories: ['DevOps & Build & CI/CD', 'Frontend'],
+    children: ['LESS', 'SASS', 'SCSS'],
+    synonyms: [/^preprocessor$/i, /css preprocessor/i],
+  },
+  {
     canonical: 'Project Management',
     categories: ['Misc'],
     synonyms: [/^pm$/i, /project management/i],
@@ -1332,6 +1479,7 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'QA',
     categories: ['Misc'],
+    related: ['Debugging', 'Testing'],
     synonyms: [/^qa$/i, /quality assurance/i],
   },
   {
@@ -1393,7 +1541,7 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'REST',
     categories: ['Concepts'],
-    related: ['GraphQL'],
+    related: ['API Integration', 'GraphQL'],
     synonyms: [/^rest$/i, /rest api/i, /restful/i],
   },
   {
@@ -1417,7 +1565,8 @@ const INTERNAL_TAXONOMY = [
     canonical: 'SASS',
     categories: ['Frontend'],
     includes: ['CSS'],
-    related: ['SCSS'],
+    parents: ['Preprocessor'],
+    related: ['LESS', 'SCSS'],
   },
   {
     canonical: 'Scientific Paper',
@@ -1433,7 +1582,8 @@ const INTERNAL_TAXONOMY = [
     canonical: 'SCSS',
     categories: ['Frontend'],
     includes: ['CSS'],
-    related: ['SASS'],
+    parents: ['Preprocessor'],
+    related: ['LESS', 'SASS'],
   },
   {
     canonical: 'SemVer',
@@ -1449,6 +1599,7 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'Sentry',
     categories: ['Tools & Libraries'],
+    related: ['Debugging'],
   },
   {
     canonical: 'Shader programming',
@@ -1466,11 +1617,18 @@ const INTERNAL_TAXONOMY = [
     canonical: 'Software Architecture',
     categories: ['Concepts'],
     children: ['Entity Component System'],
-    related: ['Microservices', 'Software Design', 'UML'],
+    related: [
+      'Design Patterns',
+      'Microservices',
+      'MVC',
+      'Software Design',
+      'UML',
+    ],
   },
   {
     canonical: 'Software Design',
     categories: ['Concepts'],
+    children: ['Design Patterns', 'MVC', 'OOP'],
     related: ['Software Architecture', 'UML'],
   },
   {
@@ -1556,6 +1714,7 @@ const INTERNAL_TAXONOMY = [
       'TESTONA',
       'UI Testing',
     ],
+    related: ['Debugging', 'QA'],
   },
   {
     canonical: 'TESTONA',
@@ -1589,6 +1748,7 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'Twitter API',
     categories: ['Tools & Libraries'],
+    includes: ['API Integration'],
     parents: ['Twitter'],
     related: ['OAuth2', 'REST'],
   },
@@ -1602,6 +1762,7 @@ const INTERNAL_TAXONOMY = [
     canonical: 'TypeScript',
     categories: ['Backend', 'Frontend'],
     parents: ['JavaScript'],
+    related: ['OOP'],
     synonyms: [/^ts$/i, /typescript/i],
   },
   {
@@ -1621,7 +1782,7 @@ const INTERNAL_TAXONOMY = [
     canonical: 'UML',
     categories: ['Concepts'],
     children: ['UML state machine'],
-    related: ['Software Architecture', 'Software Design'],
+    related: ['OOP', 'Software Architecture', 'Software Design'],
   },
   {
     canonical: 'Underscore',
@@ -1662,6 +1823,12 @@ const INTERNAL_TAXONOMY = [
     synonyms: [/^visual studio$/i, /^vs$/i],
   },
   {
+    canonical: 'Vite',
+    categories: ['DevOps & Build & CI/CD', 'Tools & Libraries'],
+    parents: ['Build Tools'],
+    related: ['Webpack'],
+  },
+  {
     canonical: 'Vue.js',
     categories: ['Frontend', 'Tools & Libraries'],
     includes: ['SPA'],
@@ -1669,19 +1836,32 @@ const INTERNAL_TAXONOMY = [
     synonyms: [/^vue/i],
   },
   {
+    canonical: 'WCAG',
+    categories: ['Concepts', 'Frontend'],
+    parents: ['Accessibility'],
+    related: ['ARIA', 'HTML', 'Lighthouse', 'Web Development', 'Web Vitals'],
+    synonyms: [
+      /^wcag$/i,
+      /accessibility guidelines/i,
+      /web content accessibility guidelines/i,
+    ],
+  },
+  {
     canonical: 'Web Components',
     categories: ['Concepts', 'Frontend'],
     children: ['Custom Elements', 'Shadow DOM'],
+    related: ['ARIA'],
   },
   {
     canonical: 'Web Development',
     categories: ['Misc'],
+    related: ['Accessibility', 'ARIA', 'Mobile First', 'WCAG'],
     synonyms: [/web dev/i, /web development/i],
   },
   {
     canonical: 'Web Vitals',
     categories: ['Concepts'],
-    related: ['Lighthouse'],
+    related: ['Lighthouse', 'WCAG'],
   },
   {
     canonical: 'WebGL',
@@ -1693,7 +1873,8 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'Webpack',
     categories: ['DevOps & Build & CI/CD'],
-    related: ['CI/CD'],
+    parents: ['Build Tools'],
+    related: ['CI/CD', 'Vite'],
   },
   {
     canonical: 'WebRTC',
@@ -1710,7 +1891,7 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'Wikipedia API',
     categories: ['Tools & Libraries'],
-    includes: ['JSON', 'REST'],
+    includes: ['API Integration', 'JSON', 'REST'],
     synonyms: [/wikipedia/i],
   },
   {
@@ -1733,7 +1914,7 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'yarn',
     categories: ['DevOps & Build & CI/CD'],
-    related: ['CI/CD', 'npm'],
+    related: ['Build Tools', 'CI/CD', 'Gulp', 'npm'],
   },
   {
     canonical: 'Yeoman',
