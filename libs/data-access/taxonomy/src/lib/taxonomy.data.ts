@@ -34,6 +34,7 @@ type InternalTagName =
   | 'Blender'
   | 'Bootstrap'
   | 'Bower'
+  | 'bubble.io'
   | 'Build Tools'
   | 'C#'
   | 'C++'
@@ -83,6 +84,7 @@ type InternalTagName =
   | 'Facebook'
   | 'Facebook API'
   | 'Facebook Games'
+  | 'Figma'
   | 'First-person camera'
   | 'Flash'
   | 'Fractal'
@@ -116,6 +118,7 @@ type InternalTagName =
   | 'Intel XDK'
   | 'Ionic'
   | 'iOS'
+  | 'J2EE'
   | 'Jasmine'
   | 'Java'
   | 'JavaScript'
@@ -188,6 +191,7 @@ type InternalTagName =
   | 'Redash'
   | 'Redux'
   | 'requireJS'
+  | 'Responsive Design'
   | 'REST'
   | 'Robotics Control Systems'
   | 'RxJS'
@@ -220,10 +224,12 @@ type InternalTagName =
   | 'TFS'
   | 'TortoiseSVN'
   | 'Travis CI'
+  | 'Trello'
   | 'tsd'
   | 'Twitter'
   | 'Twitter API'
   | 'TypeScript'
+  | 'UI/UX'
   | 'UI Testing'
   | 'UML'
   | 'UML state machine'
@@ -333,7 +339,7 @@ const INTERNAL_TAXONOMY = [
     canonical: 'Accessibility',
     categories: ['Concepts', 'Frontend'],
     children: ['ARIA', 'WCAG'],
-    related: ['Web Development'],
+    related: ['UI/UX', 'Web Development'],
     synonyms: [/^a11y$/i, /accessibility/i],
   },
   {
@@ -457,7 +463,7 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'Atlassian',
     categories: ['Tools & Libraries'],
-    children: ['BitBucket', 'Confluence', 'Jira'],
+    children: ['BitBucket', 'Confluence', 'Jira', 'Trello'],
   },
   {
     canonical: 'AWS Organizations',
@@ -506,12 +512,18 @@ const INTERNAL_TAXONOMY = [
     canonical: 'Bootstrap',
     categories: ['Frontend', 'Tools & Libraries'],
     includes: ['CSS', 'HTML', 'JavaScript'],
-    related: ['jQuery', 'LESS', 'SASS', 'SCSS'],
+    related: ['jQuery', 'LESS', 'Responsive Design', 'SASS', 'SCSS'],
   },
   {
     canonical: 'Bower',
     categories: ['DevOps & Build & CI/CD'],
     related: ['CI/CD', 'npm', 'yarn'],
+  },
+  {
+    canonical: 'bubble.io',
+    categories: ['Frontend', 'Tools & Libraries'],
+    related: ['Prototyping', 'Web Development'],
+    synonyms: [/^bubble$/i, /bubble\.io/i],
   },
   {
     canonical: 'Build Tools',
@@ -625,7 +637,7 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'Component Library',
     categories: ['Concepts', 'Frontend'],
-    related: ['Fractal', 'Storybook', 'Web Components'],
+    related: ['Fractal', 'Storybook', 'UI/UX', 'Web Components'],
   },
   {
     canonical: 'Computer Graphics',
@@ -675,7 +687,7 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'CSS',
     categories: ['Frontend'],
-    related: ['LESS', 'Mobile First', 'SASS', 'SCSS'],
+    related: ['LESS', 'Mobile First', 'Responsive Design', 'SASS', 'SCSS'],
     synonyms: [/^css/i],
   },
   {
@@ -867,6 +879,11 @@ const INTERNAL_TAXONOMY = [
     related: ['OAuth2'],
   },
   {
+    canonical: 'Figma',
+    categories: ['Tools & Libraries'],
+    related: ['Prototyping', 'UI/UX', 'Zeplin'],
+  },
+  {
     canonical: 'First-person camera',
     categories: ['Frontend'],
     parents: ['3D'],
@@ -1043,7 +1060,7 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'HTML',
     categories: ['Frontend'],
-    related: ['ARIA', 'Mobile First', 'WCAG'],
+    related: ['ARIA', 'Mobile First', 'Responsive Design', 'WCAG'],
   },
   {
     canonical: 'HTML5',
@@ -1092,6 +1109,19 @@ const INTERNAL_TAXONOMY = [
     related: ['CI/CD'],
   },
   {
+    canonical: 'J2EE',
+    categories: ['Backend', 'Tools & Libraries'],
+    children: ['Java Servlets'],
+    parents: ['Java'],
+    related: ['Maven', 'Spring Boot'],
+    synonyms: [
+      /^j2ee$/i,
+      /^jakarta\s*ee$/i,
+      /^java\s*ee$/i,
+      /java\s*2\s*enterprise\s*edition/i,
+    ],
+  },
+  {
     canonical: 'Jasmine',
     categories: ['Testing and QA'],
     includes: ['JavaScript'],
@@ -1100,14 +1130,14 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'Java Servlets',
     categories: ['Backend', 'Tools & Libraries'],
-    parents: ['Java'],
+    parents: ['J2EE', 'Java'],
     related: ['Spring Boot'],
     synonyms: [/java servlets?/i, /servlets?/i],
   },
   {
     canonical: 'Java',
     categories: ['Backend'],
-    children: ['Java Servlets', 'JNativeHook', 'Spring Boot'],
+    children: ['J2EE', 'Java Servlets', 'JNativeHook', 'Spring Boot'],
     related: ['OOP'],
     synonyms: [/^java$/i],
   },
@@ -1229,7 +1259,7 @@ const INTERNAL_TAXONOMY = [
     canonical: 'Maven',
     categories: ['DevOps & Build & CI/CD'],
     parents: ['Build Tools'],
-    related: ['Ant', 'CI/CD', 'Gradle'],
+    related: ['Ant', 'CI/CD', 'Gradle', 'J2EE'],
   },
   {
     canonical: 'Micro Frontends',
@@ -1246,12 +1276,13 @@ const INTERNAL_TAXONOMY = [
     canonical: 'Mobile Development',
     categories: ['Misc'],
     children: ['Android', 'iOS'],
-    related: ['Mobile First'],
+    related: ['Mobile First', 'Responsive Design'],
     synonyms: [/mobile dev/i],
   },
   {
     canonical: 'Mobile First',
     categories: ['Concepts', 'Frontend'],
+    includes: ['Responsive Design'],
     related: ['CSS', 'HTML', 'Mobile Development', 'Web Development'],
     synonyms: [/mobile-?first/i],
   },
@@ -1464,6 +1495,7 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'Prototyping',
     categories: ['Misc'],
+    related: ['Figma', 'UI/UX'],
     synonyms: [/prototyping/i],
   },
   {
@@ -1537,6 +1569,20 @@ const INTERNAL_TAXONOMY = [
     categories: ['DevOps & Build & CI/CD', 'Tools & Libraries'],
     includes: ['JavaScript'],
     related: ['Webpack'],
+  },
+  {
+    canonical: 'Responsive Design',
+    categories: ['Concepts', 'Frontend'],
+    related: [
+      'Bootstrap',
+      'CSS',
+      'HTML',
+      'Mobile Development',
+      'Mobile First',
+      'UI/UX',
+      'Web Development',
+    ],
+    synonyms: [/^rwd$/i, /responsive design/i, /responsive web design/i],
   },
   {
     canonical: 'REST',
@@ -1651,6 +1697,7 @@ const INTERNAL_TAXONOMY = [
     canonical: 'Spring Boot',
     categories: ['Backend'],
     parents: ['Java'],
+    related: ['J2EE', 'Java Servlets'],
   },
   {
     canonical: 'SQL',
@@ -1740,6 +1787,12 @@ const INTERNAL_TAXONOMY = [
     synonyms: [/travis/i],
   },
   {
+    canonical: 'Trello',
+    categories: ['Tools & Libraries'],
+    parents: ['Atlassian'],
+    related: ['Kanban', 'Project Management'],
+  },
+  {
     canonical: 'tsd',
     categories: ['DevOps & Build & CI/CD'],
     related: ['CI/CD', 'npm', 'TypeScript'],
@@ -1771,6 +1824,21 @@ const INTERNAL_TAXONOMY = [
     children: ['Capture-and-Replay', 'Cypress', 'QF-Test', 'Widget Trees'],
     parents: ['Testing'],
     related: ['E2E Testing', 'Puppeteer'],
+  },
+  {
+    canonical: 'UI/UX',
+    categories: ['Concepts', 'Frontend'],
+    related: [
+      'Accessibility',
+      'Component Library',
+      'CSS',
+      'Figma',
+      'Prototyping',
+      'Responsive Design',
+      'Web Development',
+      'Zeplin',
+    ],
+    synonyms: [/^ui\/ux$/i, /user experience/i, /user interface/i],
   },
   {
     canonical: 'UML state machine',
@@ -1855,7 +1923,14 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'Web Development',
     categories: ['Misc'],
-    related: ['Accessibility', 'ARIA', 'Mobile First', 'WCAG'],
+    related: [
+      'Accessibility',
+      'ARIA',
+      'Mobile First',
+      'Responsive Design',
+      'UI/UX',
+      'WCAG',
+    ],
     synonyms: [/web dev/i, /web development/i],
   },
   {
@@ -1932,6 +2007,7 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'Zeplin',
     categories: ['Tools & Libraries'],
+    related: ['Figma', 'UI/UX'],
   },
 ] satisfies readonly TaxonomyData[];
 
