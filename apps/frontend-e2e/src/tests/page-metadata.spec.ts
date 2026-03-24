@@ -13,6 +13,7 @@ type ExpectedContent = {
     imageAlt: string;
     imageHeight: string;
     imagePath: string;
+    imageType: string;
     imageWidth: string;
     siteName: string;
     siteOrigin: string;
@@ -40,7 +41,8 @@ export const EXPECTED_CONTENT: ExpectedContent = {
       'Portfolio of Oliver Stadie, full-stack web and app developer.',
     imageAlt: `Portrait of Oliver Stadie with the text 'Oliver Stadie - Full Stack Developer'`,
     imageHeight: '630',
-    imagePath: '/assets/og-image.png',
+    imagePath: '/assets/og-image.jpg',
+    imageType: 'image/jpeg',
     imageWidth: '1200',
     siteName: 'Oliver Stadie',
     siteOrigin: 'https://oliverstadie.com',
@@ -217,6 +219,11 @@ async function expectOpenGraphImageToWork(pom: WebMetadataPage): Promise<void> {
     pom,
     'og:image:height',
     expected.imageHeight
+  );
+  await expectMetadataElementToHaveContent(
+    pom,
+    'og:image:type',
+    expected.imageType
   );
   await expectMetadataElementToHaveContent(
     pom,

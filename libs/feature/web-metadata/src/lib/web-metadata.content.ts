@@ -5,7 +5,8 @@ export const WEB_METADATA = {
     imageAlt:
       "Portrait of Oliver Stadie with the text 'Oliver Stadie - Full Stack Developer'",
     imageHeight: '630',
-    imagePath: '/assets/og-image.png',
+    imagePath: '/assets/og-image.jpg',
+    imageType: 'image/jpeg',
     imageWidth: '1200',
     siteName: 'Oliver Stadie',
     siteOrigin: 'https://oliverstadie.com',
