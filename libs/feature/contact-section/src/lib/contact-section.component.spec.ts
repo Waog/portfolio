@@ -38,12 +38,10 @@ describe('ContactSectionComponent', () => {
   it('should render email contact info', () => {
     const compiled = fixture.nativeElement;
     const emailLink = compiled.querySelector(
-      'a[href="mailto:oliver.stadie+it@gmail.com"]'
+      'a[href="mailto:info@oliverstadie.com"]'
     );
     expect(emailLink).toBeTruthy();
-    expect(emailLink?.textContent?.trim()).toContain(
-      'oliver.stadie+it@gmail.com'
-    );
+    expect(emailLink?.textContent?.trim()).toContain('info@oliverstadie.com');
   });
 
   it('should render phone contact info', () => {
