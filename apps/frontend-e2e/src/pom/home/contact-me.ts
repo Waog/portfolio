@@ -14,7 +14,7 @@ export class ContactMe {
     this.title = this.locator.locator('mat-card-header mat-card-title');
     this.contactItems = this.locator.locator('mat-card-content .contact-item');
 
-    this.email = this.contactItems.getByText('@gmail.com');
+    this.email = this.contactItems.getByText('info@oliverstadie.com');
     this.phone = this.contactItems.getByText('+49 (1520) 28 25 986');
   }
 }

@@ -5,7 +5,7 @@ test.describe('Contact Section', () => {
     const contactMe = homePage.contactMe();
     await expect(contactMe.locator).toBeVisible();
     await expect(contactMe.title).toContainText('Contact Me');
-    await expect(contactMe.email).toContainText('oliver.stadie+it@gmail.com');
+    await expect(contactMe.email).toContainText('info@oliverstadie.com');
     await expect(contactMe.phone).toContainText('+49 (1520) 28 25 986');
   });
 });
