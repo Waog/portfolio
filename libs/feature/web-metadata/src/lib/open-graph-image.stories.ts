@@ -2,6 +2,14 @@ import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import type { Meta, StoryObj } from '@storybook/angular';
 import html2canvas from 'html2canvas';
 
+/**
+ * NOTE: There is no official max size, mainly Best Practices and online experience.
+ * Documented max. file size for WhatsApp preview images is 600KB, but sizes above 300KB can be unreliable.
+ * Online Best Practices recommend sizes below 300KB.
+ * We subtract a small buffer to ensure compliance.
+ */
+const IMAGE_MAX_SIZE_KB = 290;
+
 @Component({
   selector: 'lib-open-graph-image-story',
   standalone: true,
@@ -11,7 +19,7 @@ import html2canvas from 'html2canvas';
         <div class="help-content">
           <p class="help-title">Create Open Graph image</p>
           <p class="help-text">
-            Download <code>og-image.png</code> and reference it in your
+            Download <code>og-image.jpg</code> and reference it in your
             <code>meta</code> tag as <code>og:image</code>. This preview image
             will then be shown when sharing on WhatsApp, LinkedIn, or X.
           </p>
@@ -23,7 +31,7 @@ import html2canvas from 'html2canvas';
             type="button"
             (click)="downloadImage()"
           >
-            Download og-image.png
+            Download og-image.jpg
           </button>
 
           <p class="status" [attr.data-active]="status ? 'true' : 'false'">
@@ -270,10 +278,10 @@ class OpenGraphImageStoryComponent {
         height: 630,
       });
 
-      const dataUrl = canvas.toDataURL('image/png');
+      const dataUrl = this.compressCanvas(canvas);
       const link = document.createElement('a');
       link.href = dataUrl;
-      link.download = 'og-image.png';
+      link.download = 'og-image.jpg';
       link.click();
 
       this.status = 'Download started.';
@@ -282,6 +290,36 @@ class OpenGraphImageStoryComponent {
       window.alert(`Failed to render image. Please try again. ${error}`);
       this.status = 'Failed to render image.';
     }
+  }
+
+  private compressCanvas(
+    canvas: HTMLCanvasElement,
+    maxSizeKB = IMAGE_MAX_SIZE_KB
+  ): string {
+    let quality = 1;
+    let dataUrl: string;
+
+    do {
+      dataUrl = canvas.toDataURL('image/jpeg', quality);
+      const curSizeKB: number = this.getSizeKB(dataUrl);
+      if (curSizeKB <= maxSizeKB) break;
+      quality -= 0.01;
+      if (quality <= 0) {
+        throw new Error(
+          `Unable to compress image below ${maxSizeKB} KB. Size at quality ${
+            quality + 0.01
+          }: ${curSizeKB} KB.`
+        );
+      }
+    } while (quality > 0);
+
+    return dataUrl;
+  }
+
+  private getSizeKB(dataUrl: string): number {
+    const base64 = dataUrl.split(',')[1];
+    const sizeBytes = (base64.length * 3) / 4;
+    return sizeBytes / 1024;
   }
 }
 
