@@ -6,10 +6,10 @@ Evaluate the following input, which you'll find below:
 
 - the old legal texts
 - the new legal texts
-- a TOML file specifying the current app. This is to be used as a source of truth.
+- the legal master form specifying the current app. This is to be used as a source of truth.
 
 For your report, ignore cosmetic and purely linguistic changes. Only report on changes with actual legal relevance.
-Validate against existing law and the facts in the TOML. The goal is to lower the risk of legal action against a website operator and to find regressions.
+Validate against existing law and the facts in the legal master form. The goal is to lower the risk of legal action against a website operator and to find regressions.
 
 Only consider this legal document, ignore others. E.g. when reviewing the Imprint, don't make remarks which are unrelated to the Imprint and should be covered by the Privacy Policy.
 
@@ -38,7 +38,7 @@ Report in this format:
 - Assessment: criticality and direction of development (e.g. severely negative, slightly positive)
 - Before: short description of the old state
 - Before: short description of the new state
-- Cause: why this change was necessary (e.g. change in TOML? change in law? poor old version?)
+- Cause: why this change was necessary (e.g. change in legal master from? change in law? poor old version?)
 - Legal Implication: what are the legal implications?
 
 ## Regressions
