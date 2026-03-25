@@ -20,11 +20,6 @@ export const WEB_METADATA = {
       title: 'Oliver Stadie – Full-Stack Web & App Developer',
     },
     legal: {
-      cookiePolicy: {
-        description:
-          'Cookie policy and tracking information for the Oliver Stadie portfolio website.',
-        title: 'Cookies | Oliver Stadie',
-      },
       imprint: {
         description:
           'Imprint and legal publisher details for the Oliver Stadie portfolio website.',

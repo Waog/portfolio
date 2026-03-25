@@ -56,12 +56,6 @@ export const EXPECTED_CONTENT: ExpectedContent = {
       title: 'Oliver Stadie – Full-Stack Web & App Developer',
       path: '/',
     },
-    cookiePolicy: {
-      description:
-        'Cookie policy and tracking information for the Oliver Stadie portfolio website.',
-      title: 'Cookies | Oliver Stadie',
-      path: '/legal/cookie-policy',
-    },
     imprint: {
       description:
         'Imprint and legal publisher details for the Oliver Stadie portfolio website.',

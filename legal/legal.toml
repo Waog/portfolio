@@ -1,0 +1,1053 @@
+# ============================================================================
+# LEGAL MASTER FORM
+# Canonical project metadata for legal texts and compliance checks.
+# Fill this file once per website/project and keep it updated when:
+# - you add/remove third-party services
+# - you change hosting/infrastructure
+# - you add forms, login, payments, newsletter, uploads, analytics, embeds
+# - you start targeting new countries/languages
+# ============================================================================
+
+[project]
+
+# Human-readable project or website name.
+name = "Oliver Stadie Portfolio"
+name__examples = ["Oliver Stadie Portfolio", "Language Learning Stories"]
+
+# Main website type, because this affects which legal texts are needed.
+website_type = "informational"
+website_type__options = [
+  "informational",        # pure informational website, company site, brochure site, landing page, portfolio, marketing
+  "content_publication",  # blog, magazine, editorial site, news site, knowledge site with publicly published articles/content
+  "community_platform",   # users interact publicly, e.g. comments, forum, ratings, profiles, user-generated public content
+  "account_based_service",# users can register/login and use a service or protected area, but no direct paid checkout on the website
+  "ecommerce",            # products/services are sold directly on the website, including checkout/order/payment/subscription flows
+  "booking_service"       # appointments/reservations are booked directly on the website
+]
+
+# Primary public domain.
+primary_domain = "oliverstadie.com"
+primary_domain__examples = ["oliverstadie.com", "app.example.com"]
+
+# Whether contracts are concluded directly on this website.
+contracts_concluded_on_website = false
+contracts_concluded_on_website__options = [true, false]
+
+[operator]
+
+# Full legal name of the operator/responsible entity.
+# The legal operator of the website.
+# This is the person or legal entity that actually runs the website in the legal sense:
+# the one appearing in the Impressum, deciding why the website exists, what it does,
+# which services are used, and how personal data is processed.
+# In simple cases this is usually:
+# - a natural person running the site privately or professionally in their own name
+# - or a company / association / public body running the site
+# Do NOT put a mere developer, freelancer, agency, or hosting provider here unless
+# that person/entity is also the real legal operator of the site.
+# Usually this is the same entity that signs contracts, receives inquiries, and is
+# named as "Verantwortlicher" in the privacy policy.
+legal_name = "Oliver Stadie IT GmbH"
+legal_name__examples = ["Oliver Stadie IT GmbH", "Max Mustermann"]
+
+# Legal form of the operator.
+legal_form = "gmbh"
+legal_form__options = [
+  "natural_person",       # private individual acting in own name
+  "sole_proprietorship",  # Einzelunternehmen / e.K. style business under one person
+  "freelancer",           # freiberufliche Tätigkeit without company entity
+  "civil_law_partnership",# GbR / similar partnership
+  "registered_merchant",  # e.K. / Kaufmann
+  "ug",                   # Unternehmergesellschaft (haftungsbeschränkt)
+  "gmbh",                 # Gesellschaft mit beschränkter Haftung
+  "ag",                   # Aktiengesellschaft
+  "se",                   # Societas Europaea
+  "association",          # Verein / e.V.
+  "foundation",           # Stiftung
+  "public_body",          # Behörde / öffentliche Stelle / Körperschaft des öffentlichen Rechts
+  "other"                 # another legal form not covered above
+]
+
+# Brand/trade name if different from legal name.
+trade_name = ""
+trade_name__examples = ["RimRats", "Acme Apps"]
+
+# Street and house number of the operator.
+street = "Memhardstr. 7"
+street__examples = ["Musterstraße 1", "Beispielweg 12"]
+
+# Postal code of the operator.
+postal_code = "10178"
+postal_code__examples = ["10115", "80331"]
+
+# City of the operator.
+city = "Berlin"
+city__examples = ["Berlin", "München"]
+
+# Country of the operator.
+country = "Deutschland"
+country__examples = ["Deutschland", "Austria"]
+
+# Public contact email.
+contact_email = "info@oliverstadie.com"
+contact_email__examples = ["hello@example.com", "kontakt@firma.de"]
+
+# Public phone number if published.
+contact_phone = "+4915202825986"
+contact_phone__examples = ["+49 30 12345678", ""]
+
+# Register court if applicable.
+register_court = "Amtsgericht Berlin (Charlottenburg)"
+register_court__examples = ["Amtsgericht Berlin (Charlottenburg)", ""]
+
+# Register number if applicable.
+register_number = "HRB 236714 B"
+register_number__examples = ["HRB 123456 B", ""]
+
+# VAT ID if applicable.
+vat_id = "DE351854266"
+vat_id__examples = ["DE123456789", ""]
+
+# Chamber, professional association, or supervisory/professional body if legally relevant.
+# Only fill this if your legal form or profession requires naming such a body in the legal texts.
+# Typical examples: bar association, tax advisor chamber, medical chamber, IHK in some regulated contexts.
+# Leave empty if there is no such body that needs to be named.
+professional_body = "IHK Berlin (Industrie- und Handelskammer Berlin)"
+professional_body__examples = ["IHK Berlin (Industrie- und Handelskammer Berlin)", "Rechtsanwaltskammer Berlin"]
+
+professional_body_street = "Fasanenstraße 85"
+professional_body_street__examples = ["Fasanenstraße 85", "Musterstraße 1"]
+
+professional_body_postal_code = "10623"
+professional_body_postal_code__examples = ["10117", "12345"]
+
+professional_body_city = "Berlin"
+professional_body_city__examples = ["Berlin", "München"]
+
+professional_body_country = "Deutschland"
+professional_body_country__examples = ["Deutschland", "Österreich"]
+
+# Regulated professional title if relevant.
+regulated_profession_title = ""
+regulated_profession_title__examples = ["", "Rechtsanwalt", "Steuerberater"]
+
+# Country where the regulated title was granted.
+regulated_profession_country = ""
+regulated_profession_country__examples = ["", "Deutschland"]
+
+# Professional rules if relevant.
+regulated_profession_rules = ""
+regulated_profession_rules__examples = ["", "BRAO, BORA, FAO", "StBerG, BOStB"]
+
+# Whether a separate press-law responsible person is named.
+press_responsible_person_used = false
+press_responsible_person_used__options = [true, false]
+
+[operator.managing_person]
+
+# Name of the person who legally represents the operator, if that person is actually named in the final text.
+# "if named" means:
+# - for many companies, associations, etc., the legal texts explicitly name a representative
+#   such as Geschäftsführer, Vorstand, Inhaber, or another authorized representative
+# - for some setups, this may be unnecessary or already covered elsewhere
+# Typical cases where it IS named:
+# - GmbH -> Geschäftsführer
+# - association -> Vorstand
+# - sole proprietorship -> owner / Inhaber
+name = "Oliver Stadie"
+name__examples = ["Oliver Stadie", "Max Mustermann"]
+
+# Role of that person.
+role = "managing_director"
+role__options = [
+  "owner",
+  "managing_director",
+  "board_member",
+  "chairperson",
+  "authorized_representative",
+  "other"
+]
+
+[operator.press_responsible_person]
+
+# Name of the editorially responsible person, but only if such a role is actually used in the final legal text.
+# "if used" means:
+# - only relevant where you publish editorial/journalistic content and the text names a
+#   person responsible for that content
+# - not every website needs this
+# Typical examples where it may be used:
+# - blog, magazine, editorial/news site, commentary site
+# Typical examples where it is often NOT used:
+# - simple brochure site, simple portfolio, plain landing page without editorial publication
+# Leave empty if no such person is named in the final legal text.
+name = ""
+name__examples = ["Max Mustermann", ""]
+
+# Address if different from operator address.
+address = ""
+address__examples = ["Musterstraße 1, 10115 Berlin", ""]
+
+[languages]
+
+# Main language of the website and legal texts.
+default_language = "en"
+default_language__options = ["de", "en", "fr", "es", "it", "nl", "pl", "pt", "tr", "zh", "ja", "ko"]
+
+# All languages offered on the website.
+available_languages = ["en", "de"]
+available_languages__options = ["de", "en", "fr", "es", "it", "nl", "pl", "pt", "tr", "zh", "ja", "ko"]
+
+[audience]
+
+# Primary audience category.
+primary_audience = "businesses"
+primary_audience__options = [
+  "general",    # no narrow legal audience distinction intended
+  "consumers",  # private end users / B2C focus
+  "businesses", # business customers / B2B focus
+  "mixed"       # both consumers and businesses are targeted
+]
+
+# Whether children or teenagers are specifically targeted by the website, product, or communication.
+# E.g. content for school pupils, toys for children, teen fashion, etc.
+targets_minors = false
+targets_minors__options = [true, false]
+
+# Whether the website targets Germany specifically.
+germany_only = false
+germany_only__options = [true, false]
+
+# Whether the website targets the EU more broadly.
+eu_targeted = false
+eu_targeted__options = [true, false]
+
+# Whether the website targets users worldwide.
+worldwide_targeted = true
+worldwide_targeted__options = [true, false]
+
+[features]
+
+# Whether a contact form exists.
+contact_form = false
+contact_form__options = [true, false]
+
+# Whether there are relevant forms besides the main contact form.
+# "Form" here means a UI where users actively enter data and submit it for a purpose
+# other than a simple general contact message.
+# Count it as true for examples like:
+# - newsletter signup
+# - waiting list signup
+# - quote/request form
+# - support request form
+# - booking form
+# - application form
+# - survey / questionnaire
+# - contest entry form
+# Usually do NOT count as "other_forms":
+# - a pure search field that only filters local content and does not submit user data to you
+# - a login form, because that is covered under auth/account fields
+# - a payment checkout, because that is covered under payments
+# - a simple cookie banner choice UI
+other_forms = false
+other_forms__options = [true, false]
+
+# Whether users can create accounts.
+user_accounts = false
+user_accounts__options = [true, false]
+
+# Whether users can log in.
+login = false
+login__options = [true, false]
+
+# Whether newsletter signup exists.
+newsletter = false
+newsletter__options = [true, false]
+
+# Whether users can upload files.
+file_uploads = false
+file_uploads__options = [true, false]
+
+# Whether payments happen on the website.
+payments = false
+payments__options = [true, false]
+
+# Whether booking or scheduling exists.
+booking = false
+booking__options = [true, false]
+
+# Whether live chat exists.
+live_chat = false
+live_chat__options = [true, false]
+
+# Whether user comments/reviews/community features exist.
+community_features = false
+community_features__options = [true, false]
+
+[contact_form]
+
+# Whether the contact form is active.
+enabled = false
+enabled__options = [true, false]
+
+# Fields collected by the form.
+collected_fields = []
+collected_fields__options = ["name", "first_name", "last_name", "email", "phone", "company", "subject", "message", "address", "budget", "project_details", "attachment", "other"]
+
+# Where submissions are sent or stored.
+submission_target = ""
+submission_target__options = [
+  "email",         # sent to a mailbox
+  "crm",           # stored in CRM or lead system
+  "ticket_system", # stored in support/helpdesk system
+  "database",      # stored in your own backend/database
+  "other"
+]
+
+# Whether spam protection is used.
+uses_spam_protection = false
+uses_spam_protection__options = [true, false]
+
+# Spam protection provider if any.
+spam_protection_service = ""
+spam_protection_service__options = ["Cloudflare Turnstile", "Google reCAPTCHA", "hCaptcha", "Friendly Captcha", "Custom", "Other"]
+
+# Purpose of the form.
+purpose = ""
+purpose__examples = ["General inquiries", "Project requests"]
+
+# Retention period for submitted form data.
+retention_period = ""
+retention_period__examples = ["6 months", "until request resolved"]
+
+[other_forms]
+
+# This section is only about user input flows that collect submitted data for a distinct purpose
+# other than the normal contact form.
+# A "form" in this section means:
+# - one or more input fields
+# - plus a submit action
+# - plus a purpose such as support, application, booking, signup, survey, etc.
+# Not every input field automatically counts.
+# Usually NOT included here:
+# - local search boxes that do not create a stored or transmitted request
+# - login/password fields (handled in [auth])
+# - payment checkout fields (handled in [payments])
+# - purely technical UI controls like language switchers or dark mode toggles
+enabled = false
+enabled__options = [true, false]
+
+# Names/categories of those forms.
+form_names = []
+form_names__options = ["callback_request", "survey", "waitlist_signup", "support_request", "quote_request", "application_form", "contest_entry", "other"]
+
+# Fields collected by those forms.
+collected_fields = []
+collected_fields__options = ["name", "first_name", "last_name", "email", "phone", "company", "subject", "message", "address", "budget", "project_details", "attachment", "cv", "cover_letter", "other"]
+
+# Processing target of those forms.
+submission_target = ""
+submission_target__options = [
+  "email",
+  "crm",
+  "ticket_system",
+  "database",
+  "ats",   # applicant tracking system
+  "other"
+]
+
+# Purpose of those forms.
+purpose = ""
+purpose__examples = ["collect waiting list registrations", "collect survey responses"]
+
+# Retention period for those form submissions.
+retention_period = ""
+retention_period__examples = ["until campaign ends", "12 months"]
+
+[auth]
+
+# Whether registration is possible.
+registration_enabled = false
+registration_enabled__options = [true, false]
+
+# Whether login is possible.
+login_enabled = false
+login_enabled__options = [true, false]
+
+# Authentication methods used.
+auth_methods = []
+auth_methods__options = ["password", "magic_link", "google_oauth", "apple_oauth", "github_oauth", "facebook_oauth", "microsoft_oauth", "custom_sso", "other"]
+
+# Auth provider or backend.
+auth_provider = ""
+auth_provider__options = ["Firebase Auth", "Auth0", "Supabase Auth", "AWS Cognito", "Clerk", "Custom backend", "Other"]
+
+# Whether password reset exists.
+password_reset = false
+password_reset__options = [true, false]
+
+# Whether users can delete their accounts.
+self_service_account_deletion = false
+self_service_account_deletion__options = [true, false]
+
+# Retention period for inactive/deleted account data.
+inactive_account_retention = ""
+inactive_account_retention__examples = ["24 months", "until deletion request"]
+
+[newsletter]
+
+# Whether newsletter signup is enabled.
+enabled = false
+enabled__options = [true, false]
+
+# Newsletter provider.
+provider = ""
+provider__options = ["MailerLite", "Brevo", "Mailchimp", "ConvertKit", "Klaviyo", "HubSpot", "Custom", "Other"]
+
+# Signup mode.
+signup_mode = ""
+signup_mode__options = [
+  "double_opt_in", # confirmation email required before subscription becomes active
+  "single_opt_in"  # direct signup without confirmation email
+]
+
+# Fields collected for newsletter signup.
+collected_fields = []
+collected_fields__options = ["email", "first_name", "last_name", "name", "company", "interests", "language", "other"]
+
+# Whether email open/click tracking is used.
+email_tracking = false
+email_tracking__options = [true, false]
+
+# Retention period for newsletter subscriber data.
+retention_period = ""
+retention_period__examples = ["until unsubscribe", "24 months after inactivity"]
+
+[uploads]
+
+# Whether user uploads are enabled.
+enabled = false
+enabled__options = [true, false]
+
+# Types of uploaded files/content.
+upload_types = []
+upload_types__options = ["avatar", "image", "video", "audio", "pdf", "document", "cv", "invoice", "other"]
+
+# Storage provider for uploads.
+storage_provider = ""
+storage_provider__options = ["AWS S3", "Cloudflare R2", "Google Cloud Storage", "Azure Blob Storage", "Supabase Storage", "Local server", "Other"]
+
+# Whether uploaded content can become public.
+publicly_visible = false
+publicly_visible__options = [true, false]
+
+# Retention period for uploaded data.
+retention_period = ""
+retention_period__examples = ["until user deletes", "90 days"]
+
+[payments]
+
+# Whether paid services/products are offered.
+# This entire section is only about cases where the website itself is part of the payment/ordering/subscription flow.
+# In other words: fill this section because the website directly offers or handles a commercial transaction flow.
+# Typical examples where this section IS relevant:
+# - the website has a checkout
+# - users can subscribe on the site
+# - users can buy digital products on the site
+# - users enter payment details on the site or are led through an integrated payment flow
+# Typical examples where this section is NOT triggered:
+# - portfolio site shows your email address
+# - someone contacts you manually
+# - you later negotiate and sign a paper/PDF contract outside the website
+# - the website is only marketing / lead generation, but not the transaction flow itself
+# So if payments_enabled = false because the site only generates leads and all contracting happens later outside the website,
+# you normally do NOT need to fill the rest of this section.
+enabled = false
+enabled__options = [true, false]
+
+# Commercial model used.
+business_model = ""
+business_model__options = [
+  "one_time_purchase", # single payment per order
+  "subscription",      # recurring billing
+  "usage_based",       # billing based on consumption/usage
+  "donation",          # voluntary payments/donations
+  "mixed"
+]
+
+# What is sold.
+product_type = ""
+product_type__options = [
+  "digital_services", # SaaS, app access, memberships, digital service access
+  "digital_content",  # ebooks, downloads, courses, templates, media
+  "physical_goods",   # shipped products
+  "offline_services", # consulting, workshops, local services
+  "mixed"
+]
+
+# Whether the offer is B2C.
+b2c = false
+b2c__options = [true, false]
+
+# Whether the offer is B2B.
+b2b = false
+b2b__options = [true, false]
+
+# Payment providers.
+payment_providers = []
+payment_providers__options = ["Stripe", "PayPal", "Mollie", "Paddle", "Adyen", "Braintree", "Apple In-App Purchase", "Google Play Billing", "Bank transfer", "Other"]
+
+# Whether automatic renewal exists.
+automatic_renewal = false
+automatic_renewal__options = [true, false]
+
+# How cancellation works.
+cancellation_process = ""
+cancellation_process__options = [
+  "customer_portal", # user can cancel in account/settings
+  "email_support",   # cancellation via support/email
+  "app_store",       # cancellation handled via Apple/Google store
+  "manual",          # manual/internal cancellation handling
+  "not_applicable"
+]
+
+[booking]
+
+# Whether booking/scheduling is enabled.
+enabled = false
+enabled__options = [true, false]
+
+# Booking provider.
+provider = ""
+provider__options = ["Calendly", "Microsoft Bookings", "Cal.com", "Google Appointment Scheduler", "Custom", "Other"]
+
+# Fields collected during booking.
+collected_fields = []
+collected_fields__options = ["name", "first_name", "last_name", "email", "phone", "company", "notes", "address", "other"]
+
+[live_chat]
+
+# Whether live chat is enabled.
+enabled = false
+enabled__options = [true, false]
+
+# Chat provider.
+provider = ""
+provider__options = ["Crisp", "Intercom", "Zendesk Chat", "Tidio", "LiveChat", "HubSpot Chat", "Custom", "Other"]
+
+# Whether chat transcripts are stored.
+stores_transcripts = false
+stores_transcripts__options = [true, false]
+
+# Retention period for chat data.
+retention_period = ""
+retention_period__examples = ["12 months", "until ticket resolved"]
+
+[infrastructure]
+
+# Main hosting provider.
+hosting_provider = "GitHub Pages"
+hosting_provider__options = ["GitHub Pages", "Cloudflare Pages", "Vercel", "Netlify", "AWS", "Azure", "Google Cloud", "Hetzner", "Strato", "IONOS", "Render", "Custom server", "Other"]
+
+# Hosting region/country if relevant.
+hosting_region = "USA"
+hosting_region__examples = ["EU", "USA"]
+
+# DNS provider.
+dns_provider = "Cloudflare"
+dns_provider__options = ["Cloudflare", "Route 53", "Namecheap", "GoDaddy", "IONOS", "Strato", "Hetzner", "Other"]
+
+# CDN provider.
+cdn_provider = "Cloudflare"
+cdn_provider__options = ["Cloudflare", "CloudFront", "Fastly", "Bunny CDN", "jsDelivr", "Akamai", "None", "Other"]
+
+# Reverse proxy / WAF provider.
+proxy_or_waf_provider = "Cloudflare"
+proxy_or_waf_provider__options = ["Cloudflare", "Fastly", "AWS WAF", "Imperva", "Sucuri", "None", "Other"]
+
+# Email provider for ordinary contact mailboxes.
+# This means the provider(s) involved in normal human email communication for addresses published on the website,
+# such as hello@domain.tld or kontakt@domain.tld.
+# Think from the visitor's perspective:
+# - when someone writes to your published address, which provider(s) receive, forward, store, or deliver that mailbox traffic?
+# If your setup is split, document the mailbox side here:
+# - inbound routing/forwarding provider
+# - mailbox provider actually receiving/storing the message
+# This field is about ordinary mailbox communication, not bulk transactional app emails.
+# In a split setup you may need a combined value or a later normalized model with multiple providers.
+email_provider = ["Cloudflare (Email Routing)", "Google (Gmail)"]
+email_provider__examples = ["Strato", "Google Workspace", "Microsoft 365", "Proton Mail", "IONOS", "Zoho Mail", "Fastmail", "Other"]
+
+# Transactional email provider.
+# This means a provider used by a system/app/site to send operational emails automatically.
+# Think machine-sent emails, not manual human emails from your inbox.
+# Typical examples:
+# - password reset email
+# - verification email
+# - invoice email
+# - booking confirmation
+# - system notification
+# - contact-form autoresponder
+# If you manually write emails in Gmail, that alone is NOT transactional email.
+# If your site/app/backend sends emails through SMTP2GO, SES, Mailgun, etc., that IS transactional email.
+# Cloudflare Email Routing is not usually the classic transactional sender; SMTP2GO typically is.
+transactional_email_provider = "None"
+transactional_email_provider__options = ["Postmark", "AWS SES", "Mailgun", "SendGrid", "Brevo", "Resend", "None", "Other"]
+
+# File storage provider if any.
+file_storage_provider = "None"
+file_storage_provider__options = ["AWS S3", "Cloudflare R2", "Google Cloud Storage", "Azure Blob Storage", "Supabase Storage", "Local server", "None", "Other"]
+
+# Database provider if any.
+database_provider = "None"
+database_provider__options = ["PostgreSQL", "MySQL", "MariaDB", "MongoDB", "Supabase", "Firebase", "AWS DynamoDB", "SQLite", "None", "Other"]
+
+# Error monitoring/logging provider if any.
+error_monitoring_provider = "None"
+error_monitoring_provider__options = ["Sentry", "Rollbar", "Bugsnag", "Datadog", "CloudWatch", "None", "Other"]
+
+# Whether server logs are stored.
+server_logs_enabled = true
+server_logs_enabled__options = [true, false]
+
+# Retention period for server logs.
+server_log_retention = "no fixed period; depends on hosting and infrastructure providers"
+server_log_retention__examples = ["7 days", "30 days"]
+
+[frontend_assets]
+
+# Whether remote third-party fonts are loaded.
+uses_remote_fonts = false
+uses_remote_fonts__options = [true, false]
+
+# Providers of remote fonts.
+remote_font_providers = []
+remote_font_providers__options = ["Google Fonts", "Adobe Fonts", "Bunny Fonts", "Other"]
+
+# Whether third-party scripts are loaded in the browser.
+uses_third_party_scripts = true
+uses_third_party_scripts__options = [true, false]
+
+# Third-party script providers/services.
+third_party_scripts = ["Cloudflare Web Analytics"]
+third_party_scripts__options = ["Google Tag Manager", "Stripe.js", "Calendly Widget", "PayPal SDK", "YouTube", "Vimeo", "Intercom", "Crisp", "Meta Pixel", "LinkedIn Insight Tag", "Custom", "Other"]
+
+# Whether iframes are used.
+uses_iframes = false
+uses_iframes__options = [true, false]
+
+# Iframe providers/services.
+iframes = []
+iframes__options = ["YouTube", "Vimeo", "Google Maps", "Calendly", "Typeform", "Spotify", "SoundCloud", "Other"]
+
+# Whether map embeds are used.
+map_embeds = false
+map_embeds__options = [true, false]
+
+# Map providers.
+map_providers = []
+map_providers__options = ["Google Maps", "OpenStreetMap", "Mapbox", "Leaflet", "Other"]
+
+# Whether social embeds/plugins are used.
+social_embeds = false
+social_embeds__options = [true, false]
+
+# Social embed providers.
+social_embed_providers = []
+social_embed_providers__options = ["Instagram", "LinkedIn", "X", "Facebook", "TikTok", "YouTube", "Pinterest", "Reddit", "Other"]
+
+# Whether captcha/anti-bot widgets are used.
+captcha = false
+captcha__options = [true, false]
+
+# Captcha provider.
+captcha_provider = ""
+captcha_provider__options = ["Cloudflare Turnstile", "Google reCAPTCHA", "hCaptcha", "Friendly Captcha", "Custom", "Other"]
+
+[tracking]
+
+# Whether analytics are used.
+# Set true if the website measures visitor/page usage beyond pure delivery of the website.
+# Typical examples:
+# - page views
+# - visits/sessions
+# - referrers
+# - device/browser breakdown
+# - traffic sources
+# Cloudflare Web Analytics belongs here.
+analytics_enabled = true
+analytics_enabled__options = [true, false]
+
+# Analytics providers.
+analytics_providers = ["Cloudflare Web Analytics"]
+analytics_providers__options = ["Plausible", "Matomo", "Google Analytics", "Simple Analytics", "Fathom", "Umami", "Ackee", "Cloudflare Web Analytics", "Other"]
+
+# Whether a tag manager is used.
+tag_manager_enabled = false
+tag_manager_enabled__options = [true, false]
+
+# Tag manager provider.
+tag_manager_provider = ""
+tag_manager_provider__options = ["Google Tag Manager", "Segment", "Tealium", "None", "Other"]
+
+# Whether advertising/remarketing tools are used.
+ads_enabled = false
+ads_enabled__options = [true, false]
+
+# Advertising/remarketing providers.
+ads_providers = []
+ads_providers__options = ["Meta Pixel", "Google Ads", "LinkedIn Insight Tag", "TikTok Pixel", "Pinterest Tag", "X Pixel", "Other"]
+
+# Whether session replay is used.
+session_replay = false
+session_replay__options = [true, false]
+
+# Session replay provider.
+session_replay_provider = ""
+session_replay_provider__options = ["Hotjar", "Microsoft Clarity", "FullStory", "Smartlook", "Other"]
+
+# Whether heatmaps are used.
+heatmaps = false
+heatmaps__options = [true, false]
+
+# Heatmap provider.
+heatmap_provider = ""
+heatmap_provider__options = ["Hotjar", "Microsoft Clarity", "Crazy Egg", "Other"]
+
+# Whether A/B testing is used.
+ab_testing = false
+ab_testing__options = [true, false]
+
+# A/B testing provider.
+ab_testing_provider = ""
+ab_testing_provider__options = ["Optimizely", "VWO", "Google Optimize alternative", "Custom", "Other"]
+
+# Whether conversion tracking is used.
+conversion_tracking = false
+conversion_tracking__options = [true, false]
+
+# Whether affiliate tracking is used.
+affiliate_tracking = false
+affiliate_tracking__options = [true, false]
+
+# Whether any tracking starts before consent.
+tracking_before_consent = false
+tracking_before_consent__options = [true, false]
+
+[storage]
+
+# Whether cookies are used at all.
+cookies_used = true
+cookies_used__options = [true, false]
+
+# Whether localStorage is used.
+local_storage_used = false
+local_storage_used__options = [true, false]
+
+# Whether sessionStorage is used.
+session_storage_used = false
+session_storage_used__options = [true, false]
+
+# Whether IndexedDB is used.
+indexeddb_used = false
+indexeddb_used__options = [true, false]
+
+# Whether service worker / browser-side caching stores user-related data.
+# This is NOT about ordinary static asset caching alone.
+# The mere fact that a browser caches your logo, CSS, JS, or images does normally NOT mean this should be true.
+# Focus on data that relates to a user, session, state, or behavior, such as:
+# - offline app data
+# - cached account/profile data
+# - cached API responses containing personal data
+# - push subscription data
+# - user-specific settings or drafts stored via service worker/app cache
+# For a normal static website where only public assets like logos/images are browser-cached, this is usually false.
+service_worker_storage_used = false
+service_worker_storage_used__options = [true, false]
+
+[[storage.items]]
+
+# Name of the storage item/mechanism.
+name = "Cloudflare security cookies"
+name__examples = ["theme", "_ga"]
+
+# Storage mechanism.
+mechanism = "cookie"
+mechanism__options = ["cookie", "local_storage", "session_storage", "indexeddb", "service_worker_cache", "other"]
+
+# Purpose of this storage item.
+purpose = "ensure website security and protect against bots, abuse, and malicious traffic"
+purpose__examples = ["store dark mode preference", "measure analytics sessions"]
+
+# Whether it is technically necessary in your assessment.
+technically_necessary = true
+technically_necessary__options = [true, false]
+
+# Provider setting/reading the item.
+provider = "Cloudflare"
+provider__options = ["self", "Google", "Cloudflare", "Meta", "Stripe", "Plausible", "Other"]
+
+# Lifetime/retention.
+retention = "a few minutes up to 24 hours"
+retention__examples = ["session", "13 months"]
+
+[data_processing]
+
+# Categories of personal data processed.
+# "Personal data" means information relating to an identified or identifiable natural person.
+# In practice, this often includes more than obvious things like names and emails.
+# For a website context, relevant examples can include:
+# - IP-related/server log data
+# - contact form content
+# - account/login data
+# - analytics/usage data linked to a user or device
+# - booking/payment/chat/upload/application data
+# With Cloudflare Web Analytics, at least re-check whether your setup adds "usage_data"
+# in addition to ordinary "server_log_data".
+personal_data_categories = ["server_log_data", "usage_data", "location_data"]
+personal_data_categories__options = ["server_log_data", "contact_data", "account_data", "newsletter_data", "upload_data", "payment_data", "booking_data", "chat_data", "usage_data", "device_data", "location_data", "application_data", "special_category_data", "other"]
+
+# Whether special categories of personal data are processed.
+special_categories_processed = false
+special_categories_processed__options = [true, false]
+
+# Whether location data is processed.
+# Set true if the website or its services process location in a meaningful way, for example:
+# - exact GPS or device location
+# - address/location submitted by users
+# - geo-based service behavior
+# - analytics/reports that include country/region/city derived from visitor traffic
+# For a simple static site without such features, this is often false.
+# If your analytics/reporting stack provides country/region level traffic data, review carefully whether
+# you want to treat that as location-related processing in your legal inventory.
+# TODO: what? i shall decide how to interpret this!?
+location_data_processed = true
+location_data_processed__options = [true, false]
+
+# Whether health data is processed.
+health_data_processed = false
+health_data_processed__options = [true, false]
+
+# Whether applicant/job application data is processed.
+applicant_data_processed = false
+applicant_data_processed__options = [true, false]
+
+# Whether financial/payment data is processed.
+financial_data_processed = false
+financial_data_processed__options = [true, false]
+
+# Main processing purposes.
+processing_purposes = ["website_delivery", "security", "service_provision", "analytics"]
+processing_purposes__options = ["website_delivery", "security", "communication", "support", "account_management", "service_provision", "booking_management", "newsletter_delivery", "marketing", "analytics", "payment_processing", "fraud_prevention", "community_operation", "application_processing", "legal_compliance", "other"]
+
+# Main legal bases relied upon.
+# These are the GDPR reasons you rely on to process personal data.
+# Use only the ones that actually apply to your website's real processing.
+# For a minimal normal website, art_6_1_f is often the starting point for delivery/security/logging.
+# Do NOT randomly pick multiple bases "just in case".
+legal_bases = ["art_6_1_f"]
+legal_bases__options = [
+  "art_6_1_a", # consent; user must first agree (e.g. optional tracking, newsletter where consent is the basis)
+  "art_6_1_b", # contract / pre-contractual steps; needed to provide a requested service, account, booking, or order
+  "art_6_1_c", # legal obligation; needed because a law requires it (e.g. statutory retention of invoices)
+  "art_6_1_f", # legitimate interests; common for basic website operation, security, server logs, fraud prevention, some low-intrusion analytics depending on setup
+  "art_9_2_a", # explicit consent for special-category data
+  "art_9_2_b", # employment/social security context for special-category data
+  "art_9_2_h", # healthcare/medical-care context for special-category data
+  "other" # only if you knowingly rely on another basis not covered here
+]
+
+# General retention policy summary.
+# Describe, in plain language, how long different data is kept and what the general deletion logic is.
+# This is not a strict enum field because retention often differs by data type.
+# Good summaries usually answer:
+# - what is deleted quickly
+# - what is kept until purpose ends
+# - what is kept because the law requires it
+# - whether backups/logs have separate periods
+# Typical patterns:
+# - "Server logs are kept for 7 days; contact inquiries until resolved; no account data stored."
+# - "Newsletter data until unsubscribe; invoices according to statutory retention duties."
+# If you do not know this yet, that means you still need to investigate your providers and own processes.
+retention_policy_summary = "Server logs are processed by infrastructure providers and retained for a short period depending on the provider; no own long-term storage of logs"
+retention_policy_summary__examples = ["Data is deleted when no longer necessary.", "Invoices kept per tax law; support data deleted after resolution."]
+
+[[data_processing.recipients]]
+
+# Name of recipient/service provider.
+name = "Cloudflare"
+name__examples = ["GitHub Pages", "Cloudflare"]
+
+# Type of recipient.
+# This describes the legal role of the outside party receiving/handling data.
+# As a rough practical starting point for many normal website setups:
+# - hosting/CDN providers are often treated as processors in website privacy texts
+# - but this must be reviewed case by case
+recipient_type = "processor"
+recipient_type__options = [
+  "processor",             # service provider acting on your behalf
+  "independent_controller",# separate controller deciding on own purposes
+  "joint_controller"       # jointly responsible with you
+]
+
+# Why data is transferred to this recipient.
+# Choose the purposes that best describe the service you use.
+purposes = ["content_delivery", "dns", "email_delivery", "analytics", "spam_protection"]
+purposes__options = ["hosting", "content_delivery", "dns", "email_delivery", "transactional_email", "storage", "database_hosting", "error_monitoring", "analytics", "marketing", "payment_processing", "booking", "chat", "spam_protection", "authentication", "newsletter_delivery", "other"]
+
+# Where the recipient is located or primarily operates.
+region = "USA"
+region__examples = ["EU", "USA"]
+
+# Transfer safeguard if outside EU/EEA.
+# Legal mechanism used for transfers outside the EU/EEA.
+# Multiple values can be used if more than one mechanism applies.
+# This matters only if personal data is transferred to a recipient outside the EU/EEA.
+# Use:
+# - "none" if no such safeguard is identified
+# - "adequacy_decision" if the destination country is officially recognized as adequate
+# - "DPF" for EU-US Data Privacy Framework where applicable
+# - "SCC" for Standard Contractual Clauses
+# - "BCR" for Binding Corporate Rules
+# - "consent" only in the narrow case where explicit consent is the relied-on transfer mechanism
+# - "other" for another specific safeguard
+# Do not guess here. Check the provider's legal/privacy/data-processing documentation.
+transfer_safeguard = ["DPF", "SCC"]
+transfer_safeguard__options = ["none", "adequacy_decision", "DPF", "SCC", "BCR", "consent", "other"]
+
+# Whether you have a DPA / AVV with this provider.
+# Only set to true if the provider acts as a processor and you have such an agreement in place.
+has_dpa = true
+has_dpa__options = [true, false]
+
+[[data_processing.recipients]]
+
+# Name of recipient/service provider.
+name = "GitHub Pages"
+name__examples = ["GitHub Pages", "Cloudflare"]
+
+# Type of recipient.
+# This describes the legal role of the outside party receiving/handling data.
+# As a rough practical starting point for many normal website setups:
+# - hosting/CDN providers are often treated as processors in website privacy texts
+# - but this must be reviewed case by case
+recipient_type = "independent_controller"
+recipient_type__options = [
+  "processor", # processes data strictly on your behalf (usually requires a DPA/AVV)
+  "independent_controller", #decides on its own purposes (no DPA with you)
+  "joint_controller" # shares responsibility with you
+]
+
+# Why data is transferred to this recipient.
+# Choose the purposes that best describe the service you use.
+purposes = ["hosting"]
+purposes__options = ["hosting", "content_delivery", "dns", "email_delivery", "transactional_email", "storage", "database_hosting", "error_monitoring", "analytics", "marketing", "payment_processing", "booking", "chat", "spam_protection", "authentication", "newsletter_delivery", "other"]
+
+# Where the recipient is located or primarily operates.
+region = "USA"
+region__examples = ["EU", "USA"]
+
+# Transfer safeguard if outside EU/EEA.
+# Legal mechanism used for transfers outside the EU/EEA.
+# Multiple values can be used if more than one mechanism applies.
+# This matters only if personal data is transferred to a recipient outside the EU/EEA.
+# Use:
+# - "none" if no such safeguard is identified
+# - "adequacy_decision" if the destination country is officially recognized as adequate
+# - "DPF" for EU-US Data Privacy Framework where applicable
+# - "SCC" for Standard Contractual Clauses
+# - "BCR" for Binding Corporate Rules
+# - "consent" only in the narrow case where explicit consent is the relied-on transfer mechanism
+# - "other" for another specific safeguard
+# Do not guess here. Check the provider's legal/privacy/data-processing documentation.
+transfer_safeguard = ["DPF", "SCC"]
+transfer_safeguard__options = ["none", "adequacy_decision", "DPF", "SCC", "BCR", "consent", "other"]
+
+# Whether you have a DPA / AVV with this provider.
+# Only set to true if the provider acts as a processor and you have such an agreement in place.
+has_dpa = false
+has_dpa__options = [true, false]
+
+[[data_processing.recipients]]
+
+# Name of recipient/service provider.
+name = "Google (gMail)"
+name__examples = ["GitHub Pages", "Cloudflare"]
+
+# Type of recipient.
+recipient_type = "independent_controller"
+recipient_type__options = [
+  "processor",             # service provider acting on your behalf
+  "independent_controller",# separate controller deciding on own purposes
+  "joint_controller"       # jointly responsible with you
+]
+
+# Purpose of disclosure/transfer.
+purposes = ["email_delivery"]
+purposes__options = ["hosting", "content_delivery", "dns", "email_delivery", "transactional_email", "storage", "database_hosting", "error_monitoring", "analytics", "marketing", "payment_processing", "booking", "chat", "spam_protection", "authentication", "newsletter_delivery", "other"]
+
+# Region/country of recipient.
+region = "USA"
+region__examples = ["EU", "USA"]
+
+# Transfer safeguard if outside EU/EEA.
+# Legal mechanism used for transfers outside the EU/EEA.
+# Multiple values can be used if more than one mechanism applies.
+# This matters only if personal data is transferred to a recipient outside the EU/EEA.
+# Use:
+# - "none" if no such safeguard is identified
+# - "adequacy_decision" if the destination country is officially recognized as adequate
+# - "DPF" for EU-US Data Privacy Framework where applicable
+# - "SCC" for Standard Contractual Clauses
+# - "BCR" for Binding Corporate Rules
+# - "consent" only in the narrow case where explicit consent is the relied-on transfer mechanism
+# - "other" for another specific safeguard
+# Do not guess here. Check the provider's legal/privacy/data-processing documentation.
+transfer_safeguard = ["DPF", "SCC"]
+transfer_safeguard__options = ["none", "adequacy_decision", "DPF", "SCC", "BCR", "consent", "other"]
+
+# Whether you have a DPA / AVV with this provider.
+# Only set to true if the provider acts as a processor and you have such an agreement in place.
+has_dpa = false
+has_dpa__options = [true, false]
+
+[international]
+
+# Whether any personal data is transferred outside the EU/EEA.
+# "Personal data" here means any data about an identified or identifiable person.
+# For website operators this can include, depending on setup:
+# - IP-related log/request data
+# - analytics/usage data
+# - contact/account/payment/support data
+# This question is not limited to obvious profile data.
+# If providers outside the EU/EEA receive such data, or if providers in the stack transfer it onward outside the EU/EEA,
+# this may be true.
+# For a stack using providers like GitHub, Cloudflare, US analytics, US email tools, etc., this usually requires explicit review,
+# not guesswork.
+third_country_transfers = true
+third_country_transfers__options = [true, false]
+
+# Countries involved in such transfers.
+transfer_countries = ["USA"]
+transfer_countries__options = ["USA", "UK", "Canada", "India", "Australia", "Switzerland", "Other"]
+
+# Transfer safeguards/mechanisms used.
+transfer_mechanisms = ["DPF", "SCC"]
+transfer_mechanisms__options = ["adequacy_decision", "DPF", "SCC", "BCR", "consent", "other"]
+
+[urls]
+
+# Path or URL of the Impressum page.
+impressum_url = "/legal/imprint" # TODO
+impressum_url__examples = ["/impressum", "https://example.com/legal/imprint"]
+
+# Path or URL of the privacy policy page.
+privacy_policy_url = "/legal/privacy-policy" # TODO
+privacy_policy_url__examples = ["/datenschutz", "https://example.com/legal/privacy"]
+
+# Path or URL of the cookie policy page.
+cookie_policy_url = "" # TODO
+cookie_policy_url__examples = ["/cookies", ""]
+
+# Path or URL of the terms page.
+terms_url = "" # TODO
+terms_url__examples = ["/agb", ""]

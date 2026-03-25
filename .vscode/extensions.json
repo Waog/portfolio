@@ -8,6 +8,7 @@
     "adam-bender.commit-message-editor",
     "streetsidesoftware.code-spell-checker",
     "orta.vscode-jest",
-    "firsttris.vscode-jest-runner"
+    "firsttris.vscode-jest-runner",
+    "tamasfe.even-better-toml"
   ]
 }
