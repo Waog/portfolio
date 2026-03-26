@@ -312,7 +312,6 @@ export type OperatorConfig = {
    * - `association` - Verein / e.V.
    * - `foundation` - Stiftung
    * - `public_body` - Behörde / öffentliche Stelle / Körperschaft des öffentlichen Rechts
-   * - `other` - another legal form not covered above
    */
   legalForm:
     | 'natural_person'
@@ -326,8 +325,7 @@ export type OperatorConfig = {
     | 'se'
     | 'association'
     | 'foundation'
-    | 'public_body'
-    | 'other';
+    | 'public_body';
 
   /**
    * Brand/trade name if different from legal name.
@@ -540,16 +538,14 @@ export type ContactFormConfig = {
    * - `crm` - stored in CRM or lead system
    * - `ticket_system` - stored in support/helpdesk system
    * - `database` - stored in your own backend/database
-   * - `other` - other storage method
    */
-  submissionTarget: 'email' | 'crm' | 'ticket_system' | 'database' | 'other';
+  submissionTarget: 'email' | 'crm' | 'ticket_system' | 'database';
 
   /**
    * Spam protection details.
    * Options:
    * - `[any Provider]` - if third party provider is used for spam protection
    * - `Custom` - if you have your own custom anti-spam solution
-   * - `Other` - if you use another method that does not fit the above categories
    * - `null` - if no spam protection is used
    */
   spamProtection:
@@ -558,7 +554,6 @@ export type ContactFormConfig = {
     | 'hCaptcha'
     | 'Friendly Captcha'
     | 'Custom'
-    | 'Other'
     | null;
 
   /**
@@ -589,8 +584,7 @@ export type OtherFormsConfig = {
     | 'support_request'
     | 'quote_request'
     | 'application_form'
-    | 'contest_entry'
-    | 'other';
+    | 'contest_entry';
 
   /**
    * Fields collected by this form.
@@ -605,8 +599,7 @@ export type OtherFormsConfig = {
     | 'crm'
     | 'ticket_system'
     | 'database'
-    | 'applicant_tracking_system'
-    | 'other';
+    | 'applicant_tracking_system';
 
   /**
    * Purpose of this form.
@@ -648,7 +641,6 @@ export type UserAccountsConfig = {
     | 'facebook_oauth'
     | 'microsoft_oauth'
     | 'custom_sso'
-    | 'other'
   >;
 
   /**
@@ -660,8 +652,7 @@ export type UserAccountsConfig = {
     | 'Supabase Auth'
     | 'AWS Cognito'
     | 'Clerk'
-    | 'Custom backend'
-    | 'Other';
+    | 'Custom backend';
 
   /**
    * Whether password reset exists.
@@ -693,8 +684,7 @@ export type NewsletterConfig = {
     | 'ConvertKit'
     | 'Klaviyo'
     | 'HubSpot'
-    | 'Custom'
-    | 'Other';
+    | 'Custom';
 
   /**
    * Signup mode.
@@ -715,7 +705,6 @@ export type NewsletterConfig = {
     | 'company'
     | 'interests'
     | 'language'
-    | 'other'
   >;
 
   /**
@@ -745,7 +734,6 @@ export type UploadsConfig = {
     | 'document'
     | 'cv'
     | 'invoice'
-    | 'other'
   >;
 
   /**
@@ -757,8 +745,7 @@ export type UploadsConfig = {
     | 'Google Cloud Storage'
     | 'Azure Blob Storage'
     | 'Supabase Storage'
-    | 'Local server'
-    | 'Other';
+    | 'Local server';
 
   /**
    * Whether uploaded content can become public.
@@ -830,7 +817,6 @@ export type PaymentsConfig = {
     | 'Apple In-App Purchase'
     | 'Google Play Billing'
     | 'Bank transfer'
-    | 'Other'
   >;
 
   /**
@@ -864,8 +850,7 @@ export type BookingConfig = {
     | 'Microsoft Bookings'
     | 'Cal.com'
     | 'Google Appointment Scheduler'
-    | 'Custom'
-    | 'Other';
+    | 'Custom';
 
   /**
    * Fields collected during booking.
@@ -884,8 +869,7 @@ export type LiveChatConfig = {
     | 'Tidio'
     | 'LiveChat'
     | 'HubSpot Chat'
-    | 'Custom'
-    | 'Other';
+    | 'Custom';
 
   /**
    * Whether chat transcripts are stored.
@@ -912,7 +896,7 @@ export type FrontendAssetsConfig = {
   /**
    * Which remote third-party fonts are loaded.
    */
-  remoteFonts: Array<'Google Fonts' | 'Adobe Fonts' | 'Bunny Fonts' | 'Other'>;
+  remoteFonts: Array<'Google Fonts' | 'Adobe Fonts' | 'Bunny Fonts'>;
 
   /**
    * Which third-party scripts are loaded in the browser.
@@ -930,7 +914,6 @@ export type FrontendAssetsConfig = {
     | 'Meta Pixel'
     | 'LinkedIn Insight Tag'
     | 'Custom'
-    | 'Other'
   >;
 
   /**
@@ -944,15 +927,12 @@ export type FrontendAssetsConfig = {
     | 'Typeform'
     | 'Spotify'
     | 'SoundCloud'
-    | 'Other'
   >;
 
   /**
    * Which map embeds are used.
    */
-  mapEmbeds: Array<
-    'Google Maps' | 'OpenStreetMap' | 'Mapbox' | 'Leaflet' | 'Other'
-  >;
+  mapEmbeds: Array<'Google Maps' | 'OpenStreetMap' | 'Mapbox' | 'Leaflet'>;
 
   /**
    * Which social embeds/plugins are used.
@@ -966,7 +946,6 @@ export type FrontendAssetsConfig = {
     | 'YouTube'
     | 'Pinterest'
     | 'Reddit'
-    | 'Other'
   >;
 
   /**
@@ -978,7 +957,6 @@ export type FrontendAssetsConfig = {
     | 'hCaptcha'
     | 'Friendly Captcha'
     | 'Custom'
-    | 'Other'
     | null;
 };
 
@@ -1002,13 +980,12 @@ export type TrackingConfig = {
     | 'Umami'
     | 'Ackee'
     | 'Cloudflare Web Analytics'
-    | 'Other'
   >;
 
   /**
    * Which a tag manager is used.
    */
-  tagManager: 'Google Tag Manager' | 'Segment' | 'Tealium' | 'Other' | null;
+  tagManager: 'Google Tag Manager' | 'Segment' | 'Tealium' | null;
 
   /**
    * Which advertising/remarketing tools are used.
@@ -1020,7 +997,6 @@ export type TrackingConfig = {
     | 'TikTok Pixel'
     | 'Pinterest Tag'
     | 'X Pixel'
-    | 'Other'
   >;
 
   /**
@@ -1031,13 +1007,12 @@ export type TrackingConfig = {
     | 'Microsoft Clarity'
     | 'FullStory'
     | 'Smartlook'
-    | 'Other'
     | null;
 
   /**
    * Which heatmaps provider is used.
    */
-  heatmaps: 'Hotjar' | 'Microsoft Clarity' | 'Crazy Egg' | 'Other' | null;
+  heatmaps: 'Hotjar' | 'Microsoft Clarity' | 'Crazy Egg' | null;
 
   /**
    * Which A/B testing provider is used.
@@ -1047,7 +1022,6 @@ export type TrackingConfig = {
     | 'VWO'
     | 'Google Optimize alternative'
     | 'Custom'
-    | 'Other'
     | null;
 
   /**
@@ -1118,7 +1092,6 @@ export type DataProcessingConfig = {
     | 'location_data'
     | 'application_data'
     | 'special_category_data'
-    | 'other'
   >;
 
   /**
@@ -1172,7 +1145,6 @@ export type DataProcessingConfig = {
     | 'community_operation'
     | 'application_processing'
     | 'legal_compliance'
-    | 'other'
   >;
 
   /**
@@ -1190,7 +1162,6 @@ export type DataProcessingConfig = {
    * - `art_9_2_a` - explicit consent for special-category data
    * - `art_9_2_b` - employment/social security context for special-category data
    * - `art_9_2_h` - healthcare/medical-care context for special-category data
-   * - `other`     - only if you knowingly rely on another basis not covered here
    */
   legalBases: Array<
     | 'art_6_1_a'
@@ -1200,7 +1171,6 @@ export type DataProcessingConfig = {
     | 'art_9_2_a'
     | 'art_9_2_b'
     | 'art_9_2_h'
-    | 'other'
   >;
 
   /**
@@ -1366,8 +1336,7 @@ export type ManagingPersonConfig = {
     | 'managing_director'
     | 'board_member'
     | 'chairperson'
-    | 'authorized_representative'
-    | 'other';
+    | 'authorized_representative';
 };
 
 export type PressResponsiblePersonConfig = {
@@ -1416,8 +1385,7 @@ export type HostingConfig = {
     | 'Strato'
     | 'IONOS'
     | 'Render'
-    | 'Custom server'
-    | 'Other';
+    | 'Custom server';
 
   /**
    * Hosting region/country.
@@ -1434,8 +1402,7 @@ export type HostingConfig = {
     | 'GoDaddy'
     | 'IONOS'
     | 'Strato'
-    | 'Hetzner'
-    | 'Other';
+    | 'Hetzner';
 
   cdnProvider:
     | 'Cloudflare'
@@ -1444,8 +1411,7 @@ export type HostingConfig = {
     | 'Bunny CDN'
     | 'jsDelivr'
     | 'Akamai'
-    | 'None'
-    | 'Other';
+    | 'None';
 
   /**
    * Reverse proxy / WAF provider.
@@ -1456,8 +1422,7 @@ export type HostingConfig = {
     | 'AWS WAF'
     | 'Imperva'
     | 'Sucuri'
-    | 'None'
-    | 'Other';
+    | 'None';
 };
 
 export type InfrastructureEmailConfig = {
@@ -1481,7 +1446,6 @@ export type InfrastructureEmailConfig = {
    * - "IONOS"
    * - "Zoho Mail"
    * - "Fastmail"
-   * - "Other"
    */
   ordinaryMailboxProviders: string[];
 
@@ -1507,7 +1471,6 @@ export type InfrastructureEmailConfig = {
     | 'SendGrid'
     | 'Brevo'
     | 'Resend'
-    | 'Other'
     | null;
 };
 
@@ -1522,7 +1485,6 @@ export type InfrastructureDataStoresConfig = {
     | 'Azure Blob Storage'
     | 'Supabase Storage'
     | 'Local server'
-    | 'Other'
     | null;
 
   /**
@@ -1537,12 +1499,10 @@ export type InfrastructureDataStoresConfig = {
     | 'Firebase'
     | 'AWS DynamoDB'
     | 'SQLite'
-    | 'Other'
     | null;
 };
 
 export type InfrastructureObservabilityConfig = {
-  // TODO legal: 'Other' is probably not an option proper legal documents can be generated from. search all `Other` Options and simply delete or replace. the lists/types don't need to be complete, as they can be extended on the fly.
   /**
    * Error monitoring/logging provider if any.
    */
@@ -1552,7 +1512,6 @@ export type InfrastructureObservabilityConfig = {
     | 'Bugsnag'
     | 'Datadog'
     | 'CloudWatch'
-    | 'Other'
     | null;
 
   /**
@@ -1599,14 +1558,7 @@ export type StorageItemConfig = {
   /**
    * Provider setting/reading the item.
    */
-  provider:
-    | 'self'
-    | 'Google'
-    | 'Cloudflare'
-    | 'Meta'
-    | 'Stripe'
-    | 'Plausible'
-    | 'Other';
+  provider: 'self' | 'Google' | 'Cloudflare' | 'Meta' | 'Stripe' | 'Plausible';
 
   /**
    * Lifetime/retention.
@@ -1663,7 +1615,6 @@ export type RecipientConfig = {
     | 'spam_protection'
     | 'authentication'
     | 'newsletter_delivery'
-    | 'other'
   >;
 
   /**
@@ -1686,12 +1637,12 @@ export type RecipientConfig = {
    * - `SCC` for Standard Contractual Clauses
    * - `BCR` for Binding Corporate Rules
    * - `consent` only in the narrow case where explicit consent is the relied-on transfer mechanism
-   * - `other` for another specific safeguard
+   *
    *
    * Do not guess here. Check the provider's legal/privacy/data-processing documentation.
    */
   transferSafeguard: Array<
-    'none' | 'adequacy_decision' | 'DPF' | 'SCC' | 'BCR' | 'consent' | 'other'
+    'none' | 'adequacy_decision' | 'DPF' | 'SCC' | 'BCR' | 'consent'
   >;
 
   /**
@@ -1720,8 +1671,7 @@ export type CollectedField =
   | 'attachment'
   | 'cv'
   | 'cover_letter'
-  | 'notes'
-  | 'other';
+  | 'notes';
 
 export type LanguageCode =
   | 'de'
