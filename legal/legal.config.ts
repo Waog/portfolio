@@ -1,6 +1,7 @@
 // ============================================================================
 // LEGAL MASTER FORM
-// Canonical project metadata for legal texts and compliance checks.
+// Canonical project metadata, acting as a single point of truth to capture the legal aspects of this project.
+// Used for generating legal texts and performing compliance checks, by passing it to LLMs along with a Prompt.
 // Fill this file once per website/project and keep it updated when:
 // - you add/remove third-party services
 // - you change hosting/infrastructure
@@ -538,21 +539,7 @@ export type ContactFormConfig = {
   /**
    * Fields collected by the form.
    */
-  collectedFields: Array<
-    | 'name'
-    | 'first_name'
-    | 'last_name'
-    | 'email'
-    | 'phone'
-    | 'company'
-    | 'subject'
-    | 'message'
-    | 'address'
-    | 'budget'
-    | 'project_details'
-    | 'attachment'
-    | 'other'
-  >;
+  collectedFields: CollectedField[];
 
   /**
    * Where submissions are sent or stored.
@@ -616,22 +603,7 @@ export type OtherFormsConfig = {
   /**
    * Fields collected by this form.
    */
-  collectedFields:
-    | 'name'
-    | 'first_name'
-    | 'last_name'
-    | 'email'
-    | 'phone'
-    | 'company'
-    | 'subject'
-    | 'message'
-    | 'address'
-    | 'budget'
-    | 'project_details'
-    | 'attachment'
-    | 'cv'
-    | 'cover_letter'
-    | 'other';
+  collectedFields: CollectedField[];
 
   /**
    * Processing target of this form.
@@ -903,21 +875,10 @@ export type BookingConfig = {
     | 'Custom'
     | 'Other';
 
-  // TODO legal: the collected fields type often looks very similar. Generalize and reuse.
   /**
    * Fields collected during booking.
    */
-  collectedFields: Array<
-    | 'name'
-    | 'first_name'
-    | 'last_name'
-    | 'email'
-    | 'phone'
-    | 'company'
-    | 'notes'
-    | 'address'
-    | 'other'
-  >;
+  collectedFields: CollectedField[];
 };
 
 export type LiveChatConfig = {
@@ -1781,12 +1742,26 @@ export type RecipientConfig = {
 };
 
 /**
- * ============================================================================
- * OPTION ARRAYS + DERIVED UNION TYPES
- * ============================================================================
+ * Shared union type for all form-collected field identifiers.
+ * Use this single source to keep collected field sets consistent across configs.
  */
-
-export const WEBSITE_TYPE_OPTIONS = [] as const;
+export type CollectedField =
+  | 'name'
+  | 'first_name'
+  | 'last_name'
+  | 'email'
+  | 'phone'
+  | 'company'
+  | 'subject'
+  | 'message'
+  | 'address'
+  | 'budget'
+  | 'project_details'
+  | 'attachment'
+  | 'cv'
+  | 'cover_letter'
+  | 'notes'
+  | 'other';
 
 export type LanguageCode =
   | 'de'
