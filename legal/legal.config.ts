@@ -203,13 +203,6 @@ export const legalConfig: LegalConfig = {
     ],
   },
 
-  // TODO legal: Seems to be completely redundant with other parts.
-  international: {
-    thirdCountryTransfers: true,
-    transferCountries: ['USA'],
-    transferMechanisms: ['DPF', 'SCC'],
-  },
-
   urls: {
     imprintUrl: '/legal/imprint',
     privacyPolicyUrl: '/legal/privacy-policy',
@@ -240,7 +233,6 @@ export type LegalConfig = {
   tracking: TrackingConfig;
   storage: StorageConfig;
   dataProcessing: DataProcessingConfig;
-  international: InternationalConfig;
   urls: UrlsConfig;
 };
 
@@ -1236,38 +1228,6 @@ export type DataProcessingConfig = {
   retentionPolicySummary: string;
 
   recipients: RecipientConfig[];
-};
-
-export type InternationalConfig = {
-  /**
-   * Whether any personal data is transferred outside the EU/EEA.
-   * "Personal data" here means any data about an identified or identifiable person.
-   * For website operators this can include, depending on setup:
-   * - IP-related log/request data
-   * - analytics/usage data
-   * - contact/account/payment/support data
-   *
-   * This question is not limited to obvious profile data.
-   * If providers outside the EU/EEA receive such data, or if providers in the stack transfer it onward outside the EU/EEA,
-   * this may be true.
-   * For a stack using providers like GitHub, Cloudflare, US analytics, US email tools, etc., this usually requires explicit review,
-   * not guesswork.
-   */
-  thirdCountryTransfers: boolean;
-
-  /**
-   * Countries involved in such transfers.
-   */
-  transferCountries: Array<
-    'USA' | 'UK' | 'Canada' | 'India' | 'Australia' | 'Switzerland' | 'Other'
-  >;
-
-  /**
-   * Transfer safeguards/mechanisms used.
-   */
-  transferMechanisms: Array<
-    'adequacy_decision' | 'DPF' | 'SCC' | 'BCR' | 'consent' | 'other'
-  >;
 };
 
 export type UrlsConfig = {
