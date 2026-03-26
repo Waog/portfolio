@@ -150,36 +150,72 @@ export const legalConfig: LegalConfig = {
     other: [],
   },
 
-  // TODO legal: this seems like a big lump which should be split per some kind of item. Server logs are mixed up with phone calls and location data here. purposes and other aspects can't be clearly associated to one another. -> ah, we partially did this splitup already in "recipients", which seems partially redundant.
   dataProcessing: {
-    // TODO legal: do we need to add "contact_data" here, because we have an email-address when receiving a mail and a phone number when receiving a call?
-    personalDataCategories: ['server_log_data', 'usage_data', 'location_data'],
-    specialCategoriesProcessed: false,
-    locationDataProcessed: true,
-    healthDataProcessed: false,
-    applicantDataProcessed: false,
-    financialDataProcessed: false,
-    // TODO legal: do we need to add "communication" here, because we receive emails and phone calls?
-    processingPurposes: [
-      'website_delivery',
-      'security',
-      'service_provision',
-      'analytics',
+    activities: [
+      {
+        name: 'Website delivery and security',
+        personalDataCategories: [
+          'server_log_data',
+          'usage_data',
+          'device_data',
+          'location_data',
+        ],
+        processingPurposes: [
+          'website_delivery',
+          'security',
+          'service_provision',
+        ],
+        legalBases: ['art_6_1_f'],
+        retention:
+          'Server logs are processed by infrastructure providers and retained for a short period depending on the provider; no own long-term storage of logs',
+        recipients: [
+          {
+            recipientName: 'Cloudflare',
+            serviceFunctions: ['content_delivery', 'dns', 'spam_protection'],
+          },
+          {
+            recipientName: 'GitHub Pages',
+            serviceFunctions: ['hosting'],
+          },
+        ],
+      },
+      {
+        name: 'Analytics',
+        personalDataCategories: ['usage_data', 'device_data', 'location_data'],
+        processingPurposes: ['analytics'],
+        legalBases: ['art_6_1_f'],
+        retention:
+          'Analytics data is processed via Cloudflare Web Analytics according to the provider setup; no own long-term raw analytics storage',
+        recipients: [
+          {
+            recipientName: 'Cloudflare',
+            serviceFunctions: ['analytics'],
+          },
+        ],
+      },
+      {
+        name: 'Communication via E-Mail',
+        personalDataCategories: ['contact_data'],
+        processingPurposes: ['communication', 'service_provision'],
+        legalBases: ['art_6_1_b', 'art_6_1_f'],
+        retention:
+          'Contact inquiries and related notes are kept until the inquiry is resolved unless longer retention is required',
+        recipients: [
+          {
+            recipientName: 'Cloudflare',
+            serviceFunctions: ['email_delivery'],
+          },
+          {
+            recipientName: 'Google (Gmail)',
+            serviceFunctions: ['email_delivery'],
+          },
+        ],
+      },
     ],
-    legalBases: ['art_6_1_b', 'art_6_1_f'],
-    retentionPolicySummary:
-      'Server logs are processed by infrastructure providers and retained for a short period depending on the provider; contact inquiries and related notes are kept until the inquiry is resolved unless longer retention is required; no own long-term storage of logs',
     recipients: [
       {
         name: 'Cloudflare',
         recipientType: 'processor',
-        purposes: [
-          'content_delivery',
-          'dns',
-          'email_delivery',
-          'analytics',
-          'spam_protection',
-        ],
         region: 'USA',
         transferSafeguard: ['DPF', 'SCC'],
         hasDpa: true,
@@ -187,15 +223,13 @@ export const legalConfig: LegalConfig = {
       {
         name: 'GitHub Pages',
         recipientType: 'independent_controller',
-        purposes: ['hosting'],
         region: 'USA',
         transferSafeguard: ['DPF', 'SCC'],
         hasDpa: false,
       },
       {
-        name: 'Google (gMail)',
+        name: 'Google (Gmail)',
         recipientType: 'independent_controller',
-        purposes: ['email_delivery'],
         region: 'USA',
         transferSafeguard: ['DPF', 'SCC'],
         hasDpa: false,
@@ -1068,7 +1102,39 @@ export type StorageConfig = {
 
 export type DataProcessingConfig = {
   /**
-   * Categories of personal data processed.
+   * Concrete processing activities.
+   * This is the single source of truth for:
+   * - which data categories are processed
+   * - for which legal purposes
+   * - on which legal bases
+   * - for how long
+   * - with which recipients
+   * - and which technical/provider functions those recipients perform in that activity
+   *
+   * If something is legally relevant for data processing, model it here.
+   */
+  activities: ProcessingActivityConfig[];
+
+  /**
+   * Normalized recipient registry.
+   * Keep legal/provider metadata here once, then reference recipient names from
+   * individual processing activities.
+   */
+  recipients: RecipientConfig[];
+};
+
+export type ProcessingActivityConfig = {
+  /**
+   * Human-readable activity name for legal documents.
+   * Examples:
+   * - "Website delivery and security"
+   * - "Communication"
+   * - "Analytics"
+   */
+  name: string;
+
+  /**
+   * Categories of personal data processed in this activity.
    * "Personal data" means information relating to an identified or identifiable natural person.
    * In practice, this often includes more than obvious things like names and emails.
    * For a website context, relevant examples can include:
@@ -1077,6 +1143,9 @@ export type DataProcessingConfig = {
    * - account/login data
    * - analytics/usage data linked to a user or device
    * - booking/payment/chat/upload/application data
+   * - applicant/job application data
+   * - financial/payment-related data
+   * - health data or other special categories where relevant
    */
   personalDataCategories: Array<
     | 'server_log_data'
@@ -1085,49 +1154,23 @@ export type DataProcessingConfig = {
     | 'newsletter_data'
     | 'upload_data'
     | 'payment_data'
+    | 'financial_data'
     | 'booking_data'
     | 'chat_data'
     | 'usage_data'
     | 'device_data'
     | 'location_data'
     | 'application_data'
-    | 'special_category_data'
+    | 'health_data'
+    | 'biometric_identification_data'
+    | 'genetic_data'
+    | 'religious_belief_data'
+    | 'sexual_orientation_data'
   >;
 
   /**
-   * Whether special categories of personal data are processed.
-   */
-  specialCategoriesProcessed: boolean;
-
-  /**
-   * Whether location data is processed.
-   * Set true if the website or its services process location in a meaningful way, for example:
-   * - exact GPS or device location
-   * - address/location submitted by users
-   * - geo-based service behavior
-   * - analytics/reports that include country/region/city derived from visitor traffic
-   *
-   * For a simple static site without such features, this is often false.
-   * If your analytics/reporting stack provides country/region level traffic data, review carefully whether
-   * you want to treat that as location-related processing in your legal inventory.
-   * TODO legal: what? i shall decide how to interpret this!?
-   */
-  locationDataProcessed: boolean;
-
-  healthDataProcessed: boolean;
-
-  /**
-   * Whether applicant/job application data is processed.
-   */
-  applicantDataProcessed: boolean;
-
-  /**
-   * Whether financial/payment data is processed.
-   */
-  financialDataProcessed: boolean;
-
-  /**
-   * Main processing purposes.
+   * Main legal processing purposes for this activity.
+   * These are the "why" statements that must be reflected in the final legal documents.
    */
   processingPurposes: Array<
     | 'website_delivery'
@@ -1148,13 +1191,13 @@ export type DataProcessingConfig = {
   >;
 
   /**
-   * Main legal bases relied upon.
+   * Main legal bases relied upon for this activity.
    * These are the GDPR reasons you rely on to process personal data.
    * Use only the ones that actually apply to your website's real processing.
    * For a minimal normal website, art_6_1_f is often the starting point for delivery/security/logging.
    * Do NOT randomly pick multiple bases "just in case".
    *
-   *  Options:
+   * Options:
    * - `art_6_1_a` - consent; user must first agree (e.g. optional tracking, newsletter where consent is the basis)
    * - `art_6_1_b` - contract / pre-contractual steps; needed to provide a requested service, account, booking, or order
    * - `art_6_1_c` - legal obligation; needed because a law requires it (e.g. statutory retention of invoices)
@@ -1174,8 +1217,8 @@ export type DataProcessingConfig = {
   >;
 
   /**
-   * General retention policy summary.
-   * Describe, in plain language, how long different data is kept and what the general deletion logic is.
+   * Retention period or deletion logic for this concrete activity.
+   * Describe, in plain language, how long the data is kept and what the deletion logic is.
    * This is not a strict enum field because retention often differs by data type.
    *
    * Good summaries usually answer:
@@ -1184,20 +1227,61 @@ export type DataProcessingConfig = {
    * - what is kept because the law requires it
    * - whether backups/logs have separate periods
    *
-   * Typical patterns:
-   * - "Server logs are kept for 7 days; contact inquiries until resolved; no account data stored."
-   * - "Newsletter data until unsubscribe; invoices according to statutory retention duties."
-   *
-   * If you do not know this yet, that means you still need to investigate your providers and own processes.
-   *
    * Examples:
    * - "Data is deleted when no longer necessary."
    * - "Invoices kept per tax law; support data deleted after resolution."
    * - "Server logs are processed by infrastructure providers and retained for a short period depending on the provider; no own long-term storage of logs"
+   * - "Server logs are kept for 7 days"
+   * - "contact inquiries until resolved"
+   * - "no account data stored"
+   * - "Newsletter data until unsubscribe"
+   * - "Invoices according to statutory retention duties"
    */
-  retentionPolicySummary: string;
+  retention: string;
 
-  recipients: RecipientConfig[];
+  /**
+   * Activity-specific recipient linkage.
+   * This connects:
+   * - who receives/handles the data in this activity
+   * - and what technical/provider function that recipient performs here
+   *
+   * Legal documents primarily need the recipient and the legal purpose.
+   * The service function is optional but useful as explanatory detail when generating richer texts.
+   */
+  recipients: ActivityRecipientLinkConfig[];
+};
+
+export type ActivityRecipientLinkConfig = {
+  /**
+   * Name of the recipient, matching one entry from `dataProcessing.recipients`.
+   */
+  recipientName: string;
+
+  /**
+   * Technical/provider function performed by that recipient in this concrete activity.
+   * This is not the legal purpose of processing, but the provider's role in the stack.
+   * Examples:
+   * - Cloudflare may perform `dns`, `content_delivery`, or `analytics`
+   * - Google (Gmail) may perform `email_delivery`
+   */
+  serviceFunctions: Array<
+    | 'hosting'
+    | 'content_delivery'
+    | 'dns'
+    | 'email_delivery'
+    | 'transactional_email'
+    | 'storage'
+    | 'database_hosting'
+    | 'error_monitoring'
+    | 'analytics'
+    | 'marketing'
+    | 'payment_processing'
+    | 'booking'
+    | 'chat'
+    | 'spam_protection'
+    | 'authentication'
+    | 'newsletter_delivery'
+  >;
 };
 
 export type UrlsConfig = {
@@ -1595,29 +1679,6 @@ export type RecipientConfig = {
   recipientType: 'processor' | 'independent_controller' | 'joint_controller';
 
   /**
-   * Why data is transferred to this recipient.
-   * Choose the purposes that best describe the service you use.
-   */
-  purposes: Array<
-    | 'hosting'
-    | 'content_delivery'
-    | 'dns'
-    | 'email_delivery'
-    | 'transactional_email'
-    | 'storage'
-    | 'database_hosting'
-    | 'error_monitoring'
-    | 'analytics'
-    | 'marketing'
-    | 'payment_processing'
-    | 'booking'
-    | 'chat'
-    | 'spam_protection'
-    | 'authentication'
-    | 'newsletter_delivery'
-  >;
-
-  /**
    * Where the recipient is located or primarily operates.
    * Examples:
    * - "EU"
@@ -1637,7 +1698,6 @@ export type RecipientConfig = {
    * - `SCC` for Standard Contractual Clauses
    * - `BCR` for Binding Corporate Rules
    * - `consent` only in the narrow case where explicit consent is the relied-on transfer mechanism
-   *
    *
    * Do not guess here. Check the provider's legal/privacy/data-processing documentation.
    */
