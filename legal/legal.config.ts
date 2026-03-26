@@ -99,6 +99,7 @@ export const legalConfig: LegalConfig = {
       ],
       transactionalProvider: null,
     },
+    phoneProviders: ['Telefónica Germany GmbH & Co. OHG'],
     dataStores: {
       fileStorageProvider: null,
       databaseProvider: null,
@@ -211,6 +212,20 @@ export const legalConfig: LegalConfig = {
           },
         ],
       },
+      {
+        name: 'Communication via Telephone',
+        personalDataCategories: ['contact_data'],
+        processingPurposes: ['communication', 'service_provision'],
+        legalBases: ['art_6_1_b', 'art_6_1_f'],
+        retention:
+          'Telephone contact data and any resulting notes are kept only as long as necessary to handle the inquiry unless longer retention is required; call transport and connection metadata may be processed by the telephony provider under its own telecom-related rules',
+        recipients: [
+          {
+            recipientName: 'Telefónica Germany GmbH & Co. OHG',
+            serviceFunctions: ['telephony'],
+          },
+        ],
+      },
     ],
     recipients: [
       {
@@ -232,6 +247,13 @@ export const legalConfig: LegalConfig = {
         recipientType: 'independent_controller',
         region: 'USA',
         transferSafeguard: ['DPF', 'SCC'],
+        hasDpa: false,
+      },
+      {
+        name: 'Telefónica Germany GmbH & Co. OHG',
+        recipientType: 'independent_controller',
+        region: 'Deutschland / EU',
+        transferSafeguard: [],
         hasDpa: false,
       },
     ],
@@ -922,6 +944,21 @@ export type LiveChatConfig = {
 export type InfrastructureConfig = {
   hosting: HostingConfig;
   email: InfrastructureEmailConfig;
+
+  /**
+   * Provider(s) involved in ordinary business phone communication for published phone numbers.
+   * Think from the visitor's perspective:
+   * - when someone calls the published number, which telecom provider carries that call?
+   *
+   * This field is about normal human phone communication, not call-center software or VoIP SaaS tooling.
+   *
+   * Examples:
+   * - "Telefónica Germany GmbH & Co. OHG"
+   * - "Telekom"
+   * - "Vodafone"
+   * - "o2"
+   */
+  phoneProviders: string[];
   dataStores: InfrastructureDataStoresConfig;
   observability: InfrastructureObservabilityConfig;
 };
@@ -1270,6 +1307,7 @@ export type ActivityRecipientLinkConfig = {
     | 'dns'
     | 'email_delivery'
     | 'transactional_email'
+    | 'telephony'
     | 'storage'
     | 'database_hosting'
     | 'error_monitoring'
