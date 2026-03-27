@@ -209,5 +209,6 @@
     "Redash",
     "vuejs",
     "Zeplin"
-  ]
+  ],
+  "chat.promptFiles": true
 }
