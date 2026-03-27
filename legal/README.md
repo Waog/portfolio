@@ -17,18 +17,18 @@
 
 This folder provides a structured way to generate and maintain legally consistent website documents based on a single source of truth.
 
-- `legal.config.ts` (aka legal master form) defines the full legal setup of the project
+- [`legal.config.ts`](./legal.config.ts) (aka legal master form) defines the full legal setup of the project
 - copilot snippets help enforce legal consistency during implementation and review
 - prompt templates are used to generate, update, and validate legal documents
 - final legal texts are not to be edited manually, but derived from the config via prompts
 
-Core idea:  
+Core idea:
 Change the config → regenerate/update documents → verify changes
 
 ## GitHub Copilot setup
 
-- Copy text from `legal/copilot-snippets/copilot-instructions.md` to `.github/copilot-instructions.md`
-- Copy file `legal/copilot-snippets/legal.instructions.md` to `.github/instructions/legal.instructions.md`
+- Copy text from [`legal/copilot-snippets/copilot-instructions.md`](./copilot-snippets/copilot-instructions.md) to `.github/copilot-instructions.md`
+- Copy file [`legal/copilot-snippets/legal.instructions.md`](./copilot-snippets/legal.instructions.md) to `.github/instructions/legal.instructions.md`
   - replace `[YOUR LEGAL OUTPUT FOLDER]` with your actual output folder
 
 Then keep them aligned with the project's legal workflow when the repository structure or legal generation flow changes.
@@ -37,7 +37,7 @@ Then keep them aligned with the project's legal workflow when the repository str
 
 ### Manually update the Legal Master Form
 
-Edit `legal.config.ts` manually or ask AI in any way to assist you.
+Edit [`legal.config.ts`](./legal.config.ts) manually or ask AI in any way to assist you.
 
 Single source of truth for the legal setup.
 
@@ -58,12 +58,12 @@ If you don't want [manually update the Legal Master Form](#manually-update-the-l
 
 Use when no legal HTML documents exist yet.
 
-Use an AI to generate legal documents from your `legal.config.ts`.
+Use an AI to generate legal documents from your [`legal.config.ts`](./legal.config.ts).
 Ideally use an AI with access to the internet and reasoning capabilities. E.g. ChatGPT in _Deep Research_ Mode bears great results.
 
 #### Usage
 
-1. Paste the contents of `prompts/gpt-prompt-first-run.md` along with `legal.config.ts` (insert into prompts placeholder) into an AI prompt.
+1. Paste the contents of [`prompts/gpt-prompt-first-run.md`](./prompts/gpt-prompt-first-run.md) along with [`legal.config.ts`](./legal.config.ts) (insert into prompts placeholder) into an AI prompt.
 2. Run with an LLM (with web research activated)
 3. Review the feedback and save generated HTML files into your output folder
 
@@ -71,14 +71,14 @@ Ideally use an AI with access to the internet and reasoning capabilities. E.g. C
 
 Use when legal HTML documents already exist and need to be updated.
 
-Use an AI to update your existing legal documents based on changes in `legal.config.ts`.
+Use an AI to update your existing legal documents based on changes in [`legal.config.ts`](./legal.config.ts).
 Ideally use an AI with access to the internet and reasoning capabilities. E.g. ChatGPT in _Deep Research_ Mode bears great results.
 
 #### Usage
 
-1. Paste the contents of `prompts/gpt-prompt-document-updates.md`
+1. Paste the contents of [`prompts/gpt-prompt-document-updates.md`](./prompts/gpt-prompt-document-updates.md)
 2. Insert:
-   - `legal.config.ts` into the config placeholder
+   - [`legal.config.ts`](./legal.config.ts) into the config placeholder
    - all existing legal HTML files into the document placeholder
 3. Run with an LLM (with web research activated)
 4. Review the feedback and save generated HTML files into your output folder
@@ -89,11 +89,13 @@ Use after modifying or regenerating legal documents.
 
 #### Usage
 
-1. Paste the contents of `prompts/check-regressions.md`
+1. Paste the contents of [`prompts/check-regressions.md`](./prompts/check-regressions.md)
 2. Insert:
+
    - old version of the document
    - new version of the document
-   - current `legal.config.ts`
+   - current [`legal.config.ts`](./legal.config.ts)
+
 3. Run with an LLM
 4. Review:
    - improvements
@@ -110,7 +112,7 @@ Collect data with different tools and manual copy pasting, and let an AI evaluat
 #### Usage
 
 1. Host the website on a public URL
-2. Paste `prompts/blackbox-url-check.md` into an AI prompt
+2. Paste [`prompts/blackbox-url-check.md`](./prompts/blackbox-url-check.md) into an AI prompt
 3. Replace Placeholders:
    - `[ENTER Website URL]` - the domain of the website to audit
    - `[ENTER Website ENTRY POINT URLs]` - all urls the AI is supposed to start crawling from to understand your website better
@@ -136,9 +138,9 @@ After feedback or improvement advice is received from any of the other prompt, a
 
 #### Usage
 
-1. Paste the contents of `prompts/apply-feedback-to-master-form.md` along with `legal.config.ts` and (insert into prompts placeholder) into an AI prompt.
+1. Paste the contents of [`prompts/apply-feedback-to-master-form.md`](./prompts/apply-feedback-to-master-form.md) along with [`legal.config.ts`](./legal.config.ts) and (insert into prompts placeholder) into an AI prompt.
 2. Insert:
-   - `legal.config.ts` into the config placeholder
+   - [`legal.config.ts`](./legal.config.ts) into the config placeholder
    - _Free text feedback or instructions_ into the feedback placeholder
 3. Run with an LLM (with web research activated)
-4. Review the report and copy-paste the resulting `legal.config.ts` back into your project
+4. Review the report and copy-paste the resulting [`legal.config.ts`](./legal.config.ts) back into your project
