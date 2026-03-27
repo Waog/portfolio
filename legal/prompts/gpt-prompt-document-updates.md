@@ -14,9 +14,7 @@ Do not produce long essays.
 Do not dump your intermediate reasoning.
 Do not output process notes unless they belong in the update report.
 
-======================================================================
-PRIMARY TASK
-======================================================================
+### PRIMARY TASK
 
 This is NOT a fresh drafting task from zero.
 
@@ -38,9 +36,7 @@ Then produce:
 - a compact report describing the necessary document-level actions and risks
 - a full updated set of final HTML files for all documents that should exist after the update
 
-======================================================================
-INPUT RULE
-======================================================================
+### INPUT RULE
 
 You will receive:
 
@@ -75,9 +71,7 @@ The legal master form is an internal drafting/configuration artifact only.
 - Do not mention the legal master form, configuration details, field names, internal classifications, or internal uncertainty handling inside the final legal documents.
 - Use the legal master form only as internal input for research and drafting.
 
-======================================================================
-UPDATE PHILOSOPHY: DIFF-FRIENDLY AND MINIMALLY INVASIVE
-======================================================================
+### UPDATE PHILOSOPHY: DIFF-FRIENDLY AND MINIMALLY INVASIVE
 
 This task must be performed in a diff-friendly way.
 
@@ -119,9 +113,7 @@ If a document exists but is no longer required, do not include it among the fina
 
 If an existing document contains content not justified by the legal master form or research, remove or narrow only the affected parts, not unrelated text.
 
-======================================================================
-RESEARCH RULES
-======================================================================
+### RESEARCH RULES
 
 Before updating, research carefully.
 
@@ -161,9 +153,7 @@ When reusing text:
 - when updating existing documents, prefer preserving valid existing wording over replacing it with newly invented wording
 - if in doubt, favor correctness over verbatim reuse
 
-======================================================================
-CHANGE DECISION RULES
-======================================================================
+### CHANGE DECISION RULES
 
 For every document and every major clause, check these possible triggers for change:
 
@@ -191,9 +181,7 @@ For every document and every major clause, check these possible triggers for cha
 
 Only make a change if at least one real trigger exists.
 
-======================================================================
-LANGUAGE RULES
-======================================================================
+### LANGUAGE RULES
 
 For every required legal document, generate:
 
@@ -213,9 +201,7 @@ When updating existing English texts:
 - preserve the existing English structure as much as possible
 - only adjust where required by German-source changes, factual corrections, or clear language errors
 
-======================================================================
-OUTPUT RULE: ONLY TWO OUTPUT PARTS
-======================================================================
+### OUTPUT RULE: ONLY TWO OUTPUT PARTS
 
 Your output must contain exactly these two top-level parts and nothing else:
 
@@ -225,9 +211,7 @@ PART 2 — UPDATED FINAL DOCUMENT FILES
 
 Do not output any additional executive summary, research diary, decision essay, or long explanation outside these two parts.
 
-======================================================================
-PART 1 — UPDATE REPORT
-======================================================================
+### PART 1 — UPDATE REPORT
 
 This is the only non-file output.
 
@@ -280,9 +264,7 @@ E. Diff-minimization notes
 - list only the places where broader restructuring was unavoidable
 - if you had to substantially rewrite a section, explain briefly why targeted editing was not sufficient
 
-======================================================================
-PART 2 — UPDATED FINAL DOCUMENT FILES
-======================================================================
+### PART 2 — UPDATED FINAL DOCUMENT FILES
 
 For every legal document that should exist after the update, output one full updated German HTML file and one full updated English HTML file.
 
@@ -296,19 +278,17 @@ Important:
 If an existing filename is still suitable, keep it unchanged.
 If you introduce a new filename, choose a clear, conventional, stable filename.
 
-======================================================================
-HTML RULES
-======================================================================
+### HTML RULES
 
 The HTML must be ready for copy-paste into a project.
 
 Output only the content block.
 Do NOT output:
 
-- <!doctype>
-- <html>
-- <head>
-- <body>
+- `<!doctype>`
+- `<html>`
+- `<head>`
+- `<body>`
 - scripts
 - styles
 - CSS classes unless truly necessary
@@ -317,13 +297,13 @@ Do NOT output:
 
 Use only simple semantic HTML such as:
 
-- <section>
-- <h1>, <h2>, <h3>
-- <p>
-- <ul>, <ol>, <li>
-- <address>
-- <a>
-- <strong>, <em>
+- `<section>`
+- `<h1>`, `<h2>`, `<h3>`
+- `<p>`
+- `<ul>`, `<ol>`, `<li>`
+- `<address>`
+- `<a>`
+- `<strong>`, `<em>`
 
 Each file must be complete in itself.
 
@@ -340,9 +320,7 @@ Therefore:
 - do not output invalid nesting or broken markup
 - the generated HTML must be parseable without manual cleanup
 
-======================================================================
-DOCUMENT DECISION RULES
-======================================================================
+### DOCUMENT DECISION RULES
 
 Generate only documents that are actually required by the legal master form plus the research.
 
@@ -354,9 +332,7 @@ Be conservative but fact-based:
 - if clearly not required → skip or remove
 - if unclear → flag it in the update report and choose the legally safer document/output route where reasonably justified
 
-======================================================================
-DRAFTING RULES
-======================================================================
+### DRAFTING RULES
 
 - use established legal structures and wording patterns
 - adapt them carefully to the legal master form facts
@@ -374,9 +350,7 @@ If a fact is too uncertain:
 - instead, make a conservative, legally safer, fact-pattern-consistent assumption where necessary to produce a clear statement
 - such assumptions must stay close to the legal master form, the research, and the overall setup, and must not introduce new unsupported features/providers
 
-======================================================================
-SEPARATION RULE: REPORT VS. FINAL DOCUMENTS
-======================================================================
+### SEPARATION RULE: REPORT VS. FINAL DOCUMENTS
 
 Keep uncertainty, contradictions, missing facts, verification notes, internal drafting caveats, document add/remove reasoning, and diff reasoning strictly inside the update report.
 
@@ -388,9 +362,7 @@ The final legal documents must:
 - not mention that they were updated from earlier versions
 - not contain placeholders like "if applicable", "where relevant", "to the extent", unless legally required by the document type itself
 
-======================================================================
-PROVIDER AND FACT CHECK RULES
-======================================================================
+### PROVIDER AND FACT CHECK RULES
 
 For every relevant provider in the legal master form, verify where needed:
 
@@ -406,9 +378,7 @@ If anything is unclear (DPA, SCC, DPF, role, cookies, etc.), flag it in the upda
 
 Also compare provider-related wording in the existing documents against current provider documentation and adjust only where needed.
 
-======================================================================
-STRICT OUTPUT FORMAT
-======================================================================
+### STRICT OUTPUT FORMAT
 
 Output in this exact structure:
 
