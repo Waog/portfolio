@@ -1,15 +1,27 @@
+@use 'breakpoints' as breakpoints;
+@use 'spacing' as spacing;
+
+@include spacing.spacing-variables;
+
 mat-card {
   max-width: 800px;
-  margin: 20px auto;
+  margin: spacing.lg() auto;
+  max-height: calc(100vh - 200px);
+  @include breakpoints.mobile-only {
+    max-height: calc(100vh - 300px);
+  }
 }
 
-h3 {
-  margin-top: 20px;
-  margin-bottom: 10px;
-  color: #1976d2;
+mat-card-content {
+  display: flex;
+  overflow: hidden;
 }
 
-p {
-  margin-bottom: 10px;
-  line-height: 1.5;
+.scroll-container {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.language-divider {
+  margin: spacing.lg() 0;
 }

@@ -47,7 +47,7 @@ test.describe('Legal Documents E2E Tests', () => {
         const footerLink = footer.getLink(doc.footerLinkText);
         await expect(footerLink).toBeVisible();
         await footerLink.click();
-        await expect(legalPage.title).toHaveText(doc.englishTitle);
+        await expect(legalPage.enTitle).toHaveText(doc.englishTitle);
       });
     }
   });
@@ -67,34 +67,43 @@ test.describe('Legal Documents E2E Tests', () => {
           legalPage,
         }) => {
           await legalPage.goto(doc.subPath);
-          await expect(legalPage.title).toHaveText(doc.englishTitle);
+          await expect(legalPage.enTitle).toHaveText(doc.englishTitle);
           for (const content of doc.englishContent) {
             await expect(legalPage.content).toContainText(content);
           }
         });
 
-        test('should switch to German content when German language is selected', async ({
+        test('should display German content below English content', async ({
           legalPage,
         }) => {
           await legalPage.goto(doc.subPath);
-          await legalPage.langToggleGer.click();
-          await expect(legalPage.title).toHaveText(doc.germanTitle);
+          await expect(legalPage.deTitle).toHaveText(doc.germanTitle);
           for (const content of doc.germanContent) {
             await expect(legalPage.content).toContainText(content);
           }
         });
 
-        test('should switch back to English content when English language is selected', async ({
+        test('should scroll to German section when German language is selected', async ({
           legalPage,
+          page,
         }) => {
           await legalPage.goto(doc.subPath);
           await legalPage.langToggleGer.click();
-          await expect(legalPage.title).toHaveText(doc.germanTitle);
+          await expect(page).toHaveURL(new RegExp(`#de$`));
+          await expect(legalPage.deTitle).toHaveText(doc.germanTitle);
+          await expect(legalPage.deTitle).toBeInViewport();
+        });
+
+        test('should scroll to English section when English language is selected', async ({
+          legalPage,
+          page,
+        }) => {
+          await legalPage.goto(doc.subPath);
+          await legalPage.langToggleGer.click();
           await legalPage.langToggleEng.click();
-          await expect(legalPage.title).toHaveText(doc.englishTitle);
-          for (const content of doc.englishContent) {
-            await expect(legalPage.content).toContainText(content);
-          }
+          await expect(page).toHaveURL(new RegExp(`#en$`));
+          await expect(legalPage.enTitle).toHaveText(doc.englishTitle);
+          await expect(legalPage.enTitle).toBeInViewport();
         });
 
         test('should have substantial content in both languages', async ({
@@ -102,9 +111,35 @@ test.describe('Legal Documents E2E Tests', () => {
         }) => {
           const min500CharactersRegex = /.{500,}/;
           await legalPage.goto(doc.subPath);
-          await expect(legalPage.content).toHaveText(min500CharactersRegex);
+          await expect(legalPage.enContent).toHaveText(min500CharactersRegex);
+          await expect(legalPage.deContent).toHaveText(min500CharactersRegex);
+        });
+
+        test('should navigate to language-specific URL when language toggle is clicked', async ({
+          legalPage,
+          page,
+        }) => {
+          await legalPage.goto(doc.subPath);
           await legalPage.langToggleGer.click();
-          await expect(legalPage.content).toHaveText(min500CharactersRegex);
+          await expect(page).toHaveURL(new RegExp(`#de$`));
+          await legalPage.langToggleEng.click();
+          await expect(page).toHaveURL(new RegExp(`#en$`));
+        });
+
+        test('should display correct content when navigating directly to language URL', async ({
+          legalPage,
+        }) => {
+          await legalPage.gotoWithLang(doc.subPath, 'de');
+          await expect(legalPage.deTitle).toHaveText(doc.germanTitle);
+          for (const content of doc.germanContent) {
+            await expect(legalPage.content).toContainText(content);
+          }
+
+          await legalPage.gotoWithLang(doc.subPath, 'en');
+          await expect(legalPage.enTitle).toHaveText(doc.englishTitle);
+          for (const content of doc.englishContent) {
+            await expect(legalPage.content).toContainText(content);
+          }
         });
       });
     }
@@ -127,12 +162,52 @@ test.describe('Legal Documents E2E Tests', () => {
       for (const doc of legalDocuments) {
         const footerLink = footer.getLink(doc.footerLinkText);
         await footerLink.click();
-        await expect(legalPage.title).toHaveText(doc.englishTitle);
-        await legalPage.langToggleGer.click();
-        await expect(legalPage.title).toHaveText(doc.germanTitle);
-        await legalPage.langToggleEng.click();
-        await expect(legalPage.title).toHaveText(doc.englishTitle);
+        await expect(legalPage.enTitle).toHaveText(doc.englishTitle);
+        await expect(legalPage.deTitle).toHaveText(doc.germanTitle);
       }
     });
+  });
+
+  test.describe('Viewport Checks', () => {
+    for (const doc of legalDocuments) {
+      test.describe(`${doc.name} Document`, () => {
+        test('clicking German toggle scrolls German section into viewport', async ({
+          legalPage,
+        }) => {
+          await legalPage.goto(doc.subPath);
+          await expect(legalPage.deTitle).not.toBeInViewport();
+          await legalPage.langToggleGer.click();
+          await expect(legalPage.deTitle).toBeInViewport();
+        });
+
+        test('clicking English toggle scrolls English section into viewport', async ({
+          legalPage,
+        }) => {
+          await legalPage.goto(doc.subPath);
+          await legalPage.langToggleGer.click();
+          await expect(legalPage.enTitle).not.toBeInViewport();
+          await legalPage.langToggleEng.click();
+          await expect(legalPage.enTitle).toBeInViewport();
+        });
+
+        test.describe('initial fragment loads', () => {
+          test.use({ initialUrl: null });
+
+          test('loading page with #en fragment shows English section in viewport', async ({
+            legalPage,
+          }) => {
+            await legalPage.gotoWithLang(doc.subPath, 'en');
+            await expect(legalPage.enTitle).toBeInViewport();
+          });
+
+          test('loading page with #de fragment scrolls German section into viewport', async ({
+            legalPage,
+          }) => {
+            await legalPage.gotoWithLang(doc.subPath, 'de');
+            await expect(legalPage.deTitle).toBeInViewport();
+          });
+        });
+      });
+    }
   });
 });
