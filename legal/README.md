@@ -6,12 +6,12 @@
 - [GitHub Copilot setup](#github-copilot-setup)
 - [Usage](#usage)
   - [Manually update the Legal Master Form](#manually-update-the-legal-master-form)
+  - [Automatically update the Legal Master Form](#automatically-update-the-legal-master-form)
   - [First time document generation](#first-time-document-generation)
   - [Updating existing legal documents](#updating-existing-legal-documents)
   - [Regression check](#regression-check)
   - [Black Box external check](#black-box-external-check)
-
----
+  - [Incorporate Feedback into legal master form](#incorporate-feedback-into-legal-master-form)
 
 ## Overview
 
@@ -25,8 +25,6 @@ This folder provides a structured way to generate and maintain legally consisten
 Core idea:  
 Change the config → regenerate/update documents → verify changes
 
----
-
 ## GitHub Copilot setup
 
 - Copy text from `legal/copilot-snippets/copilot-instructions.md` to `.github/copilot-instructions.md`
@@ -34,8 +32,6 @@ Change the config → regenerate/update documents → verify changes
   - replace `[YOUR LEGAL OUTPUT FOLDER]` with your actual output folder
 
 Then keep them aligned with the project's legal workflow when the repository structure or legal generation flow changes.
-
----
 
 ## Usage
 
@@ -54,7 +50,9 @@ Update this file whenever anything legally relevant changes:
 - forms, accounts, uploads, payments, booking, chat
 - data-processing activities, recipients, retention, legal bases
 
----
+### Automatically update the Legal Master Form
+
+If you don't want [manually update the Legal Master Form](#manually-update-the-legal-master-form), you can use the steps from [Incorporate Feedback into legal master form](#incorporate-feedback-into-legal-master-form). Just include your free text improvement into the "Feedback" placeholder.
 
 ### First time document generation
 
@@ -68,8 +66,6 @@ Ideally use an AI with access to the internet and reasoning capabilities. E.g. C
 1. Paste the contents of `prompts/gpt-prompt-first-run.md` along with `legal.config.ts` (insert into prompts placeholder) into an AI prompt.
 2. Run with an LLM (with web research activated)
 3. Review the feedback and save generated HTML files into your output folder
-
----
 
 ### Updating existing legal documents
 
@@ -86,8 +82,6 @@ Ideally use an AI with access to the internet and reasoning capabilities. E.g. C
    - all existing legal HTML files into the document placeholder
 3. Run with an LLM (with web research activated)
 4. Review the feedback and save generated HTML files into your output folder
-
----
 
 ### Regression check
 
@@ -107,8 +101,6 @@ Use after modifying or regenerating legal documents.
    - general issues
 
 Goal: detect accidental weakening, omissions, inconsistencies
-
----
 
 ### Black Box external check
 
@@ -137,3 +129,16 @@ Collect data with different tools and manual copy pasting, and let an AI evaluat
 #### Create Reusable template
 
 Note that some of the placeholders (like your domain) seldom change. Consider copying and modifying the template or modifying it directly to hardcode this data.
+
+### Incorporate Feedback into legal master form
+
+After feedback or improvement advice is received from any of the other prompt, automatically adjust the legal master form.
+
+#### Usage
+
+1. Paste the contents of `prompts/apply-feedback-to-master-form.md` along with `legal.config.ts` and (insert into prompts placeholder) into an AI prompt.
+2. Insert:
+   - `legal.config.ts` into the config placeholder
+   - _Free text feedback or instructions_ into the feedback placeholder
+3. Run with an LLM (with web research activated)
+4. Review the report and copy-paste the resulting `legal.config.ts` back into your project
