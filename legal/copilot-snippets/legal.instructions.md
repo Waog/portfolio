@@ -42,7 +42,7 @@ When reviewing a pull request:
 
 - perform a semantic check, not a file-touch check
 - determine whether the code/config change should have changed `legal/legal.config.ts`
-- determine whether a change in `legal/legal.config.ts` should have changed any legal output file
+- determine whether a change in `legal/legal.config.ts` should have changed any legal output file.
 - it is valid that no follow-up change is needed, but this must be explicitly justified
 
 ## Expected review output
