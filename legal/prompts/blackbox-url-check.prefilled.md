@@ -16,8 +16,10 @@ oliverstadie.com
 
 ## LEGAL TEXTS on audited website
 
-https://oliverstadie.com/legal/imprint
-https://oliverstadie.com/legal/privacy-policy
+https://oliverstadie.com/legal/imprint/de
+https://oliverstadie.com/legal/imprint/en
+https://oliverstadie.com/legal/privacy-policy/de
+https://oliverstadie.com/legal/privacy-policy/en
 
 ## NETWORK DATA from Chrome Dev Tools Network tab
 

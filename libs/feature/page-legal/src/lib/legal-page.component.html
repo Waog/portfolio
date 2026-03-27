@@ -2,13 +2,16 @@
 <mat-card>
   <mat-card-header>
     <div class="header-container">
-      <legal-language-switch></legal-language-switch>
+      <legal-language-switch
+        [currentLanguage]="(language$ | async) ?? Language.En"
+        (languageChange)="onLanguageChange($event)"
+      ></legal-language-switch>
     </div>
   </mat-card-header>
   <mat-card-content>
     <legal-text
       [doc]="(routeDataDoc$ | async) ?? 'imprint'"
-      [lang]="(languageString$ | async) ?? 'en'"
+      [lang]="(language$ | async) ?? Language.En"
     ></legal-text>
   </mat-card-content>
 </mat-card>

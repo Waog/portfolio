@@ -28,6 +28,7 @@ type ExpectedContent = {
 type ExpectedPageContent = {
   description: string;
   title: string;
+  navItemTargetUrl: string;
   path: string;
 };
 
@@ -54,19 +55,22 @@ export const EXPECTED_CONTENT: ExpectedContent = {
       description:
         'Explore the portfolio of Oliver Stadie, a full-stack web and app developer.',
       title: 'Oliver Stadie – Full-Stack Web & App Developer',
+      navItemTargetUrl: '/',
       path: '/',
     },
-    imprint: {
+    imprintEn: {
       description:
         'Imprint and legal publisher details for the Oliver Stadie portfolio website.',
       title: 'Imprint | Oliver Stadie',
-      path: '/legal/imprint',
+      navItemTargetUrl: '/legal/imprint',
+      path: '/legal/imprint/en',
     },
-    privacyPolicy: {
+    privacyPolicyEn: {
       description:
         'Privacy policy for the Oliver Stadie portfolio website and related services.',
       title: 'Privacy | Oliver Stadie',
-      path: '/legal/privacy-policy',
+      navItemTargetUrl: '/legal/privacy-policy',
+      path: '/legal/privacy-policy/en',
     },
   },
 } as const;
@@ -101,7 +105,9 @@ test.describe('Page Metadata', () => {
       await webMetadataPage.goto(homepage.path);
       await expect(page).toHaveURL(new RegExp(`${homepage.path}$`));
 
-      await webMetadataPage.linkElementToUrl(currentPage.path).click();
+      await webMetadataPage
+        .linkElementToUrl(currentPage.navItemTargetUrl)
+        .click();
       await expect(page).toHaveURL(new RegExp(`${currentPage.path}$`));
 
       await expectCompleteHtmlHeadElement({
