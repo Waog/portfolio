@@ -106,8 +106,8 @@ Goal: detect accidental weakening, omissions, inconsistencies
 
 ### Black Box external check
 
-Check the hosted website as a black box, like a warning lawyer's automation bots would do it.
-Collect data with different tools and manual copy pasting, and let an AI evaluate the collected data.
+Check the hosted website as a black box, similar to how warning-letter lawyer bots (Abmahnung lawyer bots) would assess it.
+Collect data with different tools and manual copy-pasting, and let an AI evaluate the collected data.
 
 #### Usage
 
@@ -115,7 +115,7 @@ Collect data with different tools and manual copy pasting, and let an AI evaluat
 2. Paste [`prompts/blackbox-url-check.md`](./prompts/blackbox-url-check.md) into an AI prompt
 3. Replace Placeholders:
    - `[ENTER Website URL]` - the domain of the website to audit
-   - `[ENTER Website ENTRY POINT URLs]` - all urls the AI is supposed to start crawling from to understand your website better
+   - `[ENTER Website ENTRY POINT URLs]` - all URLs the AI is supposed to start crawling from to understand your website better
    - `[PASTE LEGAL TEXTS OR LINKS]` - Links to your legal texts or the complete text content
    - `[PASTE NETWORK TAB]`
      - Use chrome dev tools > Network

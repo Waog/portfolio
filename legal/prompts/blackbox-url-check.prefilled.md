@@ -23,7 +23,7 @@ https://oliverstadie.com/legal/privacy-policy
 
 [PASTE NETWORK TAB]
 
-## Webkoll Report
+## Webbkoll Report
 
 [PASTE WEBBKOLL REPORT]
 

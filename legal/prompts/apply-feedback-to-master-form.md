@@ -8,7 +8,7 @@ This feedback might either be about the legal master form file itself, about the
 
 Your task is to incorporate the given feedback into my legal master form file,
 to resolve the problems.
-The legal master form and future documents generated from it, shall not have the feedback problems anymore.
+The legal master form and future documents generated from it should no longer have these feedback problems.
 
 Do all necessary research online to achieve this task, including looking up laws and how certain technologies work or affect the legal situation.
 
@@ -27,9 +27,9 @@ Restrict your changes to legally or technically necessary changes, to avoid a bl
 
 [PASTE the legal master form here]
 
-# You Output Response
+# Your Output Response
 
 - the complete improved legal master form file, for 1:1 replacement, no omissions
 - a brief list of which information was missing for your task and which assumptions you made to compensate for it
 - very brief list of what changed
-- list of feedback points which couldn't be incorporated and explanation why.
+- list of feedback points that couldn't be incorporated and explanation why.

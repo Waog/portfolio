@@ -22,7 +22,7 @@ Your goal is to identify concrete, legally actionable risks under applicable Ger
 
 [PASTE NETWORK TAB]
 
-## Webkoll Report
+## Webbkoll Report
 
 [PASTE WEBBKOLL REPORT]
 
