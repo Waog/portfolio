@@ -6,6 +6,11 @@ import { LegalPageComponent } from './legal-page.component';
 export const legalRoutes: Route[] = [
   {
     path: 'imprint',
+    redirectTo: 'imprint/en',
+    pathMatch: 'full',
+  },
+  {
+    path: 'imprint/:lang',
     component: LegalPageComponent,
     title: WEB_METADATA.pages.legal.imprint.title,
     data: {
@@ -17,6 +22,11 @@ export const legalRoutes: Route[] = [
   },
   {
     path: 'privacy-policy',
+    redirectTo: 'privacy-policy/en',
+    pathMatch: 'full',
+  },
+  {
+    path: 'privacy-policy/:lang',
     component: LegalPageComponent,
     title: WEB_METADATA.pages.legal.privacyPolicy.title,
     data: {

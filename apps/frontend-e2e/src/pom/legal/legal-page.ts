@@ -20,4 +20,15 @@ export class LegalPage {
   async goto(pageName: 'imprint' | 'privacy-policy') {
     await this.page.goto(`/legal/${pageName}`);
   }
+
+  async gotoWithLang(
+    pageName: 'imprint' | 'privacy-policy',
+    lang: 'en' | 'de'
+  ) {
+    await this.page.goto(`/legal/${pageName}/${lang}`);
+  }
+
+  url(): string {
+    return this.page.url();
+  }
 }

@@ -106,6 +106,33 @@ test.describe('Legal Documents E2E Tests', () => {
           await legalPage.langToggleGer.click();
           await expect(legalPage.content).toHaveText(min500CharactersRegex);
         });
+
+        test('should navigate to language-specific URL when language toggle is clicked', async ({
+          legalPage,
+          page,
+        }) => {
+          await legalPage.goto(doc.subPath);
+          await legalPage.langToggleGer.click();
+          await expect(page).toHaveURL(new RegExp(`/legal/${doc.subPath}/de$`));
+          await legalPage.langToggleEng.click();
+          await expect(page).toHaveURL(new RegExp(`/legal/${doc.subPath}/en$`));
+        });
+
+        test('should display correct content when navigating directly to language URL', async ({
+          legalPage,
+        }) => {
+          await legalPage.gotoWithLang(doc.subPath, 'de');
+          await expect(legalPage.title).toHaveText(doc.germanTitle);
+          for (const content of doc.germanContent) {
+            await expect(legalPage.content).toContainText(content);
+          }
+
+          await legalPage.gotoWithLang(doc.subPath, 'en');
+          await expect(legalPage.title).toHaveText(doc.englishTitle);
+          for (const content of doc.englishContent) {
+            await expect(legalPage.content).toContainText(content);
+          }
+        });
       });
     }
   });
