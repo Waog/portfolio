@@ -6,7 +6,7 @@ import { Language } from './language.enum';
 @Injectable({
   providedIn: 'root',
 })
-export class LanguageService {
+export class LanguageSwitchService {
   private languageSubject = new BehaviorSubject<Language>(Language.En);
   language$ = this.languageSubject.asObservable();
 

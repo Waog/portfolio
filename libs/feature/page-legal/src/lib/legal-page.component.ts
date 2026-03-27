@@ -5,9 +5,9 @@ import { MatCardModule } from '@angular/material/card';
 import { ActivatedRoute, Router } from '@angular/router';
 import { combineLatest, distinctUntilChanged, map, Observable } from 'rxjs';
 
-import { Language } from './language-switch/language.enum';
-import { LanguageService } from './language-switch/language.service';
 import { LanguageSwitchComponent } from './language-switch/language-switch.component';
+import { LanguageSwitchService } from './language-switch/language-switch.service';
+import { Language } from './language-switch/language.enum';
 import { LegalTextComponent } from './legal-texts/legal-text.component';
 
 @Component({
@@ -30,11 +30,11 @@ export class LegalPageComponent {
   private readonly destroyRef = inject(DestroyRef);
 
   constructor(
-    readonly languageService: LanguageService,
+    readonly languageSwitchService: LanguageSwitchService,
     private readonly route: ActivatedRoute,
     private readonly router: Router
   ) {
-    this.languageString$ = this.languageService.language$.pipe(
+    this.languageString$ = this.languageSwitchService.language$.pipe(
       map(language => language.toString() as 'en' | 'de')
     );
     this.routeDataDoc$ = this.route.data.pipe(
@@ -51,7 +51,7 @@ export class LegalPageComponent {
       .subscribe(params => {
         const lang = params['lang'] as Language;
         if (lang && Object.values(Language).includes(lang)) {
-          this.languageService.setLanguage(lang);
+          this.languageSwitchService.setLanguage(lang);
         } else if (lang) {
           const doc = this.route.snapshot.data['legalTexts']?.doc;
           if (doc) {
@@ -63,7 +63,7 @@ export class LegalPageComponent {
 
   private syncServiceLangToUrl(): void {
     combineLatest([
-      this.languageService.language$.pipe(distinctUntilChanged()),
+      this.languageSwitchService.language$.pipe(distinctUntilChanged()),
       this.routeDataDoc$,
       this.route.params,
     ])

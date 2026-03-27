@@ -2,8 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
+import { LanguageSwitchService } from './language-switch.service';
 import { Language } from './language.enum';
-import { LanguageService } from './language.service';
 
 @Component({
   selector: 'legal-language-switch',
@@ -16,7 +16,7 @@ export class LanguageSwitchComponent {
   currentLanguage: Language;
   language = Language;
 
-  constructor(private languageService: LanguageService) {
+  constructor(private languageService: LanguageSwitchService) {
     this.currentLanguage = this.languageService.getCurrentLanguage();
   }
 
