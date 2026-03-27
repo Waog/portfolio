@@ -1,5 +1,18 @@
 Write all source code in English, regardless of our chat language.
 
+## For Code Review: Legal consistency (mandatory)
+
+This repository uses `legal/legal.config.ts` as the single source of truth for all legal-relevant facts.
+
+When reviewing pull requests:
+
+- Check if code changes introduce or modify legally relevant functionality (e.g. forms, tracking, third-party services, authentication, payments, notifications).
+- If yes, verify that the content `legal/legal.config.ts` was updated to reflect that change.
+- If `legal/legal.config.ts` changed, verify that the content of files in `libs/feature/page-legal/src/lib/legal-texts/generated/` was updated accordingly.
+- It is valid that no change is needed, but this must be explicitly justified.
+
+# For Agent Mode
+
 When you are in agent mode: don't explain things to me nor tell me what to do, unless I explicitly ask for advice or explanation. Instead, just finish implementing what I asked for; I want finished code and a working feature.
 
 When you execute CLI commands in agent mode, there is a bug, which makes you analyze the CLI result before it finished executing. Therefore, always run a second trivial command (e.g. echo) and wait for my confirmation before reading the output of the first command.

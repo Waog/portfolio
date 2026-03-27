@@ -1,39 +1,29 @@
 import { Route } from '@angular/router';
 import { WEB_METADATA } from '@portfolio/web-metadata';
 
-import { CookiePolicyComponent } from './cookie-policy/cookie-policy.component';
-import { ImprintComponent } from './imprint/imprint.component';
-import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
+import { LegalPageComponent } from './legal-page.component';
 
 export const legalRoutes: Route[] = [
   {
     path: 'imprint',
-    component: ImprintComponent,
+    component: LegalPageComponent,
     title: WEB_METADATA.pages.legal.imprint.title,
     data: {
       webMetadata: {
         description: WEB_METADATA.pages.legal.imprint.description,
       },
+      legalTexts: { doc: 'imprint' },
     },
   },
   {
     path: 'privacy-policy',
-    component: PrivacyPolicyComponent,
+    component: LegalPageComponent,
     title: WEB_METADATA.pages.legal.privacyPolicy.title,
     data: {
       webMetadata: {
         description: WEB_METADATA.pages.legal.privacyPolicy.description,
       },
-    },
-  },
-  {
-    path: 'cookie-policy',
-    component: CookiePolicyComponent,
-    title: WEB_METADATA.pages.legal.cookiePolicy.title,
-    data: {
-      webMetadata: {
-        description: WEB_METADATA.pages.legal.cookiePolicy.description,
-      },
+      legalTexts: { doc: 'privacy-policy' },
     },
   },
   {
