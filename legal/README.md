@@ -9,6 +9,7 @@
   - [First time document generation](#first-time-document-generation)
   - [Updating existing legal documents](#updating-existing-legal-documents)
   - [Regression check](#regression-check)
+  - [Black Box external check](#black-box-external-check)
 
 ---
 
@@ -106,3 +107,33 @@ Use after modifying or regenerating legal documents.
    - general issues
 
 Goal: detect accidental weakening, omissions, inconsistencies
+
+---
+
+### Black Box external check
+
+Check the hosted website as a black box, like a warning lawyer's automation bots would do it.
+Collect data with different tools and manual copy pasting, and let an AI evaluate the collected data.
+
+#### Usage
+
+1. Host the website on a public URL
+2. Paste `prompts/blackbox-url-check.md` into an AI prompt
+3. Replace Placeholders:
+   - `[ENTER Website URL]` - the domain of the website to audit
+   - `[ENTER Website ENTRY POINT URLs]` - all urls the AI is supposed to start crawling from to understand your website better
+   - `[PASTE LEGAL TEXTS OR LINKS]` - Links to your legal texts or the complete text content
+   - `[PASTE NETWORK TAB]`
+     - Use chrome dev tools > Network
+     - Enable _Preserve Log_
+     - Add Filter: `-domain:yourdomain.com` (and e.g. `-domain:*.yoursubdomain.com` or whichever requests are okay)
+     - surf your website to collect data
+     - Right click an entry > Copy > Copy all listed as HAR (sanitized)
+     - paste into `[PASTE NETWORK TAB]`
+   - `[PASTE WEBBKOLL REPORT]` - use [Webbkoll](https://webbkoll.5july.net/) for your domain. Copy-Paste the whole output.
+   - `[PASTE BUILTWITH REPORT]` - use [builtwith.com](https://builtwith.com/) for your domain. Copy-Paste the whole output.
+4. Review the report and take according actions (e.g. [Manually update the Legal Master Form](#manually-update-the-legal-master-form) again and [Update existing legal documents](#updating-existing-legal-documents) )
+
+#### Create Reusable template
+
+Note that some of the placeholders (like your domain) seldom change. Consider copying and modifying the template or modifying it directly to hardcode this data.
