@@ -2,13 +2,19 @@
 <mat-card>
   <mat-card-header>
     <div class="header-container">
-      <legal-language-switch></legal-language-switch>
+      <legal-language-switch
+        [currentLanguage]="(currentLanguage$ | async) ?? Language.En"
+        (languageChange)="onLanguageChange($event)"
+      ></legal-language-switch>
     </div>
   </mat-card-header>
   <mat-card-content>
-    <legal-text
-      [doc]="(routeDataDoc$ | async) ?? 'imprint'"
-      [lang]="(languageString$ | async) ?? 'en'"
-    ></legal-text>
+    <div #scrollContainer class="scroll-container">
+      @if (routeDataDoc$ | async; as doc) {
+      <legal-text id="en" [doc]="doc" [lang]="Language.En"></legal-text>
+      <mat-divider class="language-divider" />
+      <legal-text id="de" [doc]="doc" [lang]="Language.De"></legal-text>
+      }
+    </div>
   </mat-card-content>
 </mat-card>

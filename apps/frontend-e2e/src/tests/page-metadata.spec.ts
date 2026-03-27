@@ -3,6 +3,8 @@ import { type Page } from '@playwright/test';
 import { expect, test } from '../fixtures/app.fixture';
 import { type WebMetadataPage } from '../pom/web-metadata/web-metadata-page';
 
+const OPTIONAL_URL_FRAGMENT_REGEX = `(#.*)?`;
+
 type ExpectedContent = {
   defaults: {
     faviconIcoPath: string;
@@ -81,7 +83,9 @@ test.describe('Page Metadata', () => {
       webMetadataPage: WebMetadataPage;
     }) => {
       await webMetadataPage.goto(currentPage.path);
-      await expect(page).toHaveURL(new RegExp(`${currentPage.path}$`));
+      await expect(page).toHaveURL(
+        new RegExp(`${currentPage.path}${OPTIONAL_URL_FRAGMENT_REGEX}$`)
+      );
 
       await expectCompleteHtmlHeadElement({
         page,
@@ -102,7 +106,9 @@ test.describe('Page Metadata', () => {
       await expect(page).toHaveURL(new RegExp(`${homepage.path}$`));
 
       await webMetadataPage.linkElementToUrl(currentPage.path).click();
-      await expect(page).toHaveURL(new RegExp(`${currentPage.path}$`));
+      await expect(page).toHaveURL(
+        new RegExp(`${currentPage.path}${OPTIONAL_URL_FRAGMENT_REGEX}$`)
+      );
 
       await expectCompleteHtmlHeadElement({
         page,
