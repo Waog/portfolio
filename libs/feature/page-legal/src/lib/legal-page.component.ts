@@ -83,13 +83,13 @@ export class LegalPageComponent {
       target.getBoundingClientRect().top -
       container.getBoundingClientRect().top +
       container.scrollTop;
-    container.scrollTo({ top: scrollTop, behavior: 'auto' });
+    container.scrollTo({ top: scrollTop, behavior: 'smooth' });
   }
 
   private fragmentToLanguage(fragment: string | null): Language {
     if (fragment && Object.values(Language).includes(fragment as Language)) {
       return fragment as Language;
     }
-    return Language.En;
+    return Language.De;
   }
 }
