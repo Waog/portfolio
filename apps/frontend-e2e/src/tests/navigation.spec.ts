@@ -253,3 +253,20 @@ test.describe('Navigation: interactions', () => {
     await expect(page).not.toHaveURL(/#/);
   });
 });
+
+test.describe('Navigation: Progress Bar', () => {
+  test('shows loading progress bar with intermediate progress while searching', async ({
+    navigation,
+    urlHelper,
+  }) => {
+    await expect(navigation.progressBar).toBeHidden();
+
+    await urlHelper.gotoHomePage({
+      searchTags: ['Angular', 'TypeScript', 'Spring Boot'],
+      skipWaitingForSpinner: true,
+    });
+
+    await expect(navigation.getProgressBarBetween(1, 99)).toBeVisible();
+    await expect(navigation.progressBar).toBeHidden({ timeout: 20000 });
+  });
+});
