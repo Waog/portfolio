@@ -144,4 +144,12 @@
       </mat-menu>
     </div>
   </div>
+  @if ((loadingProgress$ | async); as progress) { @if (progress > 0 && progress
+  < 100) {
+  <mat-progress-bar
+    class="top-loading-progress-bar"
+    mode="determinate"
+    [value]="progress"
+  />
+  } }
 </mat-toolbar>
