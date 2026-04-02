@@ -21,7 +21,6 @@ describe('TagInputComponent', () => {
   let mockSearchTagService: Partial<SearchTagService> & {
     currentTags: string[];
   };
-  let mockSearchEngineService: Partial<SearchEngineService>;
 
   beforeEach(async () => {
     mockSearchTagService = {
@@ -33,19 +32,11 @@ describe('TagInputComponent', () => {
       tags$: of([]),
     };
 
-    mockSearchEngineService = {
-      searchResult$: of({
-        loading: false,
-        ngService: { loading: false, progressPercent: 0 },
-      }),
-      setQuery: jest.fn(),
-    };
-
     await TestBed.configureTestingModule({
       imports: [TagInputComponent],
       providers: [
         { provide: SearchTagService, useValue: mockSearchTagService },
-        { provide: SearchEngineService, useValue: mockSearchEngineService },
+        SearchEngineService,
       ],
     }).compileComponents();
 
@@ -129,7 +120,7 @@ describe('TagInputComponent', () => {
       imports: [TagInputComponent],
       providers: [
         { provide: SearchTagService, useValue: mockServiceWithTags },
-        { provide: SearchEngineService, useValue: mockSearchEngineService },
+        SearchEngineService,
       ],
     }).compileComponents();
 
