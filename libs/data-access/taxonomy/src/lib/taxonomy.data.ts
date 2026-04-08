@@ -165,6 +165,7 @@ type InternalTagName =
   | 'OAuth2'
   | 'OOP'
   | 'OpenAI'
+  | 'OpenAPI'
   | 'OpenGL'
   | 'OSGI'
   | 'Panda.js'
@@ -200,6 +201,7 @@ type InternalTagName =
   | 'Scientific Paper'
   | 'SCRUM'
   | 'SCSS'
+  | 'Selenium'
   | 'SemVer'
   | 'Sensor Fusion'
   | 'Sentry'
@@ -412,6 +414,7 @@ const INTERNAL_TAXONOMY = [
       'Google Maps API',
       'GraphQL',
       'OAuth2',
+      'OpenAPI',
       'PayPal API',
       'REST',
       'Twitter API',
@@ -715,7 +718,7 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'Cypress',
     categories: ['Testing and QA'],
-    parents: ['UI Testing'],
+    parents: ['E2E Testing', 'UI Testing'],
     related: ['JavaScript', 'TypeScript'],
   },
   {
@@ -769,15 +772,10 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'E2E Testing',
     categories: ['Concepts', 'Testing and QA'],
-    children: ['Playwright'],
+    children: ['Cypress', 'Playwright', 'Puppeteer', 'Selenium'],
     parents: ['Testing'],
     related: ['UI Testing'],
-    synonyms: [
-      'e2e testing',
-      'e2e tests',
-      'end-to-end testing',
-      'end-to-end tests',
-    ],
+    synonyms: [/e2e[- ]test/i, /end-to-end[- ]test/i],
   },
   {
     canonical: 'Eclipse EMF',
@@ -1422,6 +1420,12 @@ const INTERNAL_TAXONOMY = [
     parents: ['Artificial Intelligence'],
   },
   {
+    canonical: 'OpenAPI',
+    categories: ['Backend', 'Tools & Libraries'],
+    related: ['API Integration', 'REST'],
+    synonyms: [/^open\s*api$/i, /swagger/i],
+  },
+  {
     canonical: 'OpenGL',
     categories: ['Frontend'],
     children: ['GLSL', 'WebGL'],
@@ -1501,6 +1505,7 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'Puppeteer',
     categories: ['Testing and QA', 'Tools & Libraries'],
+    parents: ['E2E Testing'],
     related: ['JavaScript', 'TypeScript', 'UI Testing'],
   },
   {
@@ -1587,7 +1592,7 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'REST',
     categories: ['Concepts'],
-    related: ['API Integration', 'GraphQL'],
+    related: ['API Integration', 'GraphQL', 'OpenAPI'],
     synonyms: [/^rest$/i, /rest api/i, /restful/i],
   },
   {
@@ -1630,6 +1635,12 @@ const INTERNAL_TAXONOMY = [
     includes: ['CSS'],
     parents: ['Preprocessor'],
     related: ['LESS', 'SASS'],
+  },
+  {
+    canonical: 'Selenium',
+    categories: ['Testing and QA', 'Tools & Libraries'],
+    parents: ['E2E Testing', 'UI Testing'],
+    related: ['Cypress', 'Playwright', 'Puppeteer'],
   },
   {
     canonical: 'SemVer',
@@ -1762,6 +1773,7 @@ const INTERNAL_TAXONOMY = [
       'UI Testing',
     ],
     related: ['Debugging', 'QA'],
+    synonyms: [/^testing$/i, /test\s*automation/i],
   },
   {
     canonical: 'TESTONA',
@@ -1821,7 +1833,13 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'UI Testing',
     categories: ['Concepts', 'Testing and QA'],
-    children: ['Capture-and-Replay', 'Cypress', 'QF-Test', 'Widget Trees'],
+    children: [
+      'Capture-and-Replay',
+      'Cypress',
+      'QF-Test',
+      'Selenium',
+      'Widget Trees',
+    ],
     parents: ['Testing'],
     related: ['E2E Testing', 'Puppeteer'],
   },
