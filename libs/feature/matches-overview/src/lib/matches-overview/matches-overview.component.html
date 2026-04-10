@@ -2,41 +2,52 @@
   <lib-section-header text="Experience by Keywords" />
 
   <div class="grid">
-    @if (showSkeletons$ | async) { @for (tag of (tags$ | async) ?? []; track
-    tag) {
-    <span class="search-term">{{ tag }}:</span>
+    @if (showSkeletons$ | async) {
+      @for (tag of (tags$ | async) ?? []; track tag) {
+        <span class="search-term">{{ tag }}:</span>
 
-    <div class="match-results match-results--loading">
-      <ngx-skeleton-loader class="match-skeleton-line" appearance="line" />
-    </div>
-    } } @else { @for (matchItem of (matchesOverview$ | async) ?? []; track
-    matchItem.keyword) {
-    <span class="search-term">{{ matchItem.keyword }}:</span>
-
-    <div class="match-results">
-      @if (matchItem.fullMatchesCount > 0) {
-      <lib-color-chip
-        [text]="
-          matchItem.fullMatchesCount +
-          ' project' +
-          (matchItem.fullMatchesCount !== 1 ? 's' : '')
-        "
-        color="green"
-      />
-      } @if (matchItem.partialMatchesCount > 0) {
-      <lib-color-chip
-        [text]="
-          matchItem.partialMatchesCount +
-          ' related project' +
-          (matchItem.partialMatchesCount !== 1 ? 's' : '')
-        "
-        color="yellow"
-      />
-      } @if (matchItem.fullMatchesCount === 0 && matchItem.partialMatchesCount
-      === 0) {
-      <lib-color-chip text="no related projects" color="red" />
+        <div class="match-results match-results--loading">
+          <ngx-skeleton-loader class="match-skeleton-line" appearance="line" />
+        </div>
       }
-    </div>
-    } }
+    } @else {
+      @for (
+        matchItem of (matchesOverview$ | async) ?? [];
+        track matchItem.keyword
+      ) {
+        <span class="search-term">{{ matchItem.keyword }}:</span>
+
+        <div class="match-results">
+          @if (matchItem.fullMatchesCount > 0) {
+            <lib-color-chip
+              [text]="
+                matchItem.fullMatchesCount +
+                ' project' +
+                (matchItem.fullMatchesCount !== 1 ? 's' : '')
+              "
+              color="green"
+            />
+          }
+          @if (matchItem.partialMatchesCount > 0) {
+            <lib-color-chip
+              [text]="
+                matchItem.partialMatchesCount +
+                (matchItem.fullMatchesCount > 0
+                  ? ' related'
+                  : ' related project' +
+                    (matchItem.partialMatchesCount !== 1 ? 's' : ''))
+              "
+              color="yellow"
+            />
+          }
+          @if (
+            matchItem.fullMatchesCount === 0 &&
+            matchItem.partialMatchesCount === 0
+          ) {
+            <lib-color-chip text="no related projects" color="red" />
+          }
+        </div>
+      }
+    }
   </div>
 </div>
