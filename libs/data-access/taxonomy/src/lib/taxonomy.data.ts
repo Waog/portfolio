@@ -63,6 +63,7 @@ type InternalTagName =
   | 'Cypress'
   | 'Database Systems'
   | 'DataDog'
+  | 'Data Visualization'
   | 'Debugging'
   | 'Design Patterns'
   | 'DevOps Tools'
@@ -720,6 +721,11 @@ const INTERNAL_TAXONOMY = [
     categories: ['Testing and QA'],
     parents: ['E2E Testing', 'UI Testing'],
     related: ['JavaScript', 'TypeScript'],
+  },
+  {
+    canonical: 'Data Visualization',
+    categories: ['Concepts', 'Frontend'],
+    synonyms: [/data visuali[sz]ation/i, /dataviz/i],
   },
   {
     canonical: 'Database Systems',
@@ -1418,6 +1424,7 @@ const INTERNAL_TAXONOMY = [
     canonical: 'OpenAI',
     categories: ['Tools & Libraries'],
     parents: ['Artificial Intelligence'],
+    related: ['API Integration'],
   },
   {
     canonical: 'OpenAPI',
