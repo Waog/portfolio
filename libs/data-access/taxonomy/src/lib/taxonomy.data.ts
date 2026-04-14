@@ -56,6 +56,7 @@ type InternalTagName =
   | 'Conventional Commits'
   | 'Cordova'
   | 'CSS'
+  | 'CSS Framework'
   | 'Custom Elements'
   | 'Custom Game Engine'
   | 'Custom Scripts'
@@ -221,6 +222,7 @@ type InternalTagName =
   | 'SVN'
   | 'Swiper'
   | 'Systematic Test Generation'
+  | 'Tailwind'
   | 'TeddyMocks'
   | 'Testing'
   | 'TESTONA'
@@ -371,7 +373,8 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'Angular Material',
     categories: ['Frontend', 'Tools & Libraries'],
-    parents: ['Angular'],
+    parents: ['Angular', 'CSS Framework'],
+    related: ['Bootstrap', 'Tailwind'],
   },
   {
     canonical: 'Angular',
@@ -516,7 +519,16 @@ const INTERNAL_TAXONOMY = [
     canonical: 'Bootstrap',
     categories: ['Frontend', 'Tools & Libraries'],
     includes: ['CSS', 'HTML', 'JavaScript'],
-    related: ['jQuery', 'LESS', 'Responsive Design', 'SASS', 'SCSS'],
+    parents: ['CSS Framework'],
+    related: [
+      'Angular Material',
+      'jQuery',
+      'LESS',
+      'Responsive Design',
+      'SASS',
+      'SCSS',
+      'Tailwind',
+    ],
   },
   {
     canonical: 'Bower',
@@ -687,6 +699,12 @@ const INTERNAL_TAXONOMY = [
     canonical: 'Cordova',
     categories: ['DevOps & Build & CI/CD'],
     related: ['CI/CD', 'Intel XDK'],
+  },
+  {
+    canonical: 'CSS Framework',
+    categories: ['Frontend', 'Tools & Libraries'],
+    children: ['Angular Material', 'Bootstrap', 'Tailwind'],
+    parents: ['Frontend Framework'],
   },
   {
     canonical: 'CSS',
@@ -915,7 +933,7 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'Frontend Framework',
     categories: ['Frontend'],
-    children: ['Angular', 'AngularJS', 'React', 'Vue.js'],
+    children: ['Angular', 'AngularJS', 'CSS Framework', 'React', 'Vue.js'],
     parents: ['Framework'],
     related: ['MVC'],
     synonyms: [/frontend framework/i, /javascript framework/i, /js framework/i],
@@ -1753,6 +1771,13 @@ const INTERNAL_TAXONOMY = [
     canonical: 'Systematic Test Generation',
     categories: ['Concepts', 'Testing and QA'],
     parents: ['Model-based testing'],
+  },
+  {
+    canonical: 'Tailwind',
+    categories: ['Frontend', 'Tools & Libraries'],
+    includes: ['CSS', 'HTML'],
+    parents: ['CSS Framework'],
+    related: ['Angular Material', 'Bootstrap'],
   },
   {
     canonical: 'TeddyMocks',
