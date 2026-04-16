@@ -239,6 +239,7 @@ type InternalTagName =
   | 'UML'
   | 'UML state machine'
   | 'Underscore'
+  | 'Unit Testing'
   | 'Unity'
   | 'USB Monitor'
   | 'Various Technologies'
@@ -572,7 +573,7 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'chai',
     categories: ['Testing and QA'],
-    parents: ['Testing'],
+    parents: ['Unit Testing'],
   },
   {
     canonical: 'CI/CD',
@@ -1147,7 +1148,7 @@ const INTERNAL_TAXONOMY = [
     canonical: 'Jasmine',
     categories: ['Testing and QA'],
     includes: ['JavaScript'],
-    parents: ['Testing'],
+    parents: ['Unit Testing'],
   },
   {
     canonical: 'Java Servlets',
@@ -1178,7 +1179,7 @@ const INTERNAL_TAXONOMY = [
     canonical: 'Jest',
     categories: ['Testing and QA'],
     includes: ['JavaScript'],
-    parents: ['Testing'],
+    parents: ['Unit Testing'],
   },
   {
     canonical: 'Jira',
@@ -1231,7 +1232,7 @@ const INTERNAL_TAXONOMY = [
     canonical: 'JUnit',
     categories: ['Testing and QA'],
     includes: ['Java'],
-    parents: ['Testing'],
+    parents: ['Unit Testing'],
   },
   {
     canonical: 'Kanban',
@@ -1242,7 +1243,7 @@ const INTERNAL_TAXONOMY = [
     canonical: 'Karma',
     categories: ['Testing and QA'],
     includes: ['JavaScript'],
-    parents: ['Testing'],
+    parents: ['Unit Testing'],
     related: ['Jasmine'],
   },
   {
@@ -1311,13 +1312,13 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'mocha',
     categories: ['Testing and QA'],
-    parents: ['Testing'],
+    parents: ['Unit Testing'],
   },
   {
     canonical: 'mockito',
     categories: ['Testing and QA'],
     includes: ['Java'],
-    parents: ['Testing'],
+    parents: ['Unit Testing'],
     related: ['JUnit'],
   },
   {
@@ -1782,27 +1783,20 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'TeddyMocks',
     categories: ['Testing and QA'],
-    parents: ['Testing'],
+    parents: ['Unit Testing'],
     related: ['chai', 'Jest', 'mocha'],
   },
   {
     canonical: 'Testing',
     categories: ['Concepts'],
     children: [
-      'chai',
       'Custom Test Framework',
       'E2E Testing',
       'FRUIT',
-      'Jasmine',
-      'Jest',
-      'JUnit',
-      'Karma',
-      'mocha',
-      'mockito',
       'Model-based testing',
-      'TeddyMocks',
       'TESTONA',
       'UI Testing',
+      'Unit Testing',
     ],
     related: ['Debugging', 'QA'],
     synonyms: [/^testing$/i, /test\s*automation/i],
@@ -1907,6 +1901,23 @@ const INTERNAL_TAXONOMY = [
     categories: ['Tools & Libraries'],
     includes: ['JavaScript'],
     related: ['Lodash'],
+  },
+  {
+    canonical: 'Unit Testing',
+    categories: ['Concepts', 'Testing and QA'],
+    children: [
+      'chai',
+      'Jasmine',
+      'Jest',
+      'JUnit',
+      'Karma',
+      'mocha',
+      'mockito',
+      'TeddyMocks',
+    ],
+    parents: ['Testing'],
+    related: ['E2E Testing', 'UI Testing'],
+    synonyms: [/unit[-\s]*tests?/i],
   },
   {
     canonical: 'Unity',
