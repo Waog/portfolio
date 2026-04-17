@@ -70,7 +70,7 @@ describe('MatchesOverviewComponent', () => {
   });
 
   it('should display matches overview when tags are present', () => {
-    mockSearchTagService.tags$.next(['Angular', 'TypeScript']);
+    mockSearchTagService.tags$.next(['Angular', 'TypeScript', 'Tailwind']);
     mockSearchEngineService.searchResult$.next({
       loading: false,
       ui: {
@@ -80,6 +80,11 @@ describe('MatchesOverviewComponent', () => {
             keyword: 'TypeScript',
             fullMatchesCount: 3,
             partialMatchesCount: 2,
+          },
+          {
+            keyword: 'Tailwind',
+            fullMatchesCount: 0,
+            partialMatchesCount: 11,
           },
         ],
         projects: [] as SearchEngineProject[],
@@ -95,10 +100,12 @@ describe('MatchesOverviewComponent', () => {
     const text = fixture.nativeElement.textContent;
     expect(text).toContain('Angular:');
     expect(text).toContain('TypeScript:');
+    expect(text).toContain('Tailwind:');
     expect(text).toContain('2 projects');
-    expect(text).toContain('1 related project');
+    expect(text).toContain('1 related');
     expect(text).toContain('3 projects');
-    expect(text).toContain('2 related projects');
+    expect(text).toContain('2 related');
+    expect(text).toContain('11 related projects');
   });
 
   it('should not display anything when no tags are present', () => {
