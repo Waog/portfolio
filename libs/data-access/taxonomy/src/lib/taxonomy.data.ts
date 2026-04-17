@@ -477,6 +477,7 @@ const INTERNAL_TAXONOMY = [
     canonical: 'AWS Organizations',
     categories: ['Cloud & Infrastructure'],
     parents: ['AWS'],
+    synonyms: [/aws[-_\s]*organizations?/i],
   },
   {
     canonical: 'AWS',
@@ -547,6 +548,7 @@ const INTERNAL_TAXONOMY = [
     categories: ['DevOps & Build & CI/CD'],
     children: ['Ant', 'Gradle', 'Grunt', 'Gulp', 'Maven', 'Vite', 'Webpack'],
     related: ['CI/CD', 'npm', 'yarn'],
+    synonyms: [/\bbuild[-_\s]*tools?\b/i],
   },
   {
     canonical: 'C#',
@@ -655,6 +657,7 @@ const INTERNAL_TAXONOMY = [
     canonical: 'Component Library',
     categories: ['Concepts', 'Frontend'],
     related: ['Fractal', 'Storybook', 'UI/UX', 'Web Components'],
+    synonyms: [/component[-_\s]*librar(y|ies)/i],
   },
   {
     canonical: 'Computer Graphics',
@@ -718,6 +721,7 @@ const INTERNAL_TAXONOMY = [
     categories: ['Frontend'],
     parents: ['Web Components'],
     related: ['ARIA', 'Shadow DOM'],
+    synonyms: [/custom[-_\s]*elements?/i],
   },
   {
     canonical: 'Custom Game Engine',
@@ -729,6 +733,7 @@ const INTERNAL_TAXONOMY = [
     canonical: 'Custom Scripts',
     categories: ['DevOps & Build & CI/CD'],
     related: ['CI/CD'],
+    synonyms: [/custom[-_\s]*scripts?/i],
   },
   {
     canonical: 'Custom Test Framework',
@@ -772,6 +777,7 @@ const INTERNAL_TAXONOMY = [
     canonical: 'DevOps Tools',
     categories: ['Misc'],
     related: ['Debugging'],
+    synonyms: [/devops[-_\s]*tools?/i],
   },
   {
     canonical: 'Diploma Thesis',
@@ -970,6 +976,7 @@ const INTERNAL_TAXONOMY = [
     canonical: 'GitHub Actions',
     categories: ['DevOps & Build & CI/CD'],
     parents: ['CI/CD', 'GitHub'],
+    synonyms: [/github[-_\s]*actions?/i],
   },
   {
     canonical: 'GitHub API',
@@ -1288,6 +1295,7 @@ const INTERNAL_TAXONOMY = [
     canonical: 'Micro Frontends',
     categories: ['Concepts', 'Frontend'],
     related: ['Microservices'],
+    synonyms: [/micro[-_\s]*frontends?/i],
   },
   {
     canonical: 'Microservices',
@@ -1626,6 +1634,7 @@ const INTERNAL_TAXONOMY = [
     categories: ['Misc'],
     children: ['Nao'],
     parents: ['Artificial Intelligence'],
+    synonyms: [/robotics[-_\s]*control[-_\s]*systems?/i],
   },
   {
     canonical: 'RxJS',
@@ -1980,6 +1989,7 @@ const INTERNAL_TAXONOMY = [
     categories: ['Concepts', 'Frontend'],
     children: ['Custom Elements', 'Shadow DOM'],
     related: ['ARIA'],
+    synonyms: [/web[-_\s]*components?/i],
   },
   {
     canonical: 'Web Development',
@@ -1998,6 +2008,7 @@ const INTERNAL_TAXONOMY = [
     canonical: 'Web Vitals',
     categories: ['Concepts'],
     related: ['Lighthouse', 'WCAG'],
+    synonyms: [/web[-_\s]*vitals?/i],
   },
   {
     canonical: 'WebGL',
@@ -2023,6 +2034,7 @@ const INTERNAL_TAXONOMY = [
     canonical: 'Widget Trees',
     categories: ['Testing and QA'],
     parents: ['UI Testing'],
+    synonyms: [/widget[-_\s]*trees?/i],
   },
   {
     canonical: 'Wikipedia API',
