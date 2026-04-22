@@ -35,7 +35,7 @@ jobs:
           STORYBOOK_PID=$!
 
           # Wait for Storybook to be ready
-          npx wait-on http://localhost:6006 --timeout 60000
+          npx wait-on http://localhost:6006 --timeout 300000
 
           # Run Storybook tests
           npx nx test-storybook frontend --url=http://localhost:6006
