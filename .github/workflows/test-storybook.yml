@@ -25,8 +25,19 @@ jobs:
       - name: 🎭 Setup Playwright environment
         uses: ./.github/actions/setup-playwright
 
+      - name: 💾 Cache wait-on for Storybook tests
+        id: wait-on-cache
+        uses: actions/cache@v4
+        with:
+          path: .wait-on
+          key: ${{ runner.os }}-storybook-wait-on-${{
+            hashFiles('.github/workflows/test-storybook.yml') }}
+          restore-keys: |
+            ${{ runner.os }}-storybook-wait-on-
+
       - name: 📚 Install wait-on for Storybook tests
-        run: npm install --no-save wait-on
+        if: steps.wait-on-cache.outputs.cache-hit != 'true'
+        run: npm install --no-save --prefix .wait-on wait-on
 
       - name: 📖 Test Storybook
         run: |
@@ -35,7 +46,7 @@ jobs:
           STORYBOOK_PID=$!
 
           # Wait for Storybook to be ready
-          npx wait-on http://localhost:6006 --timeout 300000
+          .wait-on/node_modules/.bin/wait-on http://localhost:6006 --timeout 300000
 
           # Run Storybook tests
           npx nx test-storybook frontend --url=http://localhost:6006
