@@ -278,7 +278,7 @@ same as the output report above, but for the Legal Project Conclusions Data obje
 
 ## output artifacts: Legal Project Facts suggestions
 
-You output a suggestion for an improved Legal Project Facts Data object and schema (Legal Project Facts Type)
+You output a suggestion for an improved Legal Project Facts Data object and schema (Legal Project Facts Type). Yet, don't second-guess the existing facts. Assume everything written in the existing Project Facts Data was already researched and verified.
 
 In case information where missing or imprecise in `legal/legal-project-facts.data.ts` output a complete improved file including the missing information, ready for copy-paste replacement. Remember the low diff noise rule.
 

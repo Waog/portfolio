@@ -187,6 +187,13 @@ export type OperatorFactsCore = {
    * Leave empty if no such person is named in the final legal text.
    */
   pressResponsiblePerson: PressResponsiblePersonConfig | null;
+
+  /**
+   * Consumer dispute-resolution stance for imprint generation.
+   * This is relevant for German VSBG notices where consumer contracts are in scope,
+   * and can also be used for a conservative voluntary imprint notice.
+   */
+  consumerDisputeResolution?: ConsumerDisputeResolutionCore;
 };
 
 export type PostalAddress = {
@@ -261,6 +268,67 @@ export type ManagingPersonConfig = {
     | 'chairman'
     | 'board_member'
     | 'other';
+};
+
+export type ConsumerDisputeResolutionCore = {
+  /**
+   * Whether the operator participates in consumer arbitration before a
+   * Verbraucherstreitbeilegungsstelle.
+   *
+   * Purpose:
+   * - Controls whether the generated legal documents say that the operator is willing
+   *   to take part in consumer dispute resolution.
+   * - This is about out-of-court dispute resolution between a business and a consumer.
+   * - It is not about ordinary court proceedings, B2B disputes, tax disputes,
+   *   data protection complaints, or customer support.
+   *
+   * Legal decision logic:
+   * - Set to true only if the operator actually wants to participate in a consumer
+   *   arbitration procedure, or has already committed to doing so.
+   * - Set to false if the operator does not want to participate and is not legally
+   *   required to participate.
+   *
+   * B2B vs. B2C:
+   * - Pure B2B websites usually do not need this notice because the VSBG concerns
+   *   disputes with consumers.
+   * - A website is not "pure B2B" merely because businesses are the main audience.
+   *   If consumers can conclude contracts with the operator, or if the operator uses
+   *   consumer-facing terms, this can become relevant.
+   * - A portfolio or company website without online contracting is usually lower risk,
+   *   but the field can still be used to generate a short clarifying imprint notice.
+   *
+   * Avoid:
+   * - Do not set to true just to sound cooperative. A willingness statement can create
+   *   expectations and may require more precise information.
+   * - Do not use this for privacy-policy complaint rights. Data protection complaints
+   *   belong to the competent data protection authority, not to consumer arbitration.
+   */
+  willingToParticipateInConsumerArbitration: boolean;
+
+  /**
+   * Employee count category on 31 December of the previous year for VSBG § 36(3).
+   */
+  employeeCountOnPreviousYearEnd: 'ten_or_less' | 'more_than_ten';
+
+  /**
+   * Whether a short notice should be shown in the imprint even if the duty likely does not apply.
+   *
+   * This can be used to voluntarily include a consumer dispute resolution notice in the imprint for a conservative approach, even if the operator is not legally obligated to do so.
+   *
+   * Complemented by `mentioningRequired` in LegalProjectConclusions.
+   *
+   * `mention_if_feasible` means that the notice should be included if it can be done without making false claims or creating misleading impressions. It will still be omitted, if mentioning it would require unverifiable or false claims.
+   * `omit_if_feasible` means that the notice should be omitted if it can be done without making false claims or creating misleading impressions. It will still be mentioned, if legally required.
+   * `always_mention` means that the notice should always be included, regardless of feasibility.
+   * `always_omit` means that the notice should always be omitted, regardless of feasibility.
+   */
+  preferredMentioning?:
+    | 'mention_if_feasible'
+    | 'omit_if_feasible'
+    | 'always_mention'
+    | 'always_omit';
+
+  notes?: string[];
 };
 
 export type RegulatedProfession = {

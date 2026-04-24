@@ -6,6 +6,7 @@
 // This includes any information that cannot be inferred from public sources on the internet.
 // The data is consumed to generate legal project conclusions, produce legal HTML texts,
 // and perform compliance checks (typically by feeding it to LLM prompts).
+// Only add verified facts here, not assumptions or guesses. When in doubt, leave it out or mark it as `ToBeResearched`. Facts in here are not second-guessed by AI.
 // Fill this file for each website/project and keep it updated whenever you:
 // - add or remove third-party services
 // - change hosting or infrastructure
@@ -62,6 +63,14 @@ export const legalProjectFactsData: LegalProjectFacts = {
     },
     regulatedProfession: null,
     pressResponsiblePerson: null,
+    consumerDisputeResolution: {
+      willingToParticipateInConsumerArbitration: false,
+      employeeCountOnPreviousYearEnd: 'ten_or_less',
+      // Voluntary conservative imprint notice. The website is B2B-focused and does
+      // not conclude contracts online, but the short notice avoids ambiguity if an
+      // occasional consumer visitor reads the imprint.
+      preferredMentioning: 'mention_if_feasible',
+    },
   },
 
   audience: {
@@ -117,8 +126,11 @@ export const legalProjectFactsData: LegalProjectFacts = {
                   notes: [
                     'aka RUM',
                     'Enable, excluding visitor data in the EU',
-                    'The JS Snippet will be automatically injected. The JS Snippet will not be injected for visitors from the EU.',
+                    'Provider documentation describes the exclusion as excluding users connecting to Cloudflare data centers in the EEA/EU and listed additional countries including CH and GB.',
+                    'The JS Snippet will be automatically injected only for visitors not covered by that exclusion.',
                     `If injected, the JS Snippet doesn't wait for consent.`,
+                    'According to Cloudflare documentation, the RUM beacon does not store data in the browser and does not access browser storage such as cookies, localStorage, sessionStorage, or IndexedDB.',
+                    'According to Cloudflare documentation, RUM receives the client/source IP address as part of normal HTTP request handling but discards it at the nearest Cloudflare data center and does not store it in core databases or logs.',
                   ],
                 },
               },
@@ -132,9 +144,19 @@ export const legalProjectFactsData: LegalProjectFacts = {
               ],
             },
             dmarcManagement: { name: 'Email > DMARC Management' },
+            networkErrorLogging: {
+              name: 'Network > Network Error Logging',
+              notes: [
+                'Network Error Logging Monitoring is explicitly disabled. Cloudflare no longer injects NEL / Report-To / Reporting-Endpoints HTTP headers',
+              ],
+            },
           },
           notes: [
             'Cloudflare emailRouting is used to forward user emails to a gmail address',
+            // DPA source: Manage Account > Configurations > Preferences > Data processing addendum
+            'DPA - automatically accepted on 03/22/2026, as always included',
+            'Quote from Cloudflare Settings: Data processing addendum - Cloudflare’s Data Processing Addendum is incorporated into both our Self-Serve Subscription Agreement and our standard Enterprise Subscription Terms of Service. For customers with negotiated Enterprise Agreements, you can obtain a copy of your Data Processing Addendum by contacting your Account representative.',
+            'DPA url: https://www.cloudflare.com/cloudflare-customer-dpa/',
           ],
         },
       },
@@ -161,6 +183,11 @@ export const legalProjectFactsData: LegalProjectFacts = {
             'Used as admin UI and storage to receive and send emails to users.',
             'We use free consumer Gmail, not business Google Workspace.',
             'used for general communication and for contract / pre-contractual steps',
+            'We delete spam, misdirected, and clearly irrelevant emails promptly or after a short operational buffer period.',
+            'We classify emails based on their actual content and business relevance.',
+            'We keep ordinary business correspondence that does not create statutory retention duties until the matter is concluded and thereafter generally for 3 years from the end of the calendar year of the last relevant contact for documentation purposes and the establishment, exercise, or defence of legal claims.',
+            'We keep emails subject to German statutory commercial, tax, or accounting retention duties for the legally required retention period (generally 6 or 8 years from the end of the relevant calendar year).',
+            'Where multiple categories apply or an email remains relevant for ongoing claims, audits, or disputes, we retain it for the longer necessary period.',
           ],
         },
       },
