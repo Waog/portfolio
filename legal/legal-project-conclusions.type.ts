@@ -13,7 +13,7 @@ export type LegalProjectConclusions = {
 };
 
 export type LegalDocumentMetadataConclusions = {
-  /** When was this document changes/re-generated the last time? Format: YYYY-MM-DD */
+  /** When was this document changed/re-generated the last time? Format: YYYY-MM-DD */
   lastUpdated: string;
 };
 

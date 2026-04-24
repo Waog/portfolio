@@ -6,7 +6,7 @@
 // This includes any information that cannot be inferred from public sources on the internet.
 // The data is consumed to generate legal project conclusions, produce legal HTML texts,
 // and perform compliance checks (typically by feeding it to LLM prompts).
-// Only add verified facts here, not assumptions or guesses. When in doubt, leave it out or mark it as `ToBeResearched`. Fact's in here are not second-guessed by AI.
+// Only add verified facts here, not assumptions or guesses. When in doubt, leave it out or mark it as `ToBeResearched`. Facts in here are not second-guessed by AI.
 // Fill this file for each website/project and keep it updated whenever you:
 // - add or remove third-party services
 // - change hosting or infrastructure

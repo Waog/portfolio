@@ -23,7 +23,6 @@ import {
 // TODO legal: unsure how to model/handel tracking before consent true/false. figure it out and implement.
 
 export const legalProjectConclusionsData: LegalProjectConclusions = {
-  // reasons: [legalProjectFactsData.legalDocumentMetadata]
   legalDocumentMetadata: {
     lastUpdated: '2026-04-24',
   },
