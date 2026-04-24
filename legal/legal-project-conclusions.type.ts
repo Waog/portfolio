@@ -1,7 +1,8 @@
-﻿/**
+/**
  * Schema for Legal Project Conclusions Data (see `./legal-project-conclusions.data.ts`).
  */
 export type LegalProjectConclusions = {
+  legalDocumentMetadata: LegalDocumentMetadataConclusions;
   project: ProjectConclusions;
   operator: OperatorConclusions;
   audience: AudienceConclusions;
@@ -9,6 +10,11 @@ export type LegalProjectConclusions = {
   customImplementations: CustomImplementationsConclusions;
   thirdParties: ThirdPartiesConclusions;
   requiredDocuments: RequiredDocumentsConclusions;
+};
+
+export type LegalDocumentMetadataConclusions = {
+  /** When was this document changes/re-generated the last time? Format: YYYY-MM-DD */
+  lastUpdated: string;
 };
 
 /**
@@ -37,7 +43,92 @@ export type ProjectConclusions = {
 /**
  * Derived facts about the operator that come from research/verification.
  */
-export type OperatorConclusions = Record<string, never>;
+export type OperatorConclusions = {
+  /**
+   * Data protection supervisory authority that is primarily competent for this operator.
+   * Must be included in the legal documents if any personal data is processed (so, practically always).
+   *
+   * Use official data here.
+   */
+  competentDataProtectionAuthority:
+    | SupervisoryAuthorityConclusion
+    | ToBeResearched;
+
+  /**
+   * Consumer dispute-resolution stance for imprint generation.
+   * This is relevant for German VSBG notices where consumer contracts are in scope,
+   * and can also be used for a conservative voluntary imprint notice.
+   */
+  consumerDisputeResolution: ConsumerDisputeResolutionConclusions;
+};
+
+export type SupervisoryAuthorityConclusion = {
+  /**
+   * E.g. `Berliner Beauftragte für Datenschutz und Informationsfreiheit`
+   */
+  name: string;
+
+  /**
+   * E.g. `Alt-Moabit 59-61, 10555 Berlin, Germany`
+   */
+  address: string;
+
+  /**
+   * E.g. `mailbox@datenschutz-berlin.de`
+   */
+  email?: string;
+
+  /**
+   * E.g. `+49 30 13889-0`
+   */
+  phone?: string;
+
+  /**
+   * E.g. `https://www.datenschutz-berlin.de/`
+   */
+  website?: string;
+};
+
+export type ConsumerDisputeResolutionConclusions = {
+  /**
+   * Whether the operator is legally obliged to participate in consumer arbitration.
+   *
+   * Purpose:
+   * - Separates voluntary participation from a legal or contractual obligation.
+   * - If the operator is obliged to participate, the generated documents usually need
+   *   stronger and more specific wording than "we are not willing to participate".
+   *
+   * When to set true:
+   * - Set to true if a statute, industry-specific rule, membership rule, contractual
+   *   commitment, mediation/arbitration clause, or other binding rule requires the
+   *   operator to participate in consumer arbitration.
+   * - In that case, the legal documents should normally name the competent
+   *   Verbraucherstreitbeilegungsstelle, including address and website.
+   *
+   * When to set false:
+   * - Set to false if the operator has checked the issue and is not legally,
+   *   contractually, or otherwise bound to participate.
+   *
+   * When to use TO_BE_RESEARCHED:
+   * - Use TO_BE_RESEARCHED if the operator's sector, contracts, memberships, AGB,
+   *   marketplace rules, platform terms, or statutory obligations have not yet been
+   *   checked.
+   *
+   * Avoid:
+   * - Do not assume "not obliged" merely because the operator is small.
+   *   The small-business exemption mainly affects the general website/AGB notice
+   *   under § 36 VSBG; it does not prove that no other participation obligation exists.
+   */
+  obligatedToParticipate: boolean | ToBeResearched;
+
+  /**
+   * This complements the `preferredMentioning` field in LegalProjectFacts.
+   * Together these two fields determine whether a consumer dispute resolution notice is included in the imprint.
+   */
+  mentioningRequired: boolean | ToBeResearched;
+
+  notes?: string[];
+};
 
 /**
  * Derived facts about the audience.
