@@ -127,6 +127,23 @@ export type ConsumerDisputeResolutionConclusions = {
    */
   mentioningRequired: boolean | ToBeResearched;
 
+  /**
+   * Whether the generated imprint should include a consumer dispute-resolution notice.
+   * This can be true even where `mentioningRequired` is false, if the notice is included
+   * voluntarily because the facts request conservative mentioning and the statement is true.
+   */
+  includeNotice: boolean | ToBeResearched;
+
+  /**
+   * Why the notice is included or omitted.
+   */
+  inclusionReason:
+    | 'legally_required'
+    | 'voluntary_conservative_notice'
+    | 'omitted_not_required'
+    | 'omitted_to_avoid_misleading_statement'
+    | ToBeResearched;
+
   notes?: string[];
 };
 

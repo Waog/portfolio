@@ -103,14 +103,21 @@
   -->
   <p>
     In addition, Cloudflare Web Analytics with Real User Measurements is
-    enabled. According to our current configuration, RUM is configured to
-    exclude visitor data from the EU; Cloudflare describes this feature as
-    automatically dropping metrics from EU data centres. For visitors outside
-    the EU, a cookie-free JavaScript beacon may collect page-view and
-    performance metrics. No cookies and no described local browser storage are
-    used by this service. Processing serves reach and performance analysis on
-    the basis of Art. 6(1)(f) GDPR. According to the provider, related analytics
-    values are currently accessible for up to six months.
+    enabled. According to our current configuration, RUM is set to
+    &ldquo;Enable, excluding visitor data in the EU&rdquo;. Cloudflare describes
+    this function as meaning that RUM does not process performance data for
+    users connecting to Cloudflare data centres in the EEA/EU and in additional
+    countries listed by Cloudflare, including Switzerland and the United
+    Kingdom; according to the provider, corresponding metrics are automatically
+    dropped. For non-excluded visitors, a cookie-free JavaScript beacon may
+    collect page-view and performance metrics. According to the provider, the
+    RUM beacon does not store or read browser storage such as cookies,
+    localStorage, sessionStorage, or IndexedDB; the IP address received during
+    normal HTTP transmission is discarded at the nearest Cloudflare data centre
+    and is not stored in RUM core databases or logs. Processing for non-excluded
+    visitors serves reach and performance analysis on the basis of Art. 6(1)(f)
+    GDPR. The related analytics values are currently accessible for up to six
+    months where the service is active for the respective visitor.
   </p>
 </section>
 
@@ -132,12 +139,19 @@
     According to the current configuration, we do not set our own cookies and do
     not use our own local browser storage such as localStorage, sessionStorage,
     IndexedDB or comparable storage for tracking or marketing purposes.
-    According to the provider, Cloudflare Web Analytics does not use cookies or
-    localStorage. Where technically necessary storage of or access to terminal
-    equipment is required for transmitting the website, delivering requested
-    content or security functions, we rely on the statutory exceptions under
-    section 25(2) TDDDG. We do not use non-essential cookies or comparable
-    terminal-device access without consent.
+    According to the provider, Cloudflare Web Analytics/RUM does not use cookies
+    and does not store data in the browser; according to the provider, the
+    beacon also does not access browser storage such as localStorage,
+    sessionStorage, or IndexedDB. Based on our current assessment, this RUM
+    configuration therefore does not require consent under section 25 TDDDG
+    because no information is stored in terminal equipment and no information
+    already stored there is accessed. Where technically necessary storage of or
+    access to terminal equipment is required for transmitting the website,
+    delivering requested content or security functions, we rely on the statutory
+    exceptions under section 25(2) TDDDG. We do not use non-essential cookies or
+    comparable terminal-device access without consent. This assessment must be
+    reviewed again if the Cloudflare configuration changes or if further
+    analytics, tracking, or marketing services are added.
   </p>
 </section>
 
@@ -252,7 +266,10 @@
   <p>
     Recipients of personal data in the processing operations described here
     include in particular GitHub, Cloudflare, Google, SMTP2GO, and our
-    telecommunications provider.
+    telecommunications provider. In the services described here, Cloudflare and
+    SMTP2GO generally process data as processors. GitHub, Google/Gmail in the
+    free consumer account used here, and the telecommunications provider act at
+    least partly as independent controllers in the contexts described here.
   </p>
 
   <!--
@@ -389,13 +406,16 @@
     Analytics is accessible for up to six months where the service is active for
     the respective visitor. Cloudflare Email Routing provides routing analytics
     and activity data for up to 30 days. Cloudflare DMARC Management processes
-    DMARC report data for a limited provider-defined evaluation period. For
-    SMTP2GO, activity-data visibility on the free plan is limited to five days
-    and cannot be extended. Separately, the provider describes default deletion
-    of activity or email-header data after 35 days. We do not use SMTP2GO's
-    optional Email Archiving for contents, attachments and delivery details.
-    Deleted messages in Gmail generally remain in Trash for up to 30 days before
-    being permanently deleted.
+    DMARC report data for a limited provider-defined evaluation period. Where
+    providers do not publish an exact storage period, we do not have our own
+    access to those internal provider periods; the providers' published
+    information and terms are decisive. For SMTP2GO, activity-data visibility on
+    the free plan is limited to five days and cannot be extended. Separately,
+    the provider describes default deletion of activity or email-header data
+    after 35 days. We do not use SMTP2GO's optional Email Archiving for
+    contents, attachments and delivery details. Deleted messages in Gmail
+    generally remain in Trash for up to 30 days before being permanently
+    deleted.
   </p>
 </section>
 

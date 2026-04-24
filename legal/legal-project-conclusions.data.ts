@@ -16,7 +16,6 @@ import {
   DEFINED_BY_PARENT,
   DEFINED_PER_CHILD,
   LegalProjectConclusions,
-  TO_BE_RESEARCHED,
 } from './legal-project-conclusions.type';
 
 // TODO legal: retention rates of all kinds of data must be documented somehow. which granularity makes sense?
@@ -49,8 +48,21 @@ export const legalProjectConclusionsData: LegalProjectConclusions = {
     },
 
     consumerDisputeResolution: {
+      // reasons: [
+      //   legalProjectFactsData.operator.consumerDisputeResolution.willingToParticipateInConsumerArbitration,
+      //   legalProjectFactsData.operator.consumerDisputeResolution.employeeCountOnPreviousYearEnd,
+      //   legalProjectFactsData.operator.consumerDisputeResolution.preferredMentioning,
+      //   "VSBG § 36(3) exempts businesses with ten or fewer employees from the general § 36(1) no. 1 website/AGB information duty.",
+      //   "No facts indicate a statutory, contractual, membership-based, or sector-specific obligation to participate in consumer arbitration.",
+      // ]
       obligatedToParticipate: false,
-      mentioningRequired: TO_BE_RESEARCHED,
+      mentioningRequired: false,
+      includeNotice: true,
+      inclusionReason: 'voluntary_conservative_notice',
+      notes: [
+        'The short non-participation notice is included voluntarily and conservatively, not because the model concludes that § 36 VSBG requires it for this website.',
+        'The notice is consistent with the facts because the operator is not willing to participate and no participation obligation is known.',
+      ],
     },
   },
 
@@ -508,13 +520,14 @@ export const legalProjectConclusionsData: LegalProjectConclusions = {
                   name: 'Cloudflare Web Analytics (JS)',
                   technicallyNecessary: false,
                   // reasons: [
-                  //   "Cloudflare Web Analytics retains data for up to 6 months: https://usefathom.com/features/vs-cloudflare-web-analytics; https://userbird.com/review/cloudflare-web-analytics (multiple independent sources confirm 6-month retention).",
-                  //   "Cloudflare Web Analytics FAQ states that data can currently be accessed for the previous six months.",
+                  //   "Cloudflare RUM beacon documentation states that free customers have RUM enabled automatically with EU traffic excluded and can switch it off: https://developers.cloudflare.com/speed/observatory/rum-beacon/",
+                  //   "Cloudflare RUM documentation states that the beacon does not store browser data and does not access cookies, localStorage, sessionStorage, IP address, or IndexedDB: https://developers.cloudflare.com/speed/observatory/rum-beacon/",
+                  //   "Cloudflare changelog states that excluded EU metrics are dropped automatically: https://developers.cloudflare.com/changelog/post/2025-02-25-rum-exclude-eu/",
                   // ]
                   retention:
-                    'Cloudflare Web Analytics retains analytics data for up to 6 months, per Cloudflare documentation and multiple independent sources.',
+                    'Cloudflare Web Analytics / RUM analytics values are currently accessible for up to 6 months where the service is active for the respective non-excluded visitor; EU/EEA/CH/GB-excluded visitors are not measured by RUM according to the current configuration.',
                   thirdPartyScripts: [
-                    'Cloudflare Web Analytics JS snippet (auto-injected for non-EU visitors; not injected for EU visitors)',
+                    'Cloudflare Web Analytics / RUM JS snippet (auto-injected for non-excluded visitors; not injected or not active for excluded EEA/EU/CH/GB-region visitors according to the current configuration and provider documentation)',
                   ],
                   trackingBeforeConsent: true,
                   cookies: [],
@@ -529,7 +542,9 @@ export const legalProjectConclusionsData: LegalProjectConclusions = {
                 realUserMeasurements: {
                   // reasons: [
                   //   legalProjectFactsData.thirdParties.cloudflare.subServicesOrFeatures.cloudflare.subServicesOrFeatures.webAnalytics.subServicesOrFeatures.realUserMeasurements,
-                  //   "RUM is part of the same Cloudflare Web Analytics JS snippet; same EU exclusion and cookie-free approach applies.",
+                  //   "RUM is part of the same Cloudflare Web Analytics JS snippet; the current project configuration excludes EU visitor data.",
+                  //   "Cloudflare RUM beacon documentation describes exclusion for users connecting to Cloudflare data centers in the EEA/EU plus listed additional countries including CH and GB.",
+                  //   "Cloudflare RUM beacon documentation states that the beacon does not store browser data and does not access cookies, localStorage, sessionStorage, IP address, or IndexedDB.",
                   // ]
                   recipientType: 'processor',
                   dataRecipientCountry: DEFINED_BY_PARENT,
@@ -548,12 +563,13 @@ export const legalProjectConclusionsData: LegalProjectConclusions = {
                       name: 'Real User Measurements (RUM)',
                       technicallyNecessary: false,
                       // reasons: [
-                      //   "RUM data is part of Cloudflare Web Analytics; same 6-month retention applies.",
+                      //   "RUM data is part of Cloudflare Web Analytics; same 6-month dashboard availability applies where the feature is active.",
+                      //   "Cloudflare RUM beacon documentation states that excluded users are not processed for RUM performance data.",
                       // ]
                       retention:
-                        'RUM data (non-EU/EEA visitors only) is processed as part of Cloudflare Web Analytics and retained for up to 6 months, consistent with Cloudflare Web Analytics data retention.',
+                        'RUM data for non-excluded visitors is processed as part of Cloudflare Web Analytics and analytics values are currently accessible for up to 6 months. For users connecting to excluded EEA/EU/CH/GB-region Cloudflare data centers, RUM performance data is not processed according to Cloudflare documentation.',
                       thirdPartyScripts: [
-                        'Cloudflare RUM / Web Analytics JS (auto-injected for non-EU visitors; not injected for EU visitors)',
+                        'Cloudflare RUM / Web Analytics JS (auto-injected for non-excluded visitors; not injected or not active for excluded EEA/EU/CH/GB-region visitors according to the current configuration and provider documentation)',
                       ],
                       trackingBeforeConsent: true,
                       cookies: [],
@@ -640,6 +656,12 @@ export const legalProjectConclusionsData: LegalProjectConclusions = {
               },
             },
 
+            // reasons: [
+            //   legalProjectFactsData.thirdParties.cloudflare.subServicesOrFeatures.cloudflare.subServicesOrFeatures.networkErrorLogging,
+            //   "Cloudflare Network Error Logging can add NEL / Report-To headers that instruct compatible browsers to send network-error reports to Cloudflare; the operator has disabled Network Error Logging Monitoring, so it is modeled as unused.",
+            //   "Cloudflare Network Error Logging documentation: https://developers.cloudflare.com/network-error-logging/",
+            // ]
+            networkErrorLogging: null,
             waf: null,
             botFightMode: null,
             superBotFightMode: null,

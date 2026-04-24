@@ -66,7 +66,10 @@ export const legalProjectFactsData: LegalProjectFacts = {
     consumerDisputeResolution: {
       willingToParticipateInConsumerArbitration: false,
       employeeCountOnPreviousYearEnd: 'ten_or_less',
-      preferredMentioning: 'omit_if_feasible',
+      // Voluntary conservative imprint notice. The website is B2B-focused and does
+      // not conclude contracts online, but the short notice avoids ambiguity if an
+      // occasional consumer visitor reads the imprint.
+      preferredMentioning: 'mention_if_feasible',
     },
   },
 
@@ -123,8 +126,11 @@ export const legalProjectFactsData: LegalProjectFacts = {
                   notes: [
                     'aka RUM',
                     'Enable, excluding visitor data in the EU',
-                    'The JS Snippet will be automatically injected. The JS Snippet will not be injected for visitors from the EU.',
+                    'Provider documentation describes the exclusion as excluding users connecting to Cloudflare data centers in the EEA/EU and listed additional countries including CH and GB.',
+                    'The JS Snippet will be automatically injected only for visitors not covered by that exclusion.',
                     `If injected, the JS Snippet doesn't wait for consent.`,
+                    'According to Cloudflare documentation, the RUM beacon does not store data in the browser and does not access browser storage such as cookies, localStorage, sessionStorage, or IndexedDB.',
+                    'According to Cloudflare documentation, RUM receives the client/source IP address as part of normal HTTP request handling but discards it at the nearest Cloudflare data center and does not store it in core databases or logs.',
                   ],
                 },
               },
@@ -138,6 +144,12 @@ export const legalProjectFactsData: LegalProjectFacts = {
               ],
             },
             dmarcManagement: { name: 'Email > DMARC Management' },
+            networkErrorLogging: {
+              name: 'Network > Network Error Logging',
+              notes: [
+                'Network Error Logging Monitoring is explicitly disabled. Cloudflare no longer injects NEL / Report-To / Reporting-Endpoints HTTP headers',
+              ],
+            },
           },
           notes: [
             'Cloudflare emailRouting is used to forward user emails to a gmail address',

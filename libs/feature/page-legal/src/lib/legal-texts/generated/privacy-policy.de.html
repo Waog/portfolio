@@ -98,16 +98,24 @@
   -->
   <p>
     Zus&auml;tzlich ist Cloudflare Web Analytics mit Real User Measurements
-    aktiviert. Nach unserer aktuellen Konfiguration ist die RUM-Erfassung so
-    eingestellt, dass Besucherdaten aus der EU ausgeschlossen werden; Cloudflare
-    beschreibt diese Funktion so, dass Metriken aus EU-Rechenzentren automatisch
-    verworfen werden. F&uuml;r Besucher au&szlig;erhalb der EU kann ein
-    cookie-freies JavaScript-Beacon Seitenaufrufe und Performance-Metriken
-    erfassen. Cookies und die beschriebene lokale Browser-Speicherung werden
-    durch diesen Dienst nicht verwendet. Die Verarbeitung dient der Reichweiten-
-    und Performance-Analyse auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO. Nach
-    Anbieterangaben sind die zugeh&ouml;rigen Analysewerte derzeit f&uuml;r bis
-    zu sechs Monate abrufbar.
+    aktiviert. Nach unserer aktuellen Konfiguration ist RUM auf &bdquo;Enable,
+    excluding visitor data in the EU&ldquo; gestellt. Cloudflare beschreibt
+    diese Funktion so, dass RUM f&uuml;r Nutzer, die sich mit
+    Cloudflare-Rechenzentren in der EEA/EU sowie in den von Cloudflare
+    gelisteten weiteren L&auml;ndern einschlie&szlig;lich Schweiz und
+    Gro&szlig;britannien verbinden, keine Performance-Daten verarbeitet;
+    entsprechende Metriken werden nach Anbieterangaben automatisch verworfen.
+    F&uuml;r nicht ausgeschlossene Besucher kann ein cookie-freies
+    JavaScript-Beacon Seitenaufrufe und Performance-Metriken erfassen. Nach
+    Anbieterangaben speichert oder liest das RUM-Beacon keine Browser-Speicher
+    wie Cookies, LocalStorage, SessionStorage oder IndexedDB aus; die bei der
+    normalen HTTP-&Uuml;bermittlung empfangene IP-Adresse wird am
+    n&auml;chstgelegenen Cloudflare-Rechenzentrum verworfen und nicht in den
+    RUM-Kerndatenbanken oder -Logs gespeichert. Die Verarbeitung f&uuml;r nicht
+    ausgeschlossene Besucher dient der Reichweiten- und Performance-Analyse auf
+    Grundlage von Art. 6 Abs. 1 lit. f DSGVO. Die zugeh&ouml;rigen Analysewerte
+    sind derzeit f&uuml;r bis zu sechs Monate abrufbar, soweit der Dienst
+    f&uuml;r den jeweiligen Besucher aktiv ist.
   </p>
 </section>
 
@@ -129,13 +137,21 @@
     Nach der aktuellen Konfiguration setzen wir keine eigenen Cookies und nutzen
     keine eigene lokale Browser-Speicherung wie LocalStorage, SessionStorage,
     IndexedDB oder vergleichbare Speicher f&uuml;r Tracking- oder
-    Marketingzwecke. Cloudflare Web Analytics verwendet nach Anbieterangaben
-    keine Cookies und keinen LocalStorage. Soweit technisch notwendige
-    Speicherungen oder Zugriffe auf Endeinrichtungen f&uuml;r die
-    &Uuml;bertragung der Website, die Auslieferung angeforderter Inhalte oder
-    Sicherheitsfunktionen erforderlich sind, st&uuml;tzen wir uns auf die
-    Ausnahmen nach &sect; 25 Abs. 2 TDDDG. Nicht notwendige Cookies oder
+    Marketingzwecke. Cloudflare Web Analytics/RUM verwendet nach Anbieterangaben
+    keine Cookies und speichert keine Daten im Browser; das Beacon greift nach
+    Anbieterangaben auch nicht auf Browser-Speicher wie LocalStorage,
+    SessionStorage oder IndexedDB zu. Nach unserer aktuellen Bewertung ist
+    f&uuml;r diese RUM-Konfiguration daher keine Einwilligung nach &sect; 25
+    TDDDG erforderlich, weil kein Speichern von Informationen in der
+    Endeinrichtung und kein Zugriff auf dort gespeicherte Informationen erfolgt.
+    Soweit technisch notwendige Speicherungen oder Zugriffe auf Endeinrichtungen
+    f&uuml;r die &Uuml;bertragung der Website, die Auslieferung angeforderter
+    Inhalte oder Sicherheitsfunktionen erforderlich sind, st&uuml;tzen wir uns
+    auf die Ausnahmen nach &sect; 25 Abs. 2 TDDDG. Nicht notwendige Cookies oder
     vergleichbare Endger&auml;tezugriffe setzen wir ohne Einwilligung nicht ein.
+    Diese Bewertung muss neu gepr&uuml;ft werden, wenn die
+    Cloudflare-Konfiguration ge&auml;ndert wird oder weitere Analyse-, Tracking-
+    oder Marketingdienste hinzukommen.
   </p>
 </section>
 
@@ -258,7 +274,12 @@
   <p>
     Empf&auml;nger personenbezogener Daten im Rahmen der hier beschriebenen
     Verarbeitungsvorg&auml;nge sind insbesondere GitHub, Cloudflare, Google,
-    SMTP2GO und unser Telekommunikationsanbieter.
+    SMTP2GO und unser Telekommunikationsanbieter. Cloudflare und SMTP2GO
+    verarbeiten Daten in den hier beschriebenen Diensten grunds&auml;tzlich als
+    Auftragsverarbeiter. GitHub, Google/Gmail im verwendeten kostenlosen
+    Verbraucher-Konto und der Telekommunikationsanbieter handeln in den hier
+    beschriebenen Kontexten jedenfalls teilweise als eigenst&auml;ndig
+    Verantwortliche.
   </p>
 
   <!--
@@ -396,15 +417,18 @@
     soweit der Dienst f&uuml;r den jeweiligen Besucher aktiv ist. Cloudflare
     Email Routing stellt Routing-Analysen und Aktivit&auml;tsdaten f&uuml;r bis
     zu 30 Tage bereit. Cloudflare DMARC Management verarbeitet DMARC-Reportdaten
-    f&uuml;r einen begrenzten anbieterdefinierten Auswertungszeitraum. Bei
-    SMTP2GO ist im Free-Tarif die Sichtbarkeit von Aktivit&auml;tsdaten auf
-    f&uuml;nf Tage begrenzt und kann nicht verl&auml;ngert werden. Der Anbieter
-    beschreibt davon getrennt eine standardm&auml;&szlig;ige L&ouml;schung von
-    Aktivit&auml;ts- bzw. E-Mail-Header-Daten nach 35 Tagen. Die optionale
-    E-Mail-Archivierung von SMTP2GO f&uuml;r Inhalte, Anh&auml;nge und
-    Zustelldetails nutzen wir nicht. In Gmail gel&ouml;schte Nachrichten
-    verbleiben im Regelfall bis zu 30 Tage im Papierkorb, bevor sie
-    endg&uuml;ltig gel&ouml;scht werden.
+    f&uuml;r einen begrenzten anbieterdefinierten Auswertungszeitraum. Soweit
+    Anbieter keine exakte &ouml;ffentliche Speicherfrist nennen, haben wir auf
+    diese internen Anbieterfristen keinen eigenen Zugriff; ma&szlig;geblich sind
+    die jeweils ver&ouml;ffentlichten Anbieterinformationen und die
+    Anbieterbedingungen. Bei SMTP2GO ist im Free-Tarif die Sichtbarkeit von
+    Aktivit&auml;tsdaten auf f&uuml;nf Tage begrenzt und kann nicht
+    verl&auml;ngert werden. Der Anbieter beschreibt davon getrennt eine
+    standardm&auml;&szlig;ige L&ouml;schung von Aktivit&auml;ts- bzw.
+    E-Mail-Header-Daten nach 35 Tagen. Die optionale E-Mail-Archivierung von
+    SMTP2GO f&uuml;r Inhalte, Anh&auml;nge und Zustelldetails nutzen wir nicht.
+    In Gmail gel&ouml;schte Nachrichten verbleiben im Regelfall bis zu 30 Tage
+    im Papierkorb, bevor sie endg&uuml;ltig gel&ouml;scht werden.
   </p>
 </section>
 
