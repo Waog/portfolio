@@ -81,6 +81,7 @@ type InternalTagName =
   | 'Eclipse RCP'
   | 'Elastic Beanstalk'
   | 'Entity Component System'
+  | 'ESLint'
   | 'Expo'
   | 'Express'
   | 'Facebook'
@@ -175,10 +176,12 @@ type InternalTagName =
   | 'PayPal API'
   | 'Peer-to-Peer'
   | 'peerJS'
+  | 'Performance Testing'
   | 'Phaser'
   | 'Playwright'
   | 'Polly'
   | 'Preprocessor'
+  | 'Prettier'
   | 'Project Management'
   | 'Prototyping'
   | 'Puppeteer'
@@ -245,6 +248,7 @@ type InternalTagName =
   | 'Various Technologies'
   | 'Visual Studio'
   | 'Vite'
+  | 'VSCode'
   | 'Vue.js'
   | 'WCAG'
   | 'Web Components'
@@ -877,6 +881,11 @@ const INTERNAL_TAXONOMY = [
     ],
   },
   {
+    canonical: 'ESLint',
+    categories: ['DevOps & Build & CI/CD', 'Tools & Libraries'],
+    related: ['JavaScript', 'Prettier', 'TypeScript'],
+  },
+  {
     canonical: 'Expo',
     categories: ['Cloud & Infrastructure', 'Tools & Libraries'],
     includes: ['React Native'],
@@ -1503,6 +1512,13 @@ const INTERNAL_TAXONOMY = [
     parents: ['WebRTC'],
   },
   {
+    canonical: 'Performance Testing',
+    categories: ['Concepts', 'Testing and QA'],
+    parents: ['Testing'],
+    related: ['Lighthouse', 'Web Vitals'],
+    synonyms: [/load[-_\s]*tests?/i, /performance[-_\s]*tests?/i],
+  },
+  {
     canonical: 'Phaser',
     categories: ['Frontend', 'Tools & Libraries'],
     includes: ['JavaScript', 'WebGL'],
@@ -1524,6 +1540,11 @@ const INTERNAL_TAXONOMY = [
     categories: ['DevOps & Build & CI/CD', 'Frontend'],
     children: ['LESS', 'SASS', 'SCSS'],
     synonyms: [/^preprocessor$/i, /css preprocessor/i],
+  },
+  {
+    canonical: 'Prettier',
+    categories: ['DevOps & Build & CI/CD', 'Tools & Libraries'],
+    related: ['CSS', 'ESLint', 'HTML', 'JavaScript', 'SCSS', 'TypeScript'],
   },
   {
     canonical: 'Project Management',
@@ -1803,6 +1824,7 @@ const INTERNAL_TAXONOMY = [
       'E2E Testing',
       'FRUIT',
       'Model-based testing',
+      'Performance Testing',
       'TESTONA',
       'UI Testing',
       'Unit Testing',
@@ -1956,6 +1978,7 @@ const INTERNAL_TAXONOMY = [
       'Netbeans',
       'Notepad++',
       'Sublime Text',
+      'VSCode',
       'XCode',
     ],
     synonyms: [/^visual studio$/i, /^vs$/i],
@@ -1965,6 +1988,12 @@ const INTERNAL_TAXONOMY = [
     categories: ['DevOps & Build & CI/CD', 'Tools & Libraries'],
     parents: ['Build Tools'],
     related: ['Webpack'],
+  },
+  {
+    canonical: 'VSCode',
+    categories: ['Tools & Libraries'],
+    related: ['Visual Studio'],
+    synonyms: [/^vs\s*code$/i, /^vscode$/i, /visual\s+studio\s+code/i],
   },
   {
     canonical: 'Vue.js',
