@@ -22,6 +22,9 @@
       "@portfolio/contact-section": [
         "libs/feature/contact-section/src/index.ts"
       ],
+      "@portfolio/customization-state": [
+        "libs/data-access/customization-state/src/index.ts"
+      ],
       "@portfolio/footer": ["libs/feature/footer/src/index.ts"],
       "@portfolio/matches-overview": [
         "libs/feature/matches-overview/src/index.ts"
