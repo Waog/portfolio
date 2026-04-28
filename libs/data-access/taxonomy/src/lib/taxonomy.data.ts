@@ -160,6 +160,7 @@ type InternalTagName =
   | 'Nao'
   | 'NestJS'
   | 'Netbeans'
+  | 'NgRx'
   | 'Nifty GUI'
   | 'Node.js'
   | 'Notepad++'
@@ -219,6 +220,7 @@ type InternalTagName =
   | 'Splunk'
   | 'Spring Boot'
   | 'SQL'
+  | 'State Management'
   | 'Stencil'
   | 'Storybook'
   | 'Sublime Text'
@@ -387,7 +389,7 @@ const INTERNAL_TAXONOMY = [
     children: ['Angular Material'],
     includes: ['CSS', 'HTML', 'SPA', 'TypeScript'],
     parents: ['Frontend Framework'],
-    related: ['Angular Material', 'AngularJS', 'RxJS', 'SASS', 'SCSS'],
+    related: ['Angular Material', 'AngularJS', 'NgRx', 'RxJS', 'SASS', 'SCSS'],
     synonyms: [
       // Matches "Angular 13", "Angular v13", "Angular Version 13", etc., but not "Angular Material"
       // cSpell: disable-next-line
@@ -507,6 +509,28 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'Backend Systems',
     categories: ['Misc'],
+    children: [
+      'J2EE',
+      'Java Servlets',
+      'Microservices',
+      'Node.js',
+      'OpenAPI',
+      'RabbitMQ',
+      'Spring Boot',
+    ],
+    related: [
+      'C#',
+      'C++',
+      'DynamoDB',
+      'GraphQL',
+      'Java',
+      'JavaScript',
+      'MongoDB',
+      'Mongoose',
+      'Python',
+      'SQL',
+      'TypeScript',
+    ],
     synonyms: [/backend systems/i, /backend/i],
   },
   {
@@ -557,13 +581,13 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'C#',
     categories: ['Backend', 'Frontend'],
-    related: ['OOP', 'Unity'],
+    related: ['Backend Systems', 'OOP', 'Unity'],
     synonyms: [/^c[- ]sharp$/i, /^c#$/i],
   },
   {
     canonical: 'C++',
     categories: ['Backend'],
-    related: ['OOP'],
+    related: ['Backend Systems', 'OOP'],
     synonyms: [/^c\+\+$/i, /^cpp$/i],
   },
   {
@@ -802,6 +826,7 @@ const INTERNAL_TAXONOMY = [
     canonical: 'DynamoDB',
     categories: ['Backend', 'Cloud & Infrastructure'],
     parents: ['AWS'],
+    related: ['Backend Systems'],
     synonyms: [/dynamo/i],
   },
   {
@@ -895,6 +920,7 @@ const INTERNAL_TAXONOMY = [
     categories: ['Backend', 'Tools & Libraries'],
     children: ['NestJS'],
     parents: ['Node.js'],
+    related: ['Backend Systems'],
   },
   {
     canonical: 'Facebook API',
@@ -1068,7 +1094,7 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'GraphQL',
     categories: ['Backend', 'Concepts', 'Frontend', 'Tools & Libraries'],
-    related: ['API Integration', 'REST'],
+    related: ['API Integration', 'Backend Systems', 'REST'],
   },
   {
     canonical: 'Grunt',
@@ -1151,7 +1177,7 @@ const INTERNAL_TAXONOMY = [
     canonical: 'J2EE',
     categories: ['Backend', 'Tools & Libraries'],
     children: ['Java Servlets'],
-    parents: ['Java'],
+    parents: ['Backend Systems', 'Java'],
     related: ['Maven', 'Spring Boot'],
     synonyms: [
       /^j2ee$/i,
@@ -1169,7 +1195,7 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'Java Servlets',
     categories: ['Backend', 'Tools & Libraries'],
-    parents: ['J2EE', 'Java'],
+    parents: ['Backend Systems', 'J2EE', 'Java'],
     related: ['Spring Boot'],
     synonyms: [/java servlets?/i, /servlets?/i],
   },
@@ -1177,13 +1203,14 @@ const INTERNAL_TAXONOMY = [
     canonical: 'Java',
     categories: ['Backend'],
     children: ['J2EE', 'Java Servlets', 'JNativeHook', 'Spring Boot'],
-    related: ['OOP'],
+    related: ['Backend Systems', 'OOP'],
     synonyms: [/^java$/i],
   },
   {
     canonical: 'JavaScript',
     categories: ['Backend', 'Frontend'],
     children: ['TypeScript'],
+    related: ['Backend Systems'],
     synonyms: [/^js$/i, /javascript/i],
   },
   {
@@ -1309,6 +1336,7 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'Microservices',
     categories: ['Backend', 'Concepts'],
+    parents: ['Backend Systems'],
     related: ['Micro Frontends', 'Mono Repo'],
     synonyms: [/microservice/i],
   },
@@ -1347,12 +1375,14 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'MongoDB',
     categories: ['Backend', 'Cloud & Infrastructure'],
+    related: ['Backend Systems'],
     synonyms: [/^mongo$/i, /mongodb/i],
   },
   {
     canonical: 'Mongoose',
     categories: ['Backend', 'Tools & Libraries'],
     includes: ['MongoDB', 'Node.js'],
+    related: ['Backend Systems'],
   },
   {
     canonical: 'Mono Repo',
@@ -1404,6 +1434,12 @@ const INTERNAL_TAXONOMY = [
     related: ['Eclipse', 'IntelliJ IDEA', 'Maven'],
   },
   {
+    canonical: 'NgRx',
+    categories: ['Frontend', 'Tools & Libraries'],
+    parents: ['RxJS', 'State Management'],
+    related: ['Angular', 'Redux'],
+  },
+  {
     canonical: 'Nifty GUI',
     categories: ['Frontend', 'Tools & Libraries'],
     includes: ['Java'],
@@ -1414,6 +1450,7 @@ const INTERNAL_TAXONOMY = [
     categories: ['Backend'],
     children: ['Express'],
     includes: ['JavaScript'],
+    parents: ['Backend Systems'],
     synonyms: [/node/i],
   },
   {
@@ -1465,6 +1502,7 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'OpenAPI',
     categories: ['Backend', 'Tools & Libraries'],
+    parents: ['Backend Systems'],
     related: ['API Integration', 'REST'],
     synonyms: [/^open\s*api$/i, /swagger/i],
   },
@@ -1566,6 +1604,7 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'Python',
     categories: ['Backend'],
+    related: ['Backend Systems'],
     synonyms: [/^py$/i, /^python$/i],
   },
   {
@@ -1589,6 +1628,7 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'RabbitMQ',
     categories: ['Backend', 'Tools & Libraries'],
+    parents: ['Backend Systems'],
   },
   {
     canonical: 'Raspberry Pi',
@@ -1623,6 +1663,8 @@ const INTERNAL_TAXONOMY = [
     canonical: 'Redux',
     categories: ['Frontend', 'Tools & Libraries'],
     includes: ['React'],
+    parents: ['State Management'],
+    related: ['NgRx'],
   },
   {
     canonical: 'requireJS',
@@ -1660,6 +1702,7 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'RxJS',
     categories: ['Frontend', 'Tools & Libraries'],
+    children: ['NgRx'],
     includes: ['TypeScript'],
     related: ['Angular'],
   },
@@ -1763,12 +1806,18 @@ const INTERNAL_TAXONOMY = [
   {
     canonical: 'Spring Boot',
     categories: ['Backend'],
-    parents: ['Java'],
+    parents: ['Backend Systems', 'Java'],
     related: ['J2EE', 'Java Servlets'],
   },
   {
     canonical: 'SQL',
     categories: ['Backend'],
+    related: ['Backend Systems'],
+  },
+  {
+    canonical: 'State Management',
+    categories: ['Concepts', 'Frontend'],
+    children: ['NgRx', 'Redux'],
   },
   {
     canonical: 'Stencil',
@@ -1884,7 +1933,7 @@ const INTERNAL_TAXONOMY = [
     canonical: 'TypeScript',
     categories: ['Backend', 'Frontend'],
     parents: ['JavaScript'],
-    related: ['OOP'],
+    related: ['Backend Systems', 'OOP'],
     synonyms: [/^ts$/i, /typescript/i],
   },
   {
