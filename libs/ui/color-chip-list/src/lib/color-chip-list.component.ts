@@ -1,6 +1,7 @@
 import { CommonModule, isPlatformServer } from '@angular/common';
 import {
   AfterViewInit,
+  booleanAttribute,
   ChangeDetectorRef,
   Component,
   ElementRef,
@@ -28,6 +29,7 @@ interface ChipItem {
 
 @Component({
   selector: 'lib-color-chip-list',
+  host: { '[class.print-mode]': 'printMode' },
   imports: [CommonModule, MatButtonModule, MatIconModule, ColorChipComponent],
   templateUrl: './color-chip-list.component.html',
   styleUrl: './color-chip-list.component.scss',
@@ -37,6 +39,7 @@ export class ColorChipListComponent implements AfterViewInit, OnChanges {
   @Input() yellowItems: string[] = [];
   @Input() grayItems: string[] = [];
   @Input() spacing: ChipSpacing = 'large';
+  @Input({ transform: booleanAttribute }) printMode = false;
 
   @ViewChild('chipColumn', { static: false }) chipColumnRef!: ElementRef;
 

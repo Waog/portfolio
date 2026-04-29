@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { By } from '@angular/platform-browser';
+import { provideRouter } from '@angular/router';
 import {
   SearchEngineService,
   type SearchResult,
@@ -89,6 +90,7 @@ describe('SkillSectionComponent', () => {
           provide: SearchEngineService,
           useValue: { searchResult$: searchResultSubject.asObservable() },
         },
+        provideRouter([]),
       ],
     }).compileComponents();
 
@@ -134,7 +136,9 @@ describe('SkillSectionComponent', () => {
     expect(categoryTitles).toContain('Concepts:');
   });
 
-  it('should render `and more...` in print mode', () => {
+  it('should render `and more...` if rows were hidden', () => {
+    (component as unknown as { hasHiddenRows: boolean }).hasHiddenRows = true;
+    fixture.detectChanges();
     const categoryElements = fixture.debugElement.queryAll(
       By.css('.skill-category.and-more')
     );

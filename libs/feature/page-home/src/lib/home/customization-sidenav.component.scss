@@ -17,3 +17,9 @@ mat-sidenav {
     }
   }
 }
+
+mat-sidenav-content {
+  @media print {
+    margin: 0 !important;
+  }
+}

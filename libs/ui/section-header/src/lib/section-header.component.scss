@@ -6,7 +6,8 @@
   gap: spacing.sm();
 
   margin-bottom: spacing.xl();
-  @media print {
+
+  :host(.print-mode) & {
     margin-bottom: spacing.md();
   }
 

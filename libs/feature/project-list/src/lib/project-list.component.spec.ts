@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 import { SearchEngineService } from '@portfolio/search-engine-angular';
 import { SearchTagService } from '@portfolio/search-tags';
 import { BehaviorSubject, of } from 'rxjs';
@@ -62,6 +63,7 @@ describe('ProjectListComponent', () => {
           provide: ProjectListCustomOrderService,
           useValue: mockProjectListCustomOrderService,
         },
+        provideRouter([]),
       ],
     }).compileComponents();
 

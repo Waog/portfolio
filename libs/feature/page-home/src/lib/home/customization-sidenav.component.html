@@ -18,6 +18,13 @@
         <mat-icon>keyboard_double_arrow_left</mat-icon>
       </button>
     </div>
+
+    <mat-checkbox
+      [checked]="customizationStateService.isPrintMode()"
+      (change)="setPrintMode($event.checked)"
+    >
+      Print mode
+    </mat-checkbox>
   </mat-sidenav>
 
   <mat-sidenav-content>

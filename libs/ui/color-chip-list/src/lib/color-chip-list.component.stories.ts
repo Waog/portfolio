@@ -6,6 +6,9 @@ const meta: Meta<ColorChipListComponent> = {
   title: 'UI/Color Chip/Color Chip List',
   component: ColorChipListComponent,
   tags: ['autodocs'],
+  args: {
+    printMode: false,
+  },
   argTypes: {
     greenItems: {
       control: 'object',
@@ -34,6 +37,10 @@ const meta: Meta<ColorChipListComponent> = {
         defaultValue: { summary: 'large' },
       },
     },
+    printMode: {
+      control: 'boolean',
+      description: 'Apply the TS-driven print layout state',
+    },
   },
 };
 
@@ -44,7 +51,16 @@ export const Default: Story = {
   args: {
     greenItems: ['React', 'Angular', 'TypeScript'],
     yellowItems: ['JavaScript', 'Node.js'],
-    grayItems: ['CSS', 'HTML'],
+    grayItems: [
+      'CSS',
+      'HTML',
+      'AWS',
+      'Docker',
+      'Kubernetes',
+      'GraphQL',
+      'Jest',
+      'Cypress',
+    ],
   },
 };
 
@@ -106,5 +122,23 @@ export const EmptyLists: Story = {
     greenItems: [],
     yellowItems: [],
     grayItems: [],
+  },
+};
+
+export const PrintMode: Story = {
+  args: {
+    greenItems: ['React', 'Angular', 'TypeScript'],
+    yellowItems: ['JavaScript', 'Node.js'],
+    grayItems: [
+      'CSS',
+      'HTML',
+      'AWS',
+      'Docker',
+      'Kubernetes',
+      'GraphQL',
+      'Jest',
+      'Cypress',
+    ],
+    printMode: true,
   },
 };

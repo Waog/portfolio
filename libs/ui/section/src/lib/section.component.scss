@@ -9,7 +9,7 @@
     margin: 0 auto;
     padding: spacing.xl();
 
-    @media print {
+    :host(.print-mode) & {
       padding-top: spacing.lg();
       padding-bottom: spacing.lg();
     }
@@ -26,6 +26,12 @@
     &.no-vertical-padding {
       padding-top: 0;
       padding-bottom: 0;
+
+      // NOTE: This redundant block enforces css specificity to override the default vertical padding in print mode
+      :host(.print-mode) & {
+        padding-top: 0;
+        padding-bottom: 0;
+      }
     }
   }
 }

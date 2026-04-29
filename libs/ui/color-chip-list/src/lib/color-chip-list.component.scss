@@ -12,10 +12,10 @@
     gap: 0.5rem;
     align-items: center;
   }
+}
 
-  @media print {
-    .toggle-button {
-      color: gray;
-    }
+.toggle-button {
+  :host(.print-mode) & {
+    color: gray;
   }
 }

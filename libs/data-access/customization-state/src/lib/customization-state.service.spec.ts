@@ -63,11 +63,23 @@ describe('CustomizationStateService', () => {
     expect(service.isPanelShown()).toBe(false);
   });
 
+  it('exposes isPrintMode as false by default', () => {
+    service = createService();
+    expect(service.isPrintMode()).toBe(false);
+  });
+
   it('initializes isPanelShown from URL query params', () => {
     routerMock.url = '/?customizationPanelShown=true';
     service = createService();
 
     expect(service.isPanelShown()).toBe(true);
+  });
+
+  it('initializes isPrintMode from URL query params', () => {
+    routerMock.url = '/?printMode=true';
+    service = createService();
+
+    expect(service.isPrintMode()).toBe(true);
   });
 
   it('can set isPanelShown explicitly', () => {
@@ -104,6 +116,40 @@ describe('CustomizationStateService', () => {
     });
   });
 
+  it('can set isPrintMode explicitly', () => {
+    service = createService();
+    service.setPrintMode(true);
+
+    expect(service.isPrintMode()).toBe(true);
+    expect(urlStateServiceMock.updateValue).toHaveBeenCalledWith({
+      printMode: 'true',
+    });
+
+    service.setPrintMode(false);
+
+    expect(service.isPrintMode()).toBe(false);
+    expect(urlStateServiceMock.updateValue).toHaveBeenCalledWith({
+      printMode: null,
+    });
+  });
+
+  it('can toggle isPrintMode', () => {
+    service = createService();
+    service.togglePrintMode();
+
+    expect(service.isPrintMode()).toBe(true);
+    expect(urlStateServiceMock.updateValue).toHaveBeenCalledWith({
+      printMode: 'true',
+    });
+
+    service.togglePrintMode();
+
+    expect(service.isPrintMode()).toBe(false);
+    expect(urlStateServiceMock.updateValue).toHaveBeenCalledWith({
+      printMode: null,
+    });
+  });
+
   it('syncs panel state when URL changes through navigation', () => {
     service = createService();
     routerMock.url = '/?customizationPanelShown=true';
@@ -112,5 +158,15 @@ describe('CustomizationStateService', () => {
     );
 
     expect(service.isPanelShown()).toBe(true);
+  });
+
+  it('syncs print mode when URL changes through navigation', () => {
+    service = createService();
+    routerMock.url = '/?printMode=true';
+    routerMock.events.next(
+      new NavigationEnd(1, routerMock.url, routerMock.url)
+    );
+
+    expect(service.isPrintMode()).toBe(true);
   });
 });

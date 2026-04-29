@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 import {
   SearchEngineService,
   type SearchResult,
@@ -57,6 +58,7 @@ describe('MatchesOverviewComponent', () => {
       providers: [
         { provide: SearchTagService, useValue: mockSearchTagService },
         { provide: SearchEngineService, useValue: mockSearchEngineService },
+        provideRouter([]),
       ],
     }).compileComponents();
 

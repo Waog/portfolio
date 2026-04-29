@@ -26,7 +26,7 @@
 // ```
 //
 // Available spacing functions: xs(), sm(), md(), lg(), xl()
-// All functions automatically adapt to screen size and print context.
+// All functions automatically adapt to screen size and print mode.
 
 @mixin spacing-variables {
   :root {
@@ -47,14 +47,12 @@
     }
   }
 
-  @media print {
-    :root {
-      --spacing-xs: 3px;
-      --spacing-sm: 7px;
-      --spacing-md: 14px;
-      --spacing-lg: 21px;
-      --spacing-xl: 30px;
-    }
+  :root[data-spacing-print-mode='true'] {
+    --spacing-xs: 3px;
+    --spacing-sm: 7px;
+    --spacing-md: 14px;
+    --spacing-lg: 21px;
+    --spacing-xl: 30px;
   }
 }
 

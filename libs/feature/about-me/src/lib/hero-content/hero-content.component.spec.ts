@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 
 import { HeroContentComponent } from './hero-content.component';
 
@@ -9,6 +10,7 @@ describe('HeroContentComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [HeroContentComponent],
+      providers: [provideRouter([])],
     }).compileComponents();
 
     fixture = TestBed.createComponent(HeroContentComponent);

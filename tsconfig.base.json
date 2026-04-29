@@ -47,6 +47,7 @@
       "@portfolio/search-tags": ["libs/data-access/search-tags/src/index.ts"],
       "@portfolio/section": ["libs/ui/section/src/index.ts"],
       "@portfolio/section-header": ["libs/ui/section-header/src/index.ts"],
+      "@portfolio/shared-styles": ["libs/util/shared-styles/src/index.ts"],
       "@portfolio/skill-section": ["libs/feature/skill-section/src/index.ts"],
       "@portfolio/tag-input": ["libs/feature/tag-input/src/index.ts"],
       "@portfolio/taxonomy": ["libs/data-access/taxonomy/src/index.ts"],

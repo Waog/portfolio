@@ -1,4 +1,7 @@
+import { signal } from '@angular/core';
+import { CustomizationStateService } from '@portfolio/customization-state';
 import type { Meta, StoryObj } from '@storybook/angular';
+import { moduleMetadata } from '@storybook/angular';
 
 import { PersonalInformationComponent } from './personal-information.component';
 
@@ -6,6 +9,16 @@ const meta: Meta<PersonalInformationComponent> = {
   component: PersonalInformationComponent,
   title: 'Feature/About Me/Personal Information',
   tags: ['autodocs'],
+  decorators: [
+    moduleMetadata({
+      providers: [
+        {
+          provide: CustomizationStateService,
+          useValue: { isPrintMode: signal(false) },
+        },
+      ],
+    }),
+  ],
   parameters: {
     docs: {
       description: {
@@ -29,4 +42,17 @@ export const Default: Story = {
       },
     },
   },
+};
+
+export const PrintMode: Story = {
+  decorators: [
+    moduleMetadata({
+      providers: [
+        {
+          provide: CustomizationStateService,
+          useValue: { isPrintMode: signal(true) },
+        },
+      ],
+    }),
+  ],
 };

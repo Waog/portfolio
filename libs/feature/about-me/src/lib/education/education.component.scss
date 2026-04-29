@@ -4,6 +4,10 @@
   .education-main {
     margin-bottom: spacing.lg();
 
+    :host(.print-mode) & {
+      margin-bottom: spacing.sm();
+    }
+
     .degree-title {
       font-size: 1.25rem;
       font-weight: 600;
@@ -57,6 +61,15 @@
       border-radius: 6px;
       border-left: 3px solid #28a745;
 
+      :host(.print-mode) & {
+        gap: 0;
+        margin-bottom: spacing.sm();
+        padding: spacing.sm();
+        // background-color: transparent;
+        // border-radius: 0;
+        border-left: none;
+      }
+
       .grade-icon {
         color: #28a745;
         font-size: 1.125rem;
@@ -73,25 +86,6 @@
       font-size: 0.875rem;
       color: #7f8c8d;
       font-style: italic;
-    }
-  }
-}
-
-@media print {
-  .education-card {
-    .education-main {
-      margin-bottom: spacing.sm();
-    }
-
-    .education-details {
-      .grade-highlight {
-        gap: 0;
-        margin-bottom: spacing.sm();
-        padding: spacing.sm();
-        // background-color: transparent;
-        // border-radius: 0;
-        border-left: none;
-      }
     }
   }
 }

@@ -6,6 +6,9 @@ const meta: Meta<SectionHeaderComponent> = {
   title: 'UI/Section Header',
   component: SectionHeaderComponent,
   tags: ['autodocs'],
+  args: {
+    printMode: false,
+  },
   argTypes: {
     text: {
       control: 'text',
@@ -14,6 +17,10 @@ const meta: Meta<SectionHeaderComponent> = {
     highlight: {
       control: 'boolean',
       description: 'Whether to show a green star icon and highlight styling',
+    },
+    printMode: {
+      control: 'boolean',
+      description: 'Apply the TS-driven print layout state',
     },
   },
 };
@@ -45,5 +52,13 @@ export const HighlightedLongText: Story = {
   args: {
     text: 'This is a very long highlighted section header with a star icon',
     highlight: true,
+  },
+};
+
+export const PrintMode: Story = {
+  args: {
+    text: 'Print Mode Header',
+    highlight: false,
+    printMode: true,
   },
 };

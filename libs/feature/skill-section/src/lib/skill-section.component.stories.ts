@@ -1,3 +1,5 @@
+import { signal } from '@angular/core';
+import { CustomizationStateService } from '@portfolio/customization-state';
 import { SearchEngineService } from '@portfolio/search-engine-angular';
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
@@ -74,6 +76,10 @@ class MockSearchEngineService {
   public readonly searchResult$ = this.searchResultSubject.asObservable();
 }
 
+class MockCustomizationStateService {
+  readonly isPrintMode = signal(false);
+}
+
 const meta: Meta<SkillSectionComponent> = {
   component: SkillSectionComponent,
   title: 'Feature/Skill Section',
@@ -81,6 +87,10 @@ const meta: Meta<SkillSectionComponent> = {
     moduleMetadata({
       providers: [
         { provide: SearchEngineService, useClass: MockSearchEngineService },
+        {
+          provide: CustomizationStateService,
+          useClass: MockCustomizationStateService,
+        },
       ],
     }),
   ],
@@ -91,3 +101,18 @@ export default meta;
 type Story = StoryObj<SkillSectionComponent>;
 
 export const Default: Story = {};
+
+export const PrintMode: Story = {
+  decorators: [
+    moduleMetadata({
+      providers: [
+        {
+          provide: CustomizationStateService,
+          useValue: {
+            isPrintMode: signal(true),
+          },
+        },
+      ],
+    }),
+  ],
+};

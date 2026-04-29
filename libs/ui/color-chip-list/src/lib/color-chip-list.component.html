@@ -19,10 +19,15 @@
       (click)="toggleItems()"
       class="toggle-button"
     >
-      <mat-icon class="screen-only">{{
+      @if (!printMode) {
+      <mat-icon>{{
         hiddenItemsCount > 0 ? 'expand_more' : 'expand_less'
       }}</mat-icon>
-      <span class="screen-only">show</span><span class="print-only">+ </span>
+      } @if (!printMode) {
+      <span>show</span>
+      } @else {
+      <span>+ </span>
+      }
       {{
         visibleItems.length < allItems.length
           ? hiddenItemsCount + ' more'

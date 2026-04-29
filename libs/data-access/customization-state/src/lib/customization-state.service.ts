@@ -9,16 +9,19 @@ import { filter } from 'rxjs';
 })
 export class CustomizationStateService {
   private readonly panelShownQueryParam = 'customizationPanelShown';
+  private readonly printModeQueryParam = 'printMode';
   private readonly router = inject(Router);
   private readonly destroyRef = inject(DestroyRef);
   private readonly urlStateService = inject(UrlStateService);
 
   private readonly _isPanelShown = signal(false);
+  private readonly _isPrintMode = signal(false);
   readonly isPanelShown = this._isPanelShown.asReadonly();
+  readonly isPrintMode = this._isPrintMode.asReadonly();
 
   constructor() {
-    this._isPanelShown.set(this.getIsPanelShownFromUrl());
-    this.syncPanelShownWithUrlChanges();
+    this.setStateFromUrl();
+    this.syncStateWithUrlChanges();
   }
 
   setPanelShown(isShown: boolean): void {
@@ -36,20 +39,39 @@ export class CustomizationStateService {
     this.setPanelShown(!this._isPanelShown());
   }
 
-  private syncPanelShownWithUrlChanges(): void {
+  setPrintMode(isPrintMode: boolean): void {
+    if (this._isPrintMode() === isPrintMode) {
+      return;
+    }
+
+    this._isPrintMode.set(isPrintMode);
+    this.urlStateService.updateValue({
+      [this.printModeQueryParam]: isPrintMode ? 'true' : null,
+    });
+  }
+
+  togglePrintMode(): void {
+    this.setPrintMode(!this._isPrintMode());
+  }
+
+  private syncStateWithUrlChanges(): void {
     this.router.events
       .pipe(
         filter(event => event instanceof NavigationEnd),
         takeUntilDestroyed(this.destroyRef)
       )
       .subscribe(() => {
-        this._isPanelShown.set(this.getIsPanelShownFromUrl());
+        this.setStateFromUrl();
       });
   }
 
-  private getIsPanelShownFromUrl(): boolean {
+  private setStateFromUrl(): void {
+    this._isPanelShown.set(this.getQueryParamFlag(this.panelShownQueryParam));
+    this._isPrintMode.set(this.getQueryParamFlag(this.printModeQueryParam));
+  }
+
+  private getQueryParamFlag(queryParam: string): boolean {
     const urlTree = this.router.parseUrl(this.router.url);
-    const panelShownParam = urlTree.queryParams[this.panelShownQueryParam];
-    return panelShownParam === 'true';
+    return urlTree.queryParams[queryParam] === 'true';
   }
 }

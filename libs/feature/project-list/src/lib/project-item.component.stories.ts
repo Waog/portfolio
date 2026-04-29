@@ -38,6 +38,13 @@ const meta: Meta<ProjectItemComponent> = {
         type: { summary: 'boolean' },
       },
     },
+    printMode: {
+      control: 'boolean',
+      table: {
+        type: { summary: 'boolean' },
+      },
+      description: 'Apply the TS-driven print layout state',
+    },
   },
 };
 
@@ -88,6 +95,7 @@ export const Default: Story = {
     project: mockProject,
     isTopProject: false,
     compact: false,
+    printMode: false,
   },
 };
 
@@ -95,6 +103,7 @@ export const AsTopProject: Story = {
   args: {
     project: mockProject,
     isTopProject: true,
+    printMode: false,
   },
 };
 
@@ -103,5 +112,15 @@ export const Compact: Story = {
     project: mockProject,
     isTopProject: false,
     compact: true,
+    printMode: false,
+  },
+};
+
+export const PrintMode: Story = {
+  args: {
+    project: mockProject,
+    isTopProject: false,
+    compact: false,
+    printMode: true,
   },
 };

@@ -11,10 +11,21 @@
   width: 100%;
   margin-bottom: spacing.lg();
   overflow: visible;
+
+  :host(.print-mode) & {
+    box-shadow: none;
+    border-radius: 0;
+    margin-bottom: 0; // NOTE: override magic MD3 card margin
+  }
 }
 
 .main-content {
   padding: spacing.xl();
+
+  :host(.print-mode) & {
+    padding: 0;
+    padding-bottom: 0 !important;
+  }
 }
 
 .content-grid {
@@ -30,33 +41,19 @@
     gap: spacing.md();
     justify-content: space-between;
     flex-grow: 1;
+
+    :host(.print-mode) & {
+      gap: 0;
+    }
+  }
+
+  :host(.print-mode) & {
+    gap: 0;
   }
 }
 
 @include breakpoints.mobile-only {
   .content-grid {
     grid-template-columns: 1fr;
-  }
-}
-
-@media print {
-  .about-me-card {
-    box-shadow: none;
-    border-radius: 0;
-    margin-bottom: 0; // NOTE: override magic MD3 card margin
-  }
-
-  .main-content {
-    padding: 0;
-    padding-bottom: 0 !important;
-  }
-
-  .content-grid {
-    gap: 0;
-
-    .left-column,
-    .right-column {
-      gap: 0;
-    }
   }
 }
