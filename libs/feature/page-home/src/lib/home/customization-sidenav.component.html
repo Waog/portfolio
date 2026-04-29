@@ -1,0 +1,26 @@
+<mat-sidenav-container>
+  <mat-sidenav
+    position="start"
+    mode="side"
+    [opened]="customizationStateService.isPanelShown()"
+    fixedInViewport="true"
+    fixedTopGap="80"
+    class="screen-only"
+  >
+    <div class="header-row">
+      <h2 class="heading">Customize</h2>
+      <button
+        mat-icon-button
+        type="button"
+        aria-label="Hide panel"
+        (click)="hidePanel()"
+      >
+        <mat-icon>keyboard_double_arrow_left</mat-icon>
+      </button>
+    </div>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <ng-content></ng-content>
+  </mat-sidenav-content>
+</mat-sidenav-container>

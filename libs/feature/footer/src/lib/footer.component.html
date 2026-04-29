@@ -23,6 +23,21 @@
         </nav>
       </div>
 
+      <div class="footer-section footer-customization-panel-toggle-section">
+        <button
+          type="button"
+          mat-button
+          class="footer-link footer-link-subtle"
+          (click)="togglePanelShown()"
+        >
+          {{
+            customizationStateService.isPanelShown()
+              ? 'hide customization'
+              : 'show customization'
+          }}
+        </button>
+      </div>
+
       <div class="footer-section footer-copyright">
         <span class="copyright-text">
           © {{ currentYear }} Oliver Stadie IT GmbH

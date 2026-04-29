@@ -1,22 +1,24 @@
-<div class="home-container">
-  <lib-section class="tag-input screen-only">
-    <lib-tag-input />
-  </lib-section>
-  @if ((searchTagService.tags$ | async)?.length) {
-  <lib-section class="matches-overview no-page-break">
-    <lib-matches-overview />
-  </lib-section>
-  }
-  <lib-section class="project-list">
-    <lib-project-list />
-  </lib-section>
-  <lib-section class="skill-section page-break-after">
-    <lib-skill-section />
-  </lib-section>
-  <lib-section fullWidth noVerticalPadding class="about-me no-page-break">
-    <lib-about-me />
-  </lib-section>
-  <lib-section class="contact-section screen-only">
-    <lib-contact-section />
-  </lib-section>
-</div>
+<lib-customization-sidenav>
+  <div class="home-container">
+    <lib-section class="tag-input screen-only">
+      <lib-tag-input />
+    </lib-section>
+    @if ((searchTagService.tags$ | async)?.length) {
+    <lib-section class="matches-overview no-page-break">
+      <lib-matches-overview />
+    </lib-section>
+    }
+    <lib-section class="project-list">
+      <lib-project-list />
+    </lib-section>
+    <lib-section class="skill-section page-break-after">
+      <lib-skill-section />
+    </lib-section>
+    <lib-section fullWidth noVerticalPadding class="about-me no-page-break">
+      <lib-about-me />
+    </lib-section>
+    <lib-section class="contact-section screen-only">
+      <lib-contact-section />
+    </lib-section>
+  </div>
+</lib-customization-sidenav>

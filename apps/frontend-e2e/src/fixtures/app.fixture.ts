@@ -1,6 +1,7 @@
 import { test as base } from '@playwright/test';
 
 import { Footer } from '../pom/footer/footer';
+import { CustomizationSidenav } from '../pom/home/customization-sidenav';
 import { HomePage } from '../pom/home/home-page';
 import { LegalPage } from '../pom/legal/legal-page';
 import { Navigation } from '../pom/navigation/navigation';
@@ -11,6 +12,7 @@ type MyFixtures = {
   homePage: HomePage;
   navigation: Navigation;
   footer: Footer;
+  customizationSidenav: CustomizationSidenav;
   urlHelper: UrlHelper;
   webMetadataPage: WebMetadataPage;
   legalPage: LegalPage;
@@ -47,6 +49,11 @@ export const test = base.extend<MyInternalFixtures & MyOptions>({
   footer: async ({ _initialLoad, page }, use) => {
     const footer = new Footer(page);
     await use(footer);
+  },
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  customizationSidenav: async ({ _initialLoad, page }, use) => {
+    const customizationSidenav = new CustomizationSidenav(page);
+    await use(customizationSidenav);
   },
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   webMetadataPage: async ({ _initialLoad, page, request }, use) => {

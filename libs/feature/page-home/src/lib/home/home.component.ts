@@ -10,10 +10,13 @@ import { SectionComponent } from '@portfolio/section';
 import { SkillSectionComponent } from '@portfolio/skill-section';
 import { TagInputComponent } from '@portfolio/tag-input';
 
+import { CustomizationSidenavComponent } from './customization-sidenav.component';
+
 @Component({
   selector: 'lib-home',
   imports: [
     CommonModule,
+    CustomizationSidenavComponent,
     ProjectListComponent,
     TagInputComponent,
     MatchesOverviewComponent,
@@ -26,6 +29,6 @@ import { TagInputComponent } from '@portfolio/tag-input';
   styleUrl: './home.component.scss',
 })
 export class HomeComponent {
-  protected searchTagService = inject(SearchTagService);
-  protected searchResult$ = inject(SearchEngineService).searchResult$;
+  protected readonly searchTagService = inject(SearchTagService);
+  protected readonly searchResult$ = inject(SearchEngineService).searchResult$;
 }
