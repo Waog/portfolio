@@ -14,22 +14,22 @@ export class Tag {
 
   @MemoizeAllArgs
   public static find(searchTerm: string): Tag | undefined {
-    const matchByCanonical = TAXONOMY.find(
-      data => searchTerm === data.canonical
-    );
-    if (matchByCanonical) {
-      return Tag.get(matchByCanonical.canonical);
+    if (searchTerm in TAXONOMY) {
+      return Tag.get(searchTerm as TagName);
     }
 
-    const matchingData = TAXONOMY.find(data => Tag.matches(searchTerm, data));
-    return matchingData ? Tag.get(matchingData.canonical) : undefined;
+    for (const canonicalName in TAXONOMY) {
+      const data = TAXONOMY[canonicalName as TagName];
+      if (Tag.matches(searchTerm, data)) {
+        return Tag.get(data.canonical);
+      }
+    }
+
+    return undefined;
   }
 
   private constructor(public tagName: TagName) {
-    // NOTE: since we match against a TagName and TagName is derived from TAXONOMY,
-    // we can safely assume that the tagName exists in TAXONOMY.
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    this.taxonomyData = TAXONOMY.find(data => tagName === data.canonical)!;
+    this.taxonomyData = TAXONOMY[tagName];
   }
 
   @MemoizeAllArgs

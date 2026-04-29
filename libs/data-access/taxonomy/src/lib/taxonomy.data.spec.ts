@@ -4,7 +4,7 @@ import { TagName, TAXONOMY, TaxonomyData } from './taxonomy.data';
 
 describe('Taxonomy Data', () => {
   it('has no duplicate canonical values', () => {
-    const canonicalNames = TAXONOMY.map(term => term.canonical);
+    const canonicalNames = Object.keys(TAXONOMY);
     const uniqueCanonicalNames = new Set(canonicalNames);
 
     expect(canonicalNames).toEqual(Array.from(uniqueCanonicalNames));
@@ -35,7 +35,8 @@ describe('Taxonomy Data', () => {
   });
 
   it('categories include elements which are either `Misc` or others', () => {
-    for (const data of TAXONOMY) {
+    for (const canonicalName in TAXONOMY) {
+      const data = TAXONOMY[canonicalName as TagName];
       const categories = data.categories;
       expect(
         categories.length,
@@ -54,7 +55,8 @@ describe('Taxonomy Data', () => {
     sourcePropertyName: keyof TaxonomyData,
     targetPropertyName: keyof TaxonomyData | undefined = undefined
   ) {
-    for (const sourceTerm of TAXONOMY) {
+    for (const sourceCanonicalName in TAXONOMY) {
+      const sourceTerm = TAXONOMY[sourceCanonicalName as TagName];
       const sourceValues: TagName[] = sourceTerm[
         sourcePropertyName
       ] as TagName[];
@@ -62,9 +64,7 @@ describe('Taxonomy Data', () => {
       if (!sourceValues) continue;
 
       for (const sourceValue of sourceValues) {
-        const targetTerm = TAXONOMY.find(
-          targetTerm => targetTerm.canonical === sourceValue
-        );
+        const targetTerm = TAXONOMY[sourceValue];
 
         expect(
           targetTerm,
