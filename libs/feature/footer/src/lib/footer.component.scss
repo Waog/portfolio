@@ -1,3 +1,5 @@
+@use 'breakpoints' as breakpoints;
+
 .footer {
   width: 100%;
   margin-top: auto;
@@ -107,7 +109,17 @@
   opacity: 0.6;
 }
 
-@media (max-width: 768px) {
+@include breakpoints.desktop-up {
+  .footer-content {
+    flex-wrap: wrap;
+  }
+
+  .footer-brand-link {
+    flex-wrap: wrap;
+  }
+}
+
+@include breakpoints.mobile-only {
   .footer-content {
     flex-direction: column;
     align-items: center;
