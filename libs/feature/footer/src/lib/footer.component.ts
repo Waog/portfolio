@@ -1,9 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterModule } from '@angular/router';
+import { CustomizationStateService } from '@portfolio/customization-state';
 
 @Component({
   selector: 'lib-footer',
@@ -19,5 +20,12 @@ import { RouterModule } from '@angular/router';
   styleUrl: './footer.component.scss',
 })
 export class FooterComponent {
-  currentYear = new Date().getFullYear();
+  protected readonly currentYear = new Date().getFullYear();
+  protected readonly customizationStateService = inject(
+    CustomizationStateService
+  );
+
+  protected togglePanelShown(): void {
+    this.customizationStateService.togglePanelShown();
+  }
 }

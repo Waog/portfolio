@@ -1,0 +1,19 @@
+@use 'spacing' as spacing;
+
+mat-sidenav {
+  padding: spacing.md();
+  border-right: 1px solid rgba(0, 0, 0, 0.08);
+  background-color: white;
+
+  .header-row {
+    margin: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: spacing.sm();
+
+    .heading {
+      margin: 0;
+    }
+  }
+}
