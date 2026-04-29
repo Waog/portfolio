@@ -1,3 +1,5 @@
+import { signal } from '@angular/core';
+import { CustomizationStateService } from '@portfolio/customization-state';
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
 
@@ -11,6 +13,12 @@ const meta: Meta<AboutMeComponent> = {
   decorators: [
     moduleMetadata({
       imports: [MediaWrapperComponent],
+      providers: [
+        {
+          provide: CustomizationStateService,
+          useValue: { isPrintMode: signal(false) },
+        },
+      ],
     }),
   ],
 };
@@ -24,5 +32,21 @@ export const Default: Story = {
       globals['viewport'] === 'dinA4'
         ? `<lib-media-wrapper [media]="'print'"><lib-about-me /></lib-media-wrapper>`
         : `<lib-about-me />`,
+  }),
+};
+
+export const PrintMode: Story = {
+  decorators: [
+    moduleMetadata({
+      providers: [
+        {
+          provide: CustomizationStateService,
+          useValue: { isPrintMode: signal(true) },
+        },
+      ],
+    }),
+  ],
+  render: () => ({
+    template: `<lib-about-me />`,
   }),
 };

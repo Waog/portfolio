@@ -1,4 +1,7 @@
+import { signal } from '@angular/core';
+import { CustomizationStateService } from '@portfolio/customization-state';
 import type { Meta, StoryObj } from '@storybook/angular';
+import { moduleMetadata } from '@storybook/angular';
 
 import { HeroContentComponent } from './hero-content.component';
 
@@ -6,6 +9,16 @@ const meta: Meta<HeroContentComponent> = {
   component: HeroContentComponent,
   title: 'Feature/About Me/Hero Content',
   tags: ['autodocs'],
+  decorators: [
+    moduleMetadata({
+      providers: [
+        {
+          provide: CustomizationStateService,
+          useValue: { isPrintMode: signal(false) },
+        },
+      ],
+    }),
+  ],
   parameters: {
     docs: {
       description: {
@@ -29,4 +42,17 @@ export const Default: Story = {
       },
     },
   },
+};
+
+export const PrintMode: Story = {
+  decorators: [
+    moduleMetadata({
+      providers: [
+        {
+          provide: CustomizationStateService,
+          useValue: { isPrintMode: signal(true) },
+        },
+      ],
+    }),
+  ],
 };

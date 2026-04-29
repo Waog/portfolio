@@ -16,14 +16,16 @@
           <mat-icon class="info-icon">location_on</mat-icon>
           <span>Berlin (Germany)</span>
         </span>
-        <span class="location-item print-only">
+        @if (isPrintMode()) {
+        <span class="location-item">
           <mat-icon class="info-icon">phone</mat-icon>
           <a href="tel:+4915202825986">+4915202825986</a>
         </span>
-        <span class="location-item print-only">
+        <span class="location-item">
           <mat-icon class="info-icon">email</mat-icon>
           <a href="mailto:info@oliverstadie.com"> info&#64;oliverstadie.com </a>
         </span>
+        }
       </div>
       <p class="hero-summary">
         Well-organized, broad-minded, passionate and responsible IT

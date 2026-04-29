@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 
 import { ProfessionalFocusComponent } from './professional-focus.component';
 
@@ -9,6 +10,7 @@ describe('ProfessionalFocusComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [ProfessionalFocusComponent],
+      providers: [provideRouter([])],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ProfessionalFocusComponent);

@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 
 import { CommunityWritingComponent } from './community-writing.component';
 
@@ -9,6 +10,7 @@ describe('CommunityWritingComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [CommunityWritingComponent],
+      providers: [provideRouter([])],
     }).compileComponents();
 
     fixture = TestBed.createComponent(CommunityWritingComponent);

@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
+import { CustomizationStateService } from '@portfolio/customization-state';
 
 import { CommunityWritingComponent } from '../community-writing/community-writing.component';
 import { EducationComponent } from '../education/education.component';
@@ -10,6 +11,7 @@ import { ProfessionalFocusComponent } from '../professional-focus/professional-f
 
 @Component({
   selector: 'lib-about-me',
+  host: { '[class.print-mode]': 'isPrintMode()' },
   imports: [
     CommonModule,
     MatCardModule,
@@ -22,4 +24,7 @@ import { ProfessionalFocusComponent } from '../professional-focus/professional-f
   templateUrl: './about-me.component.html',
   styleUrl: './about-me.component.scss',
 })
-export class AboutMeComponent {}
+export class AboutMeComponent {
+  protected readonly isPrintMode = inject(CustomizationStateService)
+    .isPrintMode;
+}

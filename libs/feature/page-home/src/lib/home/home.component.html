@@ -1,24 +1,92 @@
 <lib-customization-sidenav>
   <div class="home-container">
-    <lib-section class="tag-input screen-only">
+    <lib-section
+      class="tag-input screen-only"
+      [printMode]="customizationStateService.isPrintMode()"
+    >
       <lib-tag-input />
     </lib-section>
-    @if ((searchTagService.tags$ | async)?.length) {
-    <lib-section class="matches-overview no-page-break">
+    @if (customizationStateService.isPrintMode()) {
+    <div class="pages-list">
+      <div class="page-sheet page-sheet--1">
+        <lib-section
+          fullWidth
+          noVerticalPadding
+          class="about-me no-page-break"
+          [printMode]="customizationStateService.isPrintMode()"
+        >
+          <lib-about-me />
+        </lib-section>
+        @if ((searchTagService.tags$ | async)?.length) {
+        <lib-section
+          class="matches-overview no-page-break"
+          [printMode]="customizationStateService.isPrintMode()"
+        >
+          <lib-matches-overview />
+        </lib-section>
+        }
+        <lib-section
+          class="skill-section page-break-after"
+          [printMode]="customizationStateService.isPrintMode()"
+        >
+          <lib-skill-section />
+        </lib-section>
+      </div>
+      <div class="page-sheet page-sheet--2">
+        <lib-section
+          class="project-list"
+          [printMode]="customizationStateService.isPrintMode()"
+        >
+          <lib-project-list
+            [printStart]="0"
+            [printCount]="3"
+            [sectionId]="'projects'"
+          />
+        </lib-section>
+      </div>
+      <div class="page-sheet page-sheet--3">
+        <lib-section
+          class="project-list"
+          [printMode]="customizationStateService.isPrintMode()"
+        >
+          <lib-project-list [printStart]="3" [printCount]="5" />
+        </lib-section>
+      </div>
+    </div>
+    } @else { @if ((searchTagService.tags$ | async)?.length) {
+    <lib-section
+      class="matches-overview no-page-break"
+      [printMode]="customizationStateService.isPrintMode()"
+    >
       <lib-matches-overview />
     </lib-section>
     }
-    <lib-section class="project-list">
-      <lib-project-list />
+    <lib-section
+      class="project-list"
+      [printMode]="customizationStateService.isPrintMode()"
+    >
+      <lib-project-list [sectionId]="'projects'" />
     </lib-section>
-    <lib-section class="skill-section page-break-after">
+    <lib-section
+      class="skill-section page-break-after"
+      [printMode]="customizationStateService.isPrintMode()"
+    >
       <lib-skill-section />
     </lib-section>
-    <lib-section fullWidth noVerticalPadding class="about-me no-page-break">
+    <lib-section
+      fullWidth
+      noVerticalPadding
+      class="about-me no-page-break"
+      [printMode]="customizationStateService.isPrintMode()"
+    >
       <lib-about-me />
     </lib-section>
-    <lib-section class="contact-section screen-only">
+    <lib-section
+      class="contact-section screen-only"
+      [printMode]="customizationStateService.isPrintMode()"
+    >
       <lib-contact-section />
     </lib-section>
+    }
   </div>
 </lib-customization-sidenav>

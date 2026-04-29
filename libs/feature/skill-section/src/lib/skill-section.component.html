@@ -1,5 +1,5 @@
 <div id="skills" class="container">
-  <lib-section-header text="Skills" />
+  <lib-section-header text="Skills" [printMode]="isPrintMode()" />
 
   <div class="grid">
     @if (showSkeletons$ | async) { @for (skeletonRow of skillSkeletonRows; track
@@ -26,15 +26,19 @@
         [greenItems]="categoryRow.tagLists.fullMatches"
         [yellowItems]="categoryRow.tagLists.partialMatches"
         [grayItems]="categoryRow.tagLists.nonMatches"
+        [printMode]="isPrintMode()"
       />
     </div>
-    }
-
-    <span class="skill-category print-only and-more">and more...</span>
+    } @if (hasHiddenRows) {<span
+      class="skill-category and-more"
+      #andMoreCategoryRef
+      >and more...</span
+    >
     <lib-color-chip-list
-      class="skill-category-content print-only and-more spacer"
+      #andMoreSpacerRef
+      class="skill-category-content and-more spacer"
       [grayItems]="['spacer']"
-    />
-    }
+      [printMode]="isPrintMode()"
+    />} }
   </div>
 </div>

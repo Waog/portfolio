@@ -1,5 +1,8 @@
+import { signal } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
+import { CustomizationStateService } from '@portfolio/customization-state';
 import type { Meta, StoryObj } from '@storybook/angular';
+import { moduleMetadata } from '@storybook/angular';
 
 import { SubSectionComponent } from './sub-section.component';
 
@@ -7,6 +10,16 @@ const meta: Meta<SubSectionComponent> = {
   component: SubSectionComponent,
   title: 'Feature/About Me/Sub Section',
   tags: ['autodocs'],
+  decorators: [
+    moduleMetadata({
+      providers: [
+        {
+          provide: CustomizationStateService,
+          useValue: { isPrintMode: signal(false) },
+        },
+      ],
+    }),
+  ],
   parameters: {
     docs: {
       description: {
@@ -77,4 +90,32 @@ export const WithComplexContent: Story = {
       },
     },
   },
+};
+
+export const PrintMode: Story = {
+  decorators: [
+    moduleMetadata({
+      providers: [
+        {
+          provide: CustomizationStateService,
+          useValue: { isPrintMode: signal(true) },
+        },
+      ],
+    }),
+  ],
+  render: args => ({
+    props: args,
+    template: `
+      <lib-sub-section>
+        <mat-icon slot="icon">person</mat-icon>
+        <span slot="title">Personal Information</span>
+        <div slot="content">
+          <p>This is example content in print mode.</p>
+        </div>
+      </lib-sub-section>
+    `,
+    moduleMetadata: {
+      imports: [MatIconModule],
+    },
+  }),
 };

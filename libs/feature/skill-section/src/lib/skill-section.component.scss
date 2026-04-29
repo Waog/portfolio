@@ -53,6 +53,10 @@
       visibility: hidden;
     }
 
+    .hidden-overflow {
+      display: none;
+    }
+
     @include breakpoints.mobile-only {
       grid-template-columns: 1fr;
 

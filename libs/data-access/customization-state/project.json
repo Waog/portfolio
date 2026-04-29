@@ -4,7 +4,7 @@
   "sourceRoot": "libs/data-access/customization-state/src",
   "prefix": "lib",
   "projectType": "library",
-  "tags": ["layer:data-access"],
+  "tags": ["layer:data-access", "type:top-level"],
   "targets": {
     "test": {
       "executor": "@nx/jest:jest",

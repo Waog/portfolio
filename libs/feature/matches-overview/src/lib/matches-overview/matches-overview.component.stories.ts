@@ -1,3 +1,5 @@
+import { signal } from '@angular/core';
+import { CustomizationStateService } from '@portfolio/customization-state';
 import { SearchEngineService } from '@portfolio/search-engine-angular';
 import { SearchTagService } from '@portfolio/search-tags';
 import type { Meta, StoryObj } from '@storybook/angular';
@@ -108,6 +110,10 @@ class MockSearchEngineService {
   }
 }
 
+class MockCustomizationStateService {
+  readonly isPrintMode = signal(false);
+}
+
 const meta: Meta<MatchesOverviewComponent> = {
   component: MatchesOverviewComponent,
   title: 'Feature/Matches Overview',
@@ -116,6 +122,10 @@ const meta: Meta<MatchesOverviewComponent> = {
       providers: [
         { provide: SearchTagService, useClass: MockSearchTagService },
         { provide: SearchEngineService, useClass: MockSearchEngineService },
+        {
+          provide: CustomizationStateService,
+          useClass: MockCustomizationStateService,
+        },
       ],
     }),
   ],
@@ -134,11 +144,33 @@ export default meta;
 type Story = StoryObj<MatchesOverviewComponent>;
 
 export const Default: Story = {
+  decorators: [
+    moduleMetadata({
+      providers: [
+        {
+          provide: SearchTagService,
+          useFactory: () => {
+            const service = new MockSearchTagService();
+            service.initializeWithTags(manyTags);
+            return service;
+          },
+        },
+        {
+          provide: SearchEngineService,
+          useFactory: () => {
+            const service = new MockSearchEngineService();
+            service.initializeWithTags(manyTags);
+            return service;
+          },
+        },
+      ],
+    }),
+  ],
   parameters: {
     docs: {
       description: {
         story:
-          'The default state with no tags selected, showing an empty matches overview.',
+          'Default story showing many tags with mixed full and partial matches.',
       },
     },
   },
@@ -205,6 +237,55 @@ export const WithManyTags: Story = {
       description: {
         story:
           'Shows how the component handles a large number of tags, including both tags with matches and tags with no matches. Demonstrates the responsive layout and comprehensive match overview with mixed results.',
+      },
+    },
+  },
+};
+
+export const NoTags: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Shows the component with no selected tags and an empty matches overview.',
+      },
+    },
+  },
+};
+
+export const PrintMode: Story = {
+  decorators: [
+    moduleMetadata({
+      providers: [
+        {
+          provide: SearchTagService,
+          useFactory: () => {
+            const service = new MockSearchTagService();
+            service.initializeWithTags(manyTags);
+            return service;
+          },
+        },
+        {
+          provide: SearchEngineService,
+          useFactory: () => {
+            const service = new MockSearchEngineService();
+            service.initializeWithTags(manyTags);
+            return service;
+          },
+        },
+        {
+          provide: CustomizationStateService,
+          useValue: {
+            isPrintMode: signal(true),
+          },
+        },
+      ],
+    }),
+  ],
+  parameters: {
+    docs: {
+      description: {
+        story: 'Shows many tags with print mode enabled.',
       },
     },
   },

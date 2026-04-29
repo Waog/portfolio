@@ -4,5 +4,5 @@
   "sourceRoot": "libs/util/shared-styles/src",
   "prefix": "lib",
   "projectType": "library",
-  "tags": ["layer:util", "type:styles"]
+  "tags": ["layer:util", "type:styles", "type:top-level"]
 }

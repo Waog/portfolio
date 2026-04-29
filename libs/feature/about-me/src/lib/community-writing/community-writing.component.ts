@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
+import { CustomizationStateService } from '@portfolio/customization-state';
 
 import { SubSectionComponent } from '../sub-section/sub-section.component';
 
@@ -10,4 +11,7 @@ import { SubSectionComponent } from '../sub-section/sub-section.component';
   styleUrl: './community-writing.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CommunityWritingComponent {}
+export class CommunityWritingComponent {
+  protected readonly isPrintMode = inject(CustomizationStateService)
+    .isPrintMode;
+}

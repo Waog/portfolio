@@ -16,6 +16,14 @@ lib-project-item {
   margin-bottom: spacing.xl();
 }
 
+.other-projects-section {
+  lib-project-item {
+    :host(.print-mode) & {
+      margin-bottom: spacing.lg();
+    }
+  }
+}
+
 ngx-skeleton-loader.project-item-skeleton {
   display: block;
   margin-bottom: spacing.xl();
@@ -48,16 +56,10 @@ ngx-skeleton-loader.project-item-skeleton {
   }
 }
 
-@media print {
-  .page-break-after {
+.page-break-after {
+  :host(.print-mode) & {
     page-break-after: always;
     break-after: page;
-  }
-
-  .other-projects-section {
-    lib-project-item {
-      margin-bottom: spacing.lg();
-    }
   }
 }
 

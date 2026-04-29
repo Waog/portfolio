@@ -1,6 +1,7 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { ColorChipComponent } from '@portfolio/color-chip';
+import { CustomizationStateService } from '@portfolio/customization-state';
 
 import { SubSectionComponent } from '../sub-section/sub-section.component';
 
@@ -13,6 +14,8 @@ import { SubSectionComponent } from '../sub-section/sub-section.component';
 })
 export class PersonalInformationComponent {
   readonly currentAge: number = this.calculateAge();
+  protected readonly isPrintMode = inject(CustomizationStateService)
+    .isPrintMode;
 
   private calculateAge(): number {
     const today = new Date();

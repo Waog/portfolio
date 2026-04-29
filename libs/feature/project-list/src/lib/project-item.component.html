@@ -1,5 +1,6 @@
 <div class="project-card no-page-break" [class.top-project]="isTopProject()">
-  <aside class="order-controls screen-only">
+  @if (!printMode()) {
+  <aside class="order-controls">
     <button
       mat-icon-button
       color="primary"
@@ -20,6 +21,7 @@
       <mat-icon>arrow_downward</mat-icon>
     </button>
   </aside>
+  }
 
   <header class="header-content">
     <h3 [class.compact]="compact()">{{ project().title }}</h3>
@@ -37,7 +39,8 @@
         {{ project().keyAchievements }}
       </div>
 
-      <nav class="content-toggle screen-only">
+      @if (!printMode()) {
+      <nav class="content-toggle">
         <button
           mat-button
           color="primary"
@@ -48,6 +51,7 @@
           Show Details
         </button>
       </nav>
+      }
     </section>
 
     <!-- Expanded Content (Full State) -->
@@ -98,6 +102,7 @@
       [greenItems]="project().technologies.fullMatches"
       [yellowItems]="project().technologies.partialMatches"
       [grayItems]="project().technologies.nonMatches"
+      [printMode]="printMode()"
     />
   </div>
 </div>

@@ -5,7 +5,9 @@
     <div class="info-item">
       <mat-icon class="info-icon">group</mat-icon>
       <div class="info-details">
-        <div class="info-label screen-only">Meetup Organizer</div>
+        @if (!isPrintMode()) {
+        <div class="info-label">Meetup Organizer</div>
+        }
         <div class="info-value">
           <a
             href="https://www.meetup.com/Software-Architecture-and-Design-Berlin/"
@@ -24,7 +26,9 @@
     <div class="info-item">
       <mat-icon class="info-icon">article</mat-icon>
       <div class="info-details">
-        <div class="info-label screen-only">Tech Blogger</div>
+        @if (!isPrintMode()) {
+        <div class="info-label">Tech Blogger</div>
+        }
         <div class="info-value">
           <a
             href="https://waog.wordpress.com/category/software-development-2/"

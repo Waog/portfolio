@@ -31,6 +31,7 @@ export class ProjectItemComponent {
   project = input.required<Project>();
   isTopProject = input<boolean>(false);
   compact = input<boolean>(false);
+  printMode = input<boolean>(false);
   customIndex = input<number>();
   moveUp = output<string>();
   moveDown = output<string>();
