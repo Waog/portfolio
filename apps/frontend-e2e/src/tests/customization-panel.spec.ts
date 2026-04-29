@@ -38,4 +38,28 @@ test.describe('Customization Panel', () => {
 
     await customizationSidenav.expectOpen();
   });
+
+  test('print mode checkbox persists state in the URL', async ({
+    footer,
+    customizationSidenav,
+    page,
+  }) => {
+    const printModeCheckbox = page.getByRole('checkbox', {
+      name: 'Print mode',
+    });
+
+    await footer.showPanelButton.click();
+    await customizationSidenav.expectOpen();
+    await expect(printModeCheckbox).not.toBeChecked();
+
+    await printModeCheckbox.click();
+
+    await expect(printModeCheckbox).toBeChecked();
+    await expect(page).toHaveURL(/printMode=true/);
+
+    await printModeCheckbox.click();
+
+    await expect(printModeCheckbox).not.toBeChecked();
+    await expect(page).not.toHaveURL(/printMode=true/);
+  });
 });
