@@ -164,7 +164,7 @@ describe('SearchEngineWorkerTask.runTask()', () => {
     );
 
     const skills = resultMessage.domainResult.skills;
-    expect(skills.length).toBe(8);
+    expect(skills.length).toBe(9);
     expect(skills).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
