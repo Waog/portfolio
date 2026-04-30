@@ -16,7 +16,7 @@
     "@angular/material": "~19.2.0",
     "@angular/platform-browser": "~19.2.0",
     "@angular/platform-browser-dynamic": "~19.2.0",
-    "@angular/platform-server": "~19.2.0",
+    "@angular/platform-server": "~19.2.21",
     "@angular/router": "~19.2.0",
     "@angular/ssr": "~19.2.0",
     "@fontsource/material-icons": "^5.2.5",
