@@ -1,7 +1,7 @@
 import { ProjectData } from './project.types';
 
-export const ALL_PROJECT_DATA: ProjectData[] = [
-  {
+export const ALL_PROJECT_DATA: { [key: string]: ProjectData } = {
+  portfolio: {
     id: 'portfolio',
     title: 'My Developer Portfolio',
     projectType: 'Web App',
@@ -72,7 +72,7 @@ export const ALL_PROJECT_DATA: ProjectData[] = [
     usageScope: 'Public',
     maturity: 'Production',
   },
-  {
+  'language-learning-app': {
     id: 'language-learning-app',
     title: 'AI-Powered Language Learning App',
     projectType: 'Mobile App',
@@ -152,7 +152,7 @@ export const ALL_PROJECT_DATA: ProjectData[] = [
     usageScope: 'Self',
     maturity: 'Prototype',
   },
-  {
+  'lottery-websites': {
     id: 'lottery-websites',
     title: 'Enterprise Lottery Platform',
     projectType: 'Web App',
@@ -246,7 +246,7 @@ export const ALL_PROJECT_DATA: ProjectData[] = [
     usageScope: 'Public',
     maturity: 'Production',
   },
-  {
+  'tech-coach-telekom': {
     id: 'tech-coach-telekom',
     title: 'Tech Coach — Telekom Digital Bootcamp',
     projectType: 'Training',
@@ -291,7 +291,7 @@ export const ALL_PROJECT_DATA: ProjectData[] = [
     usageScope: 'Team',
     maturity: 'Production',
   },
-  {
+  'unicorn-ecommerce': {
     id: 'unicorn-ecommerce',
     title: 'Custom E-Commerce Framework Development',
     projectType: 'Web App',
@@ -367,7 +367,7 @@ export const ALL_PROJECT_DATA: ProjectData[] = [
     usageScope: 'Public',
     maturity: 'Production',
   },
-  {
+  'insurance-calculator': {
     id: 'insurance-calculator',
     title: 'Insurance Calculation & Contract Platform',
     projectType: 'Web App',
@@ -439,7 +439,7 @@ export const ALL_PROJECT_DATA: ProjectData[] = [
     usageScope: 'Public',
     maturity: 'Production',
   },
-  {
+  'fintech-portfolio-management': {
     id: 'fintech-portfolio-management',
     title: 'B2B Financial Portfolio Management Platform',
     projectType: 'Web App Backend',
@@ -505,7 +505,7 @@ export const ALL_PROJECT_DATA: ProjectData[] = [
     usageScope: 'Public',
     maturity: 'Production',
   },
-  {
+  'airberlin-booking-app': {
     id: 'airberlin-booking-app',
     title: 'Flight Booking Application Frontend',
     projectType: 'Web App',
@@ -574,7 +574,7 @@ export const ALL_PROJECT_DATA: ProjectData[] = [
     usageScope: 'Public',
     maturity: 'Production',
   },
-  {
+  'self-driving-car-demo': {
     id: 'self-driving-car-demo',
     title: 'Self-Driving Car Control Demo App',
     projectType: 'Mobile App',
@@ -633,7 +633,7 @@ export const ALL_PROJECT_DATA: ProjectData[] = [
     usageScope: 'Public',
     maturity: 'Production',
   },
-  {
+  'towel-defence': {
     id: 'towel-defence',
     title: 'Towel Defence — Absurd Button Mashing Game',
     projectType: 'Mobile Game',
@@ -694,7 +694,7 @@ export const ALL_PROJECT_DATA: ProjectData[] = [
     usageScope: 'Public',
     maturity: 'Production',
   },
-  {
+  'pokemon-go-manager': {
     id: 'pokemon-go-manager',
     title: 'Pokémon Go Manager',
     projectType: 'Web App',
@@ -757,7 +757,7 @@ export const ALL_PROJECT_DATA: ProjectData[] = [
     usageScope: 'Semi-Public',
     maturity: 'MVP',
   },
-  {
+  'reverse-rpg': {
     id: 'reverse-rpg',
     title: 'Reverse RPG',
     projectType: 'Mobile Game',
@@ -806,7 +806,7 @@ export const ALL_PROJECT_DATA: ProjectData[] = [
     usageScope: 'Team',
     maturity: 'Prototype',
   },
-  {
+  'teddy-defender': {
     id: 'teddy-defender',
     title: 'Teddy Defender',
     projectType: 'Mobile Game',
@@ -855,7 +855,7 @@ export const ALL_PROJECT_DATA: ProjectData[] = [
     usageScope: 'Team',
     maturity: 'Prototype',
   },
-  {
+  'computer-vision-clothes-structure': {
     id: 'computer-vision-clothes-structure',
     title: 'Computer Vision – Analyzing the Structure of Clothes',
     projectType: 'Research Project',
@@ -903,7 +903,7 @@ export const ALL_PROJECT_DATA: ProjectData[] = [
     usageScope: 'Public',
     maturity: 'Proof-Of-Concept',
   },
-  {
+  stomap: {
     id: 'stomap',
     title: 'Stomap – Project Management Tool',
     projectType: 'Web App',
@@ -970,7 +970,7 @@ export const ALL_PROJECT_DATA: ProjectData[] = [
     usageScope: 'Self',
     maturity: 'Proof-Of-Concept',
   },
-  {
+  'state-based-testing-software': {
     id: 'state-based-testing-software',
     title: 'State Based Testing Software',
     projectType: 'Desktop App',
@@ -1035,7 +1035,7 @@ export const ALL_PROJECT_DATA: ProjectData[] = [
     usageScope: 'Public',
     maturity: 'Production',
   },
-  {
+  zaprat: {
     id: 'zaprat',
     title: 'ZapRat — Teleporting Rat vs. Cyborg Cats',
     projectType: 'Web Game',
@@ -1071,7 +1071,7 @@ export const ALL_PROJECT_DATA: ProjectData[] = [
     usageScope: 'Public',
     maturity: 'Prototype',
   },
-  {
+  'grannies-vs-zombie-orge': {
     id: 'grannies-vs-zombie-orge',
     title: 'Grannies vs. Zombie-Orge — Crowd MMO Experiment',
     projectType: 'Web Game',
@@ -1120,7 +1120,7 @@ export const ALL_PROJECT_DATA: ProjectData[] = [
     usageScope: 'Public',
     maturity: 'Prototype',
   },
-  {
+  'alien-shield-brothers': {
     id: 'alien-shield-brothers',
     title: 'Alien Shield Brothers — Local Co-op with Phaser',
     projectType: 'Web Game',
@@ -1166,7 +1166,7 @@ export const ALL_PROJECT_DATA: ProjectData[] = [
     usageScope: 'Public',
     maturity: 'Prototype',
   },
-  {
+  'viking-boat-simulator-2014': {
     id: 'viking-boat-simulator-2014',
     title: 'Viking Boat Simulator 2014 — 2-Player Local Multiplayer',
     projectType: 'Web Game',
@@ -1211,7 +1211,7 @@ export const ALL_PROJECT_DATA: ProjectData[] = [
     usageScope: 'Public',
     maturity: 'Prototype',
   },
-  {
+  'the-guy-with-the-green-towel': {
     id: 'the-guy-with-the-green-towel',
     title: 'The Guy With The Green Towel — Button Mashing Jam Game',
     projectType: 'Web Game',
@@ -1247,7 +1247,7 @@ export const ALL_PROJECT_DATA: ProjectData[] = [
     usageScope: 'Public',
     maturity: 'Prototype',
   },
-  {
+  'direct-and-conquer': {
     id: 'direct-and-conquer',
     title: 'Direct & Conquer — Mini RTS/Tactics Prototype',
     projectType: 'Web Game',
@@ -1292,7 +1292,7 @@ export const ALL_PROJECT_DATA: ProjectData[] = [
     usageScope: 'Public',
     maturity: 'Prototype',
   },
-  {
+  asteroids: {
     id: 'asteroids',
     title: 'Asteroids — P2P Multiplayer Remake',
     projectType: 'Web App',
@@ -1366,7 +1366,7 @@ export const ALL_PROJECT_DATA: ProjectData[] = [
     usageScope: 'Team',
     maturity: 'Proof-Of-Concept',
   },
-  {
+  'gui-testing-tool': {
     id: 'gui-testing-tool',
     title:
       'Smart GUI Testing — Combining Capture-&-Replay with Model-Based Automation',
@@ -1433,7 +1433,7 @@ export const ALL_PROJECT_DATA: ProjectData[] = [
     usageScope: 'Semi-Public',
     maturity: 'Prototype',
   },
-  {
+  'blubber-virtual-pocket-money': {
     id: 'blubber-virtual-pocket-money',
     title: 'Blubber – Virtual Pocket Money',
     projectType: 'Web App',
@@ -1503,7 +1503,7 @@ export const ALL_PROJECT_DATA: ProjectData[] = [
     usageScope: 'Semi-Public',
     maturity: 'Proof-Of-Concept',
   },
-  {
+  'minecraft-clone': {
     id: 'minecraft-clone',
     title: 'Minecraft Clone',
     projectType: 'Desktop App',
@@ -1559,7 +1559,7 @@ export const ALL_PROJECT_DATA: ProjectData[] = [
     usageScope: 'Team',
     maturity: 'Proof-Of-Concept',
   },
-  {
+  'forests-of-eden': {
     id: 'forests-of-eden',
     title: 'Forests of Eden – Economic Simulation Browser Game',
     projectType: 'Web App',
@@ -1632,7 +1632,7 @@ export const ALL_PROJECT_DATA: ProjectData[] = [
     usageScope: 'Semi-Public',
     maturity: 'MVP',
   },
-  {
+  'generali-heroes': {
     id: 'generali-heroes',
     title: 'Generali Heroes – Advergame Browser Game',
     projectType: 'Web App',
@@ -1693,7 +1693,7 @@ export const ALL_PROJECT_DATA: ProjectData[] = [
     usageScope: 'Public',
     maturity: 'Production',
   },
-  {
+  'chaos-cats': {
     id: 'chaos-cats',
     title: 'Chaos Cats – Side‑Scrolling Shooter Browser Game',
     projectType: 'Web App',
@@ -1759,7 +1759,7 @@ export const ALL_PROJECT_DATA: ProjectData[] = [
     usageScope: 'Semi-Public',
     maturity: 'MVP',
   },
-  {
+  'playotope-platform-game-maker': {
     id: 'playotope-platform-game-maker',
     title: 'Playotope – Platform Game Maker for the Web',
     projectType: 'Web App',
@@ -1823,7 +1823,7 @@ export const ALL_PROJECT_DATA: ProjectData[] = [
     usageScope: 'Semi-Public',
     maturity: 'MVP',
   },
-  {
+  'ai-robotics': {
     id: 'ai-robotics',
     title: 'AI & Robotics – Humanoid Robot Research',
     projectType: 'Research Project',
@@ -1871,7 +1871,7 @@ export const ALL_PROJECT_DATA: ProjectData[] = [
     usageScope: 'Semi-Public',
     maturity: 'Prototype',
   },
-  {
+  wikip3dia: {
     id: 'wikip3dia',
     title: 'Wikip3dia — 3D Wikipedia Visualization',
     projectType: 'Web App',
@@ -1932,7 +1932,7 @@ export const ALL_PROJECT_DATA: ProjectData[] = [
     usageScope: 'Semi-Public',
     maturity: 'Prototype',
   },
-  {
+  'freelancing-it-professional': {
     id: 'freelancing-it-professional',
     title: 'Freelancing IT Professional',
     projectType: 'Various Projects',
@@ -1984,4 +1984,4 @@ export const ALL_PROJECT_DATA: ProjectData[] = [
     usageScope: 'Self',
     maturity: 'Production',
   },
-];
+};
