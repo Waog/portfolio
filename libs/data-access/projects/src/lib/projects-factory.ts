@@ -6,7 +6,9 @@ import { ALL_PROJECT_DATA } from './project.data';
 class ProjectsFactory {
   @MemoizeAllArgs
   getAll(): AnalyzableProject[] {
-    return ALL_PROJECT_DATA.map(data => new AnalyzableProject(data));
+    return Object.values(ALL_PROJECT_DATA).map(
+      data => new AnalyzableProject(data)
+    );
   }
 }
 
