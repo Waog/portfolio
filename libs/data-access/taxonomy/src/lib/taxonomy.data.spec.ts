@@ -10,6 +10,17 @@ describe('Taxonomy Data', () => {
     expect(canonicalNames).toEqual(Array.from(uniqueCanonicalNames));
   });
 
+  it('keys are identical to canonical values', () => {
+    for (const key in TAXONOMY) {
+      const data = TAXONOMY[key as TagName];
+
+      expect(
+        data.canonical,
+        `Taxonomy Element "${key}" has canonical "${data.canonical}", but key and canonical must be identical`
+      ).toBe(key);
+    }
+  });
+
   it('`includes` elements exist as another TAXONOMY element', () => {
     throwIfBrokenReference('includes');
   });

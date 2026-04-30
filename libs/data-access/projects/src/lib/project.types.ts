@@ -25,7 +25,7 @@ export interface ProjectData {
   location: string;
   workMode: string;
   company: string;
-  industry: string; // TODO taxonomy: consider adding industries to the taxonomy to match/highlight them
+  industry: string; // Human-readable label (e.g., 'FinTech Startup'); matching taxonomy industry tags (e.g., 'FinTech', 'Banking') belong in `technologies`
   engagementType: EngagementType;
   commercialContext: CommercialContext;
   usageScope: UsageScope;

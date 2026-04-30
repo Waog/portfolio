@@ -4,6 +4,7 @@ export type Category =
   | 'Concepts'
   | 'DevOps & Build & CI/CD'
   | 'Frontend'
+  | 'Industry'
   | 'Misc'
   | 'Testing and QA'
   | 'Tools & Libraries';
@@ -11,9 +12,11 @@ export type Category =
 type InternalTagName =
   | '2D'
   | '3D'
+  | 'Academic Research'
   | 'Accessibility'
   | 'ActionScript'
   | 'Agile'
+  | 'Airline'
   | 'AJAX'
   | 'Android'
   | 'Angular'
@@ -27,9 +30,11 @@ type InternalTagName =
   | 'Artemis-ODB'
   | 'Artificial Intelligence'
   | 'Atlassian'
+  | 'Automotive'
   | 'AWS'
   | 'AWS Organizations'
   | 'Backend Systems'
+  | 'Banking'
   | 'BitBucket'
   | 'Blender'
   | 'Bootstrap'
@@ -67,11 +72,13 @@ type InternalTagName =
   | 'Data Visualization'
   | 'Debugging'
   | 'Design Patterns'
+  | 'Developer Portfolio'
   | 'DevOps Tools'
   | 'Diploma Thesis'
   | 'Docker'
   | 'DOORS'
   | 'DynamoDB'
+  | 'E-Commerce'
   | 'E2E Testing'
   | 'Eclipse'
   | 'Eclipse EMF'
@@ -79,6 +86,8 @@ type InternalTagName =
   | 'Eclipse Graphiti'
   | 'Eclipse PDE'
   | 'Eclipse RCP'
+  | 'Education'
+  | 'Education Technology'
   | 'Elastic Beanstalk'
   | 'Entity Component System'
   | 'ESLint'
@@ -88,6 +97,7 @@ type InternalTagName =
   | 'Facebook API'
   | 'Facebook Games'
   | 'Figma'
+  | 'FinTech'
   | 'First-person camera'
   | 'Flash'
   | 'Fractal'
@@ -95,6 +105,7 @@ type InternalTagName =
   | 'Frontend Framework'
   | 'FRUIT'
   | 'Game Development'
+  | 'Gaming'
   | 'Git'
   | 'GitHub'
   | 'GitHub Actions'
@@ -117,6 +128,7 @@ type InternalTagName =
   | 'IAM'
   | 'IAM Identity Center'
   | 'Image Processing'
+  | 'Insurance'
   | 'IntelliJ IDEA'
   | 'Intel XDK'
   | 'Ionic'
@@ -144,6 +156,7 @@ type InternalTagName =
   | 'Lighthouse'
   | 'Lit'
   | 'Lodash'
+  | 'Lottery'
   | 'Maven'
   | 'Micro Frontends'
   | 'Microservices'
@@ -174,6 +187,7 @@ type InternalTagName =
   | 'OSGI'
   | 'Panda.js'
   | 'Pattern Recognition'
+  | 'Payments'
   | 'PayPal API'
   | 'Peer-to-Peer'
   | 'peerJS'
@@ -183,6 +197,7 @@ type InternalTagName =
   | 'Polly'
   | 'Preprocessor'
   | 'Prettier'
+  | 'Productivity Tools'
   | 'Project Management'
   | 'Prototyping'
   | 'Puppeteer'
@@ -198,6 +213,7 @@ type InternalTagName =
   | 'Redash'
   | 'Redux'
   | 'requireJS'
+  | 'Research'
   | 'Responsive Design'
   | 'REST'
   | 'Robotics Control Systems'
@@ -233,6 +249,7 @@ type InternalTagName =
   | 'TESTONA'
   | 'TFS'
   | 'TortoiseSVN'
+  | 'Travel'
   | 'Travis CI'
   | 'Trello'
   | 'tsd'
@@ -247,6 +264,7 @@ type InternalTagName =
   | 'Unit Testing'
   | 'Unity'
   | 'USB Monitor'
+  | 'Various Industries'
   | 'Various Technologies'
   | 'Visual Studio'
   | 'Vite'
@@ -345,6 +363,16 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     related: ['2D', 'Unity', 'WebGL'],
     synonyms: [/^3d$/i, /three-?d/i],
   },
+  'Academic Research': {
+    canonical: 'Academic Research',
+    categories: ['Industry'],
+    parents: ['Research'],
+    synonyms: [
+      /^academic research$/i,
+      /^university research$/i,
+      /scientific research/i,
+    ],
+  },
   Accessibility: {
     canonical: 'Accessibility',
     categories: ['Concepts', 'Frontend'],
@@ -362,6 +390,12 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     canonical: 'Agile',
     categories: ['Concepts'],
     children: ['Kanban', 'SCRUM'],
+  },
+  Airline: {
+    canonical: 'Airline',
+    categories: ['Industry'],
+    parents: ['Travel'],
+    synonyms: [/^airline$/i, /aviation/i],
   },
   AJAX: {
     canonical: 'AJAX',
@@ -477,6 +511,11 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     categories: ['Tools & Libraries'],
     children: ['BitBucket', 'Confluence', 'Jira', 'Trello'],
   },
+  Automotive: {
+    canonical: 'Automotive',
+    categories: ['Industry'],
+    synonyms: [/automotive/i, /mobility/i, /vehicle/i, /vehicle software/i],
+  },
   AWS: {
     canonical: 'AWS',
     categories: ['Cloud & Infrastructure'],
@@ -530,6 +569,13 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
       'TypeScript',
     ],
     synonyms: [/backend systems/i, /backend/i],
+  },
+  Banking: {
+    canonical: 'Banking',
+    categories: ['Industry'],
+    children: ['FinTech'],
+    related: ['Insurance'],
+    synonyms: [/banking/i, /banks?/i, /financial services/i],
   },
   BitBucket: {
     canonical: 'BitBucket',
@@ -799,6 +845,15 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     related: ['MVC', 'OOP', 'Software Architecture'],
     synonyms: [/design patterns?/i],
   },
+  'Developer Portfolio': {
+    canonical: 'Developer Portfolio',
+    categories: ['Industry'],
+    synonyms: [
+      /developer portfolio/i,
+      /personal portfolio/i,
+      /portfolio website/i,
+    ],
+  },
   'DevOps Tools': {
     canonical: 'DevOps Tools',
     categories: ['Misc'],
@@ -834,6 +889,16 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     parents: ['Testing'],
     related: ['UI Testing'],
     synonyms: [/e2e[- ]test/i, /end-to-end[- ]test/i],
+  },
+  'E-Commerce': {
+    canonical: 'E-Commerce',
+    categories: ['Industry'],
+    synonyms: [
+      /e-?commerce/i,
+      /online retail/i,
+      /online shop/i,
+      /online store/i,
+    ],
   },
   Eclipse: {
     canonical: 'Eclipse',
@@ -884,6 +949,29 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     parents: ['Eclipse'],
     related: ['Eclipse EMF'],
     synonyms: [/eclipse rcp/i, /rcp/i, /rich client platform/i],
+  },
+  Education: {
+    canonical: 'Education',
+    categories: ['Industry'],
+    children: ['Education Technology'],
+    synonyms: [
+      /bootcamp/i,
+      /^education$/i,
+      /^learning$/i,
+      /^teaching$/i,
+      /^training$/i,
+    ],
+  },
+  'Education Technology': {
+    canonical: 'Education Technology',
+    categories: ['Industry'],
+    parents: ['Education'],
+    synonyms: [
+      /^edtech$/i,
+      /education technology/i,
+      /learning app/i,
+      /learning platform/i,
+    ],
   },
   'Elastic Beanstalk': {
     canonical: 'Elastic Beanstalk',
@@ -945,6 +1033,14 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     categories: ['Tools & Libraries'],
     related: ['Prototyping', 'UI/UX', 'Zeplin'],
   },
+  FinTech: {
+    canonical: 'FinTech',
+    categories: ['Industry'],
+    children: ['Payments'],
+    parents: ['Banking'],
+    related: ['Insurance'],
+    synonyms: [/financial technology/i, /fintech/i],
+  },
   'First-person camera': {
     canonical: 'First-person camera',
     categories: ['Frontend'],
@@ -997,6 +1093,18 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
       'Unity',
     ],
     synonyms: [/game dev/i],
+  },
+  Gaming: {
+    canonical: 'Gaming',
+    categories: ['Industry'],
+    children: ['Lottery'],
+    related: ['Game Development'],
+    synonyms: [
+      /^game industry$/i,
+      /^games industry$/i,
+      /^gaming$/i,
+      /^video games?$/i,
+    ],
   },
   Git: {
     canonical: 'Git',
@@ -1146,6 +1254,12 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     canonical: 'Image Processing',
     categories: ['Concepts'],
     related: ['Computer Vision', 'Pattern Recognition'],
+  },
+  Insurance: {
+    canonical: 'Insurance',
+    categories: ['Industry'],
+    related: ['Banking'],
+    synonyms: [/insurance/i, /insurtech/i],
   },
   'IntelliJ IDEA': {
     canonical: 'IntelliJ IDEA',
@@ -1318,6 +1432,12 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     categories: ['Tools & Libraries'],
     includes: ['JavaScript'],
     related: ['Underscore'],
+  },
+  Lottery: {
+    canonical: 'Lottery',
+    categories: ['Industry'],
+    parents: ['Gaming'],
+    synonyms: [/betting/i, /gambling/i, /igaming/i, /lotter(y|ies)/i],
   },
   Maven: {
     canonical: 'Maven',
@@ -1531,6 +1651,13 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     parents: ['Artificial Intelligence'],
     related: ['Image Processing'],
   },
+  Payments: {
+    canonical: 'Payments',
+    categories: ['Industry'],
+    parents: ['FinTech'],
+    related: ['E-Commerce'],
+    synonyms: [/digital wallet/i, /payment processing/i, /payments?/i],
+  },
   'PayPal API': {
     canonical: 'PayPal API',
     categories: ['Tools & Libraries'],
@@ -1581,6 +1708,16 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     canonical: 'Prettier',
     categories: ['DevOps & Build & CI/CD', 'Tools & Libraries'],
     related: ['CSS', 'ESLint', 'HTML', 'JavaScript', 'SCSS', 'TypeScript'],
+  },
+  'Productivity Tools': {
+    canonical: 'Productivity Tools',
+    categories: ['Industry'],
+    related: ['Project Management'],
+    synonyms: [
+      /productivity software/i,
+      /productivity tools?/i,
+      /work management/i,
+    ],
   },
   'Project Management': {
     canonical: 'Project Management',
@@ -1669,6 +1806,12 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     categories: ['DevOps & Build & CI/CD', 'Tools & Libraries'],
     includes: ['JavaScript'],
     related: ['Webpack'],
+  },
+  Research: {
+    canonical: 'Research',
+    categories: ['Industry'],
+    children: ['Academic Research'],
+    synonyms: [/^r&d$/i, /research( and development)?/i],
   },
   'Responsive Design': {
     canonical: 'Responsive Design',
@@ -1895,6 +2038,12 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     categories: ['DevOps & Build & CI/CD'],
     parents: ['SVN'],
   },
+  Travel: {
+    canonical: 'Travel',
+    categories: ['Industry'],
+    children: ['Airline'],
+    synonyms: [/tourism/i, /travel/i, /trip booking/i],
+  },
   'Travis CI': {
     canonical: 'Travis CI',
     categories: ['DevOps & Build & CI/CD'],
@@ -2009,6 +2158,16 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     canonical: 'USB Monitor',
     categories: ['Tools & Libraries'],
     related: ['Raspberry Pi'],
+  },
+  'Various Industries': {
+    canonical: 'Various Industries',
+    categories: ['Industry'],
+    synonyms: [
+      /cross-?industry/i,
+      /multi-?industry/i,
+      /multiple industries/i,
+      /various industries/i,
+    ],
   },
   'Various Technologies': {
     canonical: 'Various Technologies',
