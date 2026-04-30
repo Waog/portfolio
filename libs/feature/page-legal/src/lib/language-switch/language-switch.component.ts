@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
 import { Language } from './language.enum';
@@ -12,8 +12,8 @@ import { Language } from './language.enum';
   styleUrls: ['./language-switch.component.scss'],
 })
 export class LanguageSwitchComponent {
-  @Input() currentLanguage: Language = Language.En;
-  @Output() languageChange = new EventEmitter<Language>();
+  currentLanguage = input(Language.En);
+  languageChange = output<Language>();
 
   readonly language = Language;
 

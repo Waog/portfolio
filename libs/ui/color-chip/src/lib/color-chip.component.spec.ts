@@ -21,7 +21,7 @@ describe('ColorChipComponent', () => {
   });
 
   it('should display text', () => {
-    component.text = 'Test chip';
+    fixture.componentRef.setInput('text', 'Test chip');
     fixture.detectChanges();
 
     const compiled = fixture.nativeElement;
@@ -29,7 +29,7 @@ describe('ColorChipComponent', () => {
   });
 
   it('should apply correct color class', () => {
-    component.color = 'yellow';
+    fixture.componentRef.setInput('color', 'yellow');
     fixture.detectChanges();
 
     const chipElement = fixture.nativeElement.querySelector('.color-chip');
@@ -37,7 +37,7 @@ describe('ColorChipComponent', () => {
   });
 
   it('should apply gray color class', () => {
-    component.color = 'gray';
+    fixture.componentRef.setInput('color', 'gray');
     fixture.detectChanges();
 
     const chipElement = fixture.nativeElement.querySelector('.color-chip');
@@ -45,7 +45,7 @@ describe('ColorChipComponent', () => {
   });
 
   it('should apply correct spacing class', () => {
-    component.spacing = 'large';
+    fixture.componentRef.setInput('spacing', 'large');
     fixture.detectChanges();
 
     const chipElement = fixture.nativeElement.querySelector('.color-chip');
@@ -53,7 +53,7 @@ describe('ColorChipComponent', () => {
   });
 
   it('should display icon when provided', () => {
-    component.icon = 'star';
+    fixture.componentRef.setInput('icon', 'star');
     fixture.detectChanges();
 
     const iconElement =
@@ -63,7 +63,7 @@ describe('ColorChipComponent', () => {
   });
 
   it('should not display icon when not provided', () => {
-    component.icon = undefined;
+    fixture.componentRef.setInput('icon', undefined);
     fixture.detectChanges();
 
     const iconElement =
@@ -72,7 +72,7 @@ describe('ColorChipComponent', () => {
   });
 
   it('should display close button when showCloseButton is true', () => {
-    component.showCloseButton = true;
+    fixture.componentRef.setInput('showCloseButton', true);
     fixture.detectChanges();
 
     const closeButton =
@@ -81,7 +81,7 @@ describe('ColorChipComponent', () => {
   });
 
   it('should not display close button when showCloseButton is false', () => {
-    component.showCloseButton = false;
+    fixture.componentRef.setInput('showCloseButton', false);
     fixture.detectChanges();
 
     const closeButton =
@@ -91,7 +91,7 @@ describe('ColorChipComponent', () => {
 
   it('should emit closeClick when close button is clicked', () => {
     jest.spyOn(component.closeClick, 'emit');
-    component.showCloseButton = true;
+    fixture.componentRef.setInput('showCloseButton', true);
     fixture.detectChanges();
 
     const closeButton =

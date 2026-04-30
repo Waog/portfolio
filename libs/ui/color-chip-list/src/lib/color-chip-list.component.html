@@ -1,36 +1,36 @@
 <div class="container">
   <div class="chip-column" #chipColumn>
-    @for ( item of visibleItems; track item.text) {
+    @for ( item of visibleItems(); track item.text) {
     <lib-color-chip
       [text]="item.text"
       [color]="item.color"
       [icon]="item.icon"
-      [spacing]="spacing"
+      [spacing]="spacing()"
       class="chip-item"
     />
     }
   </div>
 
   <div class="toggle-button-column">
-    @if (showToggleButtons) {
+    @if (showToggleButtons()) {
     <button
       mat-button
       color="basic"
       (click)="toggleItems()"
       class="toggle-button"
     >
-      @if (!printMode) {
+      @if (!printMode()) {
       <mat-icon>{{
-        hiddenItemsCount > 0 ? 'expand_more' : 'expand_less'
+        hiddenItemsCount() > 0 ? 'expand_more' : 'expand_less'
       }}</mat-icon>
-      } @if (!printMode) {
+      } @if (!printMode()) {
       <span>show</span>
       } @else {
       <span>+ </span>
       }
       {{
-        visibleItems.length < allItems.length
-          ? hiddenItemsCount + ' more'
+        visibleItems().length < allItems().length
+          ? hiddenItemsCount() + ' more'
           : 'less'
       }}
     </button>
