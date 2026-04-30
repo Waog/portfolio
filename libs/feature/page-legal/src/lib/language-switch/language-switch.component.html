@@ -1,6 +1,6 @@
 <mat-button-toggle-group
   #group="matButtonToggleGroup"
-  [value]="currentLanguage"
+  [value]="currentLanguage()"
   (change)="onLanguageChange(group.value)"
 >
   <mat-button-toggle [value]="language.De">Deutsch</mat-button-toggle>

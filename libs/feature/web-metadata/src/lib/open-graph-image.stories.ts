@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { Component, ElementRef, input, ViewChild } from '@angular/core';
 import type { Meta, StoryObj } from '@storybook/angular';
 import html2canvas from 'html2canvas';
 
@@ -56,7 +56,7 @@ const IMAGE_MAX_SIZE_KB = 290;
 
         <div
           class="safe-area-overlay"
-          [attr.data-visible]="showSafeAreaOverlay ? 'true' : 'false'"
+          [attr.data-visible]="showSafeAreaOverlay() ? 'true' : 'false'"
           aria-hidden="true"
         ></div>
       </div>
@@ -255,8 +255,7 @@ class OpenGraphImageStoryComponent {
   @ViewChild('exportTarget', { static: true })
   private exportTarget?: ElementRef<HTMLElement>;
 
-  @Input()
-  showSafeAreaOverlay = false;
+  showSafeAreaOverlay = input(false);
 
   protected status = '';
 

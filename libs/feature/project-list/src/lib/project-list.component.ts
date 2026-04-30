@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, DestroyRef, inject, Input, input } from '@angular/core';
+import { Component, DestroyRef, inject, input } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -47,8 +47,8 @@ export class ProjectListComponent {
   protected readonly topProjectSkeletons = [0, 1, 2];
   protected readonly otherProjectSkeletons = [0, 1, 2, 3, 4, 5, 6];
 
-  @Input() printStart = 0;
-  @Input() printCount?: number;
+  printStart = input(0);
+  printCount = input<number | undefined>(undefined);
   sectionId = input<string | null>(null);
 
   protected showAllProjects = false;
@@ -66,7 +66,7 @@ export class ProjectListComponent {
   }
 
   protected isPrintSliceMode(): boolean {
-    return this.isPrintMode() && this.printCount !== undefined;
+    return this.isPrintMode() && this.printCount() !== undefined;
   }
 
   protected shouldShowTopProjectsSection(): boolean {
@@ -74,7 +74,12 @@ export class ProjectListComponent {
       return true;
     }
 
-    return this.rangeIntersects(this.printStart, this.getPrintSliceEnd(), 0, 3);
+    return this.rangeIntersects(
+      this.printStart(),
+      this.getPrintSliceEnd(),
+      0,
+      3
+    );
   }
 
   protected shouldShowOtherProjectsSection(): boolean {
@@ -87,7 +92,7 @@ export class ProjectListComponent {
     }
 
     return this.rangeIntersects(
-      this.printStart,
+      this.printStart(),
       this.getPrintSliceEnd(),
       3,
       Number.POSITIVE_INFINITY
@@ -149,12 +154,12 @@ export class ProjectListComponent {
       return index + 1;
     }
 
-    return this.printStart + index + 1;
+    return this.printStart() + index + 1;
   }
 
   protected otherProjectCustomIndex(index: number): number {
     const sectionStart = this.isPrintSliceMode()
-      ? Math.max(3, this.printStart)
+      ? Math.max(3, this.printStart())
       : 3;
     return sectionStart + index + 1;
   }
@@ -165,24 +170,24 @@ export class ProjectListComponent {
     }
 
     return (
-      globalIndex >= this.printStart && globalIndex < this.getPrintSliceEnd()
+      globalIndex >= this.printStart() && globalIndex < this.getPrintSliceEnd()
     );
   }
 
   private getPrintSliceEnd(): number {
-    const printCount = this.printCount;
+    const printCount = this.printCount();
     if (printCount === undefined) {
-      return this.printStart;
+      return this.printStart();
     }
 
-    return this.printStart + printCount;
+    return this.printStart() + printCount;
   }
 
   private getSectionSkeletons(
     sectionStart: number,
     sectionEnd: number
   ): number[] {
-    const intersectionStart = Math.max(sectionStart, this.printStart);
+    const intersectionStart = Math.max(sectionStart, this.printStart());
     const intersectionEnd = Math.min(sectionEnd, this.getPrintSliceEnd());
     const count = Math.max(0, intersectionEnd - intersectionStart);
 

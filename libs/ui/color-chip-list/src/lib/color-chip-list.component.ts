@@ -4,13 +4,13 @@ import {
   booleanAttribute,
   ChangeDetectorRef,
   Component,
+  computed,
   ElementRef,
   HostListener,
   Inject,
-  Input,
-  OnChanges,
+  input,
   PLATFORM_ID,
-  SimpleChanges,
+  signal,
   ViewChild,
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
@@ -27,64 +27,58 @@ interface ChipItem {
   icon?: string;
 }
 
+const DEFAULT_MAX_ROW_WIDTH = 1000;
+
 @Component({
   selector: 'lib-color-chip-list',
-  host: { '[class.print-mode]': 'printMode' },
+  host: { '[class.print-mode]': 'printMode()' },
   imports: [CommonModule, MatButtonModule, MatIconModule, ColorChipComponent],
   templateUrl: './color-chip-list.component.html',
   styleUrl: './color-chip-list.component.scss',
 })
-export class ColorChipListComponent implements AfterViewInit, OnChanges {
-  @Input() greenItems: string[] = [];
-  @Input() yellowItems: string[] = [];
-  @Input() grayItems: string[] = [];
-  @Input() spacing: ChipSpacing = 'large';
-  @Input({ transform: booleanAttribute }) printMode = false;
+export class ColorChipListComponent implements AfterViewInit {
+  greenItems = input<string[]>([]);
+  yellowItems = input<string[]>([]);
+  grayItems = input<string[]>([]);
+  spacing = input<ChipSpacing>('large');
+  printMode = input(false, { transform: booleanAttribute });
 
-  @ViewChild('chipColumn', { static: false }) chipColumnRef!: ElementRef;
+  @ViewChild('chipColumn', { static: false })
+  chipColumnRef!: ElementRef<HTMLElement>;
 
-  showAllItems = false;
-  private maxItemRowWidth = 1000;
+  showAllItems = signal(false);
+  private maxItemRowWidth = signal(DEFAULT_MAX_ROW_WIDTH);
 
-  // Cached computed properties
-  allItems: ChipItem[] = [];
-  visibleItems: ChipItem[] = [];
-  hiddenItemsCount = 0;
-  showToggleButtons = false;
+  readonly allItems = computed(() => this.calculateAllItems());
+  private readonly itemsFittingInRow = computed(() =>
+    this.getItemsFittingIntoMaxWidth(this.allItems())
+  );
+  readonly visibleItems = computed(() =>
+    this.showAllItems() ? this.allItems() : this.itemsFittingInRow()
+  );
+  readonly hiddenItemsCount = computed(
+    () => this.allItems().length - this.visibleItems().length
+  );
+  readonly showToggleButtons = computed(
+    () => this.allItems().length > this.itemsFittingInRow().length
+  );
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: object,
     private colorChipDimensionsService: ColorChipDimensionsService,
     private changeDetectorRef: ChangeDetectorRef
-  ) {
-    this.maxItemRowWidth = this.calculateMaxItemRowWidth();
-    this.updateCachedProperties();
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    // Recalculate when inputs change
-    if (
-      changes['greenItems'] ||
-      changes['yellowItems'] ||
-      changes['grayItems'] ||
-      changes['spacing']
-    ) {
-      this.updateCachedProperties();
-    }
-  }
+  ) {}
 
   ngAfterViewInit(): void {
     setTimeout(() => {
-      this.maxItemRowWidth = this.calculateMaxItemRowWidth();
-      this.updateCachedProperties();
+      this.maxItemRowWidth.set(this.calculateMaxItemRowWidth());
       this.changeDetectorRef.detectChanges();
     });
   }
 
   @HostListener('window:resize')
   onResize(): void {
-    this.maxItemRowWidth = this.calculateMaxItemRowWidth();
-    this.updateCachedProperties();
+    this.maxItemRowWidth.set(this.calculateMaxItemRowWidth());
   }
 
   private calculateMaxItemRowWidth(): number {
@@ -102,37 +96,22 @@ export class ColorChipListComponent implements AfterViewInit, OnChanges {
   }
 
   private calculateAllItems(): ChipItem[] {
-    const green = this.greenItems.map(text => ({
+    const green = this.greenItems().map(text => ({
       text,
       color: 'green' as const,
       icon: 'star',
     }));
-    const yellow = this.yellowItems.map(text => ({
+    const yellow = this.yellowItems().map(text => ({
       text,
       color: 'yellow' as const,
       icon: 'star_border',
     }));
-    const gray = this.grayItems.map(text => ({
+    const gray = this.grayItems().map(text => ({
       text,
       color: 'gray' as const,
     }));
 
     return [...green, ...yellow, ...gray];
-  }
-
-  private updateCachedProperties(): void {
-    this.allItems = this.calculateAllItems();
-
-    if (this.showAllItems) {
-      this.visibleItems = this.allItems;
-    } else {
-      this.visibleItems = this.getItemsFittingIntoMaxWidth(this.allItems);
-    }
-
-    this.hiddenItemsCount = this.allItems.length - this.visibleItems.length;
-    this.showToggleButtons =
-      this.allItems.length >
-      this.getItemsFittingIntoMaxWidth(this.allItems).length;
   }
 
   getItemsWidth(items: ChipItem[]): number {
@@ -147,14 +126,14 @@ export class ColorChipListComponent implements AfterViewInit, OnChanges {
     return this.colorChipDimensionsService.getWidth({
       text: item.text,
       icon: item.icon,
-      spacing: this.spacing,
+      spacing: this.spacing(),
     });
   }
 
   getItemsFittingIntoMaxWidth(items: ChipItem[]): ChipItem[] {
-    const result = [];
+    const result: ChipItem[] = [];
     for (const item of items) {
-      if (this.getItemsWidth([...result, item]) <= this.maxItemRowWidth) {
+      if (this.getItemsWidth([...result, item]) <= this.maxItemRowWidth()) {
         result.push(item);
       } else {
         break;
@@ -164,7 +143,6 @@ export class ColorChipListComponent implements AfterViewInit, OnChanges {
   }
 
   toggleItems(): void {
-    this.showAllItems = !this.showAllItems;
-    this.updateCachedProperties();
+    this.showAllItems.set(!this.showAllItems());
   }
 }

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 
@@ -13,13 +13,13 @@ export type ChipSpacing = 'small' | 'medium' | 'large';
   styleUrl: './color-chip.component.scss',
 })
 export class ColorChipComponent {
-  @Input() text = '';
-  @Input() color: ChipColor = 'green';
-  @Input() icon?: string;
-  @Input() spacing: ChipSpacing = 'medium';
-  @Input() showCloseButton = false;
+  text = input('');
+  color = input<ChipColor>('green');
+  icon = input<string>();
+  spacing = input<ChipSpacing>('medium');
+  showCloseButton = input(false);
 
-  @Output() closeClick = new EventEmitter<void>();
+  closeClick = output<void>();
 
   onCloseClick(): void {
     this.closeClick.emit();
