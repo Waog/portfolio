@@ -2,7 +2,6 @@ import nx from '@nx/eslint-plugin';
 import command from 'eslint-plugin-command/config';
 import perfectionist from 'eslint-plugin-perfectionist';
 import baseConfig from '../../../eslint.config.mjs';
-import sortObjectArrays from './eslint-rules/sort-object-arrays.mjs';
 
 export default [
   ...baseConfig,
@@ -31,29 +30,17 @@ export default [
     },
   },
   {
-    files: ['**/taxonomy.data.ts'],
+    files: ['**/*taxonomy.data.ts'],
     plugins: {
       perfectionist,
-      custom: {
-        rules: {
-          'sort-object-arrays': sortObjectArrays,
-        },
-      },
     },
     rules: {
       'perfectionist/sort-union-types': 'error',
-      'perfectionist/sort-objects': 'error',
-      'custom/sort-object-arrays': [
+      'perfectionist/sort-objects': [
         'error',
         {
-          arrayProperties: [
-            'categories',
-            'children',
-            'includes',
-            'parents',
-            'related',
-            'synonyms',
-          ],
+          type: 'natural',
+          order: 'asc',
           ignoreCase: true,
         },
       ],

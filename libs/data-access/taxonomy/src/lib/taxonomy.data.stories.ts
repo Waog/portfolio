@@ -70,7 +70,8 @@ export const Default: Story = {
         let nodeIdCounter = 1;
 
         // Create nodes for all canonical names
-        TAXONOMY.forEach(item => {
+        Object.keys(TAXONOMY).forEach(canonicalName => {
+          const item = TAXONOMY[canonicalName as TagName];
           const nodeId = nodeIdCounter++;
           nodeMap.set(item.canonical, nodeId);
           nodes.push({
@@ -80,7 +81,8 @@ export const Default: Story = {
         });
 
         // Create edges from relationships
-        TAXONOMY.forEach(item => {
+        Object.keys(TAXONOMY).forEach(canonicalName => {
+          const item = TAXONOMY[canonicalName as TagName];
           const fromId = nodeMap.get(item.canonical);
           if (!fromId) return;
 
@@ -1148,11 +1150,15 @@ export const Default: Story = {
         let filteredTerms: { name: TagName; nodeId: number }[] = [];
 
         // Create searchable terms with their node IDs
-        const searchableTerms = TAXONOMY.map(item => ({
-          name: item.canonical,
-          nodeId: nodeMap.get(item.canonical) || 0,
-        }))
-          .filter(term => term.nodeId > 0)
+        const searchableTerms = Object.keys(TAXONOMY)
+          .map(canonicalName => {
+            const item = TAXONOMY[canonicalName as TagName];
+            return {
+              name: item.canonical,
+              nodeId: nodeMap.get(item.canonical) || 0,
+            };
+          })
+          .filter((term: { name: TagName; nodeId: number }) => term.nodeId > 0)
           .sort((a, b) => a.name.localeCompare(b.name));
 
         function filterTerms(query: string) {

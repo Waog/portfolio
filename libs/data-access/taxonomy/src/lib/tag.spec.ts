@@ -1,7 +1,7 @@
 import 'jest-expect-message';
 
 import { Tag } from './tag';
-import { TAXONOMY } from './taxonomy.data';
+import { TagName, TAXONOMY } from './taxonomy.data';
 import RandExp = require('randexp');
 import seedrandom = require('seedrandom');
 
@@ -26,7 +26,8 @@ describe('Tag', () => {
 
       const errors: string[] = [];
 
-      for (const taxonomyEntry of TAXONOMY) {
+      for (const canonicalName in TAXONOMY) {
+        const taxonomyEntry = TAXONOMY[canonicalName as TagName];
         const tag = Tag.get(taxonomyEntry.canonical);
         if (tag.canonical !== taxonomyEntry.canonical) {
           errors.push(
@@ -59,7 +60,8 @@ describe('Tag', () => {
 
       const errors: string[] = [];
 
-      for (const taxonomyEntry of TAXONOMY) {
+      for (const canonicalName in TAXONOMY) {
+        const taxonomyEntry = TAXONOMY[canonicalName as TagName];
         const tag = Tag.get(taxonomyEntry.canonical);
         const searchTerms = getSearchTerms(tag);
         for (const termA of searchTerms) {
