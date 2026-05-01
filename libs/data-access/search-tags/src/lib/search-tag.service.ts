@@ -57,6 +57,12 @@ export class SearchTagService {
     this.updateTagsAndUrl(updatedTags);
   }
 
+  // Replace all tags with the given list
+  public setTags(tags: string[]): void {
+    const nextTags = [...tags];
+    this.updateTagsAndUrl(nextTags);
+  }
+
   // Clear all tags
   public clearAllTags(): void {
     this.updateTagsAndUrl([]);

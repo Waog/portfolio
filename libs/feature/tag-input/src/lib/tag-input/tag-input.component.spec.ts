@@ -1,3 +1,4 @@
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SearchEngineService } from '@portfolio/search-engine-angular';
 import { SearchTagService } from '@portfolio/search-tags';
@@ -27,6 +28,7 @@ describe('TagInputComponent', () => {
       currentTags: [],
       addTag: jest.fn(),
       removeTag: jest.fn(),
+      setTags: jest.fn(),
       clearAllTags: jest.fn(),
       hasTag: jest.fn(),
       tags$: of([]),
@@ -80,6 +82,46 @@ describe('TagInputComponent', () => {
     expect(mockSearchTagService.removeTag).toHaveBeenCalledWith('tag1');
   });
 
+  it('should call service setTags with reordered tags when reorderTag is called', () => {
+    component.tags = ['Angular', 'React', 'TypeScript'];
+    const event = {
+      previousIndex: 0,
+      currentIndex: 2,
+    } as CdkDragDrop<string[]>;
+
+    component.reorderTag(event);
+
+    expect(mockSearchTagService.setTags).toHaveBeenCalledWith([
+      'React',
+      'TypeScript',
+      'Angular',
+    ]);
+  });
+
+  it('should not call service setTags when reordered to the same index', () => {
+    component.tags = ['Angular', 'React', 'TypeScript'];
+    const event = {
+      previousIndex: 1,
+      currentIndex: 1,
+    } as CdkDragDrop<string[]>;
+
+    component.reorderTag(event);
+
+    expect(mockSearchTagService.setTags).not.toHaveBeenCalled();
+  });
+
+  it('should not call service setTags when there are fewer than two tags', () => {
+    component.tags = ['Angular'];
+    const event = {
+      previousIndex: 0,
+      currentIndex: 0,
+    } as CdkDragDrop<string[]>;
+
+    component.reorderTag(event);
+
+    expect(mockSearchTagService.setTags).not.toHaveBeenCalled();
+  });
+
   it('should add tag on Enter key press', () => {
     component.currentInput = 'test-tag';
     const addTagSpy = jest.spyOn(component, 'addTag');
@@ -109,6 +151,7 @@ describe('TagInputComponent', () => {
       currentTags: [],
       addTag: jest.fn(),
       removeTag: jest.fn(),
+      setTags: jest.fn(),
       clearAllTags: jest.fn(),
       hasTag: jest.fn(),
       tags$: of(newTags),

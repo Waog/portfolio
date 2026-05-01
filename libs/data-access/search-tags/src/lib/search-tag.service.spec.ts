@@ -64,6 +64,29 @@ describe('SearchTagService', () => {
     expect(service.currentTags).toEqual(['React']);
   }));
 
+  it('should set tags', fakeAsync(() => {
+    service.addTag('Angular');
+    tick();
+    service.addTag('React');
+    tick();
+
+    service.setTags(['TypeScript', 'Vue']);
+    tick();
+
+    expect(service.currentTags).toEqual(['TypeScript', 'Vue']);
+  }));
+
+  it('should clone tags passed to setTags', fakeAsync(() => {
+    const tags = ['TypeScript', 'Vue'];
+
+    service.setTags(tags);
+    tick();
+
+    tags.push('Angular');
+
+    expect(service.currentTags).toEqual(['TypeScript', 'Vue']);
+  }));
+
   it('should clear all tags', fakeAsync(() => {
     service.addTag('Angular');
     tick();

@@ -1,9 +1,14 @@
+import {
+  CdkDrag,
+  CdkDragDrop,
+  CdkDropList,
+  moveItemInArray,
+} from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnDestroy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ColorChipComponent } from '@portfolio/color-chip';
@@ -19,9 +24,10 @@ import { map, Observable, Subject, takeUntil } from 'rxjs';
     MatInputModule,
     MatFormFieldModule,
     MatButtonModule,
-    MatIconModule,
     MatProgressSpinnerModule,
     ColorChipComponent,
+    CdkDropList,
+    CdkDrag,
   ],
   templateUrl: './tag-input.component.html',
   styleUrl: './tag-input.component.scss',
@@ -77,6 +83,16 @@ export class TagInputComponent implements OnDestroy {
 
   removeTag(tagToRemove: string): void {
     this.searchTagService.removeTag(tagToRemove);
+  }
+
+  reorderTag(event: CdkDragDrop<string[]>): void {
+    if (this.tags.length < 2 || event.previousIndex === event.currentIndex) {
+      return;
+    }
+
+    const reordered = [...this.tags];
+    moveItemInArray(reordered, event.previousIndex, event.currentIndex);
+    this.searchTagService.setTags(reordered);
   }
 
   onKeyDown(event: KeyboardEvent): void {
