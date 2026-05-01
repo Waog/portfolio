@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
@@ -12,7 +12,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
   styleUrl: './contact-section.component.scss',
 })
 export class ContactSectionComponent {
-  constructor(private snackBar: MatSnackBar) {}
+  private readonly snackBar = inject(MatSnackBar);
 
   async copyToClipboard(text: string): Promise<void> {
     try {

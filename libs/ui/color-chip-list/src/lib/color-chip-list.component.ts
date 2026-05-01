@@ -7,7 +7,7 @@ import {
   computed,
   ElementRef,
   HostListener,
-  Inject,
+  inject,
   input,
   PLATFORM_ID,
   signal,
@@ -63,11 +63,11 @@ export class ColorChipListComponent implements AfterViewInit {
     () => this.allItems().length > this.itemsFittingInRow().length
   );
 
-  constructor(
-    @Inject(PLATFORM_ID) private platformId: object,
-    private colorChipDimensionsService: ColorChipDimensionsService,
-    private changeDetectorRef: ChangeDetectorRef
-  ) {}
+  private readonly platformId = inject(PLATFORM_ID);
+  private readonly colorChipDimensionsService = inject(
+    ColorChipDimensionsService
+  );
+  private readonly changeDetectorRef = inject(ChangeDetectorRef);
 
   ngAfterViewInit(): void {
     setTimeout(() => {

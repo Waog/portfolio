@@ -1,5 +1,5 @@
 import { isPlatformServer } from '@angular/common';
-import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { inject, Injectable, PLATFORM_ID } from '@angular/core';
 
 import { ChipSpacing } from './color-chip.component';
 
@@ -14,7 +14,7 @@ export interface ColorChipInputs {
   providedIn: 'root',
 })
 export class ColorChipDimensionsService {
-  constructor(@Inject(PLATFORM_ID) private platformId: object) {}
+  private readonly platformId = inject(PLATFORM_ID);
 
   getWidth(colorChipInputs: ColorChipInputs): number {
     const textWidth = this.getTextWidth(colorChipInputs.text);
