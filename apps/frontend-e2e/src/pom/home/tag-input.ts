@@ -1,5 +1,7 @@
 import { expect, Locator, type Page } from '@playwright/test';
 
+import { dragAndDropByMouse } from '../shared/drag-and-drop';
+
 export class TagInput {
   readonly locator: Locator;
   readonly inputField: Locator;
@@ -49,5 +51,11 @@ export class TagInput {
     const closeButton = chip.locator('button.chip-close-button');
     await closeButton.click();
     await expect(chip).toHaveCount(0);
+  }
+
+  async reorderSearchTerm(fromIndex: number, toIndex: number): Promise<void> {
+    const fromChip = this.chips.nth(fromIndex);
+    const toChip = this.chips.nth(toIndex);
+    await dragAndDropByMouse(this.page, fromChip, toChip);
   }
 }

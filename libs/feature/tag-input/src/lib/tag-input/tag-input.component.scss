@@ -77,6 +77,22 @@ mat-form-field {
   align-items: center;
   justify-content: flex-start;
   gap: 4px; // Add gap between color chips
+
+  &:active {
+    cursor: grabbing;
+  }
+
+  .search-tag {
+    cursor: grab;
+  }
+}
+
+.search-tag.cdk-drag-preview {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.search-tag.cdk-drag-placeholder {
+  opacity: 0.3;
 }
 
 .progress-indicator {

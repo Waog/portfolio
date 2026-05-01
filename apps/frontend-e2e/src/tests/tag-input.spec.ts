@@ -212,4 +212,47 @@ test.describe('Tag Input Functionality', () => {
     await expect(page).toHaveURL(/searchTags=Angular/);
     await expect(page).toHaveURL(/#skills/);
   });
+
+  test('reordering search terms updates chips and URL immediately', async ({
+    homePage,
+    urlHelper,
+    page,
+  }) => {
+    await urlHelper.gotoHomePage({
+      searchTags: ['Angular', 'TypeScript'],
+    });
+
+    const tagInput = homePage.tagInput();
+    await expect(tagInput.chipTexts).toHaveText(['Angular', 'TypeScript']);
+    await expect(page).toHaveURL(/searchTags=Angular,TypeScript/);
+
+    await tagInput.reorderSearchTerm(0, 1);
+
+    await expect(tagInput.chipTexts).toHaveText(['TypeScript', 'Angular']);
+    await expect(page).toHaveURL(/searchTags=TypeScript,Angular/);
+  });
+
+  test('reordering search terms resets the custom project ordering', async ({
+    homePage,
+    urlHelper,
+    page,
+  }) => {
+    await urlHelper.gotoHomePage({
+      searchTags: ['ionic', 'iOS'],
+      order: ['towel-defence', 'self-driving-car-demo'],
+    });
+    await expect(page).toHaveURL(/searchTags=ionic,iOS/);
+    await expect(page).toHaveURL(
+      /order=towel-defence:0,self-driving-car-demo:1/
+    );
+
+    const tagInput = homePage.tagInput();
+    await expect(tagInput.chipTexts).toHaveText(['ionic', 'iOS']);
+
+    await tagInput.reorderSearchTerm(0, 1);
+
+    await expect(tagInput.chipTexts).toHaveText(['iOS', 'ionic']);
+    await expect(page).toHaveURL(/searchTags=iOS,ionic/);
+    await expect(page).not.toHaveURL(/order=/);
+  });
 });

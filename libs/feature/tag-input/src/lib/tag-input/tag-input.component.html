@@ -21,15 +21,24 @@
         Add
       </button>
     </mat-form-field>
-    <div *ngIf="tags.length > 0" class="tag-list">
-      <lib-color-chip
-        *ngFor="let tag of tags"
-        [text]="tag"
-        color="green"
-        [showCloseButton]="true"
-        (closeClick)="removeTag(tag)"
-        class="search-tag"
-      ></lib-color-chip>
+    <div
+      *ngIf="tags.length > 0"
+      class="tag-list"
+      cdkDropList
+      cdkDropListOrientation="mixed"
+      [cdkDropListData]="tags"
+      (cdkDropListDropped)="reorderTag($event)"
+    >
+      <ng-container *ngFor="let tag of tags">
+        <div cdkDrag class="search-tag">
+          <lib-color-chip
+            [text]="tag"
+            color="green"
+            [showCloseButton]="true"
+            (closeClick)="removeTag(tag)"
+          ></lib-color-chip>
+        </div>
+      </ng-container>
       @if((loadingProgress$ | async); as progress) { @if(progress < 100) {
       <mat-progress-spinner
         class="progress-indicator"
