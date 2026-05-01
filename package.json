@@ -106,6 +106,7 @@
     "tslib": "^2.3.0",
     "typescript": "~5.9.2",
     "typescript-eslint": "^8.19.0",
+    "vis-data": "^8.0.3",
     "vis-network": "^10.0.1",
     "vite": "^7.3.2",
     "vitest": "^3.0.0"
