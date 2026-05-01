@@ -29,7 +29,8 @@ type Action =
   | { type: 'setCustomOrder'; customOrderDiff: CustomOrderDiff[] }
   | { type: 'resetCustomOrder' }
   | { type: 'up'; projectId: string }
-  | { type: 'down'; projectId: string };
+  | { type: 'down'; projectId: string }
+  | { type: 'reorder'; projects: Project[] };
 
 type State = {
   originalProjects: Project[];
@@ -154,6 +155,13 @@ export class ProjectListCustomOrderService {
     this.actions$.next({ type: 'down', projectId });
   }
 
+  /**
+   * Reorders projects to the given order.
+   */
+  reorderProjects(projects: Project[]): void {
+    this.actions$.next({ type: 'reorder', projects });
+  }
+
   private toCustomOrderDiff(orderParam: string | null): CustomOrderDiff[] {
     if (!orderParam) {
       return [];
@@ -240,6 +248,13 @@ export class ProjectListCustomOrderService {
           state.originalProjects,
           customOrderedProjects
         ),
+      };
+    }
+
+    if (action.type === 'reorder') {
+      return {
+        ...state,
+        customOrderDiff: this.toDiff(state.originalProjects, action.projects),
       };
     }
 
