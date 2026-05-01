@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, input, output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -14,7 +13,6 @@ import { ProjectItemMetaTilesComponent } from './project-item-meta-tiles.compone
 @Component({
   selector: 'lib-project-item',
   imports: [
-    CommonModule,
     MatButtonModule,
     MatCardModule,
     MatChipsModule,

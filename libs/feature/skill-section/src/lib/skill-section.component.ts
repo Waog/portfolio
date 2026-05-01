@@ -5,7 +5,6 @@ import {
   Component,
   ElementRef,
   HostListener,
-  Inject,
   inject,
   OnDestroy,
   PLATFORM_ID,
@@ -67,8 +66,7 @@ export class SkillSectionComponent implements AfterViewInit, OnDestroy {
 
   private renderer = inject(Renderer2);
   private changeDetectorRef = inject(ChangeDetectorRef);
-
-  constructor(@Inject(PLATFORM_ID) private platformId: object) {}
+  private readonly platformId = inject(PLATFORM_ID);
 
   ngAfterViewInit(): void {
     this.showSkeletons$.pipe(takeUntil(this.destroy$)).subscribe(show => {

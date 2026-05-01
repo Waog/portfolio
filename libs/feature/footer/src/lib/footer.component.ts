@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -9,13 +8,7 @@ import { CustomizationStateService } from '@portfolio/customization-state';
 @Component({
   selector: 'lib-footer',
   standalone: true,
-  imports: [
-    CommonModule,
-    RouterModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatIconModule,
-  ],
+  imports: [RouterModule, MatToolbarModule, MatButtonModule, MatIconModule],
   templateUrl: './footer.component.html',
   styleUrl: './footer.component.scss',
 })

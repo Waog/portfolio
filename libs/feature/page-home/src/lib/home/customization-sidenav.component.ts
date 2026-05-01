@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -9,7 +8,6 @@ import { CustomizationStateService } from '@portfolio/customization-state';
 @Component({
   selector: 'lib-customization-sidenav',
   imports: [
-    CommonModule,
     MatSidenavModule,
     MatButtonModule,
     MatCheckboxModule,

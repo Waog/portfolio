@@ -1,10 +1,9 @@
-import { CommonModule } from '@angular/common';
 import { booleanAttribute, Component, input } from '@angular/core';
 
 @Component({
   selector: 'lib-section',
   host: { '[class.print-mode]': 'printMode()' },
-  imports: [CommonModule],
+  imports: [],
   templateUrl: './section.component.html',
   styleUrl: './section.component.scss',
 })

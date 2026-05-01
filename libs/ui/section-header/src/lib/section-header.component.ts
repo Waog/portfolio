@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { booleanAttribute, Component, input } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 
@@ -6,7 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
   selector: 'lib-section-header',
   standalone: true,
   host: { '[class.print-mode]': 'printMode()' },
-  imports: [CommonModule, MatIconModule],
+  imports: [MatIconModule],
   templateUrl: './section-header.component.html',
   styleUrls: ['./section-header.component.scss'],
 })

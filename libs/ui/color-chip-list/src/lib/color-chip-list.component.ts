@@ -1,4 +1,4 @@
-import { CommonModule, isPlatformServer } from '@angular/common';
+import { isPlatformServer } from '@angular/common';
 import {
   AfterViewInit,
   booleanAttribute,
@@ -7,7 +7,7 @@ import {
   computed,
   ElementRef,
   HostListener,
-  Inject,
+  inject,
   input,
   PLATFORM_ID,
   signal,
@@ -32,7 +32,7 @@ const DEFAULT_MAX_ROW_WIDTH = 1000;
 @Component({
   selector: 'lib-color-chip-list',
   host: { '[class.print-mode]': 'printMode()' },
-  imports: [CommonModule, MatButtonModule, MatIconModule, ColorChipComponent],
+  imports: [MatButtonModule, MatIconModule, ColorChipComponent],
   templateUrl: './color-chip-list.component.html',
   styleUrl: './color-chip-list.component.scss',
 })
@@ -63,11 +63,11 @@ export class ColorChipListComponent implements AfterViewInit {
     () => this.allItems().length > this.itemsFittingInRow().length
   );
 
-  constructor(
-    @Inject(PLATFORM_ID) private platformId: object,
-    private colorChipDimensionsService: ColorChipDimensionsService,
-    private changeDetectorRef: ChangeDetectorRef
-  ) {}
+  private readonly platformId = inject(PLATFORM_ID);
+  private readonly colorChipDimensionsService = inject(
+    ColorChipDimensionsService
+  );
+  private readonly changeDetectorRef = inject(ChangeDetectorRef);
 
   ngAfterViewInit(): void {
     setTimeout(() => {

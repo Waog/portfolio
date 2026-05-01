@@ -1,4 +1,10 @@
-import { AfterViewInit, Component, ElementRef, input } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  inject,
+  input,
+} from '@angular/core';
 import type { Meta } from '@storybook/angular';
 
 // Default export for CSF compliance
@@ -15,7 +21,7 @@ export default {
 export class MediaWrapperComponent implements AfterViewInit {
   media = input<'screen' | 'print'>('screen');
 
-  constructor(private host: ElementRef) {}
+  private readonly host = inject(ElementRef);
 
   ngAfterViewInit(): void {
     this.simulateMedia(this.media());

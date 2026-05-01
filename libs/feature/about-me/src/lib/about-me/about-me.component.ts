@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { CustomizationStateService } from '@portfolio/customization-state';
@@ -13,7 +12,6 @@ import { ProfessionalFocusComponent } from '../professional-focus/professional-f
   selector: 'lib-about-me',
   host: { '[class.print-mode]': 'isPrintMode()' },
   imports: [
-    CommonModule,
     MatCardModule,
     HeroContentComponent,
     CommunityWritingComponent,
