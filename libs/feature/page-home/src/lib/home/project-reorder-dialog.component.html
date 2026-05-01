@@ -1,0 +1,34 @@
+<h2 mat-dialog-title>
+  Customize Project Order
+  <button
+    mat-icon-button
+    mat-dialog-close
+    aria-label="Close dialog"
+    class="close-button"
+  >
+    <mat-icon>close</mat-icon>
+  </button>
+</h2>
+
+<mat-dialog-content>
+  <div cdkDropList (cdkDropListDropped)="drop($event)">
+    @for (project of projects; track project.id; let i = $index) {
+    <div cdkDrag class="project-row" [class]="slotClass(i)">
+      <mat-icon class="drag-handle">drag_handle</mat-icon>
+      <div class="project-info">
+        <span class="project-title">{{ project.title }}</span>
+        <span class="project-company">{{ project.company }}</span>
+      </div>
+      <div class="match-counts">
+        <span class="match-count match-count--full" title="Full matches">
+          <mat-icon>star</mat-icon>{{ project.technologies.fullMatches.length }}
+        </span>
+        <span class="match-count match-count--partial" title="Partial matches">
+          <mat-icon>star_border</mat-icon
+          >{{ project.technologies.partialMatches.length }}
+        </span>
+      </div>
+    </div>
+    }
+  </div>
+</mat-dialog-content>

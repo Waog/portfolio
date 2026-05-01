@@ -28,8 +28,7 @@ type Action =
   | { type: 'setOriginalProjects'; projects: Project[] }
   | { type: 'setCustomOrder'; customOrderDiff: CustomOrderDiff[] }
   | { type: 'resetCustomOrder' }
-  | { type: 'up'; projectId: string }
-  | { type: 'down'; projectId: string };
+  | { type: 'reorder'; projects: Project[] };
 
 type State = {
   originalProjects: Project[];
@@ -141,17 +140,10 @@ export class ProjectListCustomOrderService {
   }
 
   /**
-   * Moves a project up in the custom order.
+   * Reorders projects to the given order.
    */
-  moveProjectUp(projectId: string): void {
-    this.actions$.next({ type: 'up', projectId });
-  }
-
-  /**
-   * Moves a project down in the custom order.
-   */
-  moveProjectDown(projectId: string): void {
-    this.actions$.next({ type: 'down', projectId });
+  reorderProjects(projects: Project[]): void {
+    this.actions$.next({ type: 'reorder', projects });
   }
 
   private toCustomOrderDiff(orderParam: string | null): CustomOrderDiff[] {
@@ -211,35 +203,10 @@ export class ProjectListCustomOrderService {
       return { ...state, customOrderDiff: [] };
     }
 
-    if (action.type === 'up') {
-      const customOrderedProjects = this.toCustomOrderedProjects(state);
-      const fromIndex = customOrderedProjects.findIndex(
-        project => project.id === action.projectId
-      );
-      const toIndex = Math.max(0, fromIndex - 1);
-      arrayMoveMutable(customOrderedProjects, fromIndex, toIndex);
+    if (action.type === 'reorder') {
       return {
         ...state,
-        customOrderDiff: this.toDiff(
-          state.originalProjects,
-          customOrderedProjects
-        ),
-      };
-    }
-
-    if (action.type === 'down') {
-      const customOrderedProjects = this.toCustomOrderedProjects(state);
-      const fromIndex = customOrderedProjects.findIndex(
-        project => project.id === action.projectId
-      );
-      const toIndex = Math.min(customOrderedProjects.length - 1, fromIndex + 1);
-      arrayMoveMutable(customOrderedProjects, fromIndex, toIndex);
-      return {
-        ...state,
-        customOrderDiff: this.toDiff(
-          state.originalProjects,
-          customOrderedProjects
-        ),
+        customOrderDiff: this.toDiff(state.originalProjects, action.projects),
       };
     }
 

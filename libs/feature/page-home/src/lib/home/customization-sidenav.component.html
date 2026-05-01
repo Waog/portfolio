@@ -19,12 +19,19 @@
       </button>
     </div>
 
-    <mat-checkbox
-      [checked]="customizationStateService.isPrintMode()"
-      (change)="setPrintMode($event.checked)"
-    >
-      Print mode
-    </mat-checkbox>
+    <div class="controls">
+      <mat-checkbox
+        [checked]="customizationStateService.isPrintMode()"
+        (change)="setPrintMode($event.checked)"
+      >
+        Print mode
+      </mat-checkbox>
+
+      <button mat-button type="button" (click)="openReorderDialog()">
+        <mat-icon>reorder</mat-icon>
+        Customize Project Order
+      </button>
+    </div>
   </mat-sidenav>
 
   <mat-sidenav-content>

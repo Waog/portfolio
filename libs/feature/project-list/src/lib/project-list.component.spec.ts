@@ -49,8 +49,6 @@ describe('ProjectListComponent', () => {
 
   const mockProjectListCustomOrderService = {
     projectsInOrder$: of([]),
-    moveProjectUp: jest.fn(),
-    moveProjectDown: jest.fn(),
   };
 
   beforeEach(async () => {

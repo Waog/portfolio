@@ -66,6 +66,242 @@ test.describe('Customization Panel', () => {
     await expect(page).not.toHaveURL(/printMode=true/);
   });
 
+  test('customize project order button opens dialog and shows current project order', async ({
+    footer,
+    customizationSidenav,
+    homePage,
+    urlHelper,
+  }) => {
+    await urlHelper.gotoHomePage({
+      searchTags: ['Ionic', 'iOS'],
+    });
+
+    const topProjectItems = await homePage.projectList().topProjectItems();
+    const topTitle0 = await topProjectItems[0].title.innerText();
+    const topTitle1 = await topProjectItems[1].title.innerText();
+
+    await footer.showPanelButton.click();
+    await customizationSidenav.expectOpen();
+
+    await expect(customizationSidenav.projectReorderDialog).toBeHidden();
+    await customizationSidenav.customizeProjectOrderButton.click();
+    await expect(customizationSidenav.projectReorderDialog).toBeVisible();
+
+    await expect(
+      customizationSidenav.projectReorderDialogHeading
+    ).toBeVisible();
+    await expect(
+      customizationSidenav.projectReorderDialogRows.first()
+    ).toBeVisible();
+    await expect(
+      customizationSidenav.projectReorderDialogRowTitles.nth(0)
+    ).toContainText(topTitle0.trim());
+    await expect(
+      customizationSidenav.projectReorderDialogRowTitles.nth(1)
+    ).toContainText(topTitle1.trim());
+  });
+
+  test('drag and drop in dialog reorders projects and updates URL immediately', async ({
+    footer,
+    customizationSidenav,
+    homePage,
+    page,
+    urlHelper,
+  }) => {
+    await urlHelper.gotoHomePage({
+      searchTags: ['Ionic', 'iOS'],
+    });
+
+    const initialTopProjects = await homePage.projectList().topProjectItems();
+    const initialTitle0 = await initialTopProjects[0].title.innerText();
+    const initialTitle1 = await initialTopProjects[1].title.innerText();
+
+    await footer.showPanelButton.click();
+    await customizationSidenav.expectOpen();
+
+    await expect(customizationSidenav.projectReorderDialog).toBeHidden();
+    await customizationSidenav.customizeProjectOrderButton.click();
+    await expect(customizationSidenav.projectReorderDialog).toBeVisible();
+
+    await expect(
+      customizationSidenav.projectReorderDialogHeading
+    ).toBeVisible();
+
+    await expect(page).not.toHaveURL(/order=/);
+
+    await customizationSidenav.dragProjectReorderRow(0, 1);
+
+    await expect(page).toHaveURL(/searchTags=Ionic,iOS/);
+    await expect(page).toHaveURL(/order=/);
+
+    await customizationSidenav.projectReorderDialogCloseButton.click();
+
+    const newTopProjects = await homePage.projectList().topProjectItems();
+    const newTitle0 = newTopProjects[0].title;
+    const newTitle1 = newTopProjects[1].title;
+
+    await expect(newTitle0).toHaveText(initialTitle1);
+    await expect(newTitle1).toHaveText(initialTitle0);
+  });
+
+  test('undoing dialog reorder removes custom order from URL', async ({
+    footer,
+    customizationSidenav,
+    page,
+    urlHelper,
+  }) => {
+    await urlHelper.gotoHomePage({
+      searchTags: ['Ionic', 'iOS'],
+    });
+
+    await footer.showPanelButton.click();
+    await customizationSidenav.expectOpen();
+    await customizationSidenav.customizeProjectOrderButton.click();
+    await expect(
+      customizationSidenav.projectReorderDialogHeading
+    ).toBeVisible();
+
+    await expect(page).not.toHaveURL(/order=/);
+
+    await customizationSidenav.dragProjectReorderRow(0, 1);
+    await expect(page).toHaveURL(/order=/);
+
+    await customizationSidenav.dragProjectReorderRow(1, 0);
+    await expect(page).not.toHaveURL(/order=/);
+  });
+
+  test('dialog reorder preserves fragment in URL', async ({
+    footer,
+    customizationSidenav,
+    page,
+    urlHelper,
+  }) => {
+    await urlHelper.gotoHomePage({
+      fragment: 'skills',
+    });
+
+    await expect(page).toHaveURL(/#skills/);
+
+    await footer.showPanelButton.click();
+    await customizationSidenav.expectOpen();
+    await customizationSidenav.customizeProjectOrderButton.click();
+    await expect(
+      customizationSidenav.projectReorderDialogHeading
+    ).toBeVisible();
+
+    await customizationSidenav.dragProjectReorderRow(0, 1);
+
+    await expect(page).toHaveURL(/#skills/);
+    await expect(page).toHaveURL(/order=/);
+  });
+
+  test('dialog reorder preserves searchTags, chips and third project order', async ({
+    footer,
+    customizationSidenav,
+    homePage,
+    page,
+    urlHelper,
+  }) => {
+    await urlHelper.gotoHomePage({
+      searchTags: ['Ionic', 'iOS'],
+    });
+
+    const tagInput = homePage.tagInput();
+    await expect(tagInput.chipTexts).toHaveText(['Ionic', 'iOS']);
+    await expect(page).toHaveURL(/searchTags=Ionic,iOS/);
+    await expect(page).not.toHaveURL(/order=/);
+
+    const initialTopProjects = await homePage.projectList().topProjectItems();
+    const initialTitle2 = await initialTopProjects[2].title.innerText();
+
+    await footer.showPanelButton.click();
+    await customizationSidenav.expectOpen();
+    await customizationSidenav.customizeProjectOrderButton.click();
+    await expect(
+      customizationSidenav.projectReorderDialogHeading
+    ).toBeVisible();
+
+    await customizationSidenav.dragProjectReorderRow(0, 1);
+    await customizationSidenav.projectReorderDialogCloseButton.click();
+
+    await expect(tagInput.chipTexts).toHaveText(['Ionic', 'iOS']);
+    await expect(page).toHaveURL(/searchTags=Ionic,iOS/);
+    await expect(page).toHaveURL(/order=/);
+
+    const reorderedTopProjects = await homePage.projectList().topProjectItems();
+    await expect(reorderedTopProjects[2].title).toHaveText(initialTitle2);
+  });
+
+  // TODO #155: re-enable viewport/scroll test
+  // eslint-disable-next-line playwright/no-skipped-test
+  test.skip('dialog reorder preserves viewport for visible third top project', async ({
+    footer,
+    customizationSidenav,
+    homePage,
+    urlHelper,
+  }) => {
+    await urlHelper.gotoHomePage({
+      searchTags: ['Angular'],
+    });
+
+    const projectItems = await homePage.projectList().topProjectItems();
+    const title0 = await projectItems[0].title.innerText();
+    const title1 = await projectItems[1].title.innerText();
+    const title2 = await projectItems[2].title.innerText();
+
+    await expect(projectItems[2].locator).not.toBeInViewport();
+    await projectItems[2].locator.scrollIntoViewIfNeeded();
+    await expect(projectItems[2].locator).toBeInViewport();
+
+    await footer.showPanelButton.click();
+    await customizationSidenav.expectOpen();
+    await customizationSidenav.customizeProjectOrderButton.click();
+    await expect(
+      customizationSidenav.projectReorderDialogHeading
+    ).toBeVisible();
+
+    await customizationSidenav.dragProjectReorderRow(1, 0);
+    await customizationSidenav.projectReorderDialogCloseButton.click();
+
+    const reorderedItems = await homePage.projectList().topProjectItems();
+    await expect(reorderedItems[0].title).toHaveText(title1);
+    await expect(reorderedItems[1].title).toHaveText(title0);
+    await expect(reorderedItems[2].title).toHaveText(title2);
+    await expect(reorderedItems[2].locator).toBeInViewport();
+  });
+
+  test('project reorder dialog closes via close button', async ({
+    footer,
+    customizationSidenav,
+  }) => {
+    await footer.showPanelButton.click();
+    await customizationSidenav.expectOpen();
+    await customizationSidenav.customizeProjectOrderButton.click();
+    await expect(
+      customizationSidenav.projectReorderDialogHeading
+    ).toBeVisible();
+
+    await customizationSidenav.projectReorderDialogCloseButton.click();
+    await expect(customizationSidenav.projectReorderDialog).toBeHidden();
+  });
+
+  test('project reorder dialog closes by clicking outside', async ({
+    footer,
+    customizationSidenav,
+  }) => {
+    await footer.showPanelButton.click();
+    await customizationSidenav.expectOpen();
+    await customizationSidenav.customizeProjectOrderButton.click();
+    await expect(
+      customizationSidenav.projectReorderDialogHeading
+    ).toBeVisible();
+
+    await customizationSidenav.projectReorderDialogBackdrop.click({
+      position: { x: 1, y: 1 },
+    });
+    await expect(customizationSidenav.projectReorderDialog).toBeHidden();
+  });
+
   test('print mode organizes the content into 3 sheets', async ({ page }) => {
     const homePage: HomePage = new HomePage(page);
     await page.goto(`/?printMode=true&searchTags=${searchTagsForMatches}`);
