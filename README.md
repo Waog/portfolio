@@ -1,81 +1,116 @@
 # Portfolio
 
-<a alt="Nx logo" href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>
+A personal portfolio website built with Angular 19 and SSR, organized as an Nx monorepo.
 
-✨ Your new, shiny [Nx workspace](https://nx.dev) is almost ready ✨.
+## Tech Stack
 
-[Learn more about this workspace setup and its capabilities](https://nx.dev/getting-started/tutorials/angular-monorepo-tutorial?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) or run `npx nx graph` to visually explore what was created. Now, let's get you up to speed!
+- **Framework:** [Angular 19](https://angular.dev) with Server-Side Rendering (SSR)
+- **UI Library:** [Angular Material](https://material.angular.io)
+- **Monorepo:** [Nx](https://nx.dev)
+- **Testing:** [Jest](https://jestjs.io) (unit), [Vitest](https://vitest.dev) (unit), [Playwright](https://playwright.dev) (e2e)
+- **Component Explorer:** [Storybook](https://storybook.js.org)
+- **Linting:** [ESLint](https://eslint.org) with [Prettier](https://prettier.io)
 
-## Finish your CI setup
+## Prerequisites
 
-[Click here to finish setting up your workspace!](https://cloud.nx.app/connect/6eGRYRFOlr)
+- [Node.js](https://nodejs.org) (see `.nvmrc` or `engines` field in `package.json` for the required version)
+- [npm](https://www.npmjs.com)
 
-## Run tasks
+## Setup
 
-To run the dev server for your app, use:
+```sh
+npm install
+```
+
+## Development
+
+Start the dev server (available at `http://localhost:4200`):
 
 ```sh
 npx nx serve frontend
 ```
 
-To create a production bundle:
+Start with SSR in development mode:
+
+```sh
+npx nx serve-ssr frontend
+```
+
+## Building
+
+Build the app for production:
 
 ```sh
 npx nx build frontend
 ```
 
-To see all available targets to run for a project, run:
+Build with prerendering:
 
 ```sh
-npx nx show project frontend
+npx nx prerender frontend
 ```
 
-These targets are either [inferred automatically](https://nx.dev/concepts/inferred-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) or defined in the `project.json` or `package.json` files.
+## Testing
 
-[More about running tasks in the docs &raquo;](https://nx.dev/features/run-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Add new projects
-
-While you could add new projects to your workspace manually, you might want to leverage [Nx plugins](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) and their [code generation](https://nx.dev/features/generate-code?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) feature.
-
-Use the plugin's generator to create new projects.
-
-To generate a new application, use:
+Run all unit tests:
 
 ```sh
-npx nx g @nx/angular:app demo
+npx nx run-many -t test
 ```
 
-To generate a new library, use:
+Run unit tests for a specific project:
 
 ```sh
-npx nx g @nx/angular:lib mylib
+npx nx test frontend
 ```
 
-You can use `npx nx list` to get a list of installed plugins. Then, run `npx nx list <plugin-name>` to learn about more specific capabilities of a particular plugin. Alternatively, [install Nx Console](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) to browse plugins and generators in your IDE.
+Run end-to-end tests:
 
-[Learn more about Nx plugins &raquo;](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) | [Browse the plugin registry &raquo;](https://nx.dev/plugin-registry?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+```sh
+npx nx e2e frontend-e2e
+```
 
-[Learn more about Nx on CI](https://nx.dev/ci/intro/ci-with-nx#ready-get-started-with-your-provider?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+## Linting
 
-## Install Nx Console
+Lint all projects:
 
-Nx Console is an editor extension that enriches your developer experience. It lets you run tasks, generate code, and improves code autocompletion in your IDE. It is available for VSCode and IntelliJ.
+```sh
+npx nx run-many -t lint
+```
 
-[Install Nx Console &raquo;](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+Format code with Prettier:
 
-## Useful links
+```sh
+npx nx format:write
+```
 
-Learn more:
+## Storybook
 
-- [Learn more about this workspace setup](https://nx.dev/getting-started/tutorials/angular-monorepo-tutorial?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Learn about Nx on CI](https://nx.dev/ci/intro/ci-with-nx?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Releasing Packages with Nx release](https://nx.dev/features/manage-releases?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [What are Nx plugins?](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+Start Storybook for component development:
 
-And join the Nx community:
+```sh
+npx nx storybook frontend
+```
 
-- [Discord](https://go.nx.dev/community)
-- [Follow us on X](https://twitter.com/nxdevtools) or [LinkedIn](https://www.linkedin.com/company/nrwl)
-- [Our Youtube channel](https://www.youtube.com/@nxdevtools)
-- [Our blog](https://nx.dev/blog?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+## Project Structure
+
+```
+apps/
+  frontend/          # Angular SSR application
+  frontend-e2e/      # Playwright e2e tests
+libs/
+  data-access/       # Data models and state (projects, taxonomy, etc.)
+  feature/           # Feature components (about-me, project-list, skills, contact, etc.)
+  ui/                # Reusable UI components
+  util/              # Utilities and shared styles
+```
+
+## Contributing
+
+Commits must follow [Conventional Commits](https://www.conventionalcommits.org/) (enforced via commitlint and Husky).
+
+```
+<type>(<scope>): <emoji> <short description>
+```
+
+Example: `feat(frontend): ✨ add dark mode toggle`
