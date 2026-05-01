@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, input } from '@angular/core';
 
 import { Language } from '../language-switch/language.enum';
@@ -10,7 +9,6 @@ import { PrivacyPolicyEnComponent } from './generated-wrapper-components/privacy
 @Component({
   selector: 'legal-text',
   imports: [
-    CommonModule,
     ImprintDeComponent,
     ImprintEnComponent,
     PrivacyPolicyDeComponent,

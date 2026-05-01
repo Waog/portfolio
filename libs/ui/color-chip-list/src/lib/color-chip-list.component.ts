@@ -1,4 +1,4 @@
-import { CommonModule, isPlatformServer } from '@angular/common';
+import { isPlatformServer } from '@angular/common';
 import {
   AfterViewInit,
   booleanAttribute,
@@ -32,7 +32,7 @@ const DEFAULT_MAX_ROW_WIDTH = 1000;
 @Component({
   selector: 'lib-color-chip-list',
   host: { '[class.print-mode]': 'printMode()' },
-  imports: [CommonModule, MatButtonModule, MatIconModule, ColorChipComponent],
+  imports: [MatButtonModule, MatIconModule, ColorChipComponent],
   templateUrl: './color-chip-list.component.html',
   styleUrl: './color-chip-list.component.scss',
 })
