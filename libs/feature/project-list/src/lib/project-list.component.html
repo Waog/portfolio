@@ -14,14 +14,11 @@
       appearance="line"
     />
     } } @else { @for (project of filteredTopProjects(projectsOrder$ | async);
-    track project.id; let i = $index) {
+    track project.id) {
     <lib-project-item
       [project]="project"
       [isTopProject]="true"
       [printMode]="isPrintMode()"
-      [customIndex]="topProjectCustomIndex(i)"
-      (moveUp)="moveProjectUp($event)"
-      (moveDown)="moveProjectDown($event)"
     />
     } }
   </section>
@@ -54,15 +51,12 @@
       appearance="line"
     />
     } } @else { @for (project of filteredOtherProjects(projectsOrder$ | async);
-    track project.id; let i = $index) {
+    track project.id) {
     <lib-project-item
       [project]="project"
       [isTopProject]="false"
       [compact]="true"
       [printMode]="isPrintMode()"
-      [customIndex]="otherProjectCustomIndex(i)"
-      (moveUp)="moveProjectUp($event)"
-      (moveDown)="moveProjectDown($event)"
     />
     } }
   </section>

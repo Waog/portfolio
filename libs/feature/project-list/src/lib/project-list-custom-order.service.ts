@@ -28,8 +28,6 @@ type Action =
   | { type: 'setOriginalProjects'; projects: Project[] }
   | { type: 'setCustomOrder'; customOrderDiff: CustomOrderDiff[] }
   | { type: 'resetCustomOrder' }
-  | { type: 'up'; projectId: string }
-  | { type: 'down'; projectId: string }
   | { type: 'reorder'; projects: Project[] };
 
 type State = {
@@ -142,20 +140,6 @@ export class ProjectListCustomOrderService {
   }
 
   /**
-   * Moves a project up in the custom order.
-   */
-  moveProjectUp(projectId: string): void {
-    this.actions$.next({ type: 'up', projectId });
-  }
-
-  /**
-   * Moves a project down in the custom order.
-   */
-  moveProjectDown(projectId: string): void {
-    this.actions$.next({ type: 'down', projectId });
-  }
-
-  /**
    * Reorders projects to the given order.
    */
   reorderProjects(projects: Project[]): void {
@@ -217,38 +201,6 @@ export class ProjectListCustomOrderService {
 
     if (action.type === 'resetCustomOrder') {
       return { ...state, customOrderDiff: [] };
-    }
-
-    if (action.type === 'up') {
-      const customOrderedProjects = this.toCustomOrderedProjects(state);
-      const fromIndex = customOrderedProjects.findIndex(
-        project => project.id === action.projectId
-      );
-      const toIndex = Math.max(0, fromIndex - 1);
-      arrayMoveMutable(customOrderedProjects, fromIndex, toIndex);
-      return {
-        ...state,
-        customOrderDiff: this.toDiff(
-          state.originalProjects,
-          customOrderedProjects
-        ),
-      };
-    }
-
-    if (action.type === 'down') {
-      const customOrderedProjects = this.toCustomOrderedProjects(state);
-      const fromIndex = customOrderedProjects.findIndex(
-        project => project.id === action.projectId
-      );
-      const toIndex = Math.min(customOrderedProjects.length - 1, fromIndex + 1);
-      arrayMoveMutable(customOrderedProjects, fromIndex, toIndex);
-      return {
-        ...state,
-        customOrderDiff: this.toDiff(
-          state.originalProjects,
-          customOrderedProjects
-        ),
-      };
     }
 
     if (action.type === 'reorder') {

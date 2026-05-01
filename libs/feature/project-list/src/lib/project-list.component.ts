@@ -149,21 +149,6 @@ export class ProjectListComponent {
     return this.getSectionSkeletons(3, Number.POSITIVE_INFINITY);
   }
 
-  protected topProjectCustomIndex(index: number): number {
-    if (!this.isPrintSliceMode()) {
-      return index + 1;
-    }
-
-    return this.printStart() + index + 1;
-  }
-
-  protected otherProjectCustomIndex(index: number): number {
-    const sectionStart = this.isPrintSliceMode()
-      ? Math.max(3, this.printStart())
-      : 3;
-    return sectionStart + index + 1;
-  }
-
   private isGlobalIndexInPrintSlice(globalIndex: number): boolean {
     if (!this.isPrintSliceMode()) {
       return true;
@@ -201,19 +186,5 @@ export class ProjectListComponent {
     endB: number
   ): boolean {
     return startA < endB && startB < endA;
-  }
-
-  /**
-   * Moves a project up in the custom order.
-   */
-  protected moveProjectUp(projectId: string): void {
-    this.customOrderService.moveProjectUp(projectId);
-  }
-
-  /**
-   * Moves a project down in the custom order.
-   */
-  protected moveProjectDown(projectId: string): void {
-    this.customOrderService.moveProjectDown(projectId);
   }
 }

@@ -144,14 +144,28 @@ test.describe('Navigation: interactions', () => {
   test('selecting Projects NavItem after SPA changes preserves searchTags and custom order', async ({
     homePage,
     navigation,
+    footer,
+    customizationSidenav,
     page,
   }) => {
     const tagInput = homePage.tagInput();
     await tagInput.addSearchTerm('ionic');
     await tagInput.addSearchTerm('iOS');
 
+    await footer.showPanelButton.click();
+    await customizationSidenav.expectOpen();
+    await customizationSidenav.customizeProjectOrderButton.click();
+    await expect(
+      customizationSidenav.projectReorderDialogHeading
+    ).toBeVisible();
+    await customizationSidenav.projectReorderDialogRows
+      .nth(1)
+      .dragTo(customizationSidenav.projectReorderDialogRows.nth(2), {
+        steps: 2,
+      });
+    await customizationSidenav.projectReorderDialogCloseButton.click();
+
     const projects = await homePage.projectList().topProjectItems();
-    await projects[1].decreaseCustomOrder();
 
     await expect(projects[0].title).toContainText('Self-Driving Car');
     await expect(projects[1].title).toContainText('Custom E-Commerce');
@@ -220,14 +234,28 @@ test.describe('Navigation: interactions', () => {
   test('selecting Brand Logo Link after SPA changes resets searchTags and custom order', async ({
     homePage,
     navigation,
+    footer,
+    customizationSidenav,
     page,
   }) => {
     const tagInput = homePage.tagInput();
     await tagInput.addSearchTerm('ionic');
     await tagInput.addSearchTerm('iOS');
 
+    await footer.showPanelButton.click();
+    await customizationSidenav.expectOpen();
+    await customizationSidenav.customizeProjectOrderButton.click();
+    await expect(
+      customizationSidenav.projectReorderDialogHeading
+    ).toBeVisible();
+    await customizationSidenav.projectReorderDialogRows
+      .nth(1)
+      .dragTo(customizationSidenav.projectReorderDialogRows.nth(2), {
+        steps: 2,
+      });
+    await customizationSidenav.projectReorderDialogCloseButton.click();
+
     const projects = await homePage.projectList().topProjectItems();
-    await projects[1].decreaseCustomOrder();
 
     await expect(projects[0].title).toContainText('Self-Driving Car');
     await expect(projects[1].title).toContainText('Custom E-Commerce');
