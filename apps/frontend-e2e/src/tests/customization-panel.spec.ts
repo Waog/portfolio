@@ -129,11 +129,7 @@ test.describe('Customization Panel', () => {
 
     await expect(page).not.toHaveURL(/order=/);
 
-    await customizationSidenav.projectReorderDialogRows
-      .nth(0)
-      .dragTo(customizationSidenav.projectReorderDialogRows.nth(1), {
-        steps: 2,
-      });
+    await customizationSidenav.dragProjectReorderRow(0, 1);
 
     await expect(page).toHaveURL(/searchTags=Ionic,iOS/);
     await expect(page).toHaveURL(/order=/);
@@ -167,18 +163,10 @@ test.describe('Customization Panel', () => {
 
     await expect(page).not.toHaveURL(/order=/);
 
-    await customizationSidenav.projectReorderDialogRows
-      .nth(0)
-      .dragTo(customizationSidenav.projectReorderDialogRows.nth(1), {
-        steps: 2,
-      });
+    await customizationSidenav.dragProjectReorderRow(0, 1);
     await expect(page).toHaveURL(/order=/);
 
-    await customizationSidenav.projectReorderDialogRows
-      .nth(1)
-      .dragTo(customizationSidenav.projectReorderDialogRows.nth(0), {
-        steps: 2,
-      });
+    await customizationSidenav.dragProjectReorderRow(1, 0);
     await expect(page).not.toHaveURL(/order=/);
   });
 
@@ -201,11 +189,7 @@ test.describe('Customization Panel', () => {
       customizationSidenav.projectReorderDialogHeading
     ).toBeVisible();
 
-    await customizationSidenav.projectReorderDialogRows
-      .nth(0)
-      .dragTo(customizationSidenav.projectReorderDialogRows.nth(1), {
-        steps: 2,
-      });
+    await customizationSidenav.dragProjectReorderRow(0, 1);
 
     await expect(page).toHaveURL(/#skills/);
     await expect(page).toHaveURL(/order=/);
@@ -237,11 +221,7 @@ test.describe('Customization Panel', () => {
       customizationSidenav.projectReorderDialogHeading
     ).toBeVisible();
 
-    await customizationSidenav.projectReorderDialogRows
-      .nth(0)
-      .dragTo(customizationSidenav.projectReorderDialogRows.nth(1), {
-        steps: 2,
-      });
+    await customizationSidenav.dragProjectReorderRow(0, 1);
     await customizationSidenav.projectReorderDialogCloseButton.click();
 
     await expect(tagInput.chipTexts).toHaveText(['Ionic', 'iOS']);
@@ -280,11 +260,7 @@ test.describe('Customization Panel', () => {
       customizationSidenav.projectReorderDialogHeading
     ).toBeVisible();
 
-    await customizationSidenav.projectReorderDialogRows
-      .nth(1)
-      .dragTo(customizationSidenav.projectReorderDialogRows.nth(0), {
-        steps: 2,
-      });
+    await customizationSidenav.dragProjectReorderRow(1, 0);
     await customizationSidenav.projectReorderDialogCloseButton.click();
 
     const reorderedItems = await homePage.projectList().topProjectItems();

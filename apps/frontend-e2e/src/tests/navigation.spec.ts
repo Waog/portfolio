@@ -158,11 +158,8 @@ test.describe('Navigation: interactions', () => {
     await expect(
       customizationSidenav.projectReorderDialogHeading
     ).toBeVisible();
-    await customizationSidenav.projectReorderDialogRows
-      .nth(1)
-      .dragTo(customizationSidenav.projectReorderDialogRows.nth(2), {
-        steps: 2,
-      });
+
+    await customizationSidenav.dragProjectReorderRow(1, 2);
     await customizationSidenav.projectReorderDialogCloseButton.click();
 
     const projects = await homePage.projectList().topProjectItems();
@@ -248,11 +245,7 @@ test.describe('Navigation: interactions', () => {
     await expect(
       customizationSidenav.projectReorderDialogHeading
     ).toBeVisible();
-    await customizationSidenav.projectReorderDialogRows
-      .nth(1)
-      .dragTo(customizationSidenav.projectReorderDialogRows.nth(2), {
-        steps: 2,
-      });
+    await customizationSidenav.dragProjectReorderRow(1, 2);
     await customizationSidenav.projectReorderDialogCloseButton.click();
 
     const projects = await homePage.projectList().topProjectItems();
