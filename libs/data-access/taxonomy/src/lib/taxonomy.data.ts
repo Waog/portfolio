@@ -22,6 +22,7 @@ type InternalTagName =
   | 'Angular'
   | 'AngularJS'
   | 'Angular Material'
+  | 'Angular Universal'
   | 'Ant'
   | 'API Gateway'
   | 'API Integration'
@@ -72,6 +73,7 @@ type InternalTagName =
   | 'Data Visualization'
   | 'Debugging'
   | 'Design Patterns'
+  | 'Design Tokens'
   | 'Developer Portfolio'
   | 'DevOps Tools'
   | 'Diploma Thesis'
@@ -96,6 +98,7 @@ type InternalTagName =
   | 'Facebook'
   | 'Facebook API'
   | 'Facebook Games'
+  | 'Feature Flags'
   | 'Figma'
   | 'FinTech'
   | 'First-person camera'
@@ -167,6 +170,7 @@ type InternalTagName =
   | 'Model-based testing'
   | 'MongoDB'
   | 'Mongoose'
+  | 'Monitoring'
   | 'MonoDevelop'
   | 'Mono Repo'
   | 'MVC'
@@ -179,6 +183,7 @@ type InternalTagName =
   | 'Notepad++'
   | 'npm'
   | 'Nx'
+  | 'OAuth'
   | 'OAuth2'
   | 'OOP'
   | 'OpenAI'
@@ -191,6 +196,7 @@ type InternalTagName =
   | 'PayPal API'
   | 'Peer-to-Peer'
   | 'peerJS'
+  | 'Performance Profiling'
   | 'Performance Testing'
   | 'Phaser'
   | 'Playwright'
@@ -236,6 +242,8 @@ type InternalTagName =
   | 'Splunk'
   | 'Spring Boot'
   | 'SQL'
+  | 'SSG'
+  | 'SSR'
   | 'State Management'
   | 'Stencil'
   | 'Storybook'
@@ -245,6 +253,7 @@ type InternalTagName =
   | 'Systematic Test Generation'
   | 'Tailwind'
   | 'TeddyMocks'
+  | 'Telemetry'
   | 'Testing'
   | 'TESTONA'
   | 'TFS'
@@ -412,7 +421,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
   Angular: {
     canonical: 'Angular',
     categories: ['Frontend', 'Tools & Libraries'],
-    children: ['Angular Material'],
+    children: ['Angular Material', 'Angular Universal'],
     includes: ['CSS', 'HTML', 'SPA', 'TypeScript'],
     parents: ['Frontend Framework'],
     related: ['Angular Material', 'AngularJS', 'NgRx', 'RxJS', 'SASS', 'SCSS'],
@@ -435,6 +444,12 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     categories: ['Frontend', 'Tools & Libraries'],
     parents: ['Angular', 'CSS Framework'],
     related: ['Bootstrap', 'Tailwind'],
+  },
+  'Angular Universal': {
+    canonical: 'Angular Universal',
+    categories: ['Frontend', 'Tools & Libraries'],
+    parents: ['Angular'],
+    related: ['SSR', 'SSG'],
   },
   Ant: {
     canonical: 'Ant',
@@ -468,6 +483,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     canonical: 'AppConfig',
     categories: ['Cloud & Infrastructure'],
     parents: ['AWS'],
+    related: ['Feature Flags'],
   },
   ARIA: {
     canonical: 'ARIA',
@@ -723,7 +739,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
   CloudWatch: {
     canonical: 'CloudWatch',
     categories: ['Cloud & Infrastructure'],
-    parents: ['AWS'],
+    parents: ['AWS', 'Monitoring'],
   },
   'Component Library': {
     canonical: 'Component Library',
@@ -826,6 +842,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
   DataDog: {
     canonical: 'DataDog',
     categories: ['Cloud & Infrastructure', 'Tools & Libraries'],
+    parents: ['Monitoring'],
     related: ['Docker', 'Kubernetes', 'Splunk'],
   },
   'Data Visualization': {
@@ -844,6 +861,12 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     parents: ['Software Design'],
     related: ['MVC', 'OOP', 'Software Architecture'],
     synonyms: [/design patterns?/i],
+  },
+  'Design Tokens': {
+    canonical: 'Design Tokens',
+    categories: ['Concepts', 'Frontend'],
+    related: ['Component Library', 'CSS', 'SCSS', 'Design Patterns', 'UI/UX'],
+    synonyms: [/design tokens?/i],
   },
   'Developer Portfolio': {
     canonical: 'Developer Portfolio',
@@ -1027,6 +1050,12 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     parents: ['Facebook', 'Game Development'],
     related: ['Flash', 'Unity'],
     synonyms: [/facebook games?/i],
+  },
+  'Feature Flags': {
+    canonical: 'Feature Flags',
+    categories: ['Concepts', 'DevOps & Build & CI/CD'],
+    related: ['AppConfig', 'CI/CD'],
+    synonyms: [/feature flags?/i, /feature toggles?/i],
   },
   Figma: {
     canonical: 'Figma',
@@ -1502,6 +1531,13 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     includes: ['MongoDB', 'Node.js'],
     related: ['Backend Systems'],
   },
+  Monitoring: {
+    canonical: 'Monitoring',
+    categories: ['Cloud & Infrastructure', 'Concepts'],
+    children: ['DataDog', 'Sentry', 'Splunk', 'CloudWatch'],
+    related: ['Debugging', 'Performance Profiling', 'Telemetry'],
+    synonyms: [/^monitoring$/i, /application monitoring/i, /observability/i],
+  },
   MonoDevelop: {
     canonical: 'MonoDevelop',
     categories: ['Tools & Libraries'],
@@ -1590,9 +1626,17 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     related: ['CI/CD', 'JavaScript', 'TypeScript'],
     synonyms: [/^nrwl nx$/i, /^nx$/i],
   },
+  OAuth: {
+    canonical: 'OAuth',
+    categories: ['Concepts'],
+    children: ['OAuth2'],
+    related: ['API Integration'],
+    synonyms: [/^oauth$/i],
+  },
   OAuth2: {
     canonical: 'OAuth2',
     categories: ['Concepts'],
+    parents: ['OAuth'],
     related: ['API Integration'],
     synonyms: [/oauth 2/i, /oauth2/i],
   },
@@ -1674,11 +1718,23 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     categories: ['Frontend', 'Tools & Libraries'],
     parents: ['WebRTC'],
   },
+  'Performance Profiling': {
+    canonical: 'Performance Profiling',
+    categories: ['Concepts', 'Testing and QA'],
+    related: [
+      'Debugging',
+      'Lighthouse',
+      'Monitoring',
+      'Performance Testing',
+      'Web Vitals',
+    ],
+    synonyms: [/performance profiling/i, /profiling/i],
+  },
   'Performance Testing': {
     canonical: 'Performance Testing',
     categories: ['Concepts', 'Testing and QA'],
     parents: ['Testing'],
-    related: ['Lighthouse', 'Web Vitals'],
+    related: ['Lighthouse', 'Performance Profiling', 'Web Vitals'],
     synonyms: [/load[-_\s]*tests?/i, /performance[-_\s]*tests?/i],
   },
   Phaser: {
@@ -1895,7 +1951,8 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
   },
   Sentry: {
     canonical: 'Sentry',
-    categories: ['Tools & Libraries'],
+    categories: ['Cloud & Infrastructure', 'Tools & Libraries'],
+    parents: ['Monitoring'],
     related: ['Debugging'],
   },
   'Shader programming': {
@@ -1931,6 +1988,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
   SPA: {
     canonical: 'SPA',
     categories: ['Concepts', 'Frontend'],
+    children: ['SSG', 'SSR'],
     synonyms: [/^spa$/i, /single[- ]page application/i],
   },
   Spacer: {
@@ -1942,6 +2000,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
   Splunk: {
     canonical: 'Splunk',
     categories: ['Cloud & Infrastructure', 'Tools & Libraries'],
+    parents: ['Monitoring'],
     related: ['DataDog'],
   },
   'Spring Boot': {
@@ -1954,6 +2013,20 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     canonical: 'SQL',
     categories: ['Backend'],
     related: ['Backend Systems'],
+  },
+  SSG: {
+    canonical: 'SSG',
+    categories: ['Concepts', 'Frontend'],
+    parents: ['SPA'],
+    related: ['Angular Universal', 'SSR', 'Web Development'],
+    synonyms: [/^ssg$/i, /static site gen/i],
+  },
+  SSR: {
+    canonical: 'SSR',
+    categories: ['Concepts', 'Frontend'],
+    parents: ['SPA'],
+    related: ['Angular Universal', 'SSG', 'Web Development'],
+    synonyms: [/^ssr$/i, /server[-\s]*side rendering/i],
   },
   'State Management': {
     canonical: 'State Management',
@@ -2005,6 +2078,12 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     categories: ['Testing and QA'],
     parents: ['Unit Testing'],
     related: ['chai', 'Jest', 'mocha'],
+  },
+  Telemetry: {
+    canonical: 'Telemetry',
+    categories: ['Cloud & Infrastructure', 'Concepts'],
+    related: ['Monitoring', 'Performance Profiling'],
+    synonyms: [/telemetry/i],
   },
   Testing: {
     canonical: 'Testing',
