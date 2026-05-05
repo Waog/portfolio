@@ -2273,6 +2273,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     categories: ['DevOps & Build & CI/CD', 'Tools & Libraries'],
     parents: ['Build Tools'],
     related: ['Webpack'],
+    synonyms: [/^vite$/i],
   },
   VSCode: {
     canonical: 'VSCode',
