@@ -1,33 +1,28 @@
 import { CommonModule, isPlatformServer } from '@angular/common';
 import {
-  AfterViewInit,
+  afterRender,
   booleanAttribute,
-  ChangeDetectorRef,
   Component,
   computed,
   ElementRef,
   HostListener,
-  Inject,
+  inject,
   input,
   PLATFORM_ID,
+  QueryList,
   signal,
   ViewChild,
+  ViewChildren,
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import {
-  ChipSpacing,
-  ColorChipComponent,
-  ColorChipDimensionsService,
-} from '@portfolio/color-chip';
+import { ChipSpacing, ColorChipComponent } from '@portfolio/color-chip';
 
 interface ChipItem {
   text: string;
   color: 'green' | 'yellow' | 'gray';
   icon?: string;
 }
-
-const DEFAULT_MAX_ROW_WIDTH = 1000;
 
 @Component({
   selector: 'lib-color-chip-list',
@@ -36,66 +31,121 @@ const DEFAULT_MAX_ROW_WIDTH = 1000;
   templateUrl: './color-chip-list.component.html',
   styleUrl: './color-chip-list.component.scss',
 })
-export class ColorChipListComponent implements AfterViewInit {
+export class ColorChipListComponent {
   greenItems = input<string[]>([]);
   yellowItems = input<string[]>([]);
   grayItems = input<string[]>([]);
   spacing = input<ChipSpacing>('large');
   printMode = input(false, { transform: booleanAttribute });
+  rows = input<number>(1);
 
-  @ViewChild('chipColumn', { static: false })
-  chipColumnRef!: ElementRef<HTMLElement>;
+  @ViewChild('chipColumn')
+  private chipColumnRef!: ElementRef<HTMLElement>;
 
-  showAllItems = signal(false);
-  private maxItemRowWidth = signal(DEFAULT_MAX_ROW_WIDTH);
+  @ViewChildren('chipItem', { read: ElementRef })
+  private chipItemRefs!: QueryList<ElementRef<HTMLElement>>;
 
-  readonly allItems = computed(() => this.calculateAllItems());
-  private readonly itemsFittingInRow = computed(() =>
-    this.getItemsFittingIntoMaxWidth(this.allItems())
-  );
-  readonly visibleItems = computed(() =>
-    this.showAllItems() ? this.allItems() : this.itemsFittingInRow()
-  );
+  @ViewChild('toggleButton', { read: ElementRef })
+  private toggleButtonRef?: ElementRef<HTMLElement>;
+
+  expanded = signal(false);
+  private readonly hiddenChipFlags = signal<boolean[]>([]);
+
+  readonly allItems = computed(() => this.buildAllItems());
   readonly hiddenItemsCount = computed(
-    () => this.allItems().length - this.visibleItems().length
+    () => this.hiddenChipFlags().filter(Boolean).length
   );
-  readonly showToggleButtons = computed(
-    () => this.allItems().length > this.itemsFittingInRow().length
+  readonly showToggleButton = computed(
+    () => this.expanded() || this.hiddenItemsCount() > 0
+  );
+  readonly chipHeightCssVar = computed(
+    () => `var(--chip-height-${this.spacing()})`
   );
 
-  constructor(
-    @Inject(PLATFORM_ID) private platformId: object,
-    private colorChipDimensionsService: ColorChipDimensionsService,
-    private changeDetectorRef: ChangeDetectorRef
-  ) {}
+  private readonly platformId = inject(PLATFORM_ID);
 
-  ngAfterViewInit(): void {
-    setTimeout(() => {
-      this.maxItemRowWidth.set(this.calculateMaxItemRowWidth());
-      this.changeDetectorRef.detectChanges();
-    });
+  constructor() {
+    afterRender(() => this.updateHiddenChipFlags());
   }
 
   @HostListener('window:resize')
   onResize(): void {
-    this.maxItemRowWidth.set(this.calculateMaxItemRowWidth());
+    this.updateHiddenChipFlags();
   }
 
-  private calculateMaxItemRowWidth(): number {
-    if (isPlatformServer(this.platformId)) {
-      return 1000; // Fallback for SSR without window
-    }
-    if (this.chipColumnRef) {
-      const chipColumnWidth =
-        this.chipColumnRef.nativeElement.getBoundingClientRect().width;
-      if (chipColumnWidth > 0) {
-        return chipColumnWidth;
-      }
-    }
-    return window.innerWidth * 0.7; // Fallback calculation
+  isItemHidden(index: number): boolean {
+    if (this.expanded()) return false;
+    return this.hiddenChipFlags()[index] ?? false;
   }
 
-  private calculateAllItems(): ChipItem[] {
+  toggleCollapsed(): void {
+    this.expanded.set(!this.expanded());
+  }
+
+  private updateHiddenChipFlags(): void {
+    // NOTE: bounding-box checks rely on browser APIs
+    if (isPlatformServer(this.platformId)) return;
+    if (this.expanded()) {
+      this.clearHiddenFlags();
+      return;
+    }
+    const newFlags = this.computeHiddenFlags();
+    if (this.flagsChanged(newFlags)) {
+      this.hiddenChipFlags.set(newFlags);
+    }
+  }
+
+  private clearHiddenFlags(): void {
+    if (this.hiddenChipFlags().some(Boolean)) {
+      this.hiddenChipFlags.set([]);
+    }
+  }
+
+  private computeHiddenFlags(): boolean[] {
+    const chipElements = this.chipItemRefs?.toArray() ?? [];
+    if (!this.chipColumnRef?.nativeElement || chipElements.length === 0) {
+      return [];
+    }
+    const containerRect =
+      this.chipColumnRef.nativeElement.getBoundingClientRect();
+    const toggleButtonRect =
+      this.toggleButtonRef?.nativeElement.getBoundingClientRect();
+    return chipElements.map(chipRef => {
+      const chipRect = chipRef.nativeElement.getBoundingClientRect();
+      return (
+        this.isChipOutsideContainer(chipRect, containerRect) ||
+        this.isChipOverlappingToggleButton(chipRect, toggleButtonRect)
+      );
+    });
+  }
+
+  private isChipOutsideContainer(
+    chipRect: DOMRect,
+    containerRect: DOMRect
+  ): boolean {
+    return chipRect.bottom > containerRect.bottom + 1; // +1 px float tolerance
+  }
+
+  private isChipOverlappingToggleButton(
+    chipRect: DOMRect,
+    toggleButtonRect?: DOMRect
+  ): boolean {
+    if (!toggleButtonRect) return false;
+    return !(
+      chipRect.right <= toggleButtonRect.left ||
+      chipRect.left >= toggleButtonRect.right ||
+      chipRect.bottom <= toggleButtonRect.top ||
+      chipRect.top >= toggleButtonRect.bottom
+    );
+  }
+
+  private flagsChanged(newFlags: boolean[]): boolean {
+    const currentFlags = this.hiddenChipFlags();
+    if (newFlags.length !== currentFlags.length) return true;
+    return newFlags.some((flag, i) => flag !== currentFlags[i]);
+  }
+
+  private buildAllItems(): ChipItem[] {
     const green = this.greenItems().map(text => ({
       text,
       color: 'green' as const,
@@ -110,39 +160,6 @@ export class ColorChipListComponent implements AfterViewInit {
       text,
       color: 'gray' as const,
     }));
-
     return [...green, ...yellow, ...gray];
-  }
-
-  getItemsWidth(items: ChipItem[]): number {
-    return items.reduce((total, item, index) => {
-      const toleranceBuffer = 1; // width calculation is not perfect, so we add a buffer
-      const gap = index > 0 ? 8 : 0; // 0.5rem is equivalent to 8px
-      return total + this.getItemWidth(item) + gap + toleranceBuffer;
-    }, 0);
-  }
-
-  getItemWidth(item: ChipItem): number {
-    return this.colorChipDimensionsService.getWidth({
-      text: item.text,
-      icon: item.icon,
-      spacing: this.spacing(),
-    });
-  }
-
-  getItemsFittingIntoMaxWidth(items: ChipItem[]): ChipItem[] {
-    const result: ChipItem[] = [];
-    for (const item of items) {
-      if (this.getItemsWidth([...result, item]) <= this.maxItemRowWidth()) {
-        result.push(item);
-      } else {
-        break;
-      }
-    }
-    return result;
-  }
-
-  toggleItems(): void {
-    this.showAllItems.set(!this.showAllItems());
   }
 }

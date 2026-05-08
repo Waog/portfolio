@@ -49,69 +49,53 @@ describe('ColorChipListComponent', () => {
     });
   });
 
-  describe('visibleItems', () => {
-    beforeEach(() => {
-      fixture.componentRef.setInput('greenItems', ['React', 'Angular']);
-      fixture.componentRef.setInput('yellowItems', [
-        'TypeScript',
-        'JavaScript',
-        'Node.js',
-      ]);
-      fixture.componentRef.setInput('grayItems', [
-        'CSS',
-        'HTML',
-        'SCSS',
-        'Bootstrap',
-        'Tailwind',
-      ]);
+  describe('rows input', () => {
+    it('should default to 1', () => {
+      expect(component.rows()).toBe(1);
+    });
+
+    it('should accept a custom row count', () => {
+      fixture.componentRef.setInput('rows', 2);
       fixture.detectChanges();
-    });
-
-    it('should show green items first', () => {
-      const visibleItems = component.visibleItems();
-      expect(visibleItems[0].text).toBe('React');
-      expect(visibleItems[1].text).toBe('Angular');
-    });
-
-    it('should show all items when expanded', () => {
-      component.toggleItems(); // This will set showAllItems to true and update cached properties
-      const visibleItems = component.visibleItems();
-      expect(visibleItems).toHaveLength(component.allItems().length);
+      expect(component.rows()).toBe(2);
     });
   });
 
   describe('hiddenItemsCount', () => {
-    it('should calculate correct hidden items count', () => {
+    it('should return 0 when no bounding-box overflows have been detected', () => {
       fixture.componentRef.setInput('greenItems', ['React', 'Angular']);
-      fixture.componentRef.setInput('yellowItems', [
-        'TypeScript',
-        'JavaScript',
-        'Node.js',
-      ]);
-      fixture.componentRef.setInput('grayItems', [
-        'CSS',
-        'HTML',
-        'SCSS',
-        'Bootstrap',
-        'Tailwind',
-      ]);
-      component.showAllItems.set(false);
       fixture.detectChanges();
 
-      const hiddenCount = component.hiddenItemsCount();
-      expect(hiddenCount).toBe(
-        component.allItems().length - component.visibleItems().length
-      );
+      // In JSDOM all getBoundingClientRect values are 0, so no chip appears
+      // outside the container and hiddenItemsCount stays at 0.
+      expect(component.hiddenItemsCount()).toBe(0);
     });
   });
 
-  describe('toggleItems', () => {
-    it('should toggle showAllItems', () => {
-      expect(component.showAllItems()).toBe(false);
-      component.toggleItems();
-      expect(component.showAllItems()).toBe(true);
-      component.toggleItems();
-      expect(component.showAllItems()).toBe(false);
+  describe('toggleCollapsed', () => {
+    it('should toggle expanded state', () => {
+      expect(component.expanded()).toBe(false);
+      component.toggleCollapsed();
+      expect(component.expanded()).toBe(true);
+      component.toggleCollapsed();
+      expect(component.expanded()).toBe(false);
+    });
+  });
+
+  describe('isItemHidden', () => {
+    it('should always return false when expanded is true', () => {
+      component.expanded.set(true);
+      expect(component.isItemHidden(0)).toBe(false);
+      expect(component.isItemHidden(99)).toBe(false);
+    });
+
+    it('should return false for all indices when no overflow is detected', () => {
+      fixture.componentRef.setInput('greenItems', ['React', 'Angular']);
+      fixture.detectChanges();
+      component.expanded.set(false);
+
+      expect(component.isItemHidden(0)).toBe(false);
+      expect(component.isItemHidden(1)).toBe(false);
     });
   });
 });

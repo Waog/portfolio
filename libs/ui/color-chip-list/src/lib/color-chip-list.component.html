@@ -1,39 +1,36 @@
-<div class="container">
-  <div class="chip-column" #chipColumn>
-    @for ( item of visibleItems(); track item.text) {
+<div
+  class="container"
+  [style.--chip-height]="chipHeightCssVar()"
+  [style.--rows]="rows()"
+>
+  <div class="chip-column" [class.collapsed]="!expanded()" #chipColumn>
+    @for (item of allItems(); track item.text; let i = $index) {
     <lib-color-chip
+      #chipItem
       [text]="item.text"
       [color]="item.color"
       [icon]="item.icon"
       [spacing]="spacing()"
-      class="chip-item"
+      [class.chip-hidden]="isItemHidden(i)"
     />
     }
   </div>
 
-  <div class="toggle-button-column">
-    @if (showToggleButtons()) {
-    <button
-      mat-button
-      color="basic"
-      (click)="toggleItems()"
-      class="toggle-button"
-    >
-      @if (!printMode()) {
-      <mat-icon>{{
-        hiddenItemsCount() > 0 ? 'expand_more' : 'expand_less'
-      }}</mat-icon>
-      } @if (!printMode()) {
-      <span>show</span>
-      } @else {
-      <span>+ </span>
-      }
-      {{
-        visibleItems().length < allItems().length
-          ? hiddenItemsCount() + ' more'
-          : 'less'
-      }}
-    </button>
+  @if (showToggleButton()) {
+  <button
+    #toggleButton
+    mat-button
+    color="basic"
+    class="toggle-button"
+    (click)="toggleCollapsed()"
+  >
+    @if (!printMode()) {
+    <mat-icon>{{ expanded() ? 'expand_less' : 'expand_more' }}</mat-icon>
+    } @if (!printMode()) {
+    <span>{{ expanded() ? 'less' : hiddenItemsCount() + ' more' }}</span>
+    } @else {
+    <span>+ {{ hiddenItemsCount() }} more</span>
     }
-  </div>
+  </button>
+  }
 </div>

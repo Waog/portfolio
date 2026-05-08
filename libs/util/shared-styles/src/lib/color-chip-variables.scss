@@ -1,0 +1,51 @@
+// CSS custom properties that define color-chip dimensions.
+//
+// These variables serve as the single point of truth for chip sizing.
+// Both color-chip and color-chip-list components rely on them so that
+// the chip-list can calculate its container height purely in CSS via calc().
+//
+// Usage:
+// Include the mixin once in the global stylesheet (apps/frontend/src/styles.scss):
+// ```scss
+// @use 'color-chip-variables' as chip;
+// @include chip.color-chip-variables;
+// ```
+// All variables are then available as CSS custom properties globally.
+
+@mixin color-chip-variables {
+  :root {
+    // Structure
+    --chip-border-width: 1px;
+    --chip-border-radius: 4px;
+    --chip-inner-gap: 0.25rem;
+    --chip-icon-size: 1rem;
+    --chip-font-size: 0.875rem;
+
+    // Vertical / horizontal paddings per spacing variant
+    --chip-padding-v-small: 0.125rem;
+    --chip-padding-h-small: 0.25rem;
+    --chip-padding-v-medium: 0.25rem;
+    --chip-padding-h-medium: 0.5rem;
+    --chip-padding-v-large: 0.375rem;
+    --chip-padding-h-large: 0.75rem;
+
+    // Content height of a chip's text span.
+    // This value must be explicitly enforced via `line-height: var(--chip-content-height)`
+    // All sizing derives from this single rem value.
+    --chip-content-height: 1.25rem;
+
+    // Total chip heights per spacing variant
+    --chip-height-small: calc(
+      var(--chip-content-height) + 2 * var(--chip-padding-v-small) + 2 *
+        var(--chip-border-width)
+    );
+    --chip-height-medium: calc(
+      var(--chip-content-height) + 2 * var(--chip-padding-v-medium) + 2 *
+        var(--chip-border-width)
+    );
+    --chip-height-large: calc(
+      var(--chip-content-height) + 2 * var(--chip-padding-v-large) + 2 *
+        var(--chip-border-width)
+    );
+  }
+}

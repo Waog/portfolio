@@ -57,7 +57,7 @@ test.describe('Project List Section', () => {
     const aiProject = await homePage
       .projectList()
       .projectItemByTitle(/AI-Powered Language Learning App/);
-    await expect(aiProject.chip('Java')).toBeVisible();
+    await expect(aiProject.chip('Spring Boot')).toBeVisible();
     await expect(aiProject.chip('React Native')).toBeVisible();
   });
 

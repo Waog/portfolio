@@ -1,20 +1,37 @@
-@use 'spacing' as spacing;
+// NOTE: relies on variables from color-chip-variables.scss
 
 .container {
-  display: grid;
-  gap: spacing.sm();
-  grid-template-columns: 1fr max-content;
-  align-items: center;
+  --chip-list-row-gap: 0.5rem;
+
+  position: relative;
 
   .chip-column {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem;
-    align-items: center;
+    gap: var(--chip-list-row-gap);
+
+    &.collapsed {
+      max-height: calc(
+        var(--rows, 1) * var(--chip-height) + (var(--rows, 1) - 1) *
+          var(--chip-list-row-gap)
+      );
+      overflow: hidden;
+    }
   }
 }
 
+.chip-hidden {
+  visibility: hidden;
+}
+
 .toggle-button {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  font-size: var(--chip-font-size);
+  height: var(--chip-height);
+  min-height: var(--chip-height);
+
   :host(.print-mode) & {
     color: gray;
   }

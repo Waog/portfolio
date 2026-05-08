@@ -78,6 +78,7 @@
       [greenItems]="project().technologies.fullMatches"
       [yellowItems]="project().technologies.partialMatches"
       [grayItems]="project().technologies.nonMatches"
+      [rows]="isTopProject() ? 2 : 1"
       [printMode]="printMode()"
     />
   </div>
