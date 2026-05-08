@@ -1,8 +1,60 @@
-<lib-color-chip-list
-  [greenItems]="greenItems()"
-  [yellowItems]="yellowItems()"
-  [grayItems]="grayItems()"
-  [spacing]="spacing()"
-  [printMode]="printMode()"
-  [rows]="rows()"
-/>
+<div class="customizable-color-chip-list-container">
+  @if (customizationStateService.isPanelShown()) {
+  <div
+    class="customization-panel"
+    role="toolbar"
+    aria-label="Chip list customization"
+  >
+    <div class="spacing-group" aria-label="Chip spacing">
+      <mat-button-toggle-group
+        #spacingGroup="matButtonToggleGroup"
+        [value]="effectiveSpacing()"
+        (change)="setSpacing(spacingGroup.value)"
+      >
+        <mat-button-toggle data-spacing="small" [value]="'small'"
+          >small</mat-button-toggle
+        >
+        <mat-button-toggle data-spacing="medium" [value]="'medium'"
+          >medium</mat-button-toggle
+        >
+        <mat-button-toggle data-spacing="large" [value]="'large'"
+          >large</mat-button-toggle
+        >
+      </mat-button-toggle-group>
+    </div>
+
+    <div class="rows-group" aria-label="Rows controls">
+      <button
+        mat-icon-button
+        type="button"
+        data-rows-action="decrease"
+        aria-label="Decrease rows"
+        (click)="decreaseRows()"
+      >
+        <mat-icon>remove</mat-icon>
+      </button>
+
+      <span class="rows-value">{{ effectiveRows() }}</span>
+
+      <button
+        mat-icon-button
+        type="button"
+        data-rows-action="increase"
+        aria-label="Increase rows"
+        (click)="increaseRows()"
+      >
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+  </div>
+  }
+
+  <lib-color-chip-list
+    [greenItems]="greenItems()"
+    [yellowItems]="yellowItems()"
+    [grayItems]="grayItems()"
+    [spacing]="effectiveSpacing()"
+    [printMode]="printMode()"
+    [rows]="effectiveRows()"
+  />
+</div>

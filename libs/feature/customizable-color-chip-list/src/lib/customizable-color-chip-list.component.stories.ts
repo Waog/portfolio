@@ -1,4 +1,7 @@
+import { signal } from '@angular/core';
+import { CustomizationStateService } from '@portfolio/customization-state';
 import type { Meta, StoryObj } from '@storybook/angular';
+import { moduleMetadata } from '@storybook/angular';
 
 import { CustomizableColorChipListComponent } from './customizable-color-chip-list.component';
 
@@ -6,6 +9,18 @@ const meta: Meta<CustomizableColorChipListComponent> = {
   title: 'Feature/Customizable Color Chip List',
   component: CustomizableColorChipListComponent,
   tags: ['autodocs'],
+  decorators: [
+    moduleMetadata({
+      providers: [
+        {
+          provide: CustomizationStateService,
+          useValue: {
+            isPanelShown: signal(true),
+          },
+        },
+      ],
+    }),
+  ],
   args: {
     printMode: false,
     rows: 1,
