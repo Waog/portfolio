@@ -92,7 +92,7 @@ export class ProjectItem {
     this.duration = this.locator.locator(this.getMetaTextSelector(2));
     this.location = this.locator.locator(this.getMetaTextSelector(3));
     this.industry = this.locator.locator(this.getMetaTextSelector(4));
-    this.chips = this.locator.locator('lib-color-chip.chip-item');
+    this.chips = this.locator.locator('lib-color-chip');
     this.greenChips = this.chips.locator('.color-chip-green');
     this.greenChipTexts = this.greenChips.locator('.chip-text');
   }

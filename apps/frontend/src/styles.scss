@@ -1,8 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
 @use 'spacing' as spacing;
+@use 'color-chip-variables' as chip;
 @use 'styles/material-icons';
 
 @include spacing.spacing-variables;
+@include chip.color-chip-variables;
 
 html,
 body {
