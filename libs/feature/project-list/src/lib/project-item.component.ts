@@ -6,7 +6,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
-import { ColorChipListComponent } from '@portfolio/color-chip-list';
+import { CustomizableColorChipListComponent } from '@portfolio/customizable-color-chip-list';
 import { Project } from '@portfolio/search-engine-domain';
 
 import { ProjectItemMetaTilesComponent } from './project-item-meta-tiles.component';
@@ -22,7 +22,7 @@ import { ProjectItemMetaTilesComponent } from './project-item-meta-tiles.compone
     MatIconModule,
     MatListModule,
     ProjectItemMetaTilesComponent,
-    ColorChipListComponent,
+    CustomizableColorChipListComponent,
   ],
   templateUrl: './project-item.component.html',
   styleUrl: './project-item.component.scss',

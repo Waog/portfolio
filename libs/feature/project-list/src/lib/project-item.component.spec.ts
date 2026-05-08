@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 import { Project } from '@portfolio/search-engine-domain';
 
 import { ProjectItemComponent } from './project-item.component';
@@ -43,6 +44,7 @@ describe('ProjectItemComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [ProjectItemComponent],
+      providers: [provideRouter([])],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ProjectItemComponent);

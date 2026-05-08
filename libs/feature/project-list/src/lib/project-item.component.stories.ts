@@ -1,6 +1,10 @@
+import { provideRouter } from '@angular/router';
 import { Project } from '@portfolio/search-engine-domain';
 import type { Meta, StoryObj } from '@storybook/angular';
-import { componentWrapperDecorator } from '@storybook/angular';
+import {
+  applicationConfig,
+  componentWrapperDecorator,
+} from '@storybook/angular';
 
 import { ProjectItemComponent } from './project-item.component';
 
@@ -9,6 +13,9 @@ const meta: Meta<ProjectItemComponent> = {
   component: ProjectItemComponent,
   tags: ['autodocs'],
   decorators: [
+    applicationConfig({
+      providers: [provideRouter([])],
+    }),
     componentWrapperDecorator(
       story =>
         `<div style="background-color: #EEE; padding: 1.5rem">

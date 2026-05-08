@@ -22,6 +22,9 @@
       "@portfolio/contact-section": [
         "libs/feature/contact-section/src/index.ts"
       ],
+      "@portfolio/customizable-color-chip-list": [
+        "libs/feature/customizable-color-chip-list/src/index.ts"
+      ],
       "@portfolio/customization-state": [
         "libs/data-access/customization-state/src/index.ts"
       ],
