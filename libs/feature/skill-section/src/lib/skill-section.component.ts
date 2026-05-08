@@ -16,7 +16,7 @@ import {
 } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
-import { ColorChipListComponent } from '@portfolio/color-chip-list';
+import { CustomizableColorChipListComponent } from '@portfolio/customizable-color-chip-list';
 import { CustomizationStateService } from '@portfolio/customization-state';
 import { SearchEngineService } from '@portfolio/search-engine-angular';
 import { SectionHeaderComponent } from '@portfolio/section-header';
@@ -30,7 +30,7 @@ import { map, Subject, takeUntil } from 'rxjs';
     MatCardModule,
     MatIconModule,
     SectionHeaderComponent,
-    ColorChipListComponent,
+    CustomizableColorChipListComponent,
     NgxSkeletonLoaderModule,
   ],
   templateUrl: './skill-section.component.html',
