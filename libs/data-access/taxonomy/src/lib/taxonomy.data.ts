@@ -31,6 +31,8 @@ type InternalTagName =
   | 'Artemis-ODB'
   | 'Artificial Intelligence'
   | 'Atlassian'
+  | 'Authentication'
+  | 'Authorization'
   | 'Automotive'
   | 'AWS'
   | 'AWS Organizations'
@@ -473,6 +475,9 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
       'GitHub API',
       'Google Maps API',
       'GraphQL',
+      'Authentication',
+      'Authorization',
+      'OAuth',
       'OAuth2',
       'OpenAPI',
       'PayPal API',
@@ -528,6 +533,32 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     canonical: 'Atlassian',
     categories: ['Tools & Libraries'],
     children: ['BitBucket', 'Confluence', 'Jira', 'Trello'],
+  },
+  Authentication: {
+    canonical: 'Authentication',
+    categories: ['Concepts'],
+    related: [
+      'API Integration',
+      'Authorization',
+      'IAM',
+      'IAM Identity Center',
+      'OAuth',
+      'OAuth2',
+    ],
+    synonyms: [/^authentication$/i, /^auth1$/i],
+  },
+  Authorization: {
+    canonical: 'Authorization',
+    categories: ['Concepts'],
+    related: [
+      'API Integration',
+      'Authentication',
+      'IAM',
+      'IAM Identity Center',
+      'OAuth',
+      'OAuth2',
+    ],
+    synonyms: [/^authorization$/i, /^auth2$/i],
   },
   Automotive: {
     canonical: 'Automotive',
@@ -1069,9 +1100,8 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
   'Facebook API': {
     canonical: 'Facebook API',
     categories: ['Tools & Libraries'],
-    includes: ['API Integration'],
+    includes: ['API Integration', 'OAuth2', 'REST'],
     parents: ['Facebook'],
-    related: ['OAuth2', 'REST'],
   },
   'Facebook Games': {
     canonical: 'Facebook Games',
@@ -1307,12 +1337,14 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     canonical: 'IAM',
     categories: ['Cloud & Infrastructure'],
     children: ['IAM Identity Center'],
+    includes: ['Authentication', 'Authorization'],
     parents: ['AWS'],
     synonyms: [/^aws[-_\s]*iam$/i, /^iam$/i],
   },
   'IAM Identity Center': {
     canonical: 'IAM Identity Center',
     categories: ['Cloud & Infrastructure'],
+    includes: ['Authentication', 'Authorization'],
     parents: ['AWS', 'IAM'],
   },
   'Image Processing': {
@@ -1683,12 +1715,14 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     canonical: 'OAuth',
     categories: ['Concepts'],
     children: ['OAuth2'],
+    includes: ['Authentication', 'Authorization'],
     related: ['API Integration'],
     synonyms: [/^oauth$/i],
   },
   OAuth2: {
     canonical: 'OAuth2',
     categories: ['Concepts'],
+    includes: ['Authentication', 'Authorization'],
     parents: ['OAuth'],
     related: ['API Integration'],
     synonyms: [/oauth[-_\s]*2/i, /oauth2/i],
@@ -2222,9 +2256,8 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
   'Twitter API': {
     canonical: 'Twitter API',
     categories: ['Tools & Libraries'],
-    includes: ['API Integration'],
+    includes: ['API Integration', 'OAuth2', 'REST'],
     parents: ['Twitter'],
-    related: ['OAuth2', 'REST'],
   },
   TypeScript: {
     canonical: 'TypeScript',
