@@ -55,6 +55,8 @@ type InternalTagName =
   | 'CloudFormation'
   | 'Cloud Platforms'
   | 'CloudWatch'
+  | 'Code Assistance Systems'
+  | 'Coding Agents'
   | 'Component Library'
   | 'Computer Graphics'
   | 'Computer Vision'
@@ -115,6 +117,7 @@ type InternalTagName =
   | 'GitHub'
   | 'GitHub Actions'
   | 'GitHub API'
+  | 'GitHub Copilot'
   | 'GitLab'
   | 'GitLab CI'
   | 'GLSL'
@@ -521,6 +524,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     canonical: 'Artificial Intelligence',
     categories: ['Concepts'],
     children: [
+      'Code Assistance Systems',
       'Computer Vision',
       'OpenAI',
       'Pattern Recognition',
@@ -782,6 +786,25 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     canonical: 'CloudWatch',
     categories: ['Cloud & Infrastructure'],
     parents: ['AWS', 'Monitoring'],
+  },
+  'Code Assistance Systems': {
+    canonical: 'Code Assistance Systems',
+    categories: ['Concepts', 'Tools & Libraries'],
+    children: ['Coding Agents', 'GitHub Copilot'],
+    parents: ['Artificial Intelligence'],
+    related: ['OpenAI', 'VSCode'],
+    synonyms: [
+      /ai[-_\s]*coding[-_\s]*assistants?/i,
+      /code[-_\s]*assistance[-_\s]*systems?/i,
+      /coding[-_\s]*assistants?/i,
+    ],
+  },
+  'Coding Agents': {
+    canonical: 'Coding Agents',
+    categories: ['Concepts', 'Tools & Libraries'],
+    parents: ['Code Assistance Systems'],
+    related: ['GitHub Copilot'],
+    synonyms: [/ai[-_\s]*coding[-_\s]*agents?/i, /coding[-_\s]*agents?/i],
   },
   'Component Library': {
     canonical: 'Component Library',
@@ -1212,7 +1235,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
       'DevOps & Build & CI/CD',
       'Tools & Libraries',
     ],
-    children: ['GitHub Actions', 'GitHub API'],
+    children: ['GitHub Actions', 'GitHub API', 'GitHub Copilot'],
     parents: ['Git'],
     related: ['CI/CD'],
     synonyms: [/^github$/i],
@@ -1233,6 +1256,13 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     includes: ['API Integration'],
     parents: ['GitHub'],
     related: ['CI/CD', 'OAuth2', 'REST'],
+  },
+  'GitHub Copilot': {
+    canonical: 'GitHub Copilot',
+    categories: ['Tools & Libraries'],
+    parents: ['Code Assistance Systems', 'GitHub'],
+    related: ['Coding Agents', 'OpenAI', 'VSCode'],
+    synonyms: [/^github[-_\s]*copilot$/i, /github.*copilot/i],
   },
   GitLab: {
     canonical: 'GitLab',
