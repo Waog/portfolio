@@ -180,6 +180,7 @@ type InternalTagName =
   | 'NgRx'
   | 'Nifty GUI'
   | 'Node.js'
+  | 'NoSQL Databases'
   | 'Notepad++'
   | 'npm'
   | 'Nx'
@@ -218,6 +219,7 @@ type InternalTagName =
   | 'React Web'
   | 'Redash'
   | 'Redux'
+  | 'Relational Databases'
   | 'requireJS'
   | 'Research'
   | 'Responsive Design'
@@ -845,8 +847,10 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
   },
   'Database Systems': {
     canonical: 'Database Systems',
-    categories: ['Misc'],
-    synonyms: [/database[-_\s]*system/i, /databases/i],
+    categories: ['Backend'],
+    children: ['NoSQL Databases', 'Relational Databases'],
+    related: ['Backend Systems', 'Mongoose', 'Redash'],
+    synonyms: [/database[-_\s]*systems?/i, /^databases?$/i],
   },
   DataDog: {
     canonical: 'DataDog',
@@ -910,7 +914,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
   DynamoDB: {
     canonical: 'DynamoDB',
     categories: ['Backend', 'Cloud & Infrastructure'],
-    parents: ['AWS'],
+    parents: ['AWS', 'NoSQL Databases'],
     related: ['Backend Systems'],
     synonyms: [/dynamo/i],
   },
@@ -1554,6 +1558,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
   MongoDB: {
     canonical: 'MongoDB',
     categories: ['Backend', 'Cloud & Infrastructure'],
+    parents: ['NoSQL Databases'],
     related: ['Backend Systems'],
     synonyms: [/^mongo$/i, /mongodb/i],
   },
@@ -1642,6 +1647,18 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     includes: ['JavaScript'],
     parents: ['Backend Systems'],
     synonyms: [/node/i],
+  },
+  'NoSQL Databases': {
+    canonical: 'NoSQL Databases',
+    categories: ['Backend'],
+    children: ['DynamoDB', 'MongoDB'],
+    parents: ['Database Systems'],
+    related: ['Backend Systems'],
+    synonyms: [
+      /^no[-_]?sql$/i,
+      /no[-_]?sql[-_\s]*databases?/i,
+      /non[-_]?relational[-_\s]*databases?/i,
+    ],
   },
   'Notepad++': {
     canonical: 'Notepad++',
@@ -1897,6 +1914,14 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     parents: ['State Management'],
     related: ['NgRx'],
   },
+  'Relational Databases': {
+    canonical: 'Relational Databases',
+    categories: ['Backend'],
+    children: ['SQL'],
+    parents: ['Database Systems'],
+    related: ['Backend Systems'],
+    synonyms: [/relational[-_\s]*databases?/i, /rdbms/i],
+  },
   requireJS: {
     canonical: 'requireJS',
     categories: ['DevOps & Build & CI/CD', 'Tools & Libraries'],
@@ -2056,7 +2081,9 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
   SQL: {
     canonical: 'SQL',
     categories: ['Backend'],
+    parents: ['Relational Databases'],
     related: ['Backend Systems'],
+    synonyms: [/^sql$/i, /structured[-_\s]*query[-_\s]*language/i],
   },
   SSG: {
     canonical: 'SSG',
