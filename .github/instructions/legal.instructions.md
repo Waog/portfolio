@@ -10,9 +10,11 @@ applyTo: 'legal/legal-project-facts.data.ts,legal/legal-project-facts.type.ts,le
 
 Legal Project Facts Data (`legal/legal-project-facts.data.ts`) is the single source of truth for all legal-relevant facts in this repository.
 
-If code or configuration changes affect legal/compliance-relevant facts, Legal Project Facts Data must be checked and updated if needed.
+When code or configuration changes are made:
 
-If Legal Project Facts Data changes, you must check whether the legal output files also need to be updated.
+1. Determine whether the change affects legal-relevant facts or compliance requirements.
+2. If yes, update Legal Project Facts Data (`legal/legal-project-facts.data.ts`) to reflect the change.
+3. If Legal Project Facts Data changed, check whether the legal output files also need to be updated.
 
 ## What counts as potentially legal-relevant
 
@@ -33,14 +35,14 @@ Installing, removing, or reconfiguring a dependency can itself be legally releva
 
 When actively changing code or configs in the repository:
 
-- perform a semantic check, not a file-touch check
+- perform a semantic check by verifying whether the change affects legal-relevant facts or compliance requirements, not a file-touch check
 - determine whether your code/config change has a legal impact and change Legal Project Facts Data (`legal/legal-project-facts.data.ts`) accordingly
 
 ## Review behavior
 
 When reviewing a pull request:
 
-- perform a semantic check, not a file-touch check
+- perform a semantic check by verifying whether the change affects legal-relevant facts or compliance requirements, not a file-touch check
 - determine whether the code/config change should have changed Legal Project Data
 - determine whether a change in Legal Project Facts Data should have changed any legal output file
 - it is valid that no follow-up change is needed, but this must be explicitly justified
