@@ -545,7 +545,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
       'OAuth',
       'OAuth2',
     ],
-    synonyms: [/^authentication$/i, /^auth1$/i],
+    synonyms: [/^authentication$/i, /^authn$/i],
   },
   Authorization: {
     canonical: 'Authorization',
@@ -558,7 +558,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
       'OAuth',
       'OAuth2',
     ],
-    synonyms: [/^authorization$/i, /^auth2$/i],
+    synonyms: [/^authorization$/i, /^authz$/i],
   },
   Automotive: {
     canonical: 'Automotive',
