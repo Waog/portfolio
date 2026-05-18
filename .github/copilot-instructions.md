@@ -13,13 +13,19 @@ When reviewing pull requests:
 
 # For Agent Mode
 
-When you are in agent mode: don't explain things to me nor tell me what to do, unless I explicitly ask for advice or explanation. Instead, just finish implementing what I asked for; I want finished code and a working feature.
+In agent mode, complete the requested work without extra explanation unless I explicitly ask for advice or an explanation. Finish the implementation and return working code.
 
-When you execute CLI commands in agent mode, there is a bug, which makes you analyze the CLI result before it finished executing. Therefore, always run a second trivial command (e.g. echo) and wait for my confirmation before reading the output of the first command.
+When you execute CLI commands in agent mode, there is a bug that can make you inspect the CLI result before it has finished executing. Therefore, always run a second trivial command (for example, `echo`) before reading the output of the first command.
 
-Before making high-level modifications like creating or modifying the public interface of a package, class, interface, or component, give me multiple suggestions/options for how the public interface of that class/component could look. Present them in a very brief numbered list, which only expects me to choose a number. Only present how the modified item will be consumed. Mark the recommended option as recommended.
+# For Chat Mode
 
-Prefer minimal changes over large refactors, unless the code is very bad or you are asked to do a refactor. If you think a refactor is necessary, explain why and ask for confirmation before proceeding.
+When you are in chat mode: Before making high-level modifications like creating or modifying the public interface of a package, class, interface, or component, give me multiple suggestions/options for how the public interface of that class/component could look. Present them in a very brief numbered list, which only expects me to choose a number. Only present how the modified item will be consumed. Mark the recommended option as recommended.
+
+When you are in chat mode: Prefer using the VSCode tools you have access to over custom command line execution.
+
+# General Coding Guidelines
+
+Prefer minimal changes over large refactors, unless the code is very bad or you are asked to do a refactor.
 
 Prefer using libraries and reusing existing code over writing new code. Suggest new libraries instead of reinventing the wheel. Brief and non-duplicated code is always more maintainable and preferred.
 
