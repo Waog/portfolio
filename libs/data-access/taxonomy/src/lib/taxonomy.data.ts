@@ -377,9 +377,9 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     categories: ['Industry'],
     parents: ['Research'],
     synonyms: [
-      /^academic research$/i,
-      /^university research$/i,
-      /scientific research/i,
+      /^academic[-_\s]*research$/i,
+      /^university[-_\s]*research$/i,
+      /scientific[-_\s]*research/i,
     ],
   },
   Accessibility: {
@@ -456,7 +456,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     categories: ['DevOps & Build & CI/CD'],
     parents: ['Build Tools'],
     related: ['CI/CD', 'Gradle', 'Maven'],
-    synonyms: [/^ant$/i, /apache ant/i],
+    synonyms: [/^ant$/i, /apache[-_\s]*ant/i],
   },
   'API Gateway': {
     canonical: 'API Gateway',
@@ -498,7 +498,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     ],
     synonyms: [
       /^aria$/i,
-      /accessible rich internet applications/i,
+      /accessible[-_\s]*rich[-_\s]*internet[-_\s]*applications/i,
       /wai-?aria/i,
     ],
   },
@@ -520,7 +520,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
       'Robotics Control Systems',
       'Sensor Fusion',
     ],
-    synonyms: [/^ai$/i, /artificial intelligence/i],
+    synonyms: [/^ai$/i, /artificial[-_\s]*intelligence/i],
   },
   Atlassian: {
     canonical: 'Atlassian',
@@ -530,7 +530,12 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
   Automotive: {
     canonical: 'Automotive',
     categories: ['Industry'],
-    synonyms: [/automotive/i, /mobility/i, /vehicle/i, /vehicle software/i],
+    synonyms: [
+      /automotive/i,
+      /mobility/i,
+      /vehicle/i,
+      /vehicle[-_\s]*software/i,
+    ],
   },
   AWS: {
     canonical: 'AWS',
@@ -551,7 +556,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     ],
     parents: ['Cloud Platforms'],
     related: ['Cloudflare'],
-    synonyms: [/^aws$/i, /amazon web services/i],
+    synonyms: [/^aws$/i, /amazon[-_\s]*web[-_\s]*services/i],
   },
   'AWS Organizations': {
     canonical: 'AWS Organizations',
@@ -584,14 +589,14 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
       'SQL',
       'TypeScript',
     ],
-    synonyms: [/backend systems/i, /backend/i],
+    synonyms: [/backend[-_\s]*systems/i, /backend/i],
   },
   Banking: {
     canonical: 'Banking',
     categories: ['Industry'],
     children: ['FinTech'],
     related: ['Insurance'],
-    synonyms: [/banking/i, /banks?/i, /financial services/i],
+    synonyms: [/banking/i, /banks?/i, /financial[-_\s]*services/i],
   },
   BitBucket: {
     canonical: 'BitBucket',
@@ -710,7 +715,11 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
       'Yeoman',
       'yo',
     ],
-    synonyms: [/^ci\/cd$/i, /continuous delivery/i, /continuous integration/i],
+    synonyms: [
+      /^ci\/cd$/i,
+      /continuous[-_\s]*delivery/i,
+      /continuous[-_\s]*integration/i,
+    ],
   },
   'Classification Tree Method': {
     canonical: 'Classification Tree Method',
@@ -734,7 +743,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     canonical: 'Cloud Platforms',
     categories: ['Misc'],
     children: ['AWS', 'Cloudflare', 'Google App Engine'],
-    synonyms: [/^cloud$/i, /cloud platform/i],
+    synonyms: [/^cloud$/i, /cloud[-_\s]*platform/i],
   },
   CloudWatch: {
     canonical: 'CloudWatch',
@@ -785,7 +794,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     canonical: 'Conventional Commits',
     categories: ['Concepts', 'DevOps & Build & CI/CD'],
     related: ['Git', 'SemVer'],
-    synonyms: [/^conventional commits?$/i],
+    synonyms: [/^conventional[-_\s]*commits?$/i],
   },
   Cordova: {
     canonical: 'Cordova',
@@ -837,7 +846,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
   'Database Systems': {
     canonical: 'Database Systems',
     categories: ['Misc'],
-    synonyms: [/database system/i, /databases/i],
+    synonyms: [/database[-_\s]*system/i, /databases/i],
   },
   DataDog: {
     canonical: 'DataDog',
@@ -848,7 +857,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
   'Data Visualization': {
     canonical: 'Data Visualization',
     categories: ['Concepts', 'Frontend'],
-    synonyms: [/data visuali[sz]ation/i, /dataviz/i],
+    synonyms: [/data[-_\s]*visuali[sz]ation/i, /dataviz/i],
   },
   Debugging: {
     canonical: 'Debugging',
@@ -860,21 +869,21 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     categories: ['Concepts'],
     parents: ['Software Design'],
     related: ['MVC', 'OOP', 'Software Architecture'],
-    synonyms: [/design patterns?/i],
+    synonyms: [/design[-_\s]*patterns?/i],
   },
   'Design Tokens': {
     canonical: 'Design Tokens',
     categories: ['Concepts', 'Frontend'],
     related: ['Component Library', 'CSS', 'SCSS', 'Design Patterns', 'UI/UX'],
-    synonyms: [/design tokens?/i],
+    synonyms: [/design[-_\s]*tokens?/i],
   },
   'Developer Portfolio': {
     canonical: 'Developer Portfolio',
     categories: ['Industry'],
     synonyms: [
-      /developer portfolio/i,
-      /personal portfolio/i,
-      /portfolio website/i,
+      /developer[-_\s]*portfolio/i,
+      /personal[-_\s]*portfolio/i,
+      /portfolio[-_\s]*website/i,
     ],
   },
   'DevOps Tools': {
@@ -918,9 +927,9 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     categories: ['Industry'],
     synonyms: [
       /e-?commerce/i,
-      /online retail/i,
-      /online shop/i,
-      /online store/i,
+      /online[-_\s]*retail/i,
+      /online[-_\s]*shop/i,
+      /online[-_\s]*store/i,
     ],
   },
   Eclipse: {
@@ -941,7 +950,11 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     includes: ['Java'],
     parents: ['Eclipse'],
     related: ['Eclipse GMF', 'Eclipse RCP'],
-    synonyms: [/eclipse emf/i, /eclipse modeling framework/i, /emf/i],
+    synonyms: [
+      /eclipse[-_\s]*emf/i,
+      /eclipse[-_\s]*modeling[-_\s]*framework/i,
+      /emf/i,
+    ],
   },
   'Eclipse GMF': {
     canonical: 'Eclipse GMF',
@@ -949,7 +962,11 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     includes: ['Java', 'OSGI'],
     parents: ['Eclipse'],
     related: ['Eclipse EMF', 'Eclipse PDE', 'Eclipse RCP'],
-    synonyms: [/eclipse gmf/i, /gmf/i, /graphical modeling framework/i],
+    synonyms: [
+      /eclipse[-_\s]*gmf/i,
+      /gmf/i,
+      /graphical[-_\s]*modeling[-_\s]*framework/i,
+    ],
   },
   'Eclipse Graphiti': {
     canonical: 'Eclipse Graphiti',
@@ -963,7 +980,11 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     includes: ['Java', 'OSGI'],
     parents: ['Eclipse'],
     related: ['Eclipse EMF', 'Eclipse GMF', 'Eclipse RCP'],
-    synonyms: [/eclipse pde/i, /pde/i, /plugin development environment/i],
+    synonyms: [
+      /eclipse[-_\s]*pde/i,
+      /pde/i,
+      /plugin[-_\s]*development[-_\s]*environment/i,
+    ],
   },
   'Eclipse RCP': {
     canonical: 'Eclipse RCP',
@@ -971,7 +992,11 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     includes: ['Java', 'OSGI'],
     parents: ['Eclipse'],
     related: ['Eclipse EMF'],
-    synonyms: [/eclipse rcp/i, /rcp/i, /rich client platform/i],
+    synonyms: [
+      /eclipse[-_\s]*rcp/i,
+      /rcp/i,
+      /rich[-_\s]*client[-_\s]*platform/i,
+    ],
   },
   Education: {
     canonical: 'Education',
@@ -991,9 +1016,9 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     parents: ['Education'],
     synonyms: [
       /^edtech$/i,
-      /education technology/i,
-      /learning app/i,
-      /learning platform/i,
+      /education[-_\s]*technology/i,
+      /learning[-_\s]*app/i,
+      /learning[-_\s]*platform/i,
     ],
   },
   'Elastic Beanstalk': {
@@ -1049,13 +1074,13 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     categories: ['Frontend', 'Tools & Libraries'],
     parents: ['Facebook', 'Game Development'],
     related: ['Flash', 'Unity'],
-    synonyms: [/facebook games?/i],
+    synonyms: [/facebook[-_\s]*games?/i],
   },
   'Feature Flags': {
     canonical: 'Feature Flags',
     categories: ['Concepts', 'DevOps & Build & CI/CD'],
     related: ['AppConfig', 'CI/CD'],
-    synonyms: [/feature flags?/i, /feature toggles?/i],
+    synonyms: [/feature[-_\s]*flags?/i, /feature[-_\s]*toggles?/i],
   },
   Figma: {
     canonical: 'Figma',
@@ -1068,21 +1093,21 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     children: ['Payments'],
     parents: ['Banking'],
     related: ['Insurance'],
-    synonyms: [/financial technology/i, /fintech/i],
+    synonyms: [/financial[-_\s]*technology/i, /fintech/i],
   },
   'First-person camera': {
     canonical: 'First-person camera',
     categories: ['Frontend'],
     parents: ['3D'],
     related: ['Computer Graphics'],
-    synonyms: [/first-?person camera/i, /fps camera/i],
+    synonyms: [/first-?person[-_\s]*camera/i, /fps[-_\s]*camera/i],
   },
   Flash: {
     canonical: 'Flash',
     categories: ['Frontend', 'Tools & Libraries'],
     includes: ['ActionScript'],
     parents: ['Game Development'],
-    synonyms: [/^flash$/i, /adobe flash/i],
+    synonyms: [/^flash$/i, /adobe[-_\s]*flash/i],
   },
   Fractal: {
     canonical: 'Fractal',
@@ -1101,7 +1126,11 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     children: ['Angular', 'AngularJS', 'CSS Framework', 'React', 'Vue.js'],
     parents: ['Framework'],
     related: ['MVC'],
-    synonyms: [/frontend framework/i, /javascript framework/i, /js framework/i],
+    synonyms: [
+      /frontend[-_\s]*framework/i,
+      /javascript[-_\s]*framework/i,
+      /js[-_\s]*framework/i,
+    ],
   },
   FRUIT: {
     canonical: 'FRUIT',
@@ -1121,7 +1150,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
       'Phaser',
       'Unity',
     ],
-    synonyms: [/game dev/i],
+    synonyms: [/game[-_\s]*dev/i],
   },
   Gaming: {
     canonical: 'Gaming',
@@ -1129,10 +1158,10 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     children: ['Lottery'],
     related: ['Game Development'],
     synonyms: [
-      /^game industry$/i,
-      /^games industry$/i,
+      /^game[-_\s]*industry$/i,
+      /^games[-_\s]*industry$/i,
       /^gaming$/i,
-      /^video games?$/i,
+      /^video[-_\s]*games?$/i,
     ],
   },
   Git: {
@@ -1192,7 +1221,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     categories: ['Frontend'],
     parents: ['OpenGL'],
     related: ['Shader programming'],
-    synonyms: [/^glsl$/i, /opengl shading language/i],
+    synonyms: [/^glsl$/i, /opengl[-_\s]*shading[-_\s]*language/i],
   },
   'Google Analytics': {
     canonical: 'Google Analytics',
@@ -1203,7 +1232,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     canonical: 'Google App Engine',
     categories: ['Cloud & Infrastructure'],
     parents: ['Cloud Platforms'],
-    synonyms: [/^google app engine/i, /gae/i],
+    synonyms: [/^google[-_\s]*app[-_\s]*engine/i, /gae/i],
   },
   'Google Code': {
     canonical: 'Google Code',
@@ -1218,7 +1247,10 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     canonical: 'Google Maps API',
     categories: ['Tools & Libraries'],
     includes: ['API Integration', 'REST'],
-    synonyms: [/google maps? api/i, /maps javascript api/i],
+    synonyms: [
+      /google[-_\s]*maps?[-_\s]*api/i,
+      /maps[-_\s]*javascript[-_\s]*api/i,
+    ],
   },
   Gradle: {
     canonical: 'Gradle',
@@ -1241,7 +1273,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     canonical: 'GTM',
     categories: ['Tools & Libraries'],
     related: ['Google Analytics'],
-    synonyms: [/google tag manager/i, /gtm/i],
+    synonyms: [/google[-_\s]*tag[-_\s]*manager/i, /gtm/i],
   },
   Gulp: {
     canonical: 'Gulp',
@@ -1265,14 +1297,14 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     includes: ['HTML', 'JavaScript'],
     parents: ['Computer Graphics'],
     related: ['2D', 'WebGL'],
-    synonyms: [/^canvas$/i, /^html canvas/i],
+    synonyms: [/^canvas$/i, /^html[-_\s]*canvas/i],
   },
   IAM: {
     canonical: 'IAM',
     categories: ['Cloud & Infrastructure'],
     children: ['IAM Identity Center'],
     parents: ['AWS'],
-    synonyms: [/^aws iam$/i, /^iam$/i],
+    synonyms: [/^aws[-_\s]*iam$/i, /^iam$/i],
   },
   'IAM Identity Center': {
     canonical: 'IAM Identity Center',
@@ -1352,7 +1384,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     categories: ['Backend', 'Tools & Libraries'],
     parents: ['Backend Systems', 'J2EE', 'Java'],
     related: ['Spring Boot'],
-    synonyms: [/java servlets?/i, /servlets?/i],
+    synonyms: [/java[-_\s]*servlets?/i, /servlets?/i],
   },
   Jenkins: {
     canonical: 'Jenkins',
@@ -1492,7 +1524,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     categories: ['Misc'],
     children: ['Android', 'iOS'],
     related: ['Mobile First', 'Responsive Design'],
-    synonyms: [/mobile dev/i],
+    synonyms: [/mobile[-_\s]*dev/i],
   },
   'Mobile First': {
     canonical: 'Mobile First',
@@ -1536,7 +1568,11 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     categories: ['Cloud & Infrastructure', 'Concepts'],
     children: ['DataDog', 'Sentry', 'Splunk', 'CloudWatch'],
     related: ['Debugging', 'Performance Profiling', 'Telemetry'],
-    synonyms: [/^monitoring$/i, /application monitoring/i, /observability/i],
+    synonyms: [
+      /^monitoring$/i,
+      /application[-_\s]*monitoring/i,
+      /observability/i,
+    ],
   },
   MonoDevelop: {
     canonical: 'MonoDevelop',
@@ -1611,7 +1647,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     canonical: 'Notepad++',
     categories: ['Tools & Libraries'],
     related: ['MonoDevelop', 'Sublime Text', 'Visual Studio'],
-    synonyms: [/^notepad\+\+$/i, /notepad plus plus/i],
+    synonyms: [/^notepad\+\+$/i, /notepad[-_\s]*plus[-_\s]*plus/i],
   },
   npm: {
     canonical: 'npm',
@@ -1624,7 +1660,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     includes: ['npm'],
     parents: ['Mono Repo'],
     related: ['CI/CD', 'JavaScript', 'TypeScript'],
-    synonyms: [/^nrwl nx$/i, /^nx$/i],
+    synonyms: [/^nrwl[-_\s]*nx$/i, /^nx$/i],
   },
   OAuth: {
     canonical: 'OAuth',
@@ -1638,7 +1674,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     categories: ['Concepts'],
     parents: ['OAuth'],
     related: ['API Integration'],
-    synonyms: [/oauth 2/i, /oauth2/i],
+    synonyms: [/oauth[-_\s]*2/i, /oauth2/i],
   },
   OOP: {
     canonical: 'OOP',
@@ -1653,7 +1689,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
       'TypeScript',
       'UML',
     ],
-    synonyms: [/^oop$/i, /object[- ]oriented programming/i],
+    synonyms: [/^oop$/i, /object[- ]oriented[-_\s]*programming/i],
   },
   OpenAI: {
     canonical: 'OpenAI',
@@ -1700,7 +1736,11 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     categories: ['Industry'],
     parents: ['FinTech'],
     related: ['E-Commerce'],
-    synonyms: [/digital wallet/i, /payment processing/i, /payments?/i],
+    synonyms: [
+      /digital[-_\s]*wallet/i,
+      /payment[-_\s]*processing/i,
+      /payments?/i,
+    ],
   },
   'PayPal API': {
     canonical: 'PayPal API',
@@ -1728,7 +1768,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
       'Performance Testing',
       'Web Vitals',
     ],
-    synonyms: [/performance profiling/i, /profiling/i],
+    synonyms: [/performance[-_\s]*profiling/i, /profiling/i],
   },
   'Performance Testing': {
     canonical: 'Performance Testing',
@@ -1758,7 +1798,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     canonical: 'Preprocessor',
     categories: ['DevOps & Build & CI/CD', 'Frontend'],
     children: ['LESS', 'SASS', 'SCSS'],
-    synonyms: [/^preprocessor$/i, /css preprocessor/i],
+    synonyms: [/^preprocessor$/i, /css[-_\s]*preprocessor/i],
   },
   Prettier: {
     canonical: 'Prettier',
@@ -1770,15 +1810,15 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     categories: ['Industry'],
     related: ['Project Management'],
     synonyms: [
-      /productivity software/i,
-      /productivity tools?/i,
-      /work management/i,
+      /productivity[-_\s]*software/i,
+      /productivity[-_\s]*tools?/i,
+      /work[-_\s]*management/i,
     ],
   },
   'Project Management': {
     canonical: 'Project Management',
     categories: ['Misc'],
-    synonyms: [/^pm$/i, /project management/i],
+    synonyms: [/^pm$/i, /project[-_\s]*management/i],
   },
   Prototyping: {
     canonical: 'Prototyping',
@@ -1802,7 +1842,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     canonical: 'QA',
     categories: ['Misc'],
     related: ['Debugging', 'Testing'],
-    synonyms: [/^qa$/i, /quality assurance/i],
+    synonyms: [/^qa$/i, /quality[-_\s]*assurance/i],
   },
   'QF-Test': {
     canonical: 'QF-Test',
@@ -1867,7 +1907,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     canonical: 'Research',
     categories: ['Industry'],
     children: ['Academic Research'],
-    synonyms: [/^r&d$/i, /research( and development)?/i],
+    synonyms: [/^r&d$/i, /research([-_\s]*and[-_\s]*development)?/i],
   },
   'Responsive Design': {
     canonical: 'Responsive Design',
@@ -1881,13 +1921,17 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
       'UI/UX',
       'Web Development',
     ],
-    synonyms: [/^rwd$/i, /responsive design/i, /responsive web design/i],
+    synonyms: [
+      /^rwd$/i,
+      /responsive[-_\s]*design/i,
+      /responsive[-_\s]*web[-_\s]*design/i,
+    ],
   },
   REST: {
     canonical: 'REST',
     categories: ['Concepts'],
     related: ['API Integration', 'GraphQL', 'OpenAPI'],
-    synonyms: [/^rest$/i, /rest api/i, /restful/i],
+    synonyms: [/^rest$/i, /rest[-_\s]*api/i, /restful/i],
   },
   'Robotics Control Systems': {
     canonical: 'Robotics Control Systems',
@@ -1942,7 +1986,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     canonical: 'SemVer',
     categories: ['Concepts', 'DevOps & Build & CI/CD'],
     related: ['Conventional Commits', 'npm'],
-    synonyms: [/^semver$/i, /semantic versioning/i],
+    synonyms: [/^semver$/i, /semantic[-_\s]*versioning/i],
   },
   'Sensor Fusion': {
     canonical: 'Sensor Fusion',
@@ -1989,7 +2033,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     canonical: 'SPA',
     categories: ['Concepts', 'Frontend'],
     children: ['SSG', 'SSR'],
-    synonyms: [/^spa$/i, /single[- ]page application/i],
+    synonyms: [/^spa$/i, /single[- ]page[-_\s]*application/i],
   },
   Spacer: {
     // NOTE: this is not a real technology, but a placeholder for empty spaces in the UI
@@ -2019,14 +2063,14 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     categories: ['Concepts', 'Frontend'],
     parents: ['SPA'],
     related: ['Angular Universal', 'SSR', 'Web Development'],
-    synonyms: [/^ssg$/i, /static site gen/i],
+    synonyms: [/^ssg$/i, /static[-_\s]*site[-_\s]*gen/i],
   },
   SSR: {
     canonical: 'SSR',
     categories: ['Concepts', 'Frontend'],
     parents: ['SPA'],
     related: ['Angular Universal', 'SSG', 'Web Development'],
-    synonyms: [/^ssr$/i, /server[-\s]*side rendering/i],
+    synonyms: [/^ssr$/i, /server[-\s]*side[-_\s]*rendering/i],
   },
   'State Management': {
     canonical: 'State Management',
@@ -2110,7 +2154,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     canonical: 'TFS',
     categories: ['DevOps & Build & CI/CD', 'Tools & Libraries'],
     related: ['CI/CD', 'Git'],
-    synonyms: [/^tfs$/i, /team foundation server/i],
+    synonyms: [/^tfs$/i, /team[-_\s]*foundation[-_\s]*server/i],
   },
   TortoiseSVN: {
     canonical: 'TortoiseSVN',
@@ -2121,7 +2165,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     canonical: 'Travel',
     categories: ['Industry'],
     children: ['Airline'],
-    synonyms: [/tourism/i, /travel/i, /trip booking/i],
+    synonyms: [/tourism/i, /travel/i, /trip[-_\s]*booking/i],
   },
   'Travis CI': {
     canonical: 'Travis CI',
@@ -2175,7 +2219,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
       'Web Development',
       'Zeplin',
     ],
-    synonyms: [/^ui\/ux$/i, /user experience/i, /user interface/i],
+    synonyms: [/^ui\/ux$/i, /user[-_\s]*experience/i, /user[-_\s]*interface/i],
   },
   'UI Testing': {
     canonical: 'UI Testing',
@@ -2244,8 +2288,8 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     synonyms: [
       /cross-?industry/i,
       /multi-?industry/i,
-      /multiple industries/i,
-      /various industries/i,
+      /multiple[-_\s]*industries/i,
+      /various[-_\s]*industries/i,
     ],
   },
   'Various Technologies': {
@@ -2266,7 +2310,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
       'VSCode',
       'XCode',
     ],
-    synonyms: [/^visual studio$/i, /^vs$/i],
+    synonyms: [/^visual[-_\s]*studio$/i, /^vs$/i],
   },
   Vite: {
     canonical: 'Vite',
@@ -2295,8 +2339,8 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     related: ['ARIA', 'HTML', 'Lighthouse', 'Web Development', 'Web Vitals'],
     synonyms: [
       /^wcag$/i,
-      /accessibility guidelines/i,
-      /web content accessibility guidelines/i,
+      /accessibility[-_\s]*guidelines/i,
+      /web[-_\s]*content[-_\s]*accessibility[-_\s]*guidelines/i,
     ],
   },
   'Web Components': {
@@ -2317,7 +2361,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
       'UI/UX',
       'WCAG',
     ],
-    synonyms: [/web dev/i, /web development/i],
+    synonyms: [/web[-_\s]*dev/i, /web[-_\s]*development/i],
   },
   WebGL: {
     canonical: 'WebGL',
