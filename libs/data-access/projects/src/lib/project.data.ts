@@ -1124,9 +1124,9 @@ export const ALL_PROJECT_DATA: { [key: string]: ProjectData } = {
     usageScope: 'Public',
     maturity: 'Prototype',
   },
-  'grannies-vs-zombie-orge': {
-    id: 'grannies-vs-zombie-orge',
-    title: 'Grannies vs. Zombie-Orge — Crowd MMO Experiment',
+  'grannies-vs-zombie-ogre': {
+    id: 'grannies-vs-zombie-ogre',
+    title: 'Grannies vs. Zombie-Ogre — Crowd MMO Experiment',
     projectType: 'Web Game',
     compactDescription:
       '8-hour jam experiment: hordes of grannies fight a cat-throwing zombie ogre; browser client plus simple Python backend.',
