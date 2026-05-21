@@ -163,6 +163,8 @@ type InternalTagName =
   | 'LESS'
   | 'Lighthouse'
   | 'Lit'
+  | 'LLM'
+  | 'LLM Integration'
   | 'Lodash'
   | 'Lottery'
   | 'Maven'
@@ -289,6 +291,7 @@ type InternalTagName =
   | 'WCAG'
   | 'Web Components'
   | 'Web Development'
+  | 'Web Forms'
   | 'WebGL'
   | 'Webpack'
   | 'WebRTC'
@@ -473,6 +476,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
   'API Integration': {
     canonical: 'API Integration',
     categories: ['Concepts', 'Frontend'],
+    children: ['LLM Integration'],
     related: [
       'Facebook API',
       'GitHub API',
@@ -526,6 +530,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     children: [
       'Code Assistance Systems',
       'Computer Vision',
+      'LLM',
       'OpenAI',
       'Pattern Recognition',
       'Robotics Control Systems',
@@ -1554,6 +1559,24 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     related: ['Custom Elements', 'Shadow DOM', 'Stencil'],
     synonyms: [/^lit$/i, /lit-html/i],
   },
+  LLM: {
+    canonical: 'LLM',
+    categories: ['Concepts'],
+    children: ['LLM Integration'],
+    parents: ['Artificial Intelligence'],
+    related: ['OpenAI'],
+    synonyms: [/^llm$/i, /large[-_\s]*language[-_\s]*models?/i],
+  },
+  'LLM Integration': {
+    canonical: 'LLM Integration',
+    categories: ['Concepts'],
+    parents: ['API Integration', 'LLM'],
+    related: ['OpenAI'],
+    synonyms: [
+      /llm[-_\s]*integration/i,
+      /large[-_\s]*language[-_\s]*model[-_\s]*integration/i,
+    ],
+  },
   Lodash: {
     canonical: 'Lodash',
     categories: ['Tools & Libraries'],
@@ -1776,7 +1799,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     canonical: 'OpenAI',
     categories: ['Tools & Libraries'],
     parents: ['Artificial Intelligence'],
-    related: ['API Integration'],
+    related: ['API Integration', 'LLM', 'LLM Integration'],
   },
   OpenAPI: {
     canonical: 'OpenAPI',
@@ -2443,6 +2466,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
   'Web Development': {
     canonical: 'Web Development',
     categories: ['Misc'],
+    children: ['Web Forms'],
     related: [
       'Accessibility',
       'ARIA',
@@ -2452,6 +2476,13 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
       'WCAG',
     ],
     synonyms: [/web[-_\s]*dev/i, /web[-_\s]*development/i],
+  },
+  'Web Forms': {
+    canonical: 'Web Forms',
+    categories: ['Frontend'],
+    includes: ['HTML'],
+    parents: ['Web Development'],
+    synonyms: [/web[-_\s]*forms?/i, /^forms?$/i],
   },
   WebGL: {
     canonical: 'WebGL',
