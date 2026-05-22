@@ -167,6 +167,7 @@ type InternalTagName =
   | 'LLM Integration'
   | 'Lodash'
   | 'Lottery'
+  | 'Low-Code'
   | 'Maven'
   | 'Micro Frontends'
   | 'Microservices'
@@ -186,6 +187,7 @@ type InternalTagName =
   | 'Netbeans'
   | 'NgRx'
   | 'Nifty GUI'
+  | 'No-Code'
   | 'Node.js'
   | 'NoSQL Databases'
   | 'Notepad++'
@@ -675,6 +677,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
   'bubble.io': {
     canonical: 'bubble.io',
     categories: ['Frontend', 'Tools & Libraries'],
+    parents: ['No-Code'],
     related: ['Prototyping', 'Web Development'],
     synonyms: [/^bubble$/i, /bubble\.io/i],
   },
@@ -836,7 +839,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
   'Construct 2': {
     canonical: 'Construct 2',
     categories: ['Frontend', 'Tools & Libraries'],
-    parents: ['Game Development'],
+    parents: ['Game Development', 'No-Code'],
     related: ['HTML5', 'Phaser', 'Unity'],
   },
   Container: {
@@ -1589,6 +1592,12 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     parents: ['Gaming'],
     synonyms: [/betting/i, /gambling/i, /igaming/i, /lotter(y|ies)/i],
   },
+  'Low-Code': {
+    canonical: 'Low-Code',
+    categories: ['Concepts'],
+    related: ['No-Code', 'Prototyping'],
+    synonyms: [/^low[-_\s]*code/i],
+  },
   Maven: {
     canonical: 'Maven',
     categories: ['DevOps & Build & CI/CD'],
@@ -1724,6 +1733,13 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     categories: ['Frontend', 'Tools & Libraries'],
     includes: ['Java'],
     related: ['jMonkeyEngine'],
+  },
+  'No-Code': {
+    canonical: 'No-Code',
+    categories: ['Concepts'],
+    children: ['Construct 2', 'bubble.io'],
+    related: ['Low-Code', 'Prototyping'],
+    synonyms: [/^no[-_\s]*code/i],
   },
   'Node.js': {
     canonical: 'Node.js',
