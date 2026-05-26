@@ -344,6 +344,7 @@ describe('Tag', () => {
           Tag.get('Frontend Framework'),
           Tag.get('Framework'),
           Tag.get('SPA'),
+          Tag.get('Component-based Development'),
         ])
       );
     });

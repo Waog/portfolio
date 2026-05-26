@@ -32,8 +32,8 @@ Change _Legal Project Facts Data_ -> (re-)generate/update files and documents ->
 ## GitHub Copilot setup
 
 - Copy text from [`legal/copilot-snippets/copilot-instructions.md`](./copilot-snippets/copilot-instructions.md) to `.github/copilot-instructions.md`
-- Copy file [`legal/copilot-snippets/legal.instructions.md`](./copilot-snippets/legal.instructions.md) to `.github/instructions/legal.instructions.md`
   - replace `[YOUR LEGAL OUTPUT FOLDER]` with your actual output folder
+- Copy file [`legal/copilot-snippets/legal.instructions.md`](./copilot-snippets/legal.instructions.md) to `.github/instructions/legal.instructions.md`
 
 Then keep them aligned with the project's legal workflow when the repository structure or legal generation flow changes.
 

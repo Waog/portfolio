@@ -15,7 +15,9 @@ type InternalTagName =
   | 'Academic Research'
   | 'Accessibility'
   | 'ActionScript'
+  | 'Agentic Development Workflows'
   | 'Agile'
+  | 'AI-assisted Development'
   | 'Airline'
   | 'AJAX'
   | 'Android'
@@ -56,7 +58,9 @@ type InternalTagName =
   | 'Cloud Platforms'
   | 'CloudWatch'
   | 'Code Assistance Systems'
+  | 'Code Reviews'
   | 'Coding Agents'
+  | 'Component-based Development'
   | 'Component Library'
   | 'Computer Graphics'
   | 'Computer Vision'
@@ -407,10 +411,28 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     related: ['JavaScript'],
     synonyms: [/^as3?$/i, /actionscript/i],
   },
+  'Agentic Development Workflows': {
+    canonical: 'Agentic Development Workflows',
+    categories: ['Concepts'],
+    includes: ['Coding Agents', 'AI-assisted Development'],
+    related: ['GitHub Copilot'],
+    synonyms: [/agentic[-_\s]*dev/i, /agentic[-_\s]*workflows?/i],
+  },
   Agile: {
     canonical: 'Agile',
     categories: ['Concepts'],
     children: ['Kanban', 'SCRUM'],
+  },
+  'AI-assisted Development': {
+    canonical: 'AI-assisted Development',
+    categories: ['Concepts'],
+    parents: ['Code Assistance Systems'],
+    related: [
+      'GitHub Copilot',
+      'Agentic Development Workflows',
+      'Coding Agents',
+    ],
+    synonyms: [/ai[-_\s]*(assisted|supported|powered|enabled)[-_\s]*dev/i],
   },
   Airline: {
     canonical: 'Airline',
@@ -434,7 +456,13 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     canonical: 'Angular',
     categories: ['Frontend', 'Tools & Libraries'],
     children: ['Angular Material', 'Angular Universal'],
-    includes: ['CSS', 'HTML', 'SPA', 'TypeScript'],
+    includes: [
+      'CSS',
+      'HTML',
+      'SPA',
+      'TypeScript',
+      'Component-based Development',
+    ],
     parents: ['Frontend Framework'],
     related: ['Angular Material', 'AngularJS', 'NgRx', 'RxJS', 'SASS', 'SCSS'],
     synonyms: [
@@ -798,7 +826,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
   'Code Assistance Systems': {
     canonical: 'Code Assistance Systems',
     categories: ['Concepts', 'Tools & Libraries'],
-    children: ['Coding Agents', 'GitHub Copilot'],
+    children: ['AI-assisted Development', 'Coding Agents', 'GitHub Copilot'],
     parents: ['Artificial Intelligence'],
     related: ['OpenAI', 'VSCode'],
     synonyms: [
@@ -807,12 +835,38 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
       /coding[-_\s]*assistants?/i,
     ],
   },
+  'Code Reviews': {
+    canonical: 'Code Reviews',
+    categories: ['Concepts'],
+    related: ['Git', 'GitHub', 'GitLab'],
+    synonyms: [/code[-_\s]*reviews?/i],
+  },
   'Coding Agents': {
     canonical: 'Coding Agents',
     categories: ['Concepts', 'Tools & Libraries'],
     parents: ['Code Assistance Systems'],
-    related: ['GitHub Copilot'],
-    synonyms: [/ai[-_\s]*coding[-_\s]*agents?/i, /coding[-_\s]*agents?/i],
+    related: [
+      'Agentic Development Workflows',
+      'GitHub Copilot',
+      'AI-assisted Development',
+    ],
+    synonyms: [
+      /agentic[-_\s]*coding/i,
+      /ai[-_\s]*coding[-_\s]*agents?/i,
+      /coding[-_\s]*agents?/i,
+    ],
+  },
+  'Component-based Development': {
+    canonical: 'Component-based Development',
+    categories: ['Concepts', 'Frontend'],
+    related: [
+      'Component Library',
+      'Web Components',
+      'Angular',
+      'React',
+      'Vue.js',
+    ],
+    synonyms: [/component[-_\s]*based[-_\s]*dev/i],
   },
   'Component Library': {
     canonical: 'Component Library',
@@ -1991,7 +2045,13 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     canonical: 'React',
     categories: ['Frontend', 'Tools & Libraries'],
     children: ['React Native', 'React Web'],
-    includes: ['CSS', 'HTML', 'SPA', 'TypeScript'],
+    includes: [
+      'CSS',
+      'HTML',
+      'SPA',
+      'TypeScript',
+      'Component-based Development',
+    ],
     parents: ['Frontend Framework'],
     synonyms: [/^react$/i, /react\.js/i],
   },
@@ -2457,7 +2517,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
   'Vue.js': {
     canonical: 'Vue.js',
     categories: ['Frontend', 'Tools & Libraries'],
-    includes: ['SPA'],
+    includes: ['SPA', 'Component-based Development'],
     parents: ['Frontend Framework'],
     synonyms: [/^vue/i],
   },
