@@ -53,6 +53,7 @@ type InternalTagName =
   | 'chai'
   | 'CI/CD'
   | 'Classification Tree Method'
+  | 'Cloud-Native'
   | 'Cloudflare'
   | 'CloudFormation'
   | 'Cloud Platforms'
@@ -803,6 +804,19 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     parents: ['Model-based testing'],
     synonyms: [/^ctm$/i, /classification\s*tree/i],
   },
+  'Cloud-Native': {
+    canonical: 'Cloud-Native',
+    categories: ['Cloud & Infrastructure', 'Concepts'],
+    related: [
+      'AWS',
+      'Cloud Platforms',
+      'Container',
+      'Docker',
+      'Kubernetes',
+      'Microservices',
+    ],
+    synonyms: [/cloud[-_\s]*native/i],
+  },
   Cloudflare: {
     canonical: 'Cloudflare',
     categories: ['Cloud & Infrastructure'],
@@ -819,6 +833,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     canonical: 'Cloud Platforms',
     categories: ['Misc'],
     children: ['AWS', 'Cloudflare', 'Google App Engine'],
+    includes: ['Cloud-Native'],
     synonyms: [/^cloud$/i, /cloud[-_\s]*platform/i],
   },
   CloudWatch: {
@@ -907,6 +922,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
       'DevOps & Build & CI/CD',
     ],
     children: ['Docker', 'Kubernetes'],
+    includes: ['Cloud-Native'],
     parents: ['CI/CD'],
     related: ['Microservices'],
     synonyms: [/container/i],
@@ -1671,6 +1687,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
   Microservices: {
     canonical: 'Microservices',
     categories: ['Backend', 'Concepts'],
+    includes: ['Cloud-Native'],
     parents: ['Backend Systems'],
     related: ['Micro Frontends', 'Mono Repo'],
     synonyms: [/microservice/i],
