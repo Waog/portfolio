@@ -290,6 +290,7 @@ type InternalTagName =
   | 'USB Monitor'
   | 'Various Industries'
   | 'Various Technologies'
+  | 'Version Control'
   | 'Visual Studio'
   | 'Vite'
   | 'VSCode'
@@ -1287,6 +1288,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     canonical: 'Git',
     categories: ['DevOps & Build & CI/CD'],
     children: ['BitBucket', 'GitHub', 'GitLab'],
+    parents: ['Version Control'],
     related: ['CI/CD', 'Conventional Commits', 'SVN', 'TFS'],
     synonyms: [/^git$/i],
   },
@@ -2288,6 +2290,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     canonical: 'SVN',
     categories: ['DevOps & Build & CI/CD'],
     children: ['TortoiseSVN'],
+    parents: ['Version Control'],
     related: ['CI/CD', 'Git', 'GitHub'],
     synonyms: [/subversion/i, /svn/i],
   },
@@ -2343,6 +2346,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
   TFS: {
     canonical: 'TFS',
     categories: ['DevOps & Build & CI/CD', 'Tools & Libraries'],
+    parents: ['Version Control'],
     related: ['CI/CD', 'Git'],
     synonyms: [/^tfs$/i, /team[-_\s]*foundation[-_\s]*server/i],
   },
@@ -2484,6 +2488,11 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
   'Various Technologies': {
     canonical: 'Various Technologies',
     categories: ['Misc'],
+  },
+  'Version Control': {
+    canonical: 'Version Control',
+    categories: ['DevOps & Build & CI/CD'],
+    children: ['Git', 'SVN', 'TFS'],
   },
   'Visual Studio': {
     canonical: 'Visual Studio',
