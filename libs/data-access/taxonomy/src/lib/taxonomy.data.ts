@@ -204,6 +204,7 @@ type InternalTagName =
   | 'OpenAPI'
   | 'OpenGL'
   | 'OSGI'
+  | 'Package Manager'
   | 'Panda.js'
   | 'Pattern Recognition'
   | 'Payments'
@@ -290,6 +291,7 @@ type InternalTagName =
   | 'USB Monitor'
   | 'Various Industries'
   | 'Various Technologies'
+  | 'Version Control'
   | 'Visual Studio'
   | 'Vite'
   | 'VSCode'
@@ -700,6 +702,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
   Bower: {
     canonical: 'Bower',
     categories: ['DevOps & Build & CI/CD'],
+    parents: ['Package Manager'],
     related: ['CI/CD', 'npm', 'yarn'],
   },
   'bubble.io': {
@@ -1287,6 +1290,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     canonical: 'Git',
     categories: ['DevOps & Build & CI/CD'],
     children: ['BitBucket', 'GitHub', 'GitLab'],
+    parents: ['Version Control'],
     related: ['CI/CD', 'Conventional Commits', 'SVN', 'TFS'],
     synonyms: [/^git$/i],
   },
@@ -1381,7 +1385,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
   Gradle: {
     canonical: 'Gradle',
     categories: ['DevOps & Build & CI/CD'],
-    parents: ['Build Tools'],
+    parents: ['Build Tools', 'Package Manager'],
     related: ['Ant', 'CI/CD', 'Maven'],
   },
   GraphQL: {
@@ -1655,7 +1659,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
   Maven: {
     canonical: 'Maven',
     categories: ['DevOps & Build & CI/CD'],
-    parents: ['Build Tools'],
+    parents: ['Build Tools', 'Package Manager'],
     related: ['Ant', 'CI/CD', 'Gradle', 'J2EE'],
   },
   'Micro Frontends': {
@@ -1824,6 +1828,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
   npm: {
     canonical: 'npm',
     categories: ['DevOps & Build & CI/CD'],
+    parents: ['Package Manager'],
     related: ['Build Tools', 'CI/CD', 'Gulp', 'SemVer'],
   },
   Nx: {
@@ -1891,6 +1896,12 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     categories: ['Tools & Libraries'],
     includes: ['Java'],
     related: ['Eclipse EMF', 'Eclipse PDE', 'Eclipse RCP'],
+  },
+  'Package Manager': {
+    canonical: 'Package Manager',
+    categories: ['DevOps & Build & CI/CD'],
+    children: ['Bower', 'npm', 'yarn', 'Gradle', 'Maven'],
+    related: ['Build Tools', 'CI/CD'],
   },
   'Panda.js': {
     canonical: 'Panda.js',
@@ -2288,6 +2299,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     canonical: 'SVN',
     categories: ['DevOps & Build & CI/CD'],
     children: ['TortoiseSVN'],
+    parents: ['Version Control'],
     related: ['CI/CD', 'Git', 'GitHub'],
     synonyms: [/subversion/i, /svn/i],
   },
@@ -2343,6 +2355,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
   TFS: {
     canonical: 'TFS',
     categories: ['DevOps & Build & CI/CD', 'Tools & Libraries'],
+    parents: ['Version Control'],
     related: ['CI/CD', 'Git'],
     synonyms: [/^tfs$/i, /team[-_\s]*foundation[-_\s]*server/i],
   },
@@ -2485,6 +2498,11 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     canonical: 'Various Technologies',
     categories: ['Misc'],
   },
+  'Version Control': {
+    canonical: 'Version Control',
+    categories: ['DevOps & Build & CI/CD'],
+    children: ['Git', 'SVN', 'TFS'],
+  },
   'Visual Studio': {
     canonical: 'Visual Studio',
     categories: ['Tools & Libraries'],
@@ -2618,6 +2636,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
   yarn: {
     canonical: 'yarn',
     categories: ['DevOps & Build & CI/CD'],
+    parents: ['Package Manager'],
     related: ['Build Tools', 'CI/CD', 'Gulp', 'npm'],
   },
   Yeoman: {
