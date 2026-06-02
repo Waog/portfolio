@@ -275,6 +275,7 @@ type InternalTagName =
   | 'TESTONA'
   | 'TFS'
   | 'TortoiseSVN'
+  | 'Tracking'
   | 'Travel'
   | 'Travis CI'
   | 'Trello'
@@ -1372,6 +1373,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
   'Google Analytics': {
     canonical: 'Google Analytics',
     categories: ['Tools & Libraries'],
+    parents: ['Tracking'],
     related: ['GTM'],
   },
   'Google App Engine': {
@@ -1418,6 +1420,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
   GTM: {
     canonical: 'GTM',
     categories: ['Tools & Libraries'],
+    parents: ['Tracking'],
     related: ['Google Analytics'],
     synonyms: [/google[-_\s]*tag[-_\s]*manager/i, /gtm/i],
   },
@@ -1741,7 +1744,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     canonical: 'Monitoring',
     categories: ['Cloud & Infrastructure', 'Concepts'],
     children: ['DataDog', 'Sentry', 'Splunk', 'CloudWatch'],
-    related: ['Debugging', 'Performance Profiling', 'Telemetry'],
+    related: ['Debugging', 'Performance Profiling', 'Telemetry', 'Tracking'],
     synonyms: [
       /^monitoring$/i,
       /application[-_\s]*monitoring/i,
@@ -2345,7 +2348,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
   Telemetry: {
     canonical: 'Telemetry',
     categories: ['Cloud & Infrastructure', 'Concepts'],
-    related: ['Monitoring', 'Performance Profiling'],
+    related: ['Monitoring', 'Performance Profiling', 'Tracking'],
     synonyms: [/telemetry/i],
   },
   Testing: {
@@ -2380,6 +2383,12 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     canonical: 'TortoiseSVN',
     categories: ['DevOps & Build & CI/CD'],
     parents: ['SVN'],
+  },
+  Tracking: {
+    canonical: 'Tracking',
+    categories: ['Concepts'],
+    children: ['Google Analytics', 'GTM'],
+    related: ['Monitoring', 'Telemetry'],
   },
   Travel: {
     canonical: 'Travel',
