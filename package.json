@@ -78,7 +78,6 @@
     "@vitest/ui": "^3.0.0",
     "angular-eslint": "^19.2.0",
     "browser-sync": "^3.0.0",
-    "canvas": "^2.11.2",
     "eslint": "^9.8.0",
     "eslint-config-prettier": "^10.0.0",
     "eslint-plugin-command": "^3.3.1",
