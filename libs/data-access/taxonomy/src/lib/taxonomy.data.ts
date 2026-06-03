@@ -219,6 +219,7 @@ type InternalTagName =
   | 'Phaser'
   | 'Playwright'
   | 'Polly'
+  | 'PostgreSQL'
   | 'Preprocessor'
   | 'Prettier'
   | 'Productivity Tools'
@@ -2039,6 +2040,14 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     categories: ['Cloud & Infrastructure'],
     parents: ['AWS'],
   },
+  PostgreSQL: {
+    canonical: 'PostgreSQL',
+    categories: ['Backend'],
+    includes: ['SQL'],
+    parents: ['Relational Databases'],
+    related: ['Backend Systems'],
+    synonyms: [/^postgres(ql)?$/i],
+  },
   Preprocessor: {
     canonical: 'Preprocessor',
     categories: ['DevOps & Build & CI/CD', 'Frontend'],
@@ -2151,7 +2160,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
   'Relational Databases': {
     canonical: 'Relational Databases',
     categories: ['Backend'],
-    children: ['SQL'],
+    children: ['PostgreSQL', 'SQL'],
     parents: ['Database Systems'],
     related: ['Backend Systems'],
     synonyms: [/relational[-_\s]*databases?/i, /rdbms/i],
@@ -2317,7 +2326,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     canonical: 'SQL',
     categories: ['Backend'],
     parents: ['Relational Databases'],
-    related: ['Backend Systems'],
+    related: ['Backend Systems', 'PostgreSQL'],
     synonyms: [/^sql$/i, /structured[-_\s]*query[-_\s]*language/i],
   },
   SSG: {
