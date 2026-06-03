@@ -296,6 +296,7 @@ type InternalTagName =
   | 'Version Control'
   | 'Visual Studio'
   | 'Vite'
+  | 'Vitest'
   | 'VSCode'
   | 'Vue.js'
   | 'WCAG'
@@ -1547,6 +1548,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     categories: ['Testing and QA'],
     includes: ['JavaScript'],
     parents: ['Unit Testing'],
+    related: ['Vitest'],
   },
   Jira: {
     canonical: 'Jira',
@@ -2492,6 +2494,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
       'mocha',
       'mockito',
       'TeddyMocks',
+      'Vitest',
     ],
     parents: ['Testing'],
     related: ['E2E Testing', 'UI Testing'],
@@ -2549,8 +2552,15 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     canonical: 'Vite',
     categories: ['DevOps & Build & CI/CD', 'Tools & Libraries'],
     parents: ['Build Tools'],
-    related: ['Webpack'],
+    related: ['Vitest', 'Webpack'],
     synonyms: [/^vite$/i],
+  },
+  Vitest: {
+    canonical: 'Vitest',
+    categories: ['Testing and QA'],
+    includes: ['JavaScript', 'TypeScript'],
+    parents: ['Unit Testing'],
+    related: ['Jest', 'Vite'],
   },
   VSCode: {
     canonical: 'VSCode',
