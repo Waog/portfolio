@@ -26,6 +26,7 @@ type InternalTagName =
   | 'Angular Material'
   | 'Angular Universal'
   | 'Ant'
+  | 'API Development'
   | 'API Gateway'
   | 'API Integration'
   | 'AppConfig'
@@ -503,16 +504,34 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     related: ['CI/CD', 'Gradle', 'Maven'],
     synonyms: [/^ant$/i, /apache[-_\s]*ant/i],
   },
+  'API Development': {
+    canonical: 'API Development',
+    categories: ['Backend', 'Concepts'],
+    children: ['OpenAPI'],
+    parents: ['Backend Systems'],
+    related: [
+      'API Gateway',
+      'GraphQL',
+      'OAuth',
+      'OAuth2',
+      'REST',
+      'Authentication',
+      'Authorization',
+    ],
+    synonyms: [/api[-_\s]*designs?/i, /api[-_\s]*dev(elopment)?/i],
+  },
   'API Gateway': {
     canonical: 'API Gateway',
     categories: ['Cloud & Infrastructure'],
     parents: ['AWS'],
+    related: ['API Development'],
   },
   'API Integration': {
     canonical: 'API Integration',
     categories: ['Concepts', 'Frontend'],
     children: ['LLM Integration'],
     related: [
+      'API Development',
       'Facebook API',
       'GitHub API',
       'Google Maps API',
@@ -581,6 +600,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
   Authentication: {
     canonical: 'Authentication',
     categories: ['Concepts'],
+    includes: ['API Development'],
     related: [
       'API Integration',
       'Authorization',
@@ -594,6 +614,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
   Authorization: {
     canonical: 'Authorization',
     categories: ['Concepts'],
+    includes: ['API Development'],
     related: [
       'API Integration',
       'Authentication',
@@ -645,11 +666,11 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     canonical: 'Backend Systems',
     categories: ['Misc'],
     children: [
+      'API Development',
       'J2EE',
       'Java Servlets',
       'Microservices',
       'Node.js',
-      'OpenAPI',
       'RabbitMQ',
       'Spring Boot',
     ],
@@ -1410,7 +1431,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
   GraphQL: {
     canonical: 'GraphQL',
     categories: ['Backend', 'Concepts', 'Frontend', 'Tools & Libraries'],
-    related: ['API Integration', 'Backend Systems', 'REST'],
+    related: ['API Development', 'API Integration', 'Backend Systems', 'REST'],
   },
   Grunt: {
     canonical: 'Grunt',
@@ -1503,7 +1524,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     categories: ['Backend', 'Tools & Libraries'],
     children: ['Java Servlets'],
     parents: ['Backend Systems', 'Java'],
-    related: ['Maven', 'Spring Boot'],
+    related: ['Maven', 'Spring Boot', 'API Development'],
     synonyms: [
       /^j2ee$/i,
       /^jakarta\s*ee$/i,
@@ -1534,6 +1555,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
   'Java Servlets': {
     canonical: 'Java Servlets',
     categories: ['Backend', 'Tools & Libraries'],
+    includes: ['API Development'],
     parents: ['Backend Systems', 'J2EE', 'Java'],
     related: ['Spring Boot'],
     synonyms: [/java[-_\s]*servlets?/i, /servlets?/i],
@@ -1692,7 +1714,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
   Microservices: {
     canonical: 'Microservices',
     categories: ['Backend', 'Concepts'],
-    includes: ['Cloud-Native'],
+    includes: ['Cloud-Native', 'API Development'],
     parents: ['Backend Systems'],
     related: ['Micro Frontends', 'Mono Repo'],
     synonyms: [/microservice/i],
@@ -1794,6 +1816,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
   NestJS: {
     canonical: 'NestJS',
     categories: ['Backend', 'Tools & Libraries'],
+    includes: ['API Development'],
     parents: ['Express'],
   },
   Netbeans: {
@@ -1866,7 +1889,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     categories: ['Concepts'],
     children: ['OAuth2'],
     includes: ['Authentication', 'Authorization'],
-    related: ['API Integration'],
+    related: ['API Development', 'API Integration'],
     synonyms: [/^oauth$/i],
   },
   OAuth2: {
@@ -1874,7 +1897,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     categories: ['Concepts'],
     includes: ['Authentication', 'Authorization'],
     parents: ['OAuth'],
-    related: ['API Integration'],
+    related: ['API Development', 'API Integration'],
     synonyms: [/oauth[-_\s]*2/i, /oauth2/i],
   },
   OOP: {
@@ -1901,7 +1924,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
   OpenAPI: {
     canonical: 'OpenAPI',
     categories: ['Backend', 'Tools & Libraries'],
-    parents: ['Backend Systems'],
+    parents: ['API Development'],
     related: ['API Integration', 'REST'],
     synonyms: [/^open\s*api$/i, /swagger/i],
   },
@@ -2151,7 +2174,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
   REST: {
     canonical: 'REST',
     categories: ['Concepts'],
-    related: ['API Integration', 'GraphQL', 'OpenAPI'],
+    related: ['API Development', 'API Integration', 'GraphQL', 'OpenAPI'],
     synonyms: [/^rest$/i, /rest[-_\s]*api/i, /restful/i],
   },
   'Robotics Control Systems': {
@@ -2271,6 +2294,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
   'Spring Boot': {
     canonical: 'Spring Boot',
     categories: ['Backend'],
+    includes: ['API Development'],
     parents: ['Backend Systems', 'Java'],
     related: ['J2EE', 'Java Servlets'],
   },
