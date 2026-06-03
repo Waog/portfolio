@@ -62,6 +62,7 @@ type InternalTagName =
   | 'Code Assistance Systems'
   | 'Code Reviews'
   | 'Coding Agents'
+  | 'Collaboration with UI/UX'
   | 'Component-based Development'
   | 'Component Library'
   | 'Computer Graphics'
@@ -897,6 +898,20 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
       /coding[-_\s]*agents?/i,
     ],
   },
+  'Collaboration with UI/UX': {
+    canonical: 'Collaboration with UI/UX',
+    categories: ['Concepts', 'Frontend'],
+    related: ['Figma', 'Prototyping', 'UI/UX', 'Web Development', 'Zeplin'],
+    synonyms: [
+      /design[-_\s]*handoff/i,
+      /design[-_\s]*to[-_\s]*code/i,
+      /designer[-_\s]*developer[-_\s]*collaboration/i,
+      /developer[-_\s]*designer[-_\s]*collaboration/i,
+      /(collaborat(e|es|ed|ing)|communicat(e|es|ed|ing)|partner(s|ed|ing)?|work(ing)?[-_\s]*closely)[-_\s\w/]*((ui|ux)[-_\s/]*team|designers?|product[-_\s]*designers?)/i,
+      /(implement|implements|implemented|implementing|build|builds|built|building|develop|develops|developed|developing|translate|translates|translated|translating)[-_\s\w/]*(ui|ux|front[-_\s]*end|frontend)?[-_\s\w/]*(specs?|specifications?|mockups?|wireframes?|designs?)[-_\s\w/]*(in|into|to)?[-_\s\w/]*code/i,
+      /pixel[-_\s]*perfect([-_\s]*(implementation|ui|frontend|front[-_\s]*end))?/i,
+    ],
+  },
   'Component-based Development': {
     canonical: 'Component-based Development',
     categories: ['Concepts', 'Frontend'],
@@ -1246,7 +1261,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
   Figma: {
     canonical: 'Figma',
     categories: ['Tools & Libraries'],
-    related: ['Prototyping', 'UI/UX', 'Zeplin'],
+    related: ['Collaboration with UI/UX', 'Prototyping', 'UI/UX', 'Zeplin'],
   },
   FinTech: {
     canonical: 'FinTech',
@@ -2467,6 +2482,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
       'Accessibility',
       'Component Library',
       'CSS',
+      'Collaboration with UI/UX',
       'Figma',
       'Prototyping',
       'Responsive Design',
@@ -2715,7 +2731,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
   Zeplin: {
     canonical: 'Zeplin',
     categories: ['Tools & Libraries'],
-    related: ['Figma', 'UI/UX'],
+    related: ['Collaboration with UI/UX', 'Figma', 'UI/UX'],
   },
 } satisfies Record<InternalTagName, TaxonomyData>;
 
