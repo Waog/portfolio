@@ -393,6 +393,7 @@ export const ALL_PROJECT_DATA: { [key: string]: ProjectData } = {
       'Web Forms',
       'Code Reviews',
       'Collaboration with UI/UX',
+      'CMS',
     ],
     role: 'Web Developer',
     team: 'Cross-functional Team',
