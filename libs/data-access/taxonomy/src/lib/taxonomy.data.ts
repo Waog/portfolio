@@ -59,6 +59,7 @@ type InternalTagName =
   | 'CloudFormation'
   | 'Cloud Platforms'
   | 'CloudWatch'
+  | 'CMS'
   | 'Code Assistance Systems'
   | 'Code Reviews'
   | 'Coding Agents'
@@ -865,6 +866,12 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     canonical: 'CloudWatch',
     categories: ['Cloud & Infrastructure'],
     parents: ['AWS', 'Monitoring'],
+  },
+  CMS: {
+    canonical: 'CMS',
+    categories: ['Concepts', 'Frontend'],
+    parents: ['Web Development'],
+    synonyms: [/^cms$/i, /content[-_\s]*management[-_\s]*systems?/i],
   },
   'Code Assistance Systems': {
     canonical: 'Code Assistance Systems',
@@ -2645,7 +2652,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
   'Web Development': {
     canonical: 'Web Development',
     categories: ['Misc'],
-    children: ['Web Forms'],
+    children: ['CMS', 'Web Forms'],
     related: [
       'Accessibility',
       'ARIA',
