@@ -215,6 +215,7 @@ type InternalTagName =
   | 'PayPal API'
   | 'Peer-to-Peer'
   | 'peerJS'
+  | 'Performance Optimization'
   | 'Performance Profiling'
   | 'Performance Testing'
   | 'Phaser'
@@ -1791,7 +1792,13 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     canonical: 'Monitoring',
     categories: ['Cloud & Infrastructure', 'Concepts'],
     children: ['DataDog', 'Sentry', 'Splunk', 'CloudWatch'],
-    related: ['Debugging', 'Performance Profiling', 'Telemetry', 'Tracking'],
+    related: [
+      'Debugging',
+      'Performance Optimization',
+      'Performance Profiling',
+      'Telemetry',
+      'Tracking',
+    ],
     synonyms: [
       /^monitoring$/i,
       /application[-_\s]*monitoring/i,
@@ -2011,6 +2018,24 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     categories: ['Frontend', 'Tools & Libraries'],
     parents: ['WebRTC'],
   },
+  'Performance Optimization': {
+    canonical: 'Performance Optimization',
+    categories: ['Concepts'],
+    related: [
+      'Lighthouse',
+      'Monitoring',
+      'Performance Profiling',
+      'Performance Testing',
+      'Web Vitals',
+    ],
+    synonyms: [
+      /performance[-_\s]*optimi[sz]ation/i,
+      /performance[-_\s]*tuning/i,
+      /perf[-_\s]*optimi[sz]ation/i,
+      /optimi[sz](e|ing|ed)[-_\s]*performance/i,
+      /performance[-_\s]*improvement/i,
+    ],
+  },
   'Performance Profiling': {
     canonical: 'Performance Profiling',
     categories: ['Concepts', 'Testing and QA'],
@@ -2018,6 +2043,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
       'Debugging',
       'Lighthouse',
       'Monitoring',
+      'Performance Optimization',
       'Performance Testing',
       'Web Vitals',
     ],
@@ -2027,7 +2053,12 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     canonical: 'Performance Testing',
     categories: ['Concepts', 'Testing and QA'],
     parents: ['Testing'],
-    related: ['Lighthouse', 'Performance Profiling', 'Web Vitals'],
+    related: [
+      'Lighthouse',
+      'Performance Optimization',
+      'Performance Profiling',
+      'Web Vitals',
+    ],
     synonyms: [/load[-_\s]*tests?/i, /performance[-_\s]*tests?/i],
   },
   Phaser: {
@@ -2693,7 +2724,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
   'Web Vitals': {
     canonical: 'Web Vitals',
     categories: ['Concepts'],
-    related: ['Lighthouse', 'WCAG'],
+    related: ['Lighthouse', 'Performance Optimization', 'WCAG'],
     synonyms: [/web[-_\s]*vitals?/i],
   },
   'Widget Trees': {
