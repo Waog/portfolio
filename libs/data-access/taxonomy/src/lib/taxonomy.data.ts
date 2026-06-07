@@ -844,7 +844,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
       'Kubernetes',
       'Microservices',
     ],
-    synonyms: [/cloud[-_\s]*native/i],
+    synonyms: [/cloud[-_\s]*native/i, /cloud[-_\s]*based/i],
   },
   Cloudflare: {
     canonical: 'Cloudflare',
