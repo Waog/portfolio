@@ -266,6 +266,7 @@ type InternalTagName =
   | 'SQL'
   | 'SSG'
   | 'SSR'
+  | 'Startup'
   | 'State Management'
   | 'Stencil'
   | 'Storybook'
@@ -2380,6 +2381,11 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     parents: ['SPA'],
     related: ['Angular Universal', 'SSG', 'Web Development'],
     synonyms: [/^ssr$/i, /server[-\s]*side[-_\s]*rendering/i],
+  },
+  Startup: {
+    canonical: 'Startup',
+    categories: ['Industry'],
+    synonyms: [/start[-_\s]*up(s)?/i],
   },
   'State Management': {
     canonical: 'State Management',
