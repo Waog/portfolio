@@ -147,6 +147,7 @@ type InternalTagName =
   | 'Insurance'
   | 'IntelliJ IDEA'
   | 'Intel XDK'
+  | 'Internationalization'
   | 'Ionic'
   | 'iOS'
   | 'J2EE'
@@ -413,7 +414,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     canonical: 'Accessibility',
     categories: ['Concepts', 'Frontend'],
     children: ['ARIA', 'WCAG'],
-    related: ['UI/UX', 'Web Development'],
+    related: ['Internationalization', 'UI/UX', 'Web Development'],
     synonyms: [/^a11y$/i, /accessibility/i],
   },
   ActionScript: {
@@ -1531,6 +1532,17 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     categories: ['DevOps & Build & CI/CD', 'Tools & Libraries'],
     includes: ['Cordova', 'HTML5'],
     related: ['CI/CD', 'Ionic', 'React Native'],
+  },
+  Internationalization: {
+    canonical: 'Internationalization',
+    categories: ['Concepts', 'Frontend'],
+    related: ['Accessibility'],
+    synonyms: [
+      /^i18n$/i,
+      /internationali[sz]ation/i,
+      /internationali[sz]e/i,
+      /internationali[sz]ed/i,
+    ],
   },
   Ionic: {
     canonical: 'Ionic',
