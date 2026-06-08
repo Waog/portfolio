@@ -147,6 +147,7 @@ type InternalTagName =
   | 'Insurance'
   | 'IntelliJ IDEA'
   | 'Intel XDK'
+  | 'Internationalization'
   | 'Ionic'
   | 'iOS'
   | 'J2EE'
@@ -215,6 +216,7 @@ type InternalTagName =
   | 'PayPal API'
   | 'Peer-to-Peer'
   | 'peerJS'
+  | 'Performance Optimization'
   | 'Performance Profiling'
   | 'Performance Testing'
   | 'Phaser'
@@ -265,6 +267,7 @@ type InternalTagName =
   | 'SQL'
   | 'SSG'
   | 'SSR'
+  | 'Startup'
   | 'State Management'
   | 'Stencil'
   | 'Storybook'
@@ -411,7 +414,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     canonical: 'Accessibility',
     categories: ['Concepts', 'Frontend'],
     children: ['ARIA', 'WCAG'],
-    related: ['UI/UX', 'Web Development'],
+    related: ['Internationalization', 'UI/UX', 'Web Development'],
     synonyms: [/^a11y$/i, /accessibility/i],
   },
   ActionScript: {
@@ -841,7 +844,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
       'Kubernetes',
       'Microservices',
     ],
-    synonyms: [/cloud[-_\s]*native/i],
+    synonyms: [/cloud[-_\s]*native/i, /cloud[-_\s]*based/i],
   },
   Cloudflare: {
     canonical: 'Cloudflare',
@@ -1530,6 +1533,17 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     includes: ['Cordova', 'HTML5'],
     related: ['CI/CD', 'Ionic', 'React Native'],
   },
+  Internationalization: {
+    canonical: 'Internationalization',
+    categories: ['Concepts', 'Frontend'],
+    related: ['Accessibility'],
+    synonyms: [
+      /^i18n$/i,
+      /internationali[sz]ation/i,
+      /internationali[sz]e/i,
+      /internationali[sz]ed/i,
+    ],
+  },
   Ionic: {
     canonical: 'Ionic',
     categories: ['Frontend', 'Tools & Libraries'],
@@ -1791,7 +1805,13 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     canonical: 'Monitoring',
     categories: ['Cloud & Infrastructure', 'Concepts'],
     children: ['DataDog', 'Sentry', 'Splunk', 'CloudWatch'],
-    related: ['Debugging', 'Performance Profiling', 'Telemetry', 'Tracking'],
+    related: [
+      'Debugging',
+      'Performance Optimization',
+      'Performance Profiling',
+      'Telemetry',
+      'Tracking',
+    ],
     synonyms: [
       /^monitoring$/i,
       /application[-_\s]*monitoring/i,
@@ -2011,6 +2031,24 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     categories: ['Frontend', 'Tools & Libraries'],
     parents: ['WebRTC'],
   },
+  'Performance Optimization': {
+    canonical: 'Performance Optimization',
+    categories: ['Concepts'],
+    related: [
+      'Lighthouse',
+      'Monitoring',
+      'Performance Profiling',
+      'Performance Testing',
+      'Web Vitals',
+    ],
+    synonyms: [
+      /performance[-_\s]*optimi[sz]ation/i,
+      /performance[-_\s]*tuning/i,
+      /perf[-_\s]*optimi[sz]ation/i,
+      /optimi[sz](e|ing|ed)[-_\s]*performance/i,
+      /performance[-_\s]*improvement/i,
+    ],
+  },
   'Performance Profiling': {
     canonical: 'Performance Profiling',
     categories: ['Concepts', 'Testing and QA'],
@@ -2018,6 +2056,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
       'Debugging',
       'Lighthouse',
       'Monitoring',
+      'Performance Optimization',
       'Performance Testing',
       'Web Vitals',
     ],
@@ -2027,7 +2066,12 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     canonical: 'Performance Testing',
     categories: ['Concepts', 'Testing and QA'],
     parents: ['Testing'],
-    related: ['Lighthouse', 'Performance Profiling', 'Web Vitals'],
+    related: [
+      'Lighthouse',
+      'Performance Optimization',
+      'Performance Profiling',
+      'Web Vitals',
+    ],
     synonyms: [/load[-_\s]*tests?/i, /performance[-_\s]*tests?/i],
   },
   Phaser: {
@@ -2349,6 +2393,11 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     parents: ['SPA'],
     related: ['Angular Universal', 'SSG', 'Web Development'],
     synonyms: [/^ssr$/i, /server[-\s]*side[-_\s]*rendering/i],
+  },
+  Startup: {
+    canonical: 'Startup',
+    categories: ['Industry'],
+    synonyms: [/start[-_\s]*up(s)?/i],
   },
   'State Management': {
     canonical: 'State Management',
@@ -2693,7 +2742,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
   'Web Vitals': {
     canonical: 'Web Vitals',
     categories: ['Concepts'],
-    related: ['Lighthouse', 'WCAG'],
+    related: ['Lighthouse', 'Performance Optimization', 'WCAG'],
     synonyms: [/web[-_\s]*vitals?/i],
   },
   'Widget Trees': {
