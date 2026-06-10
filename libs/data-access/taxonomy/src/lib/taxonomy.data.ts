@@ -85,6 +85,7 @@ type InternalTagName =
   | 'Data Visualization'
   | 'Debugging'
   | 'Design Patterns'
+  | 'Design System'
   | 'Design Tokens'
   | 'Developer Portfolio'
   | 'DevOps Tools'
@@ -917,7 +918,14 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
   'Collaboration with UI/UX': {
     canonical: 'Collaboration with UI/UX',
     categories: ['Concepts', 'Frontend'],
-    related: ['Figma', 'Prototyping', 'UI/UX', 'Web Development', 'Zeplin'],
+    related: [
+      'Design System',
+      'Figma',
+      'Prototyping',
+      'UI/UX',
+      'Web Development',
+      'Zeplin',
+    ],
     synonyms: [
       /design[-_\s]*handoff/i,
       /design[-_\s]*to[-_\s]*code/i,
@@ -943,7 +951,13 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
   'Component Library': {
     canonical: 'Component Library',
     categories: ['Concepts', 'Frontend'],
-    related: ['Fractal', 'Storybook', 'UI/UX', 'Web Components'],
+    related: [
+      'Design System',
+      'Fractal',
+      'Storybook',
+      'UI/UX',
+      'Web Components',
+    ],
     synonyms: [/component[-_\s]*librar(y|ies)/i],
   },
   'Computer Graphics': {
@@ -1064,10 +1078,32 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     related: ['MVC', 'OOP', 'Software Architecture'],
     synonyms: [/design[-_\s]*patterns?/i],
   },
+  'Design System': {
+    canonical: 'Design System',
+    categories: ['Concepts', 'Frontend'],
+    related: [
+      'Collaboration with UI/UX',
+      'Component Library',
+      'Design Tokens',
+      'Figma',
+      'Prototyping',
+      'Software Design',
+      'UI/UX',
+      'Zeplin',
+    ],
+    synonyms: [/design[-_\s]*systems?/i, /ui[-_\s]*design[-_\s]*systems?/i],
+  },
   'Design Tokens': {
     canonical: 'Design Tokens',
     categories: ['Concepts', 'Frontend'],
-    related: ['Component Library', 'CSS', 'SCSS', 'Design Patterns', 'UI/UX'],
+    related: [
+      'Component Library',
+      'CSS',
+      'Design Patterns',
+      'Design System',
+      'SCSS',
+      'UI/UX',
+    ],
     synonyms: [/design[-_\s]*tokens?/i],
   },
   'Developer Portfolio': {
@@ -1277,7 +1313,13 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
   Figma: {
     canonical: 'Figma',
     categories: ['Tools & Libraries'],
-    related: ['Collaboration with UI/UX', 'Prototyping', 'UI/UX', 'Zeplin'],
+    related: [
+      'Collaboration with UI/UX',
+      'Design System',
+      'Prototyping',
+      'UI/UX',
+      'Zeplin',
+    ],
   },
   FinTech: {
     canonical: 'FinTech',
@@ -2570,6 +2612,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
       'Component Library',
       'CSS',
       'Collaboration with UI/UX',
+      'Design System',
       'Figma',
       'Prototyping',
       'Responsive Design',
