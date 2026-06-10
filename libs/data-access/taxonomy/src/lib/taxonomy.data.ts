@@ -144,6 +144,7 @@ type InternalTagName =
   | 'IAM'
   | 'IAM Identity Center'
   | 'Image Processing'
+  | 'Infrastructure as Code'
   | 'Insurance'
   | 'IntelliJ IDEA'
   | 'Intel XDK'
@@ -278,6 +279,7 @@ type InternalTagName =
   | 'Tailwind'
   | 'TeddyMocks'
   | 'Telemetry'
+  | 'Terraform'
   | 'Testing'
   | 'TESTONA'
   | 'TFS'
@@ -769,7 +771,9 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
   CDK: {
     canonical: 'CDK',
     categories: ['Cloud & Infrastructure', 'DevOps & Build & CI/CD'],
-    parents: ['AWS', 'CI/CD'],
+    includes: ['CloudFormation'],
+    parents: ['AWS', 'CI/CD', 'Infrastructure as Code'],
+    related: ['Terraform'],
   },
   chai: {
     canonical: 'chai',
@@ -807,6 +811,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
       'Gulp',
       'Intel XDK',
       'iOS',
+      'Infrastructure as Code',
       'Kubernetes',
       'Maven',
       'npm',
@@ -855,8 +860,8 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
   CloudFormation: {
     canonical: 'CloudFormation',
     categories: ['Cloud & Infrastructure', 'DevOps & Build & CI/CD'],
-    parents: ['AWS'],
-    related: ['CI/CD'],
+    parents: ['AWS', 'Infrastructure as Code'],
+    related: ['CDK', 'CI/CD', 'Terraform'],
   },
   'Cloud Platforms': {
     canonical: 'Cloud Platforms',
@@ -1515,6 +1520,17 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     categories: ['Concepts'],
     related: ['Computer Vision', 'Pattern Recognition'],
   },
+  'Infrastructure as Code': {
+    canonical: 'Infrastructure as Code',
+    categories: [
+      'Cloud & Infrastructure',
+      'Concepts',
+      'DevOps & Build & CI/CD',
+    ],
+    children: ['CDK', 'CloudFormation', 'Terraform'],
+    related: ['CI/CD', 'Cloud-Native', 'Container', 'Kubernetes'],
+    synonyms: [/^iac$/i, /infrastructure[-_\s]*as[-_\s]*code/i],
+  },
   Insurance: {
     canonical: 'Insurance',
     categories: ['Industry'],
@@ -1678,7 +1694,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     canonical: 'Kubernetes',
     categories: ['Cloud & Infrastructure', 'DevOps & Build & CI/CD'],
     parents: ['Container'],
-    related: ['CI/CD', 'Docker'],
+    related: ['CI/CD', 'Docker', 'Infrastructure as Code'],
     synonyms: [/^k8s$/i, /^kubernetes$/i],
   },
   LESS: {
@@ -2456,6 +2472,12 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     categories: ['Cloud & Infrastructure', 'Concepts'],
     related: ['Monitoring', 'Performance Profiling', 'Tracking'],
     synonyms: [/telemetry/i],
+  },
+  Terraform: {
+    canonical: 'Terraform',
+    categories: ['Cloud & Infrastructure', 'DevOps & Build & CI/CD'],
+    parents: ['Infrastructure as Code'],
+    related: ['CDK', 'CloudFormation'],
   },
   Testing: {
     canonical: 'Testing',
