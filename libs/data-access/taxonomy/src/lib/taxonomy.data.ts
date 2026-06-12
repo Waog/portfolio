@@ -250,6 +250,7 @@ type InternalTagName =
   | 'Robotics Control Systems'
   | 'RxJS'
   | 'S3'
+  | 'SAFe'
   | 'SASS'
   | 'Scientific Paper'
   | 'SCRUM'
@@ -436,7 +437,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
   Agile: {
     canonical: 'Agile',
     categories: ['Concepts'],
-    children: ['Kanban', 'SCRUM'],
+    children: ['Kanban', 'SAFe', 'SCRUM'],
   },
   'AI-assisted Development': {
     canonical: 'AI-assisted Development',
@@ -1724,6 +1725,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     canonical: 'Kanban',
     categories: ['Concepts'],
     parents: ['Agile'],
+    related: ['SAFe'],
   },
   Karma: {
     canonical: 'Karma',
@@ -2181,6 +2183,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
   'Project Management': {
     canonical: 'Project Management',
     categories: ['Misc'],
+    related: ['Agile', 'Kanban', 'SAFe', 'SCRUM'],
     synonyms: [/^pm$/i, /project[-_\s]*management/i],
   },
   Prototyping: {
@@ -2329,6 +2332,13 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     categories: ['Cloud & Infrastructure'],
     parents: ['AWS'],
   },
+  SAFe: {
+    canonical: 'SAFe',
+    categories: ['Concepts'],
+    parents: ['Agile'],
+    related: ['Kanban', 'Project Management', 'SCRUM'],
+    synonyms: [/^safe$/i, /scaled[-_\s]*agile[-_\s]*framework/i],
+  },
   SASS: {
     canonical: 'SASS',
     categories: ['Frontend'],
@@ -2345,6 +2355,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     canonical: 'SCRUM',
     categories: ['Concepts'],
     parents: ['Agile'],
+    related: ['SAFe'],
   },
   SCSS: {
     canonical: 'SCSS',
