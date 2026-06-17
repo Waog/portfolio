@@ -182,6 +182,8 @@ type InternalTagName =
   | 'Lodash'
   | 'Lottery'
   | 'Low-Code'
+  | 'Material Design'
+  | 'Material UI'
   | 'Maven'
   | 'Micro Frontends'
   | 'Microservices'
@@ -501,8 +503,13 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
   'Angular Material': {
     canonical: 'Angular Material',
     categories: ['Frontend', 'Tools & Libraries'],
-    parents: ['Angular', 'CSS Framework'],
-    related: ['Bootstrap', 'Tailwind'],
+    parents: [
+      'Angular',
+      'CSS Framework',
+      'Material Design',
+      'Component Library',
+    ],
+    related: ['Bootstrap', 'Material UI', 'Tailwind'],
   },
   'Angular Universal': {
     canonical: 'Angular Universal',
@@ -962,6 +969,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
   'Component Library': {
     canonical: 'Component Library',
     categories: ['Concepts', 'Frontend'],
+    children: ['Angular Material', 'Material UI'],
     related: [
       'Design System',
       'Fractal',
@@ -1026,7 +1034,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
   'CSS Framework': {
     canonical: 'CSS Framework',
     categories: ['Frontend', 'Tools & Libraries'],
-    children: ['Angular Material', 'Bootstrap', 'Tailwind'],
+    children: ['Angular Material', 'Bootstrap', 'Material UI', 'Tailwind'],
     parents: ['Frontend Framework'],
   },
   'Custom Elements': {
@@ -1831,6 +1839,19 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     related: ['No-Code', 'Prototyping'],
     synonyms: [/^low[-_\s]*code/i],
   },
+  'Material Design': {
+    canonical: 'Material Design',
+    categories: ['Concepts', 'Frontend'],
+    children: ['Angular Material', 'Material UI'],
+    related: ['Design System', 'UI/UX'],
+  },
+  'Material UI': {
+    canonical: 'Material UI',
+    categories: ['Frontend', 'Tools & Libraries'],
+    parents: ['CSS Framework', 'Material Design', 'React', 'Component Library'],
+    related: ['Angular Material', 'Bootstrap', 'Tailwind'],
+    synonyms: [/^mui$/i, /material[-_\s]*ui/i],
+  },
   Maven: {
     canonical: 'Maven',
     categories: ['DevOps & Build & CI/CD'],
@@ -2272,7 +2293,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
   React: {
     canonical: 'React',
     categories: ['Frontend', 'Tools & Libraries'],
-    children: ['React Native', 'React Web'],
+    children: ['React Native', 'React Web', 'Material UI'],
     includes: [
       'CSS',
       'HTML',
