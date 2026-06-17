@@ -106,6 +106,7 @@ type InternalTagName =
   | 'Elastic Beanstalk'
   | 'Entity Component System'
   | 'ESLint'
+  | 'Event-Driven Architecture'
   | 'Expo'
   | 'Express'
   | 'Facebook'
@@ -677,6 +678,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     categories: ['Misc'],
     children: [
       'API Development',
+      'Event-Driven Architecture',
       'J2EE',
       'Java Servlets',
       'Microservices',
@@ -1274,6 +1276,13 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     categories: ['DevOps & Build & CI/CD', 'Tools & Libraries'],
     related: ['JavaScript', 'Prettier', 'TypeScript'],
   },
+  'Event-Driven Architecture': {
+    canonical: 'Event-Driven Architecture',
+    categories: ['Backend', 'Concepts'],
+    parents: ['Backend Systems', 'Software Architecture'],
+    related: ['Microservices', 'RabbitMQ'],
+    synonyms: [/^event[-_\s]*driven/i, /^eda$/i],
+  },
   Expo: {
     canonical: 'Expo',
     categories: ['Cloud & Infrastructure', 'Tools & Libraries'],
@@ -1813,7 +1822,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     categories: ['Backend', 'Concepts'],
     includes: ['Cloud-Native', 'API Development'],
     parents: ['Backend Systems'],
-    related: ['Micro Frontends', 'Mono Repo'],
+    related: ['Event-Driven Architecture', 'Micro Frontends', 'Mono Repo'],
     synonyms: [/microservice/i],
   },
   'Mobile Development': {
@@ -2226,6 +2235,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     canonical: 'RabbitMQ',
     categories: ['Backend', 'Tools & Libraries'],
     parents: ['Backend Systems'],
+    related: ['Event-Driven Architecture'],
   },
   'Raspberry Pi': {
     canonical: 'Raspberry Pi',
@@ -2402,7 +2412,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
   'Software Architecture': {
     canonical: 'Software Architecture',
     categories: ['Concepts'],
-    children: ['Entity Component System'],
+    children: ['Entity Component System', 'Event-Driven Architecture'],
     related: [
       'Design Patterns',
       'Microservices',

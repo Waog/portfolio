@@ -552,6 +552,7 @@ export const ALL_PROJECT_DATA: { [key: string]: ProjectData } = {
       'Code Reviews',
       'API Development',
       'Startup',
+      'Event-Driven Architecture',
     ],
     role: 'Backend Developer',
     team: 'Backend Development Team',
