@@ -148,6 +148,7 @@ type InternalTagName =
   | 'Image Processing'
   | 'Infrastructure as Code'
   | 'Insurance'
+  | 'Integration Testing'
   | 'IntelliJ IDEA'
   | 'Intel XDK'
   | 'Internationalization'
@@ -782,7 +783,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
   chai: {
     canonical: 'chai',
     categories: ['Testing and QA'],
-    parents: ['Unit Testing'],
+    parents: ['Integration Testing', 'Unit Testing'],
   },
   'CI/CD': {
     canonical: 'CI/CD',
@@ -1151,7 +1152,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     categories: ['Concepts', 'Testing and QA'],
     children: ['Cypress', 'Playwright', 'Puppeteer', 'Selenium'],
     parents: ['Testing'],
-    related: ['UI Testing'],
+    related: ['Integration Testing', 'UI Testing'],
     synonyms: [/e2e[- ]test/i, /end-to-end[- ]test/i],
   },
   'E-Commerce': {
@@ -1589,6 +1590,24 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     related: ['Banking'],
     synonyms: [/insurance/i, /insurtech/i],
   },
+  'Integration Testing': {
+    canonical: 'Integration Testing',
+    categories: ['Concepts', 'Testing and QA'],
+    children: [
+      'chai',
+      'Jasmine',
+      'Jest',
+      'JUnit',
+      'Karma',
+      'mocha',
+      'mockito',
+      'TeddyMocks',
+      'Vitest',
+    ],
+    parents: ['Testing'],
+    related: ['E2E Testing', 'UI Testing', 'Unit Testing'],
+    synonyms: [/integration[-\s]*test(ing|s)?/i],
+  },
   'IntelliJ IDEA': {
     canonical: 'IntelliJ IDEA',
     categories: ['Tools & Libraries'],
@@ -1641,7 +1660,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     canonical: 'Jasmine',
     categories: ['Testing and QA'],
     includes: ['JavaScript'],
-    parents: ['Unit Testing'],
+    parents: ['Integration Testing', 'Unit Testing'],
   },
   Java: {
     canonical: 'Java',
@@ -1674,7 +1693,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     canonical: 'Jest',
     categories: ['Testing and QA'],
     includes: ['JavaScript'],
-    parents: ['Unit Testing'],
+    parents: ['Integration Testing', 'Unit Testing'],
     related: ['Vitest'],
   },
   Jira: {
@@ -1728,7 +1747,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     canonical: 'JUnit',
     categories: ['Testing and QA'],
     includes: ['Java'],
-    parents: ['Unit Testing'],
+    parents: ['Integration Testing', 'Unit Testing'],
   },
   Kanban: {
     canonical: 'Kanban',
@@ -1740,7 +1759,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     canonical: 'Karma',
     categories: ['Testing and QA'],
     includes: ['JavaScript'],
-    parents: ['Unit Testing'],
+    parents: ['Integration Testing', 'Unit Testing'],
     related: ['Jasmine'],
   },
   Kubernetes: {
@@ -1842,13 +1861,13 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
   mocha: {
     canonical: 'mocha',
     categories: ['Testing and QA'],
-    parents: ['Unit Testing'],
+    parents: ['Integration Testing', 'Unit Testing'],
   },
   mockito: {
     canonical: 'mockito',
     categories: ['Testing and QA'],
     includes: ['Java'],
-    parents: ['Unit Testing'],
+    parents: ['Integration Testing', 'Unit Testing'],
     related: ['JUnit'],
   },
   'Model-based testing': {
@@ -2527,7 +2546,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
   TeddyMocks: {
     canonical: 'TeddyMocks',
     categories: ['Testing and QA'],
-    parents: ['Unit Testing'],
+    parents: ['Integration Testing', 'Unit Testing'],
     related: ['chai', 'Jest', 'mocha'],
   },
   Telemetry: {
@@ -2549,6 +2568,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
       'Custom Test Framework',
       'E2E Testing',
       'FRUIT',
+      'Integration Testing',
       'Model-based testing',
       'Performance Testing',
       'TESTONA',
@@ -2688,7 +2708,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
       'Vitest',
     ],
     parents: ['Testing'],
-    related: ['E2E Testing', 'UI Testing'],
+    related: ['E2E Testing', 'Integration Testing', 'UI Testing'],
     synonyms: [/unit[-\s]*tests?/i],
   },
   Unity: {
@@ -2750,7 +2770,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     canonical: 'Vitest',
     categories: ['Testing and QA'],
     includes: ['JavaScript', 'TypeScript'],
-    parents: ['Unit Testing'],
+    parents: ['Integration Testing', 'Unit Testing'],
     related: ['Jest', 'Vite'],
   },
   VSCode: {
