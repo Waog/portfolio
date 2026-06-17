@@ -54,6 +54,7 @@ type InternalTagName =
   | 'chai'
   | 'CI/CD'
   | 'Classification Tree Method'
+  | 'Clean Code'
   | 'Cloud-Native'
   | 'Cloudflare'
   | 'CloudFormation'
@@ -842,6 +843,12 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     categories: ['Concepts', 'Testing and QA'],
     parents: ['Model-based testing'],
     synonyms: [/^ctm$/i, /classification\s*tree/i],
+  },
+  'Clean Code': {
+    canonical: 'Clean Code',
+    categories: ['Concepts'],
+    parents: ['Software Design'],
+    related: ['Code Reviews', 'Design Patterns', 'OOP'],
   },
   'Cloud-Native': {
     canonical: 'Cloud-Native',
@@ -2443,7 +2450,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
   'Software Design': {
     canonical: 'Software Design',
     categories: ['Concepts'],
-    children: ['Design Patterns', 'MVC', 'OOP'],
+    children: ['Clean Code', 'Design Patterns', 'MVC', 'OOP'],
     related: ['Software Architecture', 'UML'],
   },
   SPA: {
