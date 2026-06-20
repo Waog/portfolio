@@ -23,8 +23,12 @@ export class MatchesOverviewComponent {
   private readonly searchEngineService = inject(SearchEngineService);
   private readonly searchTagService = inject(SearchTagService);
   private readonly searchResult$ = this.searchEngineService.searchResult$;
-  protected readonly isPrintMode = inject(CustomizationStateService)
-    .isPrintMode;
+  protected readonly customizationStateService = inject(
+    CustomizationStateService
+  );
+  protected readonly isPrintMode = this.customizationStateService.isPrintMode;
+  protected readonly unit =
+    this.customizationStateService.skillMatrixExperienceUnit;
 
   protected readonly tags$ = this.searchTagService.tags$;
 

@@ -4,10 +4,16 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
+import { MatRadioModule } from '@angular/material/radio';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { CustomizationStateService } from '@portfolio/customization-state';
+import {
+  CustomizationStateService,
+  SkillMatrixExperienceUnit,
+} from '@portfolio/customization-state';
 
 import { ProjectReorderDialogComponent } from './project-reorder-dialog.component';
+
+// TODO: move component to own nx lib
 
 @Component({
   selector: 'lib-customization-sidenav',
@@ -18,6 +24,7 @@ import { ProjectReorderDialogComponent } from './project-reorder-dialog.componen
     MatCheckboxModule,
     MatDialogModule,
     MatIconModule,
+    MatRadioModule,
   ],
   templateUrl: './customization-sidenav.component.html',
   styleUrl: './customization-sidenav.component.scss',
@@ -34,6 +41,12 @@ export class CustomizationSidenavComponent {
 
   protected setPrintMode(isPrintMode: boolean): void {
     this.customizationStateService.setPrintMode(isPrintMode);
+  }
+
+  protected setSkillMatrixExperienceUnit(
+    unit: SkillMatrixExperienceUnit
+  ): void {
+    this.customizationStateService.setSkillMatrixExperienceUnit(unit);
   }
 
   protected openReorderDialog(): void {

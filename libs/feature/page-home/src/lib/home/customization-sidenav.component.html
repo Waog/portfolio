@@ -27,6 +27,19 @@
         Print mode
       </mat-checkbox>
 
+      <div class="radio-group-section">
+        <span class="radio-group-label">Skill Matrix - Experience Unit</span>
+        <mat-radio-group
+          [value]="customizationStateService.skillMatrixExperienceUnit()"
+          (change)="setSkillMatrixExperienceUnit($event.value)"
+        >
+          <mat-radio-button value="project-count"
+            >project count</mat-radio-button
+          >
+          <mat-radio-button value="time">time</mat-radio-button>
+        </mat-radio-group>
+      </div>
+
       <button mat-button type="button" (click)="openReorderDialog()">
         <mat-icon>reorder</mat-icon>
         Customize Project Order

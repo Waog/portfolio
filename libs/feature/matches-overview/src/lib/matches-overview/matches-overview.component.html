@@ -1,6 +1,8 @@
 <div class="container">
   <lib-section-header
-    text="Experience by Keywords"
+    [text]="
+      unit() === 'time' ? 'Experience by Keywords*' : 'Experience by Keywords'
+    "
     [printMode]="isPrintMode()"
   />
 
@@ -20,20 +22,24 @@
       @if (matchItem.fullMatchesCount > 0) {
       <lib-color-chip
         [text]="
-          matchItem.fullMatchesCount +
-          ' project' +
-          (matchItem.fullMatchesCount !== 1 ? 's' : '')
+          unit() === 'project-count'
+            ? matchItem.fullMatchesCount +
+              ' project' +
+              (matchItem.fullMatchesCount !== 1 ? 's' : '')
+            : matchItem.fullMatchesTotalDurationText
         "
         color="green"
       />
       } @if (matchItem.partialMatchesCount > 0) {
       <lib-color-chip
         [text]="
-          matchItem.partialMatchesCount +
-          (matchItem.fullMatchesCount > 0
-            ? ' related'
-            : ' related project' +
-              (matchItem.partialMatchesCount !== 1 ? 's' : ''))
+          unit() === 'project-count'
+            ? matchItem.partialMatchesCount +
+              (matchItem.fullMatchesCount > 0
+                ? ' related'
+                : ' related project' +
+                  (matchItem.partialMatchesCount !== 1 ? 's' : ''))
+            : `(${matchItem.allMatchesTotalDurationText})`
         "
         color="yellow"
       />
@@ -44,4 +50,12 @@
     </div>
     } }
   </div>
+
+  @if (unit() === 'time') {
+  <p class="match-note">
+    * Exact matches are shown in green. Broader experience with similar,
+    comparable, or related technologies, methods, or processes is shown in
+    yellow in parentheses.
+  </p>
+  }
 </div>

@@ -169,4 +169,50 @@ describe('CustomizationStateService', () => {
 
     expect(service.isPrintMode()).toBe(true);
   });
+
+  it('exposes skillMatrixExperienceUnit as project-count by default', () => {
+    service = createService();
+    expect(service.skillMatrixExperienceUnit()).toBe('project-count');
+  });
+
+  it('initializes skillMatrixExperienceUnit from URL query params', () => {
+    routerMock.url = '/?skillMatrixExperienceUnit=time';
+    service = createService();
+
+    expect(service.skillMatrixExperienceUnit()).toBe('time');
+  });
+
+  it('can set skillMatrixExperienceUnit explicitly', () => {
+    service = createService();
+    service.setSkillMatrixExperienceUnit('time');
+
+    expect(service.skillMatrixExperienceUnit()).toBe('time');
+    expect(urlStateServiceMock.updateValue).toHaveBeenCalledWith({
+      skillMatrixExperienceUnit: 'time',
+    });
+
+    service.setSkillMatrixExperienceUnit('project-count');
+
+    expect(service.skillMatrixExperienceUnit()).toBe('project-count');
+    expect(urlStateServiceMock.updateValue).toHaveBeenCalledWith({
+      skillMatrixExperienceUnit: null,
+    });
+  });
+
+  it('does not update URL when setting skillMatrixExperienceUnit to same value', () => {
+    service = createService();
+    service.setSkillMatrixExperienceUnit('project-count');
+
+    expect(urlStateServiceMock.updateValue).not.toHaveBeenCalled();
+  });
+
+  it('syncs skillMatrixExperienceUnit when URL changes through navigation', () => {
+    service = createService();
+    routerMock.url = '/?skillMatrixExperienceUnit=time';
+    routerMock.events.next(
+      new NavigationEnd(1, routerMock.url, routerMock.url)
+    );
+
+    expect(service.skillMatrixExperienceUnit()).toBe('time');
+  });
 });

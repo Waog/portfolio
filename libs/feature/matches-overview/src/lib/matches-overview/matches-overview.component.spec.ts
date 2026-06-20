@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
+import { CustomizationStateService } from '@portfolio/customization-state';
 import {
   SearchEngineService,
   type SearchResult,
@@ -51,6 +52,7 @@ const mockSearchEngineService = {
 describe('MatchesOverviewComponent', () => {
   let component: MatchesOverviewComponent;
   let fixture: ComponentFixture<MatchesOverviewComponent>;
+  let customizationStateService: CustomizationStateService;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -64,6 +66,8 @@ describe('MatchesOverviewComponent', () => {
 
     fixture = TestBed.createComponent(MatchesOverviewComponent);
     component = fixture.componentInstance;
+    customizationStateService = TestBed.inject(CustomizationStateService);
+    customizationStateService.setSkillMatrixExperienceUnit('project-count');
     fixture.detectChanges();
   });
 
@@ -77,16 +81,35 @@ describe('MatchesOverviewComponent', () => {
       loading: false,
       ui: {
         matchesOverview: [
-          { keyword: 'Angular', fullMatchesCount: 2, partialMatchesCount: 1 },
+          {
+            keyword: 'Angular',
+            fullMatchesCount: 2,
+            partialMatchesCount: 1,
+            fullMatchesTotalDurationInMs: 120,
+            partialMatchesTotalDurationInMs: 30,
+            fullMatchesTotalDurationText: '2h',
+            partialMatchesTotalDurationText: '30m',
+            allMatchesTotalDurationText: '2h 30m',
+          },
           {
             keyword: 'TypeScript',
             fullMatchesCount: 3,
             partialMatchesCount: 2,
+            fullMatchesTotalDurationInMs: 180,
+            partialMatchesTotalDurationInMs: 60,
+            fullMatchesTotalDurationText: '3h',
+            partialMatchesTotalDurationText: '1h',
+            allMatchesTotalDurationText: '4h',
           },
           {
             keyword: 'Tailwind',
             fullMatchesCount: 0,
             partialMatchesCount: 11,
+            fullMatchesTotalDurationInMs: 0,
+            partialMatchesTotalDurationInMs: 330,
+            fullMatchesTotalDurationText: '0m',
+            partialMatchesTotalDurationText: '5h 30m',
+            allMatchesTotalDurationText: '5h 30m',
           },
         ],
         projects: [] as SearchEngineProject[],
@@ -128,5 +151,16 @@ describe('MatchesOverviewComponent', () => {
 
     const tags = fixture.nativeElement.querySelectorAll('.search-term');
     expect(tags.length).toBe(0);
+  });
+
+  it('should add the asterisk and note for the time unit', () => {
+    customizationStateService.setSkillMatrixExperienceUnit('time');
+    fixture.detectChanges();
+
+    const text = fixture.nativeElement.textContent;
+    expect(text).toContain('Experience by Keywords*');
+    expect(text).toMatch(/exact matches are shown in green/i);
+    expect(text).toMatch(/broader experience/i);
+    expect(text).toMatch(/similar, comparable, or related technologies/i);
   });
 });
