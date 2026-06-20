@@ -6,6 +6,11 @@ export type SearchEngineDomainResult = {
     keyword: string;
     fullMatchesCount: number;
     partialMatchesCount: number;
+    fullMatchesTotalDurationInMs: number;
+    partialMatchesTotalDurationInMs: number;
+    fullMatchesTotalDurationText: string;
+    partialMatchesTotalDurationText: string;
+    allMatchesTotalDurationText: string;
   }>;
   projects: Array<ProjectDTO>;
   skills: Array<{

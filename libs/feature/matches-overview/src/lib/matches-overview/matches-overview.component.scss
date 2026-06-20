@@ -4,6 +4,7 @@
 .container {
   display: flex;
   flex-direction: column;
+  gap: spacing.md();
 
   .grid {
     display: grid;
@@ -38,6 +39,14 @@
         }
       }
     }
+  }
+
+  .match-note {
+    margin: 0;
+    color: var(--text-secondary, #5f6368);
+    font-size: 0.875rem;
+    line-height: 1.5;
+    margin-top: spacing.xs();
   }
 }
 

@@ -6,7 +6,7 @@ import {
   TechnologyMatcher,
 } from '@portfolio/projects';
 import { Tag } from '@portfolio/taxonomy';
-import { Duration } from 'date-fns';
+import { Duration, formatDistanceStrict } from 'date-fns';
 
 import {
   SearchEngineDomainChunkResult,
@@ -206,7 +206,14 @@ export class SearchEngineDomain {
         );
       }
 
-      this.updateMatchesOverview(matchesOverview[searchTerm], bestMatchType);
+      // TODO: handle the "freelancing IT professional" project better. It's not really a project.
+      if (project.id !== 'freelancing-it-professional') {
+        this.updateMatchesOverview(
+          matchesOverview[searchTerm],
+          bestMatchType,
+          (project.to ?? new Date()).valueOf() - project.from.valueOf()
+        );
+      }
     }
 
     if (searchTerms.length === 0) {
@@ -225,6 +232,11 @@ export class SearchEngineDomain {
         keyword: searchTerm,
         fullMatchesCount: 0,
         partialMatchesCount: 0,
+        fullMatchesTotalDurationInMs: 0,
+        partialMatchesTotalDurationInMs: 0,
+        fullMatchesTotalDurationText: '',
+        partialMatchesTotalDurationText: '',
+        allMatchesTotalDurationText: '',
       };
     }
     return matchesOverview;
@@ -289,13 +301,30 @@ export class SearchEngineDomain {
 
   private updateMatchesOverview(
     matchesOverviewEntry: MatchesOverviewItem,
-    bestMatchType: MatchType
+    bestMatchType: MatchType,
+    durationInMs: number
   ) {
     if (bestMatchType === 'full') {
       matchesOverviewEntry.fullMatchesCount++;
+      matchesOverviewEntry.fullMatchesTotalDurationInMs += durationInMs;
+      matchesOverviewEntry.fullMatchesTotalDurationText = formatDistanceStrict(
+        matchesOverviewEntry.fullMatchesTotalDurationInMs,
+        0
+      );
     } else if (bestMatchType === 'indirect') {
       matchesOverviewEntry.partialMatchesCount++;
+      matchesOverviewEntry.partialMatchesTotalDurationInMs += durationInMs;
+      matchesOverviewEntry.partialMatchesTotalDurationText =
+        formatDistanceStrict(
+          matchesOverviewEntry.partialMatchesTotalDurationInMs,
+          0
+        );
     }
+    matchesOverviewEntry.allMatchesTotalDurationText = formatDistanceStrict(
+      matchesOverviewEntry.fullMatchesTotalDurationInMs +
+        matchesOverviewEntry.partialMatchesTotalDurationInMs,
+      0
+    );
   }
 
   private updateSkillCategoryItems(
