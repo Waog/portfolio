@@ -218,6 +218,7 @@ type InternalTagName =
   | 'OSGI'
   | 'Package Manager'
   | 'Panda.js'
+  | 'Pattern Library'
   | 'Pattern Recognition'
   | 'Payments'
   | 'PayPal API'
@@ -230,6 +231,7 @@ type InternalTagName =
   | 'Playwright'
   | 'Polly'
   | 'PostgreSQL'
+  | 'Postman'
   | 'Preprocessor'
   | 'Prettier'
   | 'Productivity Tools'
@@ -970,6 +972,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     canonical: 'Component Library',
     categories: ['Concepts', 'Frontend'],
     children: ['Angular Material', 'Material UI'],
+    includes: ['Pattern Library'],
     related: [
       'Design System',
       'Fractal',
@@ -1105,6 +1108,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
       'Component Library',
       'Design Tokens',
       'Figma',
+      'Pattern Library',
       'Prototyping',
       'Software Design',
       'UI/UX',
@@ -2114,6 +2118,22 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     parents: ['Game Development'],
     related: ['HTML Canvas', 'Phaser'],
   },
+  'Pattern Library': {
+    canonical: 'Pattern Library',
+    categories: ['Concepts', 'Frontend'],
+    related: [
+      'Component Library',
+      'Design System',
+      'Design Tokens',
+      'Fractal',
+      'Storybook',
+    ],
+    synonyms: [
+      /pattern[-_\s]*librar(y|ies)/i,
+      /^dpl$/i,
+      /design[-_\s]*pattern[-_\s]*librar(y|ies)/i,
+    ],
+  },
   'Pattern Recognition': {
     canonical: 'Pattern Recognition',
     categories: ['Concepts'],
@@ -2214,6 +2234,17 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     parents: ['Relational Databases'],
     related: ['Backend Systems'],
     synonyms: [/^postgres(ql)?$/i],
+  },
+  Postman: {
+    canonical: 'Postman',
+    categories: ['Testing and QA', 'Tools & Libraries'],
+    related: [
+      'API Development',
+      'API Integration',
+      'GraphQL',
+      'OpenAPI',
+      'REST',
+    ],
   },
   Preprocessor: {
     canonical: 'Preprocessor',
@@ -2539,7 +2570,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
   Storybook: {
     canonical: 'Storybook',
     categories: ['Frontend', 'Tools & Libraries'],
-    related: ['Component Library', 'Web Components'],
+    related: ['Component Library', 'Pattern Library', 'Web Components'],
   },
   'Sublime Text': {
     canonical: 'Sublime Text',
