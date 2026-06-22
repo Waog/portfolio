@@ -230,6 +230,7 @@ type InternalTagName =
   | 'Playwright'
   | 'Polly'
   | 'PostgreSQL'
+  | 'Postman'
   | 'Preprocessor'
   | 'Prettier'
   | 'Productivity Tools'
@@ -2214,6 +2215,17 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     parents: ['Relational Databases'],
     related: ['Backend Systems'],
     synonyms: [/^postgres(ql)?$/i],
+  },
+  Postman: {
+    canonical: 'Postman',
+    categories: ['Testing and QA', 'Tools & Libraries'],
+    related: [
+      'API Development',
+      'API Integration',
+      'GraphQL',
+      'OpenAPI',
+      'REST',
+    ],
   },
   Preprocessor: {
     canonical: 'Preprocessor',
