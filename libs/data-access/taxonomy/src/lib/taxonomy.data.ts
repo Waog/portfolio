@@ -22,6 +22,7 @@ type InternalTagName =
   | 'AJAX'
   | 'Android'
   | 'Angular'
+  | 'Angular CLI'
   | 'AngularJS'
   | 'Angular Material'
   | 'Angular Universal'
@@ -480,6 +481,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     categories: ['Frontend', 'Tools & Libraries'],
     children: ['Angular Material', 'Angular Universal'],
     includes: [
+      'Angular CLI',
       'CSS',
       'HTML',
       'SPA',
@@ -494,6 +496,11 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
       /^angular\s*(v(?:ersion)?\s*)?\d+$/i,
       /^angular$/i,
     ],
+  },
+  'Angular CLI': {
+    canonical: 'Angular CLI',
+    categories: ['Frontend', 'Tools & Libraries'],
+    related: ['Angular'],
   },
   AngularJS: {
     canonical: 'AngularJS',

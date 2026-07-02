@@ -345,6 +345,7 @@ describe('Tag', () => {
           Tag.get('Framework'),
           Tag.get('SPA'),
           Tag.get('Component-based Development'),
+          Tag.get('Angular CLI'),
         ])
       );
     });
