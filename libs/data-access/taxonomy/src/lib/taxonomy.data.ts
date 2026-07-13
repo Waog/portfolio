@@ -73,6 +73,7 @@ type InternalTagName =
   | 'Confluence'
   | 'Construct 2'
   | 'Container'
+  | 'Continuous Testing'
   | 'Conventional Commits'
   | 'Cordova'
   | 'CSS'
@@ -813,6 +814,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
       'Jenkins',
       'Travis CI',
     ],
+    includes: ['Continuous Testing'],
     related: [
       'Android',
       'Ant',
@@ -850,6 +852,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     ],
     synonyms: [
       /^ci\/cd$/i,
+      /^ci\/cd[-_\s]*pipelines?$/i,
       /continuous[-_\s]*delivery/i,
       /continuous[-_\s]*integration/i,
     ],
@@ -1023,6 +1026,18 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     parents: ['CI/CD'],
     related: ['Microservices'],
     synonyms: [/container/i],
+  },
+  'Continuous Testing': {
+    canonical: 'Continuous Testing',
+    categories: ['Testing and QA', 'DevOps & Build & CI/CD'],
+    parents: ['Testing'],
+    related: [
+      'E2E Testing',
+      'Integration Testing',
+      'Performance Testing',
+      'Unit Testing',
+      'CI/CD',
+    ],
   },
   'Conventional Commits': {
     canonical: 'Conventional Commits',
@@ -2631,6 +2646,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     canonical: 'Testing',
     categories: ['Concepts'],
     children: [
+      'Continuous Testing',
       'Custom Test Framework',
       'E2E Testing',
       'FRUIT',
