@@ -166,6 +166,7 @@ describe('Tag', () => {
           Tag.get('React'),
           Tag.get('Frontend Framework'),
           Tag.get('Framework'),
+          Tag.get('Frontend'),
         ])
       );
     });
@@ -194,12 +195,16 @@ describe('Tag', () => {
   describe('getAllCommonAncestors()', () => {
     it('returns a set of all common ancestors', () => {
       expect(Tag.get('React Web').getAllCommonAncestors('Angular')).toEqual(
-        new Set([Tag.get('Frontend Framework'), Tag.get('Framework')])
+        new Set([
+          Tag.get('Frontend Framework'),
+          Tag.get('Framework'),
+          Tag.get('Frontend'),
+        ])
       );
     });
 
     it('returns an empty set if there are no common ancestors', () => {
-      expect(Tag.get('CSS').getAllCommonAncestors('HTML')).toEqual(new Set());
+      expect(Tag.get('CSS').getAllCommonAncestors('Docker')).toEqual(new Set());
     });
 
     it('caches and reuses the result', () => {
@@ -249,7 +254,7 @@ describe('Tag', () => {
     });
 
     it('returns null if there is no common ancestor', () => {
-      expect(Tag.get('CSS').getLowestCommonAncestor('HTML')).toEqual(null);
+      expect(Tag.get('CSS').getLowestCommonAncestor('Docker')).toEqual(null);
     });
   });
 
@@ -282,7 +287,7 @@ describe('Tag', () => {
 
     it('returns null if there is no common ancestor', () => {
       expect(
-        Tag.get('CSS').getMinDistanceToLowestCommonAncestor('HTML')
+        Tag.get('CSS').getMinDistanceToLowestCommonAncestor('Docker')
       ).toEqual(null);
     });
   });
@@ -346,6 +351,7 @@ describe('Tag', () => {
           Tag.get('SPA'),
           Tag.get('Component-based Development'),
           Tag.get('Angular CLI'),
+          Tag.get('Frontend'),
         ])
       );
     });

@@ -122,6 +122,7 @@ type InternalTagName =
   | 'Flash'
   | 'Fractal'
   | 'Framework'
+  | 'Frontend'
   | 'Frontend Framework'
   | 'FRUIT'
   | 'Game Development'
@@ -401,7 +402,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
   '2D': {
     canonical: '2D',
     categories: ['Concepts', 'Frontend'],
-    parents: ['Computer Graphics'],
+    parents: ['Frontend', 'Computer Graphics'],
     related: ['3D', 'HTML Canvas', 'Unity'],
     synonyms: [/^2d$/i, /two-?d/i],
   },
@@ -409,7 +410,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     canonical: '3D',
     categories: ['Concepts', 'Frontend'],
     children: ['Blender', 'First-person camera'],
-    parents: ['Computer Graphics'],
+    parents: ['Frontend', 'Computer Graphics'],
     related: ['2D', 'Unity', 'WebGL'],
     synonyms: [/^3d$/i, /three-?d/i],
   },
@@ -427,12 +428,14 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     canonical: 'Accessibility',
     categories: ['Concepts', 'Frontend'],
     children: ['ARIA', 'WCAG'],
+    parents: ['Frontend'],
     related: ['Internationalization', 'UI/UX', 'Web Development'],
     synonyms: [/^a11y$/i, /accessibility/i],
   },
   ActionScript: {
     canonical: 'ActionScript',
     categories: ['Frontend'],
+    parents: ['Frontend'],
     related: ['JavaScript'],
     synonyms: [/^as3?$/i, /actionscript/i],
   },
@@ -468,6 +471,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
   AJAX: {
     canonical: 'AJAX',
     categories: ['Concepts', 'Frontend'],
+    parents: ['Frontend'],
     related: ['JavaScript', 'REST'],
     synonyms: [/^ajax$/i, /xmlhttprequest/i],
   },
@@ -501,6 +505,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
   'Angular CLI': {
     canonical: 'Angular CLI',
     categories: ['Frontend', 'Tools & Libraries'],
+    parents: ['Frontend'],
     related: ['Angular'],
   },
   AngularJS: {
@@ -560,6 +565,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     canonical: 'API Integration',
     categories: ['Concepts', 'Frontend'],
     children: ['LLM Integration'],
+    parents: ['Frontend'],
     related: [
       'API Development',
       'Facebook API',
@@ -763,7 +769,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
   'bubble.io': {
     canonical: 'bubble.io',
     categories: ['Frontend', 'Tools & Libraries'],
-    parents: ['No-Code'],
+    parents: ['Frontend', 'No-Code'],
     related: ['Prototyping', 'Web Development'],
     synonyms: [/^bubble$/i, /bubble\.io/i],
   },
@@ -777,6 +783,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
   'C#': {
     canonical: 'C#',
     categories: ['Backend', 'Frontend'],
+    parents: ['Frontend'],
     related: ['Backend Systems', 'OOP', 'Unity'],
     synonyms: [/^c[- ]sharp$/i, /^c#$/i],
   },
@@ -909,7 +916,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
   CMS: {
     canonical: 'CMS',
     categories: ['Concepts', 'Frontend'],
-    parents: ['Web Development'],
+    parents: ['Frontend', 'Web Development'],
     synonyms: [/^cms$/i, /content[-_\s]*management[-_\s]*systems?/i],
   },
   'Code Assistance Systems': {
@@ -948,6 +955,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
   'Collaboration with UI/UX': {
     canonical: 'Collaboration with UI/UX',
     categories: ['Concepts', 'Frontend'],
+    parents: ['Frontend'],
     related: [
       'Design System',
       'Figma',
@@ -969,6 +977,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
   'Component-based Development': {
     canonical: 'Component-based Development',
     categories: ['Concepts', 'Frontend'],
+    parents: ['Frontend'],
     related: [
       'Component Library',
       'Web Components',
@@ -983,6 +992,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     categories: ['Concepts', 'Frontend'],
     children: ['Angular Material', 'Material UI'],
     includes: ['Pattern Library'],
+    parents: ['Frontend'],
     related: [
       'Design System',
       'Fractal',
@@ -1011,7 +1021,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
   'Construct 2': {
     canonical: 'Construct 2',
     categories: ['Frontend', 'Tools & Libraries'],
-    parents: ['Game Development', 'No-Code'],
+    parents: ['Frontend', 'Game Development', 'No-Code'],
     related: ['HTML5', 'Phaser', 'Unity'],
   },
   Container: {
@@ -1053,6 +1063,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
   CSS: {
     canonical: 'CSS',
     categories: ['Frontend'],
+    parents: ['Frontend'],
     related: ['LESS', 'Mobile First', 'Responsive Design', 'SASS', 'SCSS'],
     synonyms: [/^css/i],
   },
@@ -1108,6 +1119,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
   'Data Visualization': {
     canonical: 'Data Visualization',
     categories: ['Concepts', 'Frontend'],
+    parents: ['Frontend'],
     synonyms: [/data[-_\s]*visuali[sz]ation/i, /dataviz/i],
   },
   Debugging: {
@@ -1125,6 +1137,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
   'Design System': {
     canonical: 'Design System',
     categories: ['Concepts', 'Frontend'],
+    parents: ['Frontend'],
     related: [
       'Collaboration with UI/UX',
       'Component Library',
@@ -1141,6 +1154,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
   'Design Tokens': {
     canonical: 'Design Tokens',
     categories: ['Concepts', 'Frontend'],
+    parents: ['Frontend'],
     related: [
       'Component Library',
       'CSS',
@@ -1264,7 +1278,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     canonical: 'Eclipse RCP',
     categories: ['Frontend'],
     includes: ['Java', 'OSGI'],
-    parents: ['Eclipse'],
+    parents: ['Frontend', 'Eclipse'],
     related: ['Eclipse EMF'],
     synonyms: [
       /eclipse[-_\s]*rcp/i,
@@ -1352,7 +1366,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
   'Facebook Games': {
     canonical: 'Facebook Games',
     categories: ['Frontend', 'Tools & Libraries'],
-    parents: ['Facebook', 'Game Development'],
+    parents: ['Frontend', 'Facebook', 'Game Development'],
     related: ['Flash', 'Unity'],
     synonyms: [/facebook[-_\s]*games?/i],
   },
@@ -1392,12 +1406,13 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     canonical: 'Flash',
     categories: ['Frontend', 'Tools & Libraries'],
     includes: ['ActionScript'],
-    parents: ['Game Development'],
+    parents: ['Frontend', 'Game Development'],
     synonyms: [/^flash$/i, /adobe[-_\s]*flash/i],
   },
   Fractal: {
     canonical: 'Fractal',
     categories: ['Frontend', 'Tools & Libraries'],
+    parents: ['Frontend'],
     related: ['Stencil', 'Web Components'],
   },
   Framework: {
@@ -1406,11 +1421,77 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     children: ['Frontend Framework'],
     synonyms: [/^framework$/i],
   },
+  Frontend: {
+    canonical: 'Frontend',
+    categories: ['Concepts', 'Frontend'],
+    children: [
+      '2D',
+      '3D',
+      'Accessibility',
+      'ActionScript',
+      'AJAX',
+      'Angular CLI',
+      'API Integration',
+      'bubble.io',
+      'C#',
+      'CMS',
+      'Collaboration with UI/UX',
+      'Component Library',
+      'Component-based Development',
+      'Construct 2',
+      'CSS',
+      'Data Visualization',
+      'Design System',
+      'Design Tokens',
+      'Eclipse RCP',
+      'Facebook Games',
+      'Flash',
+      'Fractal',
+      'Frontend Framework',
+      'GraphQL',
+      'HTML',
+      'HTML Canvas',
+      'HTML5',
+      'Internationalization',
+      'Ionic',
+      'JavaScript',
+      'jMonkeyEngine',
+      'jQuery',
+      'Lit',
+      'Material Design',
+      'Micro Frontends',
+      'Mobile First',
+      'Nifty GUI',
+      'OpenGL',
+      'Panda.js',
+      'Pattern Library',
+      'Phaser',
+      'Preprocessor',
+      'Responsive Design',
+      'RxJS',
+      'SPA',
+      'State Management',
+      'Stencil',
+      'Storybook',
+      'Swiper',
+      'UI/UX',
+      'Unity',
+      'Web Components',
+      'Web Forms',
+      'WebRTC',
+    ],
+    synonyms: [
+      /^front[-_\s]*end$/i,
+      /^front[-_\s]*end[-_\s]*dev(?:elopment)?$/i,
+      /^web[-_\s]*front[-_\s]*end$/i,
+      /^web[-_\s]*front[-_\s]*end[-_\s]*dev(?:elopment)?$/i,
+    ],
+  },
   'Frontend Framework': {
     canonical: 'Frontend Framework',
     categories: ['Frontend'],
     children: ['Angular', 'AngularJS', 'CSS Framework', 'React', 'Vue.js'],
-    parents: ['Framework'],
+    parents: ['Frontend', 'Framework'],
     related: ['MVC'],
     synonyms: [
       /frontend[-_\s]*framework/i,
@@ -1556,6 +1637,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
   GraphQL: {
     canonical: 'GraphQL',
     categories: ['Backend', 'Concepts', 'Frontend', 'Tools & Libraries'],
+    parents: ['Frontend'],
     related: ['API Development', 'API Integration', 'Backend Systems', 'REST'],
   },
   Grunt: {
@@ -1580,18 +1662,20 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
   HTML: {
     canonical: 'HTML',
     categories: ['Frontend'],
+    parents: ['Frontend'],
     related: ['ARIA', 'Mobile First', 'Responsive Design', 'WCAG'],
   },
   HTML5: {
     canonical: 'HTML5',
     categories: ['Frontend'],
     includes: ['CSS', 'HTML', 'JavaScript'],
+    parents: ['Frontend'],
   },
   'HTML Canvas': {
     canonical: 'HTML Canvas',
     categories: ['Frontend'],
     includes: ['HTML', 'JavaScript'],
-    parents: ['Computer Graphics'],
+    parents: ['Frontend', 'Computer Graphics'],
     related: ['2D', 'WebGL'],
     synonyms: [/^canvas$/i, /^html[-_\s]*canvas/i],
   },
@@ -1664,6 +1748,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
   Internationalization: {
     canonical: 'Internationalization',
     categories: ['Concepts', 'Frontend'],
+    parents: ['Frontend'],
     related: ['Accessibility'],
     synonyms: [
       /^i18n$/i,
@@ -1676,6 +1761,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     canonical: 'Ionic',
     categories: ['Frontend', 'Tools & Libraries'],
     includes: ['CSS', 'HTML', 'JavaScript'],
+    parents: ['Frontend'],
     related: ['Angular', 'Intel XDK', 'React', 'Vue.js'],
   },
   iOS: {
@@ -1714,6 +1800,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     canonical: 'JavaScript',
     categories: ['Backend', 'Frontend'],
     children: ['TypeScript'],
+    parents: ['Frontend'],
     related: ['Backend Systems'],
     synonyms: [/^js$/i, /javascript/i],
   },
@@ -1746,6 +1833,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     canonical: 'jMonkeyEngine',
     categories: ['Frontend', 'Tools & Libraries'],
     includes: ['Java', 'OpenGL'],
+    parents: ['Frontend'],
     related: ['3D', 'Artemis-ODB', 'GLSL', 'Nifty GUI', 'OpenGL'],
     synonyms: [/^jme$/i],
   },
@@ -1759,6 +1847,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     categories: ['Frontend', 'Tools & Libraries'],
     children: ['jQuery UI', 'jQuery.qrcode'],
     includes: ['JavaScript'],
+    parents: ['Frontend'],
   },
   'jQuery.qrcode': {
     canonical: 'jQuery.qrcode',
@@ -1826,6 +1915,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     canonical: 'Lit',
     categories: ['Frontend', 'Tools & Libraries'],
     includes: ['Web Components'],
+    parents: ['Frontend'],
     related: ['Custom Elements', 'Shadow DOM', 'Stencil'],
     synonyms: [/^lit$/i, /lit-html/i],
   },
@@ -1869,6 +1959,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     canonical: 'Material Design',
     categories: ['Concepts', 'Frontend'],
     children: ['Angular Material', 'Material UI'],
+    parents: ['Frontend'],
     related: ['Design System', 'UI/UX'],
   },
   'Material UI': {
@@ -1887,6 +1978,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
   'Micro Frontends': {
     canonical: 'Micro Frontends',
     categories: ['Concepts', 'Frontend'],
+    parents: ['Frontend'],
     related: ['Microservices'],
     synonyms: [/micro[-_\s]*frontends?/i],
   },
@@ -1909,6 +2001,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     canonical: 'Mobile First',
     categories: ['Concepts', 'Frontend'],
     includes: ['Responsive Design'],
+    parents: ['Frontend'],
     related: ['CSS', 'HTML', 'Mobile Development', 'Web Development'],
     synonyms: [/mobile-?first/i],
   },
@@ -2020,6 +2113,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     canonical: 'Nifty GUI',
     categories: ['Frontend', 'Tools & Libraries'],
     includes: ['Java'],
+    parents: ['Frontend'],
     related: ['jMonkeyEngine'],
   },
   'No-Code': {
@@ -2117,7 +2211,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     canonical: 'OpenGL',
     categories: ['Frontend'],
     children: ['GLSL', 'WebGL'],
-    parents: ['Computer Graphics'],
+    parents: ['Frontend', 'Computer Graphics'],
     related: ['Shader programming'],
     synonyms: [/^opengl$/i],
   },
@@ -2137,12 +2231,13 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     canonical: 'Panda.js',
     categories: ['Frontend', 'Tools & Libraries'],
     includes: ['HTML5', 'JavaScript'],
-    parents: ['Game Development'],
+    parents: ['Frontend', 'Game Development'],
     related: ['HTML Canvas', 'Phaser'],
   },
   'Pattern Library': {
     canonical: 'Pattern Library',
     categories: ['Concepts', 'Frontend'],
+    parents: ['Frontend'],
     related: [
       'Component Library',
       'Design System',
@@ -2236,7 +2331,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     canonical: 'Phaser',
     categories: ['Frontend', 'Tools & Libraries'],
     includes: ['JavaScript', 'WebGL'],
-    parents: ['Game Development'],
+    parents: ['Frontend', 'Game Development'],
   },
   Playwright: {
     canonical: 'Playwright',
@@ -2272,6 +2367,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     canonical: 'Preprocessor',
     categories: ['DevOps & Build & CI/CD', 'Frontend'],
     children: ['LESS', 'SASS', 'SCSS'],
+    parents: ['Frontend'],
     synonyms: [/^preprocessor$/i, /css[-_\s]*preprocessor/i],
   },
   Prettier: {
@@ -2402,6 +2498,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
   'Responsive Design': {
     canonical: 'Responsive Design',
     categories: ['Concepts', 'Frontend'],
+    parents: ['Frontend'],
     related: [
       'Bootstrap',
       'CSS',
@@ -2435,6 +2532,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     categories: ['Frontend', 'Tools & Libraries'],
     children: ['NgRx'],
     includes: ['TypeScript'],
+    parents: ['Frontend'],
     related: ['Angular'],
   },
   S3: {
@@ -2531,6 +2629,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     canonical: 'SPA',
     categories: ['Concepts', 'Frontend'],
     children: ['SSG', 'SSR'],
+    parents: ['Frontend'],
     synonyms: [/^spa$/i, /single[- ]page[-_\s]*application/i],
   },
   Spacer: {
@@ -2582,16 +2681,19 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     canonical: 'State Management',
     categories: ['Concepts', 'Frontend'],
     children: ['NgRx', 'Redux'],
+    parents: ['Frontend'],
   },
   Stencil: {
     canonical: 'Stencil',
     categories: ['Frontend', 'Tools & Libraries'],
     includes: ['TypeScript', 'Web Components'],
+    parents: ['Frontend'],
     related: ['Component Library', 'Fractal', 'Storybook'],
   },
   Storybook: {
     canonical: 'Storybook',
     categories: ['Frontend', 'Tools & Libraries'],
+    parents: ['Frontend'],
     related: ['Component Library', 'Pattern Library', 'Web Components'],
   },
   'Sublime Text': {
@@ -2611,6 +2713,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
   Swiper: {
     canonical: 'Swiper',
     categories: ['Frontend', 'Tools & Libraries'],
+    parents: ['Frontend'],
   },
   'Systematic Test Generation': {
     canonical: 'Systematic Test Generation',
@@ -2730,6 +2833,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
   'UI/UX': {
     canonical: 'UI/UX',
     categories: ['Concepts', 'Frontend'],
+    parents: ['Frontend'],
     related: [
       'Accessibility',
       'Component Library',
@@ -2797,7 +2901,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     canonical: 'Unity',
     categories: ['Frontend', 'Tools & Libraries'],
     includes: ['C#'],
-    parents: ['Game Development'],
+    parents: ['Frontend', 'Game Development'],
     related: ['3D', 'Blender', 'jMonkeyEngine', 'MonoDevelop'],
     synonyms: [/^unity$/i, /^unity3d$/i],
   },
@@ -2883,6 +2987,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     canonical: 'Web Components',
     categories: ['Concepts', 'Frontend'],
     children: ['Custom Elements', 'Shadow DOM'],
+    parents: ['Frontend'],
     related: ['ARIA'],
     synonyms: [/web[-_\s]*components?/i],
   },
@@ -2904,7 +3009,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     canonical: 'Web Forms',
     categories: ['Frontend'],
     includes: ['HTML'],
-    parents: ['Web Development'],
+    parents: ['Frontend', 'Web Development'],
     synonyms: [/web[-_\s]*forms?/i, /^forms?$/i],
   },
   WebGL: {
@@ -2925,7 +3030,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     categories: ['Backend', 'Concepts', 'Frontend'],
     children: ['peerJS'],
     includes: ['JavaScript'],
-    parents: ['Peer-to-Peer'],
+    parents: ['Frontend', 'Peer-to-Peer'],
   },
   'Web Vitals': {
     canonical: 'Web Vitals',
