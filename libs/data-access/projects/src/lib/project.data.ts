@@ -189,7 +189,7 @@ export const ALL_PROJECT_DATA: { [key: string]: ProjectData } = {
     keyAchievements:
       'Custom CI/CD tool development • Web vitals performance optimization • Technical consulting',
     fullDescription:
-      'Maintained and improved existing lottery websites in a Scrum-like environment. Worked on the custom frontend framework of a complex micro-frontend architectured online shop for multiple lottery platforms. Provided technical consulting to team and managers while building a custom CI/CD tool to ensure company-wide optimal website performance through web vitals monitoring.',
+      'Maintained and improved existing lottery websites in a Scrum-like environment. Worked on the custom frontend framework of a complex micro-frontend architected online shop for multiple lottery platforms. Provided technical consulting to team and managers while building a custom CI/CD tool to ensure company-wide optimal website performance through web vitals monitoring.',
     features: [
       'Micro-frontend architecture',
       'Custom frontend framework',
