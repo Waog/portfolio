@@ -125,6 +125,7 @@ type InternalTagName =
   | 'Frontend'
   | 'Frontend Framework'
   | 'FRUIT'
+  | 'GAE Datastore'
   | 'Game Development'
   | 'Gaming'
   | 'Git'
@@ -1504,6 +1505,16 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     categories: ['Testing and QA', 'Tools & Libraries'],
     parents: ['Testing'],
   },
+  'GAE Datastore': {
+    canonical: 'GAE Datastore',
+    categories: ['Backend', 'Cloud & Infrastructure'],
+    parents: ['Google App Engine', 'NoSQL Databases'],
+    related: ['Backend Systems'],
+    synonyms: [
+      /gae[-_\s]*datastore/i,
+      /google[-_\s]*app[-_\s]*engine[-_\s]*datastore/i,
+    ],
+  },
   'Game Development': {
     canonical: 'Game Development',
     categories: ['Concepts'],
@@ -1607,6 +1618,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
   'Google App Engine': {
     canonical: 'Google App Engine',
     categories: ['Cloud & Infrastructure'],
+    children: ['GAE Datastore'],
     parents: ['Cloud Platforms'],
     synonyms: [/^google[-_\s]*app[-_\s]*engine/i, /gae/i],
   },
@@ -2134,7 +2146,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
   'NoSQL Databases': {
     canonical: 'NoSQL Databases',
     categories: ['Backend'],
-    children: ['DynamoDB', 'MongoDB'],
+    children: ['DynamoDB', 'GAE Datastore', 'MongoDB'],
     parents: ['Database Systems'],
     related: ['Backend Systems'],
     synonyms: [
