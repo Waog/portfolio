@@ -982,7 +982,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
       /design[-_\s]*to[-_\s]*code/i,
       /designer[-_\s]*developer[-_\s]*collaboration/i,
       /developer[-_\s]*designer[-_\s]*collaboration/i,
-      /(collaborat(e|es|ed|ing)|communicat(e|es|ed|ing)|partner(s|ed|ing)?|work(ing)?[-_\s]*closely)[-_\s\w/]*((ui|ux)[-_\s/]*team|designers?|product[-_\s]*designers?)/i,
+      /(collaborat(ion|e|es|ed|ing)|communicat(e|es|ed|ing)|partner(s|ed|ing)?|work(ing)?[-_\s]*closely)[-_\s\w]*(ui|ux|design)+[-_\s\w]*(teams?)?/i,
       /(implement|implements|implemented|implementing|build|builds|built|building|develop|develops|developed|developing|translate|translates|translated|translating)[-_\s\w/]*(ui|ux|front[-_\s]*end|frontend)?[-_\s\w/]*(specs?|specifications?|mockups?|wireframes?|designs?)[-_\s\w/]*(in|into|to)?[-_\s\w/]*code/i,
       /pixel[-_\s]*perfect([-_\s]*(implementation|ui|frontend|front[-_\s]*end))?/i,
     ],
