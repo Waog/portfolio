@@ -261,6 +261,7 @@ type InternalTagName =
   | 'React Web'
   | 'Redash'
   | 'Redux'
+  | 'Regulated Environment'
   | 'Relational Databases'
   | 'requireJS'
   | 'Research'
@@ -2555,6 +2556,14 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     includes: ['React'],
     parents: ['State Management'],
     related: ['NgRx'],
+  },
+  'Regulated Environment': {
+    canonical: 'Regulated Environment',
+    categories: ['Industry'],
+    synonyms: [
+      /regulated[-_\s]*environment/i,
+      /regulated[-_\s]*industr(y|ies)/i,
+    ],
   },
   'Relational Databases': {
     canonical: 'Relational Databases',
