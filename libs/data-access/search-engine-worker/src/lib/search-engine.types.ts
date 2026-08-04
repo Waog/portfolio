@@ -1,4 +1,7 @@
-import { SearchEngineDomainResult } from '@portfolio/search-engine-domain';
+import {
+  ProjectSortOrder,
+  SearchEngineDomainResult,
+} from '@portfolio/search-engine-domain';
 
 export const SEARCH_ENGINE_WORKER_REQUEST_KIND =
   'search-engine.request' as const;
@@ -12,6 +15,7 @@ export interface SearchEngineWorkerInput {
   kind: typeof SEARCH_ENGINE_WORKER_REQUEST_KIND;
   queryId: number;
   query: string[];
+  sortOrder?: ProjectSortOrder;
 }
 
 export interface SearchEngineWorkerResult {

@@ -1,6 +1,7 @@
 import { DestroyRef, inject, Injectable } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { NavigationEnd, Router } from '@angular/router';
+import { CustomizationStateService } from '@portfolio/customization-state';
 import { SearchEngineService } from '@portfolio/search-engine-angular';
 import { Project } from '@portfolio/search-engine-domain';
 import { SearchTagService } from '@portfolio/search-tags';
@@ -47,6 +48,9 @@ export class ProjectListCustomOrderService {
   private readonly router = inject(Router);
   private readonly searchEngineService = inject(SearchEngineService);
   private readonly searchTagService = inject(SearchTagService);
+  private readonly customizationStateService = inject(
+    CustomizationStateService
+  );
   private readonly urlStateService = inject(UrlStateService);
   private readonly destroyRef = inject(DestroyRef);
 
@@ -72,6 +76,7 @@ export class ProjectListCustomOrderService {
     this.setupUrlSetsCustomOrder();
     this.setupStateChangeChangesUrl();
     this.setupResetOnSearchTagChangeEffect();
+    this.setupResetOnProjectSortOrderChangeEffect();
   }
 
   private setupSearchResultsUpdateState() {
@@ -131,6 +136,16 @@ export class ProjectListCustomOrderService {
 
   private setupResetOnSearchTagChangeEffect(): void {
     this.searchTagService.tags$
+      .pipe(
+        skip(1), // Skip the initial value to avoid resetting on service initialization
+        tap(() => this.actions$.next({ type: 'resetCustomOrder' })),
+        takeUntilDestroyed(this.destroyRef)
+      )
+      .subscribe();
+  }
+
+  private setupResetOnProjectSortOrderChangeEffect(): void {
+    toObservable(this.customizationStateService.projectSortOrder)
       .pipe(
         skip(1), // Skip the initial value to avoid resetting on service initialization
         tap(() => this.actions$.next({ type: 'resetCustomOrder' })),

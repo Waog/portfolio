@@ -1,6 +1,7 @@
 import { DestroyRef, inject, Injectable, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NavigationEnd, Router } from '@angular/router';
+import { ProjectSortOrder } from '@portfolio/search-engine-domain';
 import { UrlStateService } from '@portfolio/url-state';
 import { filter } from 'rxjs';
 
@@ -14,6 +15,7 @@ export class CustomizationStateService {
   private readonly printModeQueryParam = 'printMode';
   private readonly skillMatrixExperienceUnitQueryParam =
     'skillMatrixExperienceUnit';
+  private readonly projectSortOrderQueryParam = 'projectSortOrder';
   private readonly router = inject(Router);
   private readonly destroyRef = inject(DestroyRef);
   private readonly urlStateService = inject(UrlStateService);
@@ -22,10 +24,12 @@ export class CustomizationStateService {
   private readonly _isPrintMode = signal(false);
   private readonly _skillMatrixExperienceUnit =
     signal<SkillMatrixExperienceUnit>('project-count');
+  private readonly _projectSortOrder = signal<ProjectSortOrder>('relevance');
   readonly isPanelShown = this._isPanelShown.asReadonly();
   readonly isPrintMode = this._isPrintMode.asReadonly();
   readonly skillMatrixExperienceUnit =
     this._skillMatrixExperienceUnit.asReadonly();
+  readonly projectSortOrder = this._projectSortOrder.asReadonly();
 
   constructor() {
     this.setStateFromUrl();
@@ -74,6 +78,18 @@ export class CustomizationStateService {
     });
   }
 
+  setProjectSortOrder(sortOrder: ProjectSortOrder): void {
+    if (this._projectSortOrder() === sortOrder) {
+      return;
+    }
+
+    this._projectSortOrder.set(sortOrder);
+    this.urlStateService.updateValue({
+      [this.projectSortOrderQueryParam]:
+        sortOrder === 'relevance' ? null : sortOrder,
+    });
+  }
+
   private syncStateWithUrlChanges(): void {
     this.router.events
       .pipe(
@@ -91,6 +107,7 @@ export class CustomizationStateService {
     this._skillMatrixExperienceUnit.set(
       this.getSkillMatrixExperienceUnitFromUrl()
     );
+    this._projectSortOrder.set(this.getProjectSortOrderFromUrl());
   }
 
   private getSkillMatrixExperienceUnitFromUrl(): SkillMatrixExperienceUnit {
@@ -99,6 +116,11 @@ export class CustomizationStateService {
       urlTree.queryParams[this.skillMatrixExperienceUnitQueryParam] ??
       'project-count'
     );
+  }
+
+  private getProjectSortOrderFromUrl(): ProjectSortOrder {
+    const urlTree = this.router.parseUrl(this.router.url);
+    return urlTree.queryParams[this.projectSortOrderQueryParam] ?? 'relevance';
   }
 
   private getQueryParamFlag(queryParam: string): boolean {

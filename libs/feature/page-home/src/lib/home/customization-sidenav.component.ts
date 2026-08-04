@@ -10,6 +10,7 @@ import {
   CustomizationStateService,
   SkillMatrixExperienceUnit,
 } from '@portfolio/customization-state';
+import { ProjectSortOrder } from '@portfolio/search-engine-domain';
 
 import { ProjectReorderDialogComponent } from './project-reorder-dialog.component';
 
@@ -47,6 +48,10 @@ export class CustomizationSidenavComponent {
     unit: SkillMatrixExperienceUnit
   ): void {
     this.customizationStateService.setSkillMatrixExperienceUnit(unit);
+  }
+
+  protected setProjectSortOrder(sortOrder: ProjectSortOrder): void {
+    this.customizationStateService.setProjectSortOrder(sortOrder);
   }
 
   protected openReorderDialog(): void {
