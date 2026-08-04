@@ -341,7 +341,7 @@ describe('Tag', () => {
       const implicitTags: Set<Tag> = Tag.get('Angular').getImplicitTags();
       const expectedTags: Set<Tag> = new Set([
         Tag.get('Angular'),
-        Tag.get('Component-based Architectures'),
+        Tag.get('Component-based Architecture'),
         Tag.get('CSS'),
         Tag.get('HTML'),
         Tag.get('TypeScript'),
