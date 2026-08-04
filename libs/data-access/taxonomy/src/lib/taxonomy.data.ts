@@ -35,6 +35,7 @@ type InternalTagName =
   | 'Artemis-ODB'
   | 'Artificial Intelligence'
   | 'Atlassian'
+  | 'Atomic Design'
   | 'Authentication'
   | 'Authorization'
   | 'Automotive'
@@ -634,6 +635,13 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     categories: ['Tools & Libraries'],
     children: ['BitBucket', 'Confluence', 'Jira', 'Trello'],
   },
+  'Atomic Design': {
+    canonical: 'Atomic Design',
+    categories: ['Concepts', 'Frontend'],
+    parents: ['Design System'],
+    related: ['Component Library', 'Pattern Library'],
+    synonyms: [/atomic[-_\s]*design/i],
+  },
   Authentication: {
     canonical: 'Authentication',
     categories: ['Concepts'],
@@ -995,6 +1003,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     includes: ['Pattern Library'],
     parents: ['Frontend'],
     related: [
+      'Atomic Design',
       'Design System',
       'Fractal',
       'Storybook',
@@ -1138,6 +1147,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
   'Design System': {
     canonical: 'Design System',
     categories: ['Concepts', 'Frontend'],
+    children: ['Atomic Design'],
     parents: ['Frontend'],
     related: [
       'Collaboration with UI/UX',
@@ -1972,7 +1982,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     categories: ['Concepts', 'Frontend'],
     children: ['Angular Material', 'Material UI'],
     parents: ['Frontend'],
-    related: ['Design System', 'UI/UX'],
+    related: ['Atomic Design', 'Design System', 'UI/UX'],
   },
   'Material UI': {
     canonical: 'Material UI',

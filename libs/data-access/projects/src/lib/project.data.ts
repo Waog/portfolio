@@ -625,6 +625,7 @@ export const ALL_PROJECT_DATA: { [key: string]: ProjectData } = {
       'SCRUM',
       'Kanban',
       'Component Library',
+      'Atomic Design',
       'Design System',
       'API Integration',
       'Debugging',
