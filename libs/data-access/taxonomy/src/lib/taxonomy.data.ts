@@ -108,6 +108,7 @@ type InternalTagName =
   | 'Education'
   | 'Education Technology'
   | 'Elastic Beanstalk'
+  | 'Enterprise Project'
   | 'Entity Component System'
   | 'ESLint'
   | 'Event-Driven Architecture'
@@ -1324,6 +1325,10 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     canonical: 'Elastic Beanstalk',
     categories: ['Cloud & Infrastructure'],
     parents: ['AWS'],
+  },
+  'Enterprise Project': {
+    canonical: 'Enterprise Project',
+    categories: ['Misc'],
   },
   'Entity Component System': {
     canonical: 'Entity Component System',
