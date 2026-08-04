@@ -25,6 +25,7 @@ type InternalTagName =
   | 'Angular CLI'
   | 'AngularJS'
   | 'Angular Material'
+  | 'Angular Testing Library'
   | 'Angular Universal'
   | 'Ant'
   | 'API Development'
@@ -70,6 +71,7 @@ type InternalTagName =
   | 'Component-based Architectures'
   | 'Component-based Development'
   | 'Component Library'
+  | 'Component Testing'
   | 'Computer Graphics'
   | 'Computer Vision'
   | 'Confluence'
@@ -128,6 +130,7 @@ type InternalTagName =
   | 'Framework'
   | 'Frontend'
   | 'Frontend Framework'
+  | 'Frontend Testing'
   | 'FRUIT'
   | 'GAE Datastore'
   | 'Game Development'
@@ -254,6 +257,7 @@ type InternalTagName =
   | 'Raspberry Pi'
   | 'React'
   | 'React Native'
+  | 'React Testing Library'
   | 'React Web'
   | 'Redash'
   | 'Redux'
@@ -298,6 +302,7 @@ type InternalTagName =
   | 'Telemetry'
   | 'Terraform'
   | 'Testing'
+  | 'Testing Library'
   | 'TESTONA'
   | 'TFS'
   | 'TortoiseSVN'
@@ -531,6 +536,13 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
       'Component Library',
     ],
     related: ['Bootstrap', 'Material UI', 'Tailwind'],
+  },
+  'Angular Testing Library': {
+    canonical: 'Angular Testing Library',
+    categories: ['Testing and QA', 'Tools & Libraries'],
+    includes: ['Angular'],
+    parents: ['Testing Library'],
+    related: ['Jasmine', 'Jest', 'Karma', 'Vitest'],
   },
   'Angular Universal': {
     canonical: 'Angular Universal',
@@ -1023,6 +1035,14 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     ],
     synonyms: [/component[-_\s]*librar(y|ies)/i],
   },
+  'Component Testing': {
+    canonical: 'Component Testing',
+    categories: ['Concepts', 'Testing and QA'],
+    children: ['Testing Library'],
+    parents: ['Frontend Testing'],
+    related: ['Integration Testing', 'Unit Testing'],
+    synonyms: [/component[-_\s]*test(ing|s)?/i],
+  },
   'Computer Graphics': {
     canonical: 'Computer Graphics',
     categories: ['Concepts'],
@@ -1233,7 +1253,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     categories: ['Concepts', 'Testing and QA'],
     children: ['Cypress', 'Playwright', 'Puppeteer', 'Selenium'],
     parents: ['Testing'],
-    related: ['Integration Testing', 'UI Testing'],
+    related: ['Integration Testing', 'UI Testing', 'Frontend Testing'],
     synonyms: [/e2e[- ]test/i, /end-to-end[- ]test/i],
   },
   'E-Commerce': {
@@ -1467,6 +1487,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
       'CMS',
       'Collaboration with UI/UX',
       'Component Library',
+      'Component-based Architectures',
       'Component-based Development',
       'Construct 2',
       'CSS',
@@ -1478,6 +1499,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
       'Flash',
       'Fractal',
       'Frontend Framework',
+      'Frontend Testing',
       'GraphQL',
       'HTML',
       'HTML Canvas',
@@ -1529,6 +1551,14 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
       /javascript[-_\s]*framework/i,
       /js[-_\s]*framework/i,
     ],
+  },
+  'Frontend Testing': {
+    canonical: 'Frontend Testing',
+    categories: ['Concepts', 'Testing and QA'],
+    children: ['Component Testing', 'UI Testing'],
+    parents: ['Frontend', 'Testing'],
+    related: ['E2E Testing', 'UI Testing'],
+    synonyms: [/(automated)?[-_\s]*front[-_\s]*end[-_\s]*test(ing|s)?/i],
   },
   FRUIT: {
     canonical: 'FRUIT',
@@ -1772,7 +1802,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
       'Vitest',
     ],
     parents: ['Testing'],
-    related: ['E2E Testing', 'UI Testing', 'Unit Testing'],
+    related: ['E2E Testing', 'UI Testing', 'Unit Testing', 'Component Testing'],
     synonyms: [/integration[-\s]*test(ing|s)?/i],
   },
   'IntelliJ IDEA': {
@@ -1830,6 +1860,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     categories: ['Testing and QA'],
     includes: ['JavaScript'],
     parents: ['Integration Testing', 'Unit Testing'],
+    related: ['Angular Testing Library'],
   },
   Java: {
     canonical: 'Java',
@@ -1864,7 +1895,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     categories: ['Testing and QA'],
     includes: ['JavaScript'],
     parents: ['Integration Testing', 'Unit Testing'],
-    related: ['Vitest'],
+    related: ['Vitest', 'React Testing Library', 'Angular Testing Library'],
   },
   Jira: {
     canonical: 'Jira',
@@ -1932,7 +1963,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     categories: ['Testing and QA'],
     includes: ['JavaScript'],
     parents: ['Integration Testing', 'Unit Testing'],
-    related: ['Jasmine'],
+    related: ['Jasmine', 'Angular Testing Library'],
   },
   Kubernetes: {
     canonical: 'Kubernetes',
@@ -2500,6 +2531,14 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     categories: ['Frontend', 'Tools & Libraries'],
     parents: ['React'],
   },
+  'React Testing Library': {
+    canonical: 'React Testing Library',
+    categories: ['Testing and QA', 'Tools & Libraries'],
+    includes: ['React'],
+    parents: ['Testing Library'],
+    related: ['Jest', 'Vitest'],
+    synonyms: [/react[-_\s]*testing[-_\s]*library/i, /^rtl$/i],
+  },
   'React Web': {
     canonical: 'React Web',
     categories: ['Frontend', 'Tools & Libraries'],
@@ -2795,12 +2834,12 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
       'Continuous Testing',
       'Custom Test Framework',
       'E2E Testing',
+      'Frontend Testing',
       'FRUIT',
       'Integration Testing',
       'Model-based testing',
       'Performance Testing',
       'TESTONA',
-      'UI Testing',
       'Unit Testing',
     ],
     related: ['Debugging', 'QA'],
@@ -2809,6 +2848,14 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
       /test[-_\s]*automation/i,
       /automated[-_\s]*testing/i,
     ],
+  },
+  'Testing Library': {
+    canonical: 'Testing Library',
+    categories: ['Testing and QA', 'Tools & Libraries'],
+    children: ['Angular Testing Library', 'React Testing Library'],
+    parents: ['Component Testing'],
+    related: ['Jest', 'Vitest'],
+    synonyms: [/testing[-_\s]*library/i],
   },
   TESTONA: {
     canonical: 'TESTONA',
@@ -2905,7 +2952,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
       'Selenium',
       'Widget Trees',
     ],
-    parents: ['Testing'],
+    parents: ['Frontend Testing'],
     related: ['E2E Testing', 'Puppeteer'],
   },
   UML: {
@@ -2941,7 +2988,12 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
       'Vitest',
     ],
     parents: ['Testing'],
-    related: ['E2E Testing', 'Integration Testing', 'UI Testing'],
+    related: [
+      'E2E Testing',
+      'Integration Testing',
+      'UI Testing',
+      'Component Testing',
+    ],
     synonyms: [/unit[-\s]*tests?/i],
   },
   Unity: {
@@ -3010,7 +3062,12 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     categories: ['Testing and QA'],
     includes: ['JavaScript', 'TypeScript'],
     parents: ['Integration Testing', 'Unit Testing'],
-    related: ['Jest', 'Vite'],
+    related: [
+      'Jest',
+      'Vite',
+      'React Testing Library',
+      'Angular Testing Library',
+    ],
   },
   VSCode: {
     canonical: 'VSCode',
