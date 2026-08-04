@@ -67,6 +67,7 @@ type InternalTagName =
   | 'Code Reviews'
   | 'Coding Agents'
   | 'Collaboration with UI/UX'
+  | 'Component-based Architectures'
   | 'Component-based Development'
   | 'Component Library'
   | 'Computer Graphics'
@@ -986,9 +987,16 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
       /pixel[-_\s]*perfect([-_\s]*(implementation|ui|frontend|front[-_\s]*end))?/i,
     ],
   },
+  'Component-based Architectures': {
+    canonical: 'Component-based Architectures',
+    categories: ['Concepts', 'Frontend'],
+    parents: ['Frontend'],
+    synonyms: [/component[-_\s]*based[-_\s]*architectures?/i],
+  },
   'Component-based Development': {
     canonical: 'Component-based Development',
     categories: ['Concepts', 'Frontend'],
+    includes: ['Component-based Architectures'],
     parents: ['Frontend'],
     related: [
       'Component Library',
