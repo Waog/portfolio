@@ -92,6 +92,7 @@ type InternalTagName =
   | 'Design System'
   | 'Design Tokens'
   | 'Developer Portfolio'
+  | 'Development Workflows'
   | 'DevOps Tools'
   | 'Diploma Thesis'
   | 'Docker'
@@ -832,7 +833,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
       'Jenkins',
       'Travis CI',
     ],
-    includes: ['Continuous Testing'],
+    includes: ['Continuous Testing', 'Development Workflows'],
     related: [
       'Android',
       'Ant',
@@ -1186,6 +1187,10 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
       /personal[-_\s]*portfolio/i,
       /portfolio[-_\s]*website/i,
     ],
+  },
+  'Development Workflows': {
+    canonical: 'Development Workflows',
+    categories: ['Concepts'],
   },
   'DevOps Tools': {
     canonical: 'DevOps Tools',
@@ -2963,6 +2968,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     canonical: 'Version Control',
     categories: ['DevOps & Build & CI/CD'],
     children: ['Git', 'SVN', 'TFS'],
+    includes: ['Development Workflows'],
   },
   'Visual Studio': {
     canonical: 'Visual Studio',
