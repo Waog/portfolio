@@ -314,6 +314,7 @@ type InternalTagName =
   | 'Underscore'
   | 'Unit Testing'
   | 'Unity'
+  | 'Usability'
   | 'USB Monitor'
   | 'Various Industries'
   | 'Various Technologies'
@@ -1496,6 +1497,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
       'Web Forms',
       'WebRTC',
     ],
+    includes: ['Usability'],
     synonyms: [
       /^front[-_\s]*end$/i,
       /^front[-_\s]*end[-_\s]*dev(?:elopment)?$/i,
@@ -2931,6 +2933,11 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     parents: ['Frontend', 'Game Development'],
     related: ['3D', 'Blender', 'jMonkeyEngine', 'MonoDevelop'],
     synonyms: [/^unity$/i, /^unity3d$/i],
+  },
+  Usability: {
+    canonical: 'Usability',
+    categories: ['Concepts'],
+    synonyms: [/^usability$/i],
   },
   'USB Monitor': {
     canonical: 'USB Monitor',
