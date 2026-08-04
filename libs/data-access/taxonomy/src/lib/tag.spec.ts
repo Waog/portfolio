@@ -339,21 +339,32 @@ describe('Tag', () => {
   describe('getImplicitTags()', () => {
     it('returns all Tags which are implicitly included in this tag in any way', () => {
       const implicitTags: Set<Tag> = Tag.get('Angular').getImplicitTags();
-      expect(implicitTags).toEqual(
-        new Set([
-          Tag.get('Angular'),
-          Tag.get('CSS'),
-          Tag.get('HTML'),
-          Tag.get('TypeScript'),
-          Tag.get('JavaScript'),
-          Tag.get('Frontend Framework'),
-          Tag.get('Framework'),
-          Tag.get('SPA'),
-          Tag.get('Component-based Development'),
-          Tag.get('Angular CLI'),
-          Tag.get('Frontend'),
-        ])
+      const expectedTags: Set<Tag> = new Set([
+        Tag.get('Angular'),
+        Tag.get('Component-based Architecture'),
+        Tag.get('CSS'),
+        Tag.get('HTML'),
+        Tag.get('TypeScript'),
+        Tag.get('JavaScript'),
+        Tag.get('Frontend Framework'),
+        Tag.get('Framework'),
+        Tag.get('SPA'),
+        Tag.get('Component-based Development'),
+        Tag.get('Angular CLI'),
+        Tag.get('Frontend'),
+        Tag.get('Usability'),
+      ]);
+
+      const implicitTagNames: Set<string> = new Set(
+        Array.from(implicitTags).map(tag => tag.canonical)
       );
+      const expectedTagNames: Set<string> = new Set(
+        Array.from(expectedTags).map(tag => tag.canonical)
+      );
+
+      // NOTE: we compare the sole names first for better readability of potential errors, as the Tag objects themselves are not easily readable in the error message.
+      expect(implicitTagNames).toEqual(expectedTagNames);
+      expect(implicitTags).toEqual(expectedTags);
     });
   });
 });

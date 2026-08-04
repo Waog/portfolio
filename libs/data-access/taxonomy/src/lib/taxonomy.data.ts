@@ -25,6 +25,7 @@ type InternalTagName =
   | 'Angular CLI'
   | 'AngularJS'
   | 'Angular Material'
+  | 'Angular Testing Library'
   | 'Angular Universal'
   | 'Ant'
   | 'API Development'
@@ -67,8 +68,10 @@ type InternalTagName =
   | 'Code Reviews'
   | 'Coding Agents'
   | 'Collaboration with UI/UX'
+  | 'Component-based Architecture'
   | 'Component-based Development'
   | 'Component Library'
+  | 'Component Testing'
   | 'Computer Graphics'
   | 'Computer Vision'
   | 'Confluence'
@@ -92,6 +95,7 @@ type InternalTagName =
   | 'Design System'
   | 'Design Tokens'
   | 'Developer Portfolio'
+  | 'Development Workflows'
   | 'DevOps Tools'
   | 'Diploma Thesis'
   | 'Docker'
@@ -108,6 +112,7 @@ type InternalTagName =
   | 'Education'
   | 'Education Technology'
   | 'Elastic Beanstalk'
+  | 'Enterprise Project'
   | 'Entity Component System'
   | 'ESLint'
   | 'Event-Driven Architecture'
@@ -125,6 +130,7 @@ type InternalTagName =
   | 'Framework'
   | 'Frontend'
   | 'Frontend Framework'
+  | 'Frontend Testing'
   | 'FRUIT'
   | 'GAE Datastore'
   | 'Game Development'
@@ -251,9 +257,11 @@ type InternalTagName =
   | 'Raspberry Pi'
   | 'React'
   | 'React Native'
+  | 'React Testing Library'
   | 'React Web'
   | 'Redash'
   | 'Redux'
+  | 'Regulated Environment'
   | 'Relational Databases'
   | 'requireJS'
   | 'Research'
@@ -295,6 +303,7 @@ type InternalTagName =
   | 'Telemetry'
   | 'Terraform'
   | 'Testing'
+  | 'Testing Library'
   | 'TESTONA'
   | 'TFS'
   | 'TortoiseSVN'
@@ -313,6 +322,7 @@ type InternalTagName =
   | 'Underscore'
   | 'Unit Testing'
   | 'Unity'
+  | 'Usability'
   | 'USB Monitor'
   | 'Various Industries'
   | 'Various Technologies'
@@ -527,6 +537,13 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
       'Component Library',
     ],
     related: ['Bootstrap', 'Material UI', 'Tailwind'],
+  },
+  'Angular Testing Library': {
+    canonical: 'Angular Testing Library',
+    categories: ['Testing and QA', 'Tools & Libraries'],
+    includes: ['Angular'],
+    parents: ['Testing Library'],
+    related: ['Jasmine', 'Jest', 'Karma', 'Vitest'],
   },
   'Angular Universal': {
     canonical: 'Angular Universal',
@@ -830,7 +847,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
       'Jenkins',
       'Travis CI',
     ],
-    includes: ['Continuous Testing'],
+    includes: ['Continuous Testing', 'Development Workflows'],
     related: [
       'Android',
       'Ant',
@@ -978,14 +995,21 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
       /design[-_\s]*to[-_\s]*code/i,
       /designer[-_\s]*developer[-_\s]*collaboration/i,
       /developer[-_\s]*designer[-_\s]*collaboration/i,
-      /(collaborat(e|es|ed|ing)|communicat(e|es|ed|ing)|partner(s|ed|ing)?|work(ing)?[-_\s]*closely)[-_\s\w/]*((ui|ux)[-_\s/]*team|designers?|product[-_\s]*designers?)/i,
+      /(collaborat(ion|e|es|ed|ing)|communicat(e|es|ed|ing)|partner(s|ed|ing)?|work(ing)?[-_\s]*closely)[-_\s\w]*(ui|ux|design)+[-_\s\w]*(teams?)?/i,
       /(implement|implements|implemented|implementing|build|builds|built|building|develop|develops|developed|developing|translate|translates|translated|translating)[-_\s\w/]*(ui|ux|front[-_\s]*end|frontend)?[-_\s\w/]*(specs?|specifications?|mockups?|wireframes?|designs?)[-_\s\w/]*(in|into|to)?[-_\s\w/]*code/i,
       /pixel[-_\s]*perfect([-_\s]*(implementation|ui|frontend|front[-_\s]*end))?/i,
     ],
   },
+  'Component-based Architecture': {
+    canonical: 'Component-based Architecture',
+    categories: ['Concepts', 'Frontend'],
+    parents: ['Frontend'],
+    synonyms: [/component[-_\s]*based[-_\s]*arch/i, /component[-_\s]*arch/i],
+  },
   'Component-based Development': {
     canonical: 'Component-based Development',
     categories: ['Concepts', 'Frontend'],
+    includes: ['Component-based Architecture'],
     parents: ['Frontend'],
     related: [
       'Component Library',
@@ -1011,6 +1035,14 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
       'Web Components',
     ],
     synonyms: [/component[-_\s]*librar(y|ies)/i],
+  },
+  'Component Testing': {
+    canonical: 'Component Testing',
+    categories: ['Concepts', 'Testing and QA'],
+    children: ['Testing Library'],
+    parents: ['Frontend Testing'],
+    related: ['Integration Testing', 'Unit Testing'],
+    synonyms: [/component[-_\s]*test(ing|s)?/i],
   },
   'Computer Graphics': {
     canonical: 'Computer Graphics',
@@ -1185,6 +1217,10 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
       /portfolio[-_\s]*website/i,
     ],
   },
+  'Development Workflows': {
+    canonical: 'Development Workflows',
+    categories: ['Concepts'],
+  },
   'DevOps Tools': {
     canonical: 'DevOps Tools',
     categories: ['Misc'],
@@ -1218,7 +1254,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     categories: ['Concepts', 'Testing and QA'],
     children: ['Cypress', 'Playwright', 'Puppeteer', 'Selenium'],
     parents: ['Testing'],
-    related: ['Integration Testing', 'UI Testing'],
+    related: ['Integration Testing', 'UI Testing', 'Frontend Testing'],
     synonyms: [/e2e[- ]test/i, /end-to-end[- ]test/i],
   },
   'E-Commerce': {
@@ -1324,6 +1360,10 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     canonical: 'Elastic Beanstalk',
     categories: ['Cloud & Infrastructure'],
     parents: ['AWS'],
+  },
+  'Enterprise Project': {
+    canonical: 'Enterprise Project',
+    categories: ['Misc'],
   },
   'Entity Component System': {
     canonical: 'Entity Component System',
@@ -1448,6 +1488,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
       'CMS',
       'Collaboration with UI/UX',
       'Component Library',
+      'Component-based Architecture',
       'Component-based Development',
       'Construct 2',
       'CSS',
@@ -1459,6 +1500,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
       'Flash',
       'Fractal',
       'Frontend Framework',
+      'Frontend Testing',
       'GraphQL',
       'HTML',
       'HTML Canvas',
@@ -1491,6 +1533,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
       'Web Forms',
       'WebRTC',
     ],
+    includes: ['Usability'],
     synonyms: [
       /^front[-_\s]*end$/i,
       /^front[-_\s]*end[-_\s]*dev(?:elopment)?$/i,
@@ -1509,6 +1552,14 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
       /javascript[-_\s]*framework/i,
       /js[-_\s]*framework/i,
     ],
+  },
+  'Frontend Testing': {
+    canonical: 'Frontend Testing',
+    categories: ['Concepts', 'Testing and QA'],
+    children: ['Component Testing', 'UI Testing'],
+    parents: ['Frontend', 'Testing'],
+    related: ['E2E Testing', 'UI Testing'],
+    synonyms: [/(automated)?[-_\s]*front[-_\s]*end[-_\s]*test(ing|s)?/i],
   },
   FRUIT: {
     canonical: 'FRUIT',
@@ -1752,7 +1803,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
       'Vitest',
     ],
     parents: ['Testing'],
-    related: ['E2E Testing', 'UI Testing', 'Unit Testing'],
+    related: ['E2E Testing', 'UI Testing', 'Unit Testing', 'Component Testing'],
     synonyms: [/integration[-\s]*test(ing|s)?/i],
   },
   'IntelliJ IDEA': {
@@ -1810,6 +1861,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     categories: ['Testing and QA'],
     includes: ['JavaScript'],
     parents: ['Integration Testing', 'Unit Testing'],
+    related: ['Angular Testing Library'],
   },
   Java: {
     canonical: 'Java',
@@ -1844,7 +1896,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     categories: ['Testing and QA'],
     includes: ['JavaScript'],
     parents: ['Integration Testing', 'Unit Testing'],
-    related: ['Vitest'],
+    related: ['Vitest', 'React Testing Library', 'Angular Testing Library'],
   },
   Jira: {
     canonical: 'Jira',
@@ -1912,7 +1964,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     categories: ['Testing and QA'],
     includes: ['JavaScript'],
     parents: ['Integration Testing', 'Unit Testing'],
-    related: ['Jasmine'],
+    related: ['Jasmine', 'Angular Testing Library'],
   },
   Kubernetes: {
     canonical: 'Kubernetes',
@@ -2480,6 +2532,14 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     categories: ['Frontend', 'Tools & Libraries'],
     parents: ['React'],
   },
+  'React Testing Library': {
+    canonical: 'React Testing Library',
+    categories: ['Testing and QA', 'Tools & Libraries'],
+    includes: ['React'],
+    parents: ['Testing Library'],
+    related: ['Jest', 'Vitest'],
+    synonyms: [/react[-_\s]*testing[-_\s]*library/i, /^rtl$/i],
+  },
   'React Web': {
     canonical: 'React Web',
     categories: ['Frontend', 'Tools & Libraries'],
@@ -2496,6 +2556,14 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     includes: ['React'],
     parents: ['State Management'],
     related: ['NgRx'],
+  },
+  'Regulated Environment': {
+    canonical: 'Regulated Environment',
+    categories: ['Industry'],
+    synonyms: [
+      /regulated[-_\s]*environment/i,
+      /regulated[-_\s]*industr(y|ies)/i,
+    ],
   },
   'Relational Databases': {
     canonical: 'Relational Databases',
@@ -2534,6 +2602,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
       /^rwd$/i,
       /responsive[-_\s]*design/i,
       /responsive[-_\s]*web[-_\s]*design/i,
+      /responsive[-_\s]*web[-_\s]*apps?/i,
     ],
   },
   REST: {
@@ -2774,16 +2843,28 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
       'Continuous Testing',
       'Custom Test Framework',
       'E2E Testing',
+      'Frontend Testing',
       'FRUIT',
       'Integration Testing',
       'Model-based testing',
       'Performance Testing',
       'TESTONA',
-      'UI Testing',
       'Unit Testing',
     ],
     related: ['Debugging', 'QA'],
-    synonyms: [/^testing$/i, /test\s*automation/i],
+    synonyms: [
+      /^testing$/i,
+      /test[-_\s]*automation/i,
+      /automated[-_\s]*testing/i,
+    ],
+  },
+  'Testing Library': {
+    canonical: 'Testing Library',
+    categories: ['Testing and QA', 'Tools & Libraries'],
+    children: ['Angular Testing Library', 'React Testing Library'],
+    parents: ['Component Testing'],
+    related: ['Jest', 'Vitest'],
+    synonyms: [/testing[-_\s]*library/i],
   },
   TESTONA: {
     canonical: 'TESTONA',
@@ -2880,7 +2961,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
       'Selenium',
       'Widget Trees',
     ],
-    parents: ['Testing'],
+    parents: ['Frontend Testing'],
     related: ['E2E Testing', 'Puppeteer'],
   },
   UML: {
@@ -2916,7 +2997,12 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
       'Vitest',
     ],
     parents: ['Testing'],
-    related: ['E2E Testing', 'Integration Testing', 'UI Testing'],
+    related: [
+      'E2E Testing',
+      'Integration Testing',
+      'UI Testing',
+      'Component Testing',
+    ],
     synonyms: [/unit[-\s]*tests?/i],
   },
   Unity: {
@@ -2926,6 +3012,11 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     parents: ['Frontend', 'Game Development'],
     related: ['3D', 'Blender', 'jMonkeyEngine', 'MonoDevelop'],
     synonyms: [/^unity$/i, /^unity3d$/i],
+  },
+  Usability: {
+    canonical: 'Usability',
+    categories: ['Concepts'],
+    synonyms: [/^usability$/i],
   },
   'USB Monitor': {
     canonical: 'USB Monitor',
@@ -2950,6 +3041,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     canonical: 'Version Control',
     categories: ['DevOps & Build & CI/CD'],
     children: ['Git', 'SVN', 'TFS'],
+    includes: ['Development Workflows'],
   },
   'Visual Studio': {
     canonical: 'Visual Studio',
@@ -2979,7 +3071,12 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     categories: ['Testing and QA'],
     includes: ['JavaScript', 'TypeScript'],
     parents: ['Integration Testing', 'Unit Testing'],
-    related: ['Jest', 'Vite'],
+    related: [
+      'Jest',
+      'Vite',
+      'React Testing Library',
+      'Angular Testing Library',
+    ],
   },
   VSCode: {
     canonical: 'VSCode',
