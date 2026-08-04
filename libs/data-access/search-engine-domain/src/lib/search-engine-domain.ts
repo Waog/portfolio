@@ -9,6 +9,7 @@ import { Tag } from '@portfolio/taxonomy';
 import { Duration, formatDistanceStrict } from 'date-fns';
 
 import {
+  ProjectSortOrder,
   SearchEngineDomainChunkResult,
   SearchEngineDomainResult,
 } from './search-engine-domain.types';
@@ -63,9 +64,13 @@ export class SearchEngineDomain {
   private activeSkillCategoryItems: SkillCategoryItems = {};
   private activeProjectIndex = 0;
   private activeProcessInitialized = false;
+  private activeSortOrder: ProjectSortOrder = 'relevance';
 
-  get(searchTerms: string[]): SearchEngineDomainResult {
-    this.initialize(searchTerms);
+  get(
+    searchTerms: string[],
+    sortOrder: ProjectSortOrder = 'relevance'
+  ): SearchEngineDomainResult {
+    this.initialize(searchTerms, sortOrder);
 
     while (!this.processChunk().done) {
       // synchronous convenience API keeps previous behavior
@@ -74,7 +79,10 @@ export class SearchEngineDomain {
     return this.finalize();
   }
 
-  initialize(searchTerms: string[]): void {
+  initialize(
+    searchTerms: string[],
+    sortOrder: ProjectSortOrder = 'relevance'
+  ): void {
     this.activeSearchTerms = [...searchTerms];
     this.activeSearchTermWeights = this.initSearchTermWeights(searchTerms);
     this.activeMatchesOverview = this.initMatchesOverview(searchTerms);
@@ -82,6 +90,7 @@ export class SearchEngineDomain {
     this.activeSkillCategoryItems = {};
     this.activeProjectIndex = 0;
     this.activeProcessInitialized = true;
+    this.activeSortOrder = sortOrder;
   }
 
   private initSearchTermWeights(searchTerms: string[]): {
@@ -140,7 +149,10 @@ export class SearchEngineDomain {
       matchesOverview: this.activeSearchTerms.map(
         word => this.activeMatchesOverview[word]
       ),
-      projects: this.toSortedProjects(this.activeProjectItems),
+      projects: this.toSortedProjects(
+        this.activeProjectItems,
+        this.activeSortOrder
+      ),
       skills: this.toSortedSkills(this.activeSkillCategoryItems),
     };
   }
@@ -477,11 +489,11 @@ export class SearchEngineDomain {
   }
 
   private toSortedProjects(
-    projectItems: ProjectItems
+    projectItems: ProjectItems,
+    sortOrder: ProjectSortOrder
   ): SearchEngineDomainResult['projects'] {
-    return Object.entries(projectItems)
-      .sort(([, itemA], [, itemB]) => itemB.rankingScore - itemA.rankingScore)
-      .map(([projectId, item]) => ({
+    return this.toOrderedProjectEntries(projectItems, sortOrder).map(
+      ([projectId, item]) => ({
         ...item.project.toDtoWithoutTechnologies(),
         id: projectId,
         totalScore: item.rankingScore,
@@ -490,7 +502,24 @@ export class SearchEngineDomain {
           partialMatches: item.partialMatches.map(({ tag }) => tag.canonical),
           nonMatches: item.nonMatches.map(({ tag }) => tag.canonical),
         },
-      }));
+      })
+    );
+  }
+
+  private toOrderedProjectEntries(
+    projectItems: ProjectItems,
+    sortOrder: ProjectSortOrder
+  ): Array<[string, ProjectItem]> {
+    const entries = Object.entries(projectItems);
+
+    if (sortOrder === 'date') {
+      // entries are already in the original dataset order
+      return entries;
+    }
+
+    return entries.sort(
+      ([, itemA], [, itemB]) => itemB.rankingScore - itemA.rankingScore
+    );
   }
 
   private toSortedSkills(

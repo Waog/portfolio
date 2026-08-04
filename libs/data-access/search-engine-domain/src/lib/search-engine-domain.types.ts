@@ -1,5 +1,7 @@
 import { ProjectDTOWithoutTechnologies } from '@portfolio/projects';
 
+export type ProjectSortOrder = 'relevance' | 'date';
+
 export type SearchEngineDomainResult = {
   query: string[];
   matchesOverview: Array<{

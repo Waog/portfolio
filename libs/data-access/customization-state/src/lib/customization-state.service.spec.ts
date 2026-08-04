@@ -215,4 +215,50 @@ describe('CustomizationStateService', () => {
 
     expect(service.skillMatrixExperienceUnit()).toBe('time');
   });
+
+  it('exposes projectSortOrder as relevance by default', () => {
+    service = createService();
+    expect(service.projectSortOrder()).toBe('relevance');
+  });
+
+  it('initializes projectSortOrder from URL query params', () => {
+    routerMock.url = '/?projectSortOrder=date';
+    service = createService();
+
+    expect(service.projectSortOrder()).toBe('date');
+  });
+
+  it('can set projectSortOrder explicitly', () => {
+    service = createService();
+    service.setProjectSortOrder('date');
+
+    expect(service.projectSortOrder()).toBe('date');
+    expect(urlStateServiceMock.updateValue).toHaveBeenCalledWith({
+      projectSortOrder: 'date',
+    });
+
+    service.setProjectSortOrder('relevance');
+
+    expect(service.projectSortOrder()).toBe('relevance');
+    expect(urlStateServiceMock.updateValue).toHaveBeenCalledWith({
+      projectSortOrder: null,
+    });
+  });
+
+  it('does not update URL when setting projectSortOrder to same value', () => {
+    service = createService();
+    service.setProjectSortOrder('relevance');
+
+    expect(urlStateServiceMock.updateValue).not.toHaveBeenCalled();
+  });
+
+  it('syncs projectSortOrder when URL changes through navigation', () => {
+    service = createService();
+    routerMock.url = '/?projectSortOrder=date';
+    routerMock.events.next(
+      new NavigationEnd(1, routerMock.url, routerMock.url)
+    );
+
+    expect(service.projectSortOrder()).toBe('date');
+  });
 });

@@ -40,6 +40,17 @@
         </mat-radio-group>
       </div>
 
+      <div class="radio-group-section">
+        <span class="radio-group-label">Project Order</span>
+        <mat-radio-group
+          [value]="customizationStateService.projectSortOrder()"
+          (change)="setProjectSortOrder($event.value)"
+        >
+          <mat-radio-button value="relevance">by relevance</mat-radio-button>
+          <mat-radio-button value="date">by date</mat-radio-button>
+        </mat-radio-group>
+      </div>
+
       <button mat-button type="button" (click)="openReorderDialog()">
         <mat-icon>reorder</mat-icon>
         Customize Project Order

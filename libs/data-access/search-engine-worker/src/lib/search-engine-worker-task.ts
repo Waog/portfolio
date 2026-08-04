@@ -40,11 +40,11 @@ async function processLatestRequests(
   try {
     while (latestRequest) {
       const request = latestRequest;
-      const { queryId, query } = request;
+      const { queryId, query, sortOrder = 'relevance' } = request;
       let lastProgressPercent = -1;
       const startedAt = performance.now();
 
-      searchEngineDomain.initialize(query);
+      searchEngineDomain.initialize(query, sortOrder);
 
       while (latestRequest?.queryId === queryId) {
         const chunkResult = searchEngineDomain.processChunk();

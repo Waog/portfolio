@@ -1,5 +1,9 @@
-import { Injectable, OnDestroy } from '@angular/core';
-import { SearchEngineDomainResult } from '@portfolio/search-engine-domain';
+import { effect, inject, Injectable, OnDestroy } from '@angular/core';
+import { CustomizationStateService } from '@portfolio/customization-state';
+import {
+  ProjectSortOrder,
+  SearchEngineDomainResult,
+} from '@portfolio/search-engine-domain';
 import {
   createSearchEngineWorker,
   SEARCH_ENGINE_WORKER_PROGRESS_KIND,
@@ -33,6 +37,11 @@ export type SearchResult = {
 export class SearchEngineService implements OnDestroy {
   private worker?: SearchEngineWorker;
   private queryIdCounter = 0;
+  private lastQuery: string[] = [];
+  private hasQueried = false;
+  private readonly customizationStateService = inject(
+    CustomizationStateService
+  );
   // undefined = loading
   private readonly resultSubject = new BehaviorSubject<{
     queryId?: number;
@@ -68,7 +77,23 @@ export class SearchEngineService implements OnDestroy {
     }))
   );
 
+  constructor() {
+    // Re-issue the last query whenever the project sort order changes
+    effect(() => {
+      const sortOrder = this.customizationStateService.projectSortOrder();
+      if (this.hasQueried) {
+        this.issueQuery(this.lastQuery, sortOrder);
+      }
+    });
+  }
+
   setQuery(query: string[]): void {
+    this.lastQuery = [...query];
+    this.hasQueried = true;
+    this.issueQuery(query, this.customizationStateService.projectSortOrder());
+  }
+
+  private issueQuery(query: string[], sortOrder: ProjectSortOrder): void {
     const worker = this.getOrCreateWorker();
     this.queryIdCounter++;
     this.resultSubject.next({
@@ -79,6 +104,7 @@ export class SearchEngineService implements OnDestroy {
       kind: SEARCH_ENGINE_WORKER_REQUEST_KIND,
       queryId: this.queryIdCounter,
       query,
+      sortOrder,
     });
   }
 

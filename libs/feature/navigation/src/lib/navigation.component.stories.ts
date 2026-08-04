@@ -1,23 +1,36 @@
-import { ActivatedRoute } from '@angular/router';
+import { provideRouter } from '@angular/router';
+import { SearchEngineService } from '@portfolio/search-engine-angular';
 import type { Meta, StoryObj } from '@storybook/angular';
-import { moduleMetadata } from '@storybook/angular';
-import { of } from 'rxjs';
+import { applicationConfig, moduleMetadata } from '@storybook/angular';
+import { BehaviorSubject } from 'rxjs';
 
 import { NavigationComponent } from './navigation.component';
+
+class MockSearchEngineService {
+  private readonly searchResultSubject = new BehaviorSubject({
+    loading: false,
+    ngService: {
+      loading: false,
+      progressPercent: 0,
+    },
+  });
+
+  readonly searchResult$ = this.searchResultSubject.asObservable();
+}
 
 const meta: Meta<NavigationComponent> = {
   component: NavigationComponent,
   title: 'Feature/Navigation',
   tags: ['autodocs'],
   decorators: [
+    applicationConfig({
+      providers: [provideRouter([])],
+    }),
     moduleMetadata({
       providers: [
         {
-          provide: ActivatedRoute,
-          useValue: {
-            snapshot: { params: {} },
-            paramMap: of({}),
-          },
+          provide: SearchEngineService,
+          useClass: MockSearchEngineService,
         },
       ],
     }),

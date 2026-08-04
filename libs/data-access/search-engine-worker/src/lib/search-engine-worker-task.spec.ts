@@ -234,4 +234,82 @@ describe('SearchEngineWorkerTask.runTask()', () => {
     const lastMessage = messages[messages.length - 1];
     expect(lastMessage).toBe(resultMessage);
   });
+
+  it('sorts projects by relevance by default', async () => {
+    const input = {
+      kind: SEARCH_ENGINE_WORKER_REQUEST_KIND,
+      queryId: 3,
+      query: ['Angular'],
+    };
+
+    jest.useFakeTimers();
+    const postMessageMock = jest.fn();
+
+    try {
+      runTask(input, postMessageMock);
+      await jest.runAllTimersAsync();
+    } finally {
+      jest.useRealTimers();
+    }
+
+    const resultMessage: SearchEngineWorkerResult = postMessageMock.mock.calls
+      .map(([message]) => message)
+      .find(message => message.kind === SEARCH_ENGINE_WORKER_RESULT_KIND);
+
+    const projects = resultMessage.domainResult.projects;
+    const firstIndexWithoutFullMatch = projects.findIndex(
+      project => project.technologies.fullMatches.length === 0
+    );
+    const lastIndexWithFullMatch = projects
+      .map(project => project.technologies.fullMatches.length > 0)
+      .lastIndexOf(true);
+
+    expect(firstIndexWithoutFullMatch).toBeGreaterThan(-1);
+    expect(lastIndexWithFullMatch).toBeGreaterThan(-1);
+    expect(lastIndexWithFullMatch).toBeLessThan(firstIndexWithoutFullMatch);
+  });
+
+  it('keeps the original dataset order when sortOrder is "date"', async () => {
+    const relevanceInput = {
+      kind: SEARCH_ENGINE_WORKER_REQUEST_KIND,
+      queryId: 4,
+      query: ['Angular'],
+      sortOrder: 'relevance' as const,
+    };
+    const dateInput = {
+      kind: SEARCH_ENGINE_WORKER_REQUEST_KIND,
+      queryId: 5,
+      query: ['Angular'],
+      sortOrder: 'date' as const,
+    };
+
+    jest.useFakeTimers();
+    const relevancePostMessageMock = jest.fn();
+    const datePostMessageMock = jest.fn();
+
+    try {
+      runTask(relevanceInput, relevancePostMessageMock);
+      await jest.runAllTimersAsync();
+      runTask(dateInput, datePostMessageMock);
+      await jest.runAllTimersAsync();
+    } finally {
+      jest.useRealTimers();
+    }
+
+    const relevanceResult: SearchEngineWorkerResult =
+      relevancePostMessageMock.mock.calls
+        .map(([message]) => message)
+        .find(message => message.kind === SEARCH_ENGINE_WORKER_RESULT_KIND);
+    const dateResult: SearchEngineWorkerResult = datePostMessageMock.mock.calls
+      .map(([message]) => message)
+      .find(message => message.kind === SEARCH_ENGINE_WORKER_RESULT_KIND);
+
+    const relevanceIds = relevanceResult.domainResult.projects.map(
+      project => project.id
+    );
+    const dateIds = dateResult.domainResult.projects.map(project => project.id);
+
+    expect(dateIds).not.toEqual(relevanceIds);
+    expect(new Set(dateIds)).toEqual(new Set(relevanceIds));
+  });
 });
