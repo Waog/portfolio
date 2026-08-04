@@ -261,4 +261,108 @@ describe('CustomizationStateService', () => {
 
     expect(service.projectSortOrder()).toBe('date');
   });
+
+  it('exposes printProjectPageSizes as [3, 5] by default', () => {
+    service = createService();
+    expect(service.printProjectPageSizes()).toEqual([3, 5]);
+  });
+
+  it('exposes printProjectPageStarts computed from page sizes', () => {
+    service = createService();
+    expect(service.printProjectPageStarts()).toEqual([0, 3]);
+  });
+
+  it('initializes printProjectPageSizes from URL query params', () => {
+    routerMock.url = '/?printProjectPageSizes=2,4,10';
+    service = createService();
+
+    expect(service.printProjectPageSizes()).toEqual([2, 4, 10]);
+    expect(service.printProjectPageStarts()).toEqual([0, 2, 6]);
+  });
+
+  it('ignores or sanitizes invalid entries when parsing printProjectPageSizes from URL', () => {
+    routerMock.url = '/?printProjectPageSizes=2,abc,-1,0,4.6';
+    service = createService();
+
+    expect(service.printProjectPageSizes()).toEqual([2, 1, 1, 4]);
+  });
+
+  it('falls back to defaults if printProjectPageSizes URL param has no valid entries', () => {
+    routerMock.url = '/?printProjectPageSizes=abc,xyz';
+    service = createService();
+
+    expect(service.printProjectPageSizes()).toEqual([3, 5]);
+  });
+
+  it('can set printProjectPageSizes explicitly', () => {
+    service = createService();
+    service.setPrintProjectPageSizes([2, 4, 10]);
+
+    expect(service.printProjectPageSizes()).toEqual([2, 4, 10]);
+    expect(urlStateServiceMock.updateValue).toHaveBeenCalledWith({
+      printProjectPageSizes: '2,4,10',
+    });
+
+    service.setPrintProjectPageSizes([3, 5]);
+
+    expect(service.printProjectPageSizes()).toEqual([3, 5]);
+    expect(urlStateServiceMock.updateValue).toHaveBeenCalledWith({
+      printProjectPageSizes: null,
+    });
+  });
+
+  it('does not update URL when setting printProjectPageSizes to same value', () => {
+    service = createService();
+    service.setPrintProjectPageSizes([3, 5]);
+
+    expect(urlStateServiceMock.updateValue).not.toHaveBeenCalled();
+  });
+
+  it('can add a print project page with a default size', () => {
+    service = createService();
+    service.addPrintProjectPage();
+
+    expect(service.printProjectPageSizes()).toEqual([3, 5, 5]);
+  });
+
+  it('can remove a print project page by index', () => {
+    service = createService();
+    service.setPrintProjectPageSizes([2, 4, 10]);
+    service.removePrintProjectPage(1);
+
+    expect(service.printProjectPageSizes()).toEqual([2, 10]);
+  });
+
+  it('does not remove the last remaining print project page', () => {
+    service = createService();
+    service.setPrintProjectPageSizes([3]);
+    service.removePrintProjectPage(0);
+
+    expect(service.printProjectPageSizes()).toEqual([3]);
+  });
+
+  it('can set the size of a specific print project page', () => {
+    service = createService();
+    service.setPrintProjectPageSize(0, 2);
+
+    expect(service.printProjectPageSizes()).toEqual([2, 5]);
+  });
+
+  it('sanitizes invalid values when setting a print project page size', () => {
+    service = createService();
+    service.setPrintProjectPageSize(0, -3);
+
+    expect(service.printProjectPageSizes()).toEqual([1, 5]);
+  });
+
+  it('syncs printProjectPageSizes when URL changes through navigation', () => {
+    service = createService();
+    routerMock.url = '/?printProjectPageSizes=2,4,10';
+    routerMock.events.next(
+      new NavigationEnd(1, routerMock.url, routerMock.url)
+    );
+
+    expect(service.printProjectPageSizes()).toEqual([2, 4, 10]);
+    expect(service.printProjectPageStarts()).toEqual([0, 2, 6]);
+  });
 });

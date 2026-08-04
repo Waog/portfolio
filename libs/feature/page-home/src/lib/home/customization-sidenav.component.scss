@@ -12,19 +12,48 @@ mat-sidenav {
     align-items: flex-start;
     gap: spacing.sm();
 
+    // shared by radio-group-section and print-pages-section headings
+    .radio-group-label {
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+
     .radio-group-section {
       display: flex;
       flex-direction: column;
       gap: spacing.xs();
 
-      .radio-group-label {
-        font-size: 0.875rem;
-        font-weight: 500;
-      }
-
       mat-radio-group {
         display: flex;
         flex-direction: column;
+      }
+    }
+
+    .print-pages-section {
+      display: flex;
+      flex-direction: column;
+      gap: spacing.xs();
+
+      .print-page-row {
+        display: flex;
+        align-items: center;
+        gap: spacing.xs();
+        padding-left: spacing.sm();
+
+        .print-page-label {
+          font-size: 0.875rem;
+        }
+
+        .page-size-field {
+          width: 4rem;
+
+          // MDC's default outlined field is much taller than the other compact controls here
+          ::ng-deep .mat-mdc-form-field-infix {
+            min-height: unset;
+            padding-top: spacing.xs();
+            padding-bottom: spacing.xs();
+          }
+        }
       }
     }
   }

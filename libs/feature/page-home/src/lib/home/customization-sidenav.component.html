@@ -51,6 +51,44 @@
         </mat-radio-group>
       </div>
 
+      <div class="print-pages-section">
+        <span class="radio-group-label">Print Pages - Projects per Page</span>
+        @for (pageSize of customizationStateService.printProjectPageSizes();
+        track $index) {
+        <div class="print-page-row">
+          <span class="print-page-label">Page {{ $index + 2 }}</span>
+          <mat-form-field
+            appearance="outline"
+            subscriptSizing="dynamic"
+            class="page-size-field"
+          >
+            <input
+              matInput
+              type="number"
+              min="1"
+              [value]="pageSize"
+              (change)="setPrintProjectPageSize($index, $event)"
+            />
+          </mat-form-field>
+          <button
+            mat-icon-button
+            type="button"
+            [attr.aria-label]="'Remove page ' + ($index + 2)"
+            [disabled]="
+              customizationStateService.printProjectPageSizes().length <= 1
+            "
+            (click)="removePrintProjectPage($index)"
+          >
+            <mat-icon>remove_circle_outline</mat-icon>
+          </button>
+        </div>
+        }
+        <button mat-button type="button" (click)="addPrintProjectPage()">
+          <mat-icon>add</mat-icon>
+          Add Page
+        </button>
+      </div>
+
       <button mat-button type="button" (click)="openReorderDialog()">
         <mat-icon>reorder</mat-icon>
         Customize Project Order

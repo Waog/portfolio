@@ -32,26 +32,23 @@
           <lib-skill-section />
         </lib-section>
       </div>
-      <div class="page-sheet page-sheet--2">
+      @for (pageSize of customizationStateService.printProjectPageSizes(); track
+      $index) {
+      <div class="page-sheet page-sheet--{{ $index + 2 }}">
         <lib-section
           class="project-list"
           [printMode]="customizationStateService.isPrintMode()"
         >
           <lib-project-list
-            [printStart]="0"
-            [printCount]="3"
-            [sectionId]="'projects'"
+            [printStart]="
+              customizationStateService.printProjectPageStarts()[$index]
+            "
+            [printCount]="pageSize"
+            [sectionId]="$index === 0 ? 'projects' : null"
           />
         </lib-section>
       </div>
-      <div class="page-sheet page-sheet--3">
-        <lib-section
-          class="project-list"
-          [printMode]="customizationStateService.isPrintMode()"
-        >
-          <lib-project-list [printStart]="3" [printCount]="5" />
-        </lib-section>
-      </div>
+      }
     </div>
     } @else { @if ((searchTagService.tags$ | async)?.length) {
     <lib-section

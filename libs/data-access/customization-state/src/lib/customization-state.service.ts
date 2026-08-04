@@ -1,11 +1,21 @@
-import { DestroyRef, inject, Injectable, signal } from '@angular/core';
+import {
+  computed,
+  DestroyRef,
+  inject,
+  Injectable,
+  signal,
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NavigationEnd, Router } from '@angular/router';
 import { ProjectSortOrder } from '@portfolio/search-engine-domain';
 import { UrlStateService } from '@portfolio/url-state';
+import isEqual from 'lodash/isEqual';
 import { filter } from 'rxjs';
 
 export type SkillMatrixExperienceUnit = 'project-count' | 'time';
+
+const DEFAULT_PRINT_PROJECT_PAGE_SIZES = [3, 5];
+const DEFAULT_NEW_PRINT_PROJECT_PAGE_SIZE = 5;
 
 @Injectable({
   providedIn: 'root',
@@ -16,6 +26,7 @@ export class CustomizationStateService {
   private readonly skillMatrixExperienceUnitQueryParam =
     'skillMatrixExperienceUnit';
   private readonly projectSortOrderQueryParam = 'projectSortOrder';
+  private readonly printProjectPageSizesQueryParam = 'printProjectPageSizes';
   private readonly router = inject(Router);
   private readonly destroyRef = inject(DestroyRef);
   private readonly urlStateService = inject(UrlStateService);
@@ -25,11 +36,18 @@ export class CustomizationStateService {
   private readonly _skillMatrixExperienceUnit =
     signal<SkillMatrixExperienceUnit>('project-count');
   private readonly _projectSortOrder = signal<ProjectSortOrder>('relevance');
+  private readonly _printProjectPageSizes = signal<number[]>([
+    ...DEFAULT_PRINT_PROJECT_PAGE_SIZES,
+  ]);
   readonly isPanelShown = this._isPanelShown.asReadonly();
   readonly isPrintMode = this._isPrintMode.asReadonly();
   readonly skillMatrixExperienceUnit =
     this._skillMatrixExperienceUnit.asReadonly();
   readonly projectSortOrder = this._projectSortOrder.asReadonly();
+  readonly printProjectPageSizes = this._printProjectPageSizes.asReadonly();
+  readonly printProjectPageStarts = computed(() =>
+    this.computePrintProjectPageStarts(this._printProjectPageSizes())
+  );
 
   constructor() {
     this.setStateFromUrl();
@@ -90,6 +108,50 @@ export class CustomizationStateService {
     });
   }
 
+  setPrintProjectPageSizes(pageSizes: number[]): void {
+    const sanitized = this.sanitizePrintProjectPageSizes(pageSizes);
+    if (isEqual(this._printProjectPageSizes(), sanitized)) {
+      return;
+    }
+
+    this._printProjectPageSizes.set(sanitized);
+    this.urlStateService.updateValue({
+      [this.printProjectPageSizesQueryParam]: isEqual(
+        sanitized,
+        DEFAULT_PRINT_PROJECT_PAGE_SIZES
+      )
+        ? null
+        : sanitized.join(','),
+    });
+  }
+
+  addPrintProjectPage(): void {
+    this.setPrintProjectPageSizes([
+      ...this._printProjectPageSizes(),
+      DEFAULT_NEW_PRINT_PROJECT_PAGE_SIZE,
+    ]);
+  }
+
+  removePrintProjectPage(pageIndex: number): void {
+    const pageSizes = this._printProjectPageSizes();
+    if (pageSizes.length <= 1) {
+      return;
+    }
+
+    this.setPrintProjectPageSizes(
+      pageSizes.filter((_, index) => index !== pageIndex)
+    );
+  }
+
+  setPrintProjectPageSize(pageIndex: number, projectCount: number): void {
+    const pageSizes = this._printProjectPageSizes();
+    this.setPrintProjectPageSizes(
+      pageSizes.map((size, index) =>
+        index === pageIndex ? projectCount : size
+      )
+    );
+  }
+
   private syncStateWithUrlChanges(): void {
     this.router.events
       .pipe(
@@ -108,6 +170,7 @@ export class CustomizationStateService {
       this.getSkillMatrixExperienceUnitFromUrl()
     );
     this._projectSortOrder.set(this.getProjectSortOrderFromUrl());
+    this._printProjectPageSizes.set(this.getPrintProjectPageSizesFromUrl());
   }
 
   private getSkillMatrixExperienceUnitFromUrl(): SkillMatrixExperienceUnit {
@@ -121,6 +184,42 @@ export class CustomizationStateService {
   private getProjectSortOrderFromUrl(): ProjectSortOrder {
     const urlTree = this.router.parseUrl(this.router.url);
     return urlTree.queryParams[this.projectSortOrderQueryParam] ?? 'relevance';
+  }
+
+  private getPrintProjectPageSizesFromUrl(): number[] {
+    const urlTree = this.router.parseUrl(this.router.url);
+    const param = urlTree.queryParams[this.printProjectPageSizesQueryParam];
+    if (!param) {
+      return [...DEFAULT_PRINT_PROJECT_PAGE_SIZES];
+    }
+
+    const parsedPageSizes = (param as string)
+      .split(',')
+      .map(part => parseInt(part, 10));
+
+    return this.sanitizePrintProjectPageSizes(parsedPageSizes);
+  }
+
+  private sanitizePrintProjectPageSizes(pageSizes: number[]): number[] {
+    const sanitized = pageSizes
+      .filter(size => Number.isFinite(size))
+      .map(size => Math.max(1, Math.round(size)));
+
+    return sanitized.length > 0
+      ? sanitized
+      : [...DEFAULT_PRINT_PROJECT_PAGE_SIZES];
+  }
+
+  private computePrintProjectPageStarts(pageSizes: number[]): number[] {
+    const starts: number[] = [];
+    let cumulativeCount = 0;
+
+    for (const pageSize of pageSizes) {
+      starts.push(cumulativeCount);
+      cumulativeCount += pageSize;
+    }
+
+    return starts;
   }
 
   private getQueryParamFlag(queryParam: string): boolean {

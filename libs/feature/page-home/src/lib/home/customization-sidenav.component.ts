@@ -3,7 +3,9 @@ import { Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import {
@@ -24,7 +26,9 @@ import { ProjectReorderDialogComponent } from './project-reorder-dialog.componen
     MatButtonModule,
     MatCheckboxModule,
     MatDialogModule,
+    MatFormFieldModule,
     MatIconModule,
+    MatInputModule,
     MatRadioModule,
   ],
   templateUrl: './customization-sidenav.component.html',
@@ -52,6 +56,22 @@ export class CustomizationSidenavComponent {
 
   protected setProjectSortOrder(sortOrder: ProjectSortOrder): void {
     this.customizationStateService.setProjectSortOrder(sortOrder);
+  }
+
+  protected addPrintProjectPage(): void {
+    this.customizationStateService.addPrintProjectPage();
+  }
+
+  protected removePrintProjectPage(pageIndex: number): void {
+    this.customizationStateService.removePrintProjectPage(pageIndex);
+  }
+
+  protected setPrintProjectPageSize(pageIndex: number, event: Event): void {
+    const projectCount = (event.target as HTMLInputElement).valueAsNumber;
+    this.customizationStateService.setPrintProjectPageSize(
+      pageIndex,
+      projectCount
+    );
   }
 
   protected openReorderDialog(): void {
