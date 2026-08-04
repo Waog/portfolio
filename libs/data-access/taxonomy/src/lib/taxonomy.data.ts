@@ -2804,7 +2804,11 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
       'Unit Testing',
     ],
     related: ['Debugging', 'QA'],
-    synonyms: [/^testing$/i, /test\s*automation/i],
+    synonyms: [
+      /^testing$/i,
+      /test[-_\s]*automation/i,
+      /automated[-_\s]*testing/i,
+    ],
   },
   TESTONA: {
     canonical: 'TESTONA',
