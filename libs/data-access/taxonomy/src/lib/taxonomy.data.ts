@@ -2541,6 +2541,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
       /^rwd$/i,
       /responsive[-_\s]*design/i,
       /responsive[-_\s]*web[-_\s]*design/i,
+      /responsive[-_\s]*web[-_\s]*apps?/i,
     ],
   },
   REST: {
