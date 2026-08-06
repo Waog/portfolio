@@ -21,7 +21,7 @@ test.describe('About Me Section', () => {
     );
     await expect(aboutMe.heroLocation).toHaveText('Berlin (Germany)');
     await expect(aboutMe.heroSummary).toHaveText(
-      /Well-organized.*professional.*business/s
+      /\d\d years.*ownership.*solutions/s
     );
   });
 
