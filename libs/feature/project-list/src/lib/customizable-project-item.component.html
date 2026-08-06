@@ -1,0 +1,46 @@
+<div class="customizable-project-item-container">
+  @if (customizationStateService.isPanelShown()) {
+  <div
+    class="customization-panel"
+    role="toolbar"
+    aria-label="Project item customization"
+  >
+    <div class="top-project-group" aria-label="Top project toggle">
+      <mat-button-toggle-group
+        #topProjectGroup="matButtonToggleGroup"
+        [value]="effectiveIsTopProject()"
+        (change)="setIsTopProject(topProjectGroup.value)"
+      >
+        <mat-button-toggle data-top-project="false" [value]="false"
+          >Normal</mat-button-toggle
+        >
+        <mat-button-toggle data-top-project="true" [value]="true"
+          >Top</mat-button-toggle
+        >
+      </mat-button-toggle-group>
+    </div>
+
+    <div class="compact-group" aria-label="Compact toggle">
+      <mat-button-toggle-group
+        #compactGroup="matButtonToggleGroup"
+        [value]="effectiveCompact()"
+        (change)="setCompact(compactGroup.value)"
+      >
+        <mat-button-toggle data-compact="false" [value]="false"
+          >Full</mat-button-toggle
+        >
+        <mat-button-toggle data-compact="true" [value]="true"
+          >Compact</mat-button-toggle
+        >
+      </mat-button-toggle-group>
+    </div>
+  </div>
+  }
+
+  <lib-project-item
+    [project]="project()"
+    [isTopProject]="effectiveIsTopProject()"
+    [compact]="effectiveCompact()"
+    [printMode]="printMode()"
+  />
+</div>
