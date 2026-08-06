@@ -15,7 +15,7 @@
     />
     } } @else { @for (project of filteredTopProjects(projectsOrder$ | async);
     track project.id) {
-    <lib-project-item
+    <lib-customizable-project-item
       [project]="project"
       [isTopProject]="true"
       [printMode]="isPrintMode()"
@@ -52,7 +52,7 @@
     />
     } } @else { @for (project of filteredOtherProjects(projectsOrder$ | async);
     track project.id) {
-    <lib-project-item
+    <lib-customizable-project-item
       [project]="project"
       [isTopProject]="false"
       [compact]="true"
