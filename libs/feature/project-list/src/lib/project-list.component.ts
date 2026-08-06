@@ -11,7 +11,7 @@ import { SectionHeaderComponent } from '@portfolio/section-header';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { map, Observable } from 'rxjs';
 
-import { ProjectItemComponent } from './project-item.component';
+import { CustomizableProjectItemComponent } from './customizable-project-item.component';
 import { ProjectListCustomOrderService } from './project-list-custom-order.service';
 
 @Component({
@@ -19,7 +19,7 @@ import { ProjectListCustomOrderService } from './project-list-custom-order.servi
   host: { '[class.print-mode]': 'isPrintMode()' },
   imports: [
     CommonModule,
-    ProjectItemComponent,
+    CustomizableProjectItemComponent,
     MatButtonModule,
     MatIconModule,
     SectionHeaderComponent,

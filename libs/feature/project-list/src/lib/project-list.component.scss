@@ -1,5 +1,4 @@
 @use 'nav-scroll-spacer' as *;
-@use 'breakpoints' as breakpoints;
 @use 'spacing' as spacing;
 
 .projects-container {
@@ -11,13 +10,13 @@
   margin-bottom: 3rem;
 }
 
-lib-project-item {
+lib-customizable-project-item {
   display: block;
   margin-bottom: spacing.xl();
 }
 
 .other-projects-section {
-  lib-project-item {
+  lib-customizable-project-item {
     :host(.print-mode) & {
       margin-bottom: spacing.lg();
     }
