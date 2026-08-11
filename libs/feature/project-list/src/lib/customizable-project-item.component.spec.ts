@@ -2,8 +2,10 @@ import { signal, WritableSignal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { provideRouter } from '@angular/router';
+import { CustomizableColorChipListUrlService } from '@portfolio/customizable-color-chip-list';
 import { CustomizationStateService } from '@portfolio/customization-state';
 import { Project } from '@portfolio/search-engine-domain';
+import { UrlStateService } from '@portfolio/url-state';
 
 import { CustomizableProjectItemComponent } from './customizable-project-item.component';
 import { CustomizableProjectItemUrlService } from './customizable-project-item-url.service';
@@ -86,9 +88,24 @@ describe('CustomizableProjectItemComponent', () => {
       providers: [
         provideRouter([]),
         {
+          provide: UrlStateService,
+          useValue: {
+            updateValue: () => undefined,
+          },
+        },
+        {
           provide: CustomizationStateService,
           useValue: {
             isPanelShown: signal(true),
+          },
+        },
+        {
+          provide: CustomizableColorChipListUrlService,
+          useValue: {
+            getSpacing: () => null,
+            getRows: () => null,
+            setSpacing: () => undefined,
+            setRows: () => undefined,
           },
         },
         {

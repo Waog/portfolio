@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
+import { CustomizableColorChipListUrlService } from '@portfolio/customizable-color-chip-list';
 import { Project } from '@portfolio/search-engine-domain';
+import { UrlStateService } from '@portfolio/url-state';
 
 import { ProjectItemComponent } from './project-item.component';
 
@@ -44,7 +46,24 @@ describe('ProjectItemComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [ProjectItemComponent],
-      providers: [provideRouter([])],
+      providers: [
+        provideRouter([]),
+        {
+          provide: UrlStateService,
+          useValue: {
+            updateValue: () => undefined,
+          },
+        },
+        {
+          provide: CustomizableColorChipListUrlService,
+          useValue: {
+            getSpacing: () => null,
+            getRows: () => null,
+            setSpacing: () => undefined,
+            setRows: () => undefined,
+          },
+        },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ProjectItemComponent);
