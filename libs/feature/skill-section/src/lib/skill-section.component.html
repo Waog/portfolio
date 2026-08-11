@@ -26,6 +26,7 @@
         [greenItems]="categoryRow.tagLists.fullMatches"
         [yellowItems]="categoryRow.tagLists.partialMatches"
         [grayItems]="categoryRow.tagLists.nonMatches"
+        [urlPersistenceKey]="sanitizeUrlPersistenceKey(categoryRow.category)"
         [printMode]="isPrintMode()"
       />
     </div>
@@ -38,6 +39,7 @@
       #andMoreSpacerRef
       class="skill-category-content and-more spacer"
       [grayItems]="['spacer']"
+      [urlPersistenceKey]="'skills-and-more-spacer'"
       [printMode]="isPrintMode()"
     />} }
   </div>

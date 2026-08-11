@@ -1,5 +1,7 @@
 import { provideRouter } from '@angular/router';
+import { CustomizableColorChipListUrlService } from '@portfolio/customizable-color-chip-list';
 import { Project } from '@portfolio/search-engine-domain';
+import { UrlStateService } from '@portfolio/url-state';
 import type { Meta, StoryObj } from '@storybook/angular';
 import {
   applicationConfig,
@@ -14,7 +16,24 @@ const meta: Meta<ProjectItemComponent> = {
   tags: ['autodocs'],
   decorators: [
     applicationConfig({
-      providers: [provideRouter([])],
+      providers: [
+        provideRouter([]),
+        {
+          provide: UrlStateService,
+          useValue: {
+            updateValue: () => undefined,
+          },
+        },
+        {
+          provide: CustomizableColorChipListUrlService,
+          useValue: {
+            getSpacing: () => null,
+            getRows: () => null,
+            setSpacing: () => undefined,
+            setRows: () => undefined,
+          },
+        },
+      ],
     }),
     componentWrapperDecorator(
       story =>

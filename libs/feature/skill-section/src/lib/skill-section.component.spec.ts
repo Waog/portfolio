@@ -3,11 +3,13 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { By } from '@angular/platform-browser';
 import { provideRouter } from '@angular/router';
+import { CustomizableColorChipListUrlService } from '@portfolio/customizable-color-chip-list';
 import {
   SearchEngineService,
   type SearchResult,
 } from '@portfolio/search-engine-angular';
 import type { Project as SearchEngineProject } from '@portfolio/search-engine-domain';
+import { UrlStateService } from '@portfolio/url-state';
 import { BehaviorSubject } from 'rxjs';
 
 import { SkillSectionComponent } from './skill-section.component';
@@ -89,6 +91,21 @@ describe('SkillSectionComponent', () => {
         {
           provide: SearchEngineService,
           useValue: { searchResult$: searchResultSubject.asObservable() },
+        },
+        {
+          provide: UrlStateService,
+          useValue: {
+            updateValue: () => undefined,
+          },
+        },
+        {
+          provide: CustomizableColorChipListUrlService,
+          useValue: {
+            getSpacing: () => null,
+            getRows: () => null,
+            setSpacing: () => undefined,
+            setRows: () => undefined,
+          },
         },
         provideRouter([]),
       ],

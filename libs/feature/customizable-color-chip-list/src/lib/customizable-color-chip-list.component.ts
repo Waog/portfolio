@@ -5,7 +5,6 @@ import {
   computed,
   inject,
   input,
-  signal,
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
@@ -13,6 +12,8 @@ import { MatIconModule } from '@angular/material/icon';
 import type { ChipSpacing } from '@portfolio/color-chip';
 import { ColorChipListComponent } from '@portfolio/color-chip-list';
 import { CustomizationStateService } from '@portfolio/customization-state';
+
+import { CustomizableColorChipListUrlService } from './customizable-color-chip-list-url.service';
 
 @Component({
   selector: 'lib-customizable-color-chip-list',
@@ -30,6 +31,9 @@ export class CustomizableColorChipListComponent {
   protected readonly customizationStateService = inject(
     CustomizationStateService
   );
+  private readonly customizableColorChipListUrlService = inject(
+    CustomizableColorChipListUrlService
+  );
 
   greenItems = input<string[]>([]);
   yellowItems = input<string[]>([]);
@@ -37,9 +41,16 @@ export class CustomizableColorChipListComponent {
   spacing = input<ChipSpacing>('large');
   printMode = input(false, { transform: booleanAttribute });
   rows = input<number>(1);
+  urlPersistenceKey = input.required<string>();
 
-  private readonly customSpacing = signal<ChipSpacing | null>(null);
-  private readonly customRows = signal<number | null>(null);
+  private readonly customSpacing = computed(() =>
+    this.customizableColorChipListUrlService.getSpacing(
+      this.urlPersistenceKey()
+    )
+  );
+  private readonly customRows = computed(() =>
+    this.customizableColorChipListUrlService.getRows(this.urlPersistenceKey())
+  );
 
   readonly effectiveSpacing = computed(
     () => this.customSpacing() ?? this.spacing()
@@ -47,14 +58,25 @@ export class CustomizableColorChipListComponent {
   readonly effectiveRows = computed(() => this.customRows() ?? this.rows());
 
   protected setSpacing(spacing: ChipSpacing): void {
-    this.customSpacing.set(spacing);
+    this.customizableColorChipListUrlService.setSpacing(
+      this.urlPersistenceKey(),
+      this.spacing() === spacing ? null : spacing
+    );
   }
 
   protected decreaseRows(): void {
-    this.customRows.set(Math.max(1, this.effectiveRows() - 1));
+    const rows = Math.max(1, this.effectiveRows() - 1);
+    this.customizableColorChipListUrlService.setRows(
+      this.urlPersistenceKey(),
+      this.rows() === rows ? null : rows
+    );
   }
 
   protected increaseRows(): void {
-    this.customRows.set(this.effectiveRows() + 1);
+    const rows = this.effectiveRows() + 1;
+    this.customizableColorChipListUrlService.setRows(
+      this.urlPersistenceKey(),
+      this.rows() === rows ? null : rows
+    );
   }
 }

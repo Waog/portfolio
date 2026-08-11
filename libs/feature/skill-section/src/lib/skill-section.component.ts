@@ -70,6 +70,10 @@ export class SkillSectionComponent implements AfterViewInit, OnDestroy {
 
   constructor(@Inject(PLATFORM_ID) private platformId: object) {}
 
+  protected sanitizeUrlPersistenceKey(category: string): string {
+    return encodeURIComponent(category);
+  }
+
   ngAfterViewInit(): void {
     this.showSkeletons$.pipe(takeUntil(this.destroy$)).subscribe(show => {
       if (!show) {
