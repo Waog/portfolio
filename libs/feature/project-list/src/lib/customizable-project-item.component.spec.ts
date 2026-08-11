@@ -1,4 +1,4 @@
-import { signal } from '@angular/core';
+import { signal, WritableSignal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { provideRouter } from '@angular/router';
@@ -6,11 +6,22 @@ import { CustomizationStateService } from '@portfolio/customization-state';
 import { Project } from '@portfolio/search-engine-domain';
 
 import { CustomizableProjectItemComponent } from './customizable-project-item.component';
+import { CustomizableProjectItemUrlService } from './customizable-project-item-url.service';
 import { ProjectItemComponent } from './project-item.component';
 
 describe('CustomizableProjectItemComponent', () => {
   let component: CustomizableProjectItemComponent;
   let fixture: ComponentFixture<CustomizableProjectItemComponent>;
+  let customIsTopProjectByProjectId: WritableSignal<
+    Record<string, boolean | null>
+  >;
+  let customCompactByProjectId: WritableSignal<Record<string, boolean | null>>;
+  let mockCustomizableProjectItemUrlService: {
+    getIsTopProject: jest.Mock;
+    getCompact: jest.Mock;
+    setIsTopProject: jest.Mock;
+    setCompact: jest.Mock;
+  };
 
   const mockProject: Project = {
     id: 'test-project',
@@ -46,6 +57,30 @@ describe('CustomizableProjectItemComponent', () => {
   };
 
   beforeEach(async () => {
+    customIsTopProjectByProjectId = signal<Record<string, boolean | null>>({});
+    customCompactByProjectId = signal<Record<string, boolean | null>>({});
+    mockCustomizableProjectItemUrlService = {
+      getIsTopProject: jest.fn(
+        (projectId: string) =>
+          customIsTopProjectByProjectId()[projectId] ?? null
+      ),
+      getCompact: jest.fn(
+        (projectId: string) => customCompactByProjectId()[projectId] ?? null
+      ),
+      setIsTopProject: jest.fn((projectId: string, value: boolean | null) => {
+        customIsTopProjectByProjectId.update(state => ({
+          ...state,
+          [projectId]: value,
+        }));
+      }),
+      setCompact: jest.fn((projectId: string, value: boolean | null) => {
+        customCompactByProjectId.update(state => ({
+          ...state,
+          [projectId]: value,
+        }));
+      }),
+    };
+
     await TestBed.configureTestingModule({
       imports: [CustomizableProjectItemComponent],
       providers: [
@@ -55,6 +90,10 @@ describe('CustomizableProjectItemComponent', () => {
           useValue: {
             isPanelShown: signal(true),
           },
+        },
+        {
+          provide: CustomizableProjectItemUrlService,
+          useValue: mockCustomizableProjectItemUrlService,
         },
       ],
     }).compileComponents();
@@ -104,6 +143,52 @@ describe('CustomizableProjectItemComponent', () => {
     fixture.detectChanges();
 
     clickCompactButton(true);
+    fixture.detectChanges();
+
+    const wrapped = fixture.debugElement.query(
+      By.directive(ProjectItemComponent)
+    ).componentInstance as ProjectItemComponent;
+
+    expect(wrapped.isTopProject()).toBe(true);
+    expect(wrapped.compact()).toBe(true);
+  });
+
+  it('should forward panel actions to CustomizableProjectItemUrlService keyed by project id', () => {
+    clickTopProjectButton(true);
+    clickCompactButton(true);
+
+    expect(
+      mockCustomizableProjectItemUrlService.setIsTopProject
+    ).toHaveBeenCalledWith(mockProject.id, true);
+    expect(
+      mockCustomizableProjectItemUrlService.setCompact
+    ).toHaveBeenCalledWith(mockProject.id, true);
+  });
+
+  it('should pass null to URL service when selected value equals input default', () => {
+    fixture.componentRef.setInput('isTopProject', false);
+    fixture.componentRef.setInput('compact', false);
+    fixture.detectChanges();
+
+    clickTopProjectButton(true);
+    clickCompactButton(true);
+    mockCustomizableProjectItemUrlService.setIsTopProject.mockClear();
+    mockCustomizableProjectItemUrlService.setCompact.mockClear();
+
+    clickTopProjectButton(false);
+    clickCompactButton(false);
+
+    expect(
+      mockCustomizableProjectItemUrlService.setIsTopProject
+    ).toHaveBeenCalledWith(mockProject.id, null);
+    expect(
+      mockCustomizableProjectItemUrlService.setCompact
+    ).toHaveBeenCalledWith(mockProject.id, null);
+  });
+
+  it('should reflect a customization already present in CustomizableProjectItemUrlService on load', () => {
+    customIsTopProjectByProjectId.set({ [mockProject.id]: true });
+    customCompactByProjectId.set({ [mockProject.id]: true });
     fixture.detectChanges();
 
     const wrapped = fixture.debugElement.query(
