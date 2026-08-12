@@ -3,7 +3,13 @@
   @if (shouldShowTopProjectsSection()) {
   <section class="top-projects-section page-break-after">
     <lib-section-header
-      text="Top Matching Projects"
+      [text]="
+        projectSortOrder() === 'date'
+          ? 'Projects (sorted by Date)'
+          : isPrintMode()
+          ? 'Projects (sorted by Relevance)'
+          : 'Top Matching Projects'
+      "
       [printMode]="isPrintMode()"
     />
 
@@ -42,9 +48,9 @@
   <!-- Other projects section -->
   @if (shouldShowOtherProjectsSection()) {
   <section class="other-projects-section">
+    @if (!isPrintMode()) {
     <lib-section-header text="Other Projects" [printMode]="isPrintMode()" />
-
-    @if (showSkeletons$ | async) { @for (skeleton of
+    } @if (showSkeletons$ | async) { @for (skeleton of
     filteredOtherProjectSkeletons(); track skeleton) {
     <ngx-skeleton-loader
       class="project-item-skeleton project-item-skeleton--compact"
