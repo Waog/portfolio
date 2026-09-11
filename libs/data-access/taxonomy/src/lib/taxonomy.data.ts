@@ -263,6 +263,7 @@ type InternalTagName =
   | 'Redux'
   | 'Regulated Environment'
   | 'Relational Databases'
+  | 'Repository'
   | 'requireJS'
   | 'Research'
   | 'Responsive Design'
@@ -1607,7 +1608,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     canonical: 'Git',
     categories: ['DevOps & Build & CI/CD'],
     children: ['BitBucket', 'GitHub', 'GitLab'],
-    parents: ['Version Control'],
+    parents: ['Repository', 'Version Control'],
     related: ['CI/CD', 'Conventional Commits', 'SVN', 'TFS'],
     synonyms: [/^git$/i],
   },
@@ -2573,6 +2574,13 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     related: ['Backend Systems'],
     synonyms: [/relational[-_\s]*databases?/i, /rdbms/i],
   },
+  Repository: {
+    canonical: 'Repository',
+    categories: ['Concepts'],
+    children: ['Git', 'SVN', 'TFS'],
+    includes: ['Version Control'],
+    synonyms: [/repositor(y|ies)/i],
+  },
   requireJS: {
     canonical: 'requireJS',
     categories: ['DevOps & Build & CI/CD', 'Tools & Libraries'],
@@ -2797,7 +2805,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
     canonical: 'SVN',
     categories: ['DevOps & Build & CI/CD'],
     children: ['TortoiseSVN'],
-    parents: ['Version Control'],
+    parents: ['Repository', 'Version Control'],
     related: ['CI/CD', 'Git', 'GitHub'],
     synonyms: [/subversion/i, /svn/i],
   },
@@ -2874,7 +2882,7 @@ const INTERNAL_TAXONOMY: Record<InternalTagName, TaxonomyData> = {
   TFS: {
     canonical: 'TFS',
     categories: ['DevOps & Build & CI/CD', 'Tools & Libraries'],
-    parents: ['Version Control'],
+    parents: ['Repository', 'Version Control'],
     related: ['CI/CD', 'Git'],
     synonyms: [/^tfs$/i, /team[-_\s]*foundation[-_\s]*server/i],
   },
