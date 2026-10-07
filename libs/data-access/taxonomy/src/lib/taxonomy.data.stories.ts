@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/angular';
-import { Network } from 'vis-network';
+import { Network } from 'vis-network/standalone';
 
 import { type TagName, TAXONOMY } from './taxonomy.data';
 
