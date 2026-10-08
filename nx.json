@@ -84,6 +84,9 @@
     "@nx/vitest:test": {
       "cache": true,
       "inputs": ["default", "^production"]
+    },
+    "compile": {
+      "syncGenerators": ["@nx/js:typescript-sync", "@aws/nx-plugin:ts#sync"]
     }
   },
   "plugins": [
@@ -192,5 +195,6 @@
       "typeSeparator": "."
     }
   },
-  "analytics": false
+  "analytics": false,
+  "parallel": 8
 }

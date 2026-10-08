@@ -3,12 +3,21 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
+    "dev": "nx run-many --target dev",
+    "build": "nx run-many --target build",
+    "lint": "nx run-many --target lint --configuration=fix",
+    "test": "nx run-many --target test --all",
+    "trivy": "nx run-many --target trivy --all",
+    "build:skip-lint": "nx run-many --target build --configuration=skip-lint",
+    "build:all": "nx run-many --target build --all",
+    "affected:all": "nx affected --target build",
     "prepare": "husky"
   },
   "private": true,
   "workspaces": [
     "apps/*",
-    "libs/*/*"
+    "libs/*/*",
+    "packages/*"
   ],
   "dependencies": {
     "@angular/animations": "22.1.8",
@@ -45,7 +54,10 @@
     "@angular/cli": "22.1.9",
     "@angular/compiler-cli": "22.1.8",
     "@angular/language-service": "22.1.8",
+    "@aws/nx-plugin": "^1.0.6",
+    "@aws/nx-plugin-mcp": "^1.0.6",
     "@babel/core": "^7.29.7",
+    "@biomejs/biome": "2.5.15",
     "@commitlint/cli": "^19.8.1",
     "@commitlint/config-conventional": "^19.8.1",
     "@eslint/js": "^9.8.0",
