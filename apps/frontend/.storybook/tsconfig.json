@@ -13,9 +13,15 @@
     "composite": false,
     // NOTE: This non-composite config emits no declarations, so declaration maps must be disabled.
     "declarationMap": false,
-    "noEmit": true
+    // Angular's Webpack loader needs JavaScript output for story exports.
+    "noEmit": false
   },
-  "exclude": ["../**/*.spec.ts"],
+  "exclude": [
+    "../**/*.spec.ts",
+    "../../../libs/**/*.spec.ts",
+    "../../../libs/**/*.test.ts",
+    "../../../libs/**/test-setup.ts"
+  ],
   "include": [
     "../src/**/*.stories.ts",
     "../src/**/*.stories.js",
@@ -27,6 +33,8 @@
     "../../../libs/**/*.stories.jsx",
     "../../../libs/**/*.stories.tsx",
     "../../../libs/**/*.stories.mdx",
+    // Compile workspace sources explicitly so symlinked packages emit JavaScript.
+    "../../../libs/*/*/src/**/*.ts",
     "*.js",
     "*.ts"
   ],
