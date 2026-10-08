@@ -13,7 +13,7 @@ A personal portfolio website built with Angular 22.1 and SSR, organized as an Nx
 
 ## Prerequisites
 
-- [Node.js](https://nodejs.org) 24.15.0 or newer within Node 24 (CI uses Node 24)
+- [Node.js](https://nodejs.org) (see `.nvmrc` or `engines` field in `package.json` for the required version)
 - [npm](https://www.npmjs.com)
 
 ## Setup
