@@ -1,11 +1,22 @@
 {
-  "extends": "./tsconfig.json",
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "outDir": "../../dist/out-tsc",
-    "types": []
+    "target": "es2022",
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "outDir": "./out-tsc/app",
+    "types": [],
+    // NOTE: Angular 19 compiles library sources directly and does not support composite builds.
+    "composite": false,
+    "declaration": true
   },
   "files": ["src/main.ts"],
-  "include": ["src/**/*.d.ts"],
+  // NOTE: Angular must compile workspace library sources, not just their declarations.
+  "include": ["src/**/*.d.ts", "../../libs/*/*/src/**/*.ts"],
   "exclude": [
     "jest.config.ts",
     "src/**/*.test.ts",
@@ -22,6 +33,39 @@
     "src/**/*.spec.jsx",
     "src/test-setup.ts",
     "**/*.stories.ts",
-    "**/*.stories.js"
+    "**/*.stories.js",
+    "../../libs/**/*.spec.ts",
+    "../../libs/**/*.test.ts",
+    "../../libs/**/*.stories.ts",
+    "../../libs/**/test-setup.ts"
+  ],
+  "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "strictTemplates": true
+  },
+  "references": [
+    {
+      "path": "../../libs/feature/web-metadata/tsconfig.lib.json"
+    },
+    {
+      "path": "../../libs/util/shared-styles/tsconfig.lib.json"
+    },
+    {
+      "path": "../../libs/feature/page-legal/tsconfig.lib.json"
+    },
+    {
+      "path": "../../libs/feature/page-home/tsconfig.lib.json"
+    },
+    {
+      "path": "../../libs/feature/navigation/tsconfig.lib.json"
+    },
+    {
+      "path": "../../libs/feature/footer/tsconfig.lib.json"
+    },
+    {
+      "path": "../../libs/data-access/customization-state/tsconfig.lib.json"
+    }
   ]
 }

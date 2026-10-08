@@ -2,25 +2,26 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "allowJs": true,
-    "outDir": "../../dist/out-tsc",
+    "outDir": "./out-tsc/playwright",
     "sourceMap": false,
-    "module": "commonjs",
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    "target": "es2022"
   },
   "include": [
     "**/*.ts",
     "**/*.js",
     "playwright.config.ts",
-    "eslint.config.mjs",
     "src/**/*.spec.ts",
     "src/**/*.spec.js",
     "src/**/*.test.ts",
     "src/**/*.test.js",
     "src/**/*.d.ts"
-  ]
+  ],
+  "exclude": ["out-tsc", "eslint.config.mjs"],
+  "references": []
 }

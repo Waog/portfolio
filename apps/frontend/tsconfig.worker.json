@@ -1,9 +1,26 @@
 {
-  "extends": "./tsconfig.json",
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "outDir": "../../dist/out-tsc",
+    "outDir": "./out-tsc/worker",
     "lib": ["es2018", "webworker"],
-    "types": []
+    "types": [],
+    "target": "es2022",
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    // NOTE: Angular's worker build compiles source directly, without composite builds.
+    "composite": false,
+    // NOTE: Declaration maps require declarations or composite mode.
+    "declarationMap": false
   },
-  "include": ["../../libs/**/*.worker.ts"]
+  "include": ["../../libs/**/*.worker.ts"],
+  "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "strictTemplates": true
+  }
 }

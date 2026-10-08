@@ -24,6 +24,9 @@ npm install
 
 ## Development
 
+After changing project dependencies, run `npm exec nx -- sync` to update TypeScript
+references. Validate changes with `npm exec nx -- run-many -t typecheck,build,lint,test`.
+
 Start the dev server (available at `http://localhost:4200`):
 
 ```sh

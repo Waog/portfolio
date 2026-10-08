@@ -1,0 +1,14 @@
+{
+  "name": "@portfolio/frontend",
+  "version": "0.0.1",
+  "private": true,
+  "devDependencies": {
+    "@portfolio/customization-state": "*",
+    "@portfolio/footer": "*",
+    "@portfolio/navigation": "*",
+    "@portfolio/page-home": "*",
+    "@portfolio/page-legal": "*",
+    "@portfolio/shared-styles": "*",
+    "@portfolio/web-metadata": "*"
+  }
+}

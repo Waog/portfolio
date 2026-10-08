@@ -1,9 +1,27 @@
 {
-  "extends": "../tsconfig.json",
+  "extends": "../../../tsconfig.base.json",
   "compilerOptions": {
-    "emitDecoratorMetadata": true
+    "target": "es2022",
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "emitDecoratorMetadata": true,
+    "outDir": "../out-tsc/storybook",
+    "composite": false,
+    // NOTE: This non-composite config emits no declarations, so declaration maps must be disabled.
+    "declarationMap": false,
+    // Angular's Webpack loader needs JavaScript output for story exports.
+    "noEmit": false
   },
-  "exclude": ["../**/*.spec.ts"],
+  "exclude": [
+    "../**/*.spec.ts",
+    "../../../libs/**/*.spec.ts",
+    "../../../libs/**/*.test.ts",
+    "../../../libs/**/test-setup.ts"
+  ],
   "include": [
     "../src/**/*.stories.ts",
     "../src/**/*.stories.js",
@@ -15,7 +33,15 @@
     "../../../libs/**/*.stories.jsx",
     "../../../libs/**/*.stories.tsx",
     "../../../libs/**/*.stories.mdx",
+    // Compile workspace sources explicitly so symlinked packages emit JavaScript.
+    "../../../libs/*/*/src/**/*.ts",
     "*.js",
     "*.ts"
-  ]
+  ],
+  "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "strictTemplates": true
+  }
 }

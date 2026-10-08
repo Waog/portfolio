@@ -1,28 +1,25 @@
 {
-  "compilerOptions": {
-    "target": "es2022",
-    "forceConsistentCasingInFileNames": true,
-    "strict": true,
-    "noImplicitOverride": true,
-    "noPropertyAccessFromIndexSignature": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true
-  },
+  "extends": "../../../tsconfig.base.json",
   "files": [],
   "include": [],
   "references": [
+    {
+      "path": "../../data-access/url-state"
+    },
+    {
+      "path": "../../data-access/customization-state"
+    },
+    {
+      "path": "../../ui/color-chip-list"
+    },
+    {
+      "path": "../../ui/color-chip"
+    },
     {
       "path": "./tsconfig.lib.json"
     },
     {
       "path": "./tsconfig.spec.json"
     }
-  ],
-  "extends": "../../../tsconfig.base.json",
-  "angularCompilerOptions": {
-    "enableI18nLegacyMessageIdFormat": false,
-    "strictInjectionParameters": true,
-    "strictInputAccessModifiers": true,
-    "strictTemplates": true
-  }
+  ]
 }

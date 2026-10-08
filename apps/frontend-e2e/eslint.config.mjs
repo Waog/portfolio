@@ -5,6 +5,7 @@ import baseConfig from '../../eslint.config.mjs';
 // TODO: add e2e linting to CI/CD pipeline
 
 export default [
+  { ignores: ['eslint.config.mjs'] },
   playwright.configs['flat/recommended'],
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   ...baseConfig,
