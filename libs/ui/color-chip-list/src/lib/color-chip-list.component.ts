@@ -1,7 +1,8 @@
-import { CommonModule, isPlatformServer } from '@angular/common';
+import { isPlatformServer } from '@angular/common';
 import {
-  afterRender,
+  afterEveryRender,
   booleanAttribute,
+  ChangeDetectionStrategy,
   Component,
   computed,
   ElementRef,
@@ -27,8 +28,9 @@ interface ChipItem {
 @Component({
   selector: 'lib-color-chip-list',
   host: { '[class.print-mode]': 'printMode()' },
-  imports: [CommonModule, MatButtonModule, MatIconModule, ColorChipComponent],
+  imports: [MatButtonModule, MatIconModule, ColorChipComponent],
   templateUrl: './color-chip-list.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './color-chip-list.component.scss',
 })
 export class ColorChipListComponent {
@@ -65,7 +67,7 @@ export class ColorChipListComponent {
   private readonly platformId = inject(PLATFORM_ID);
 
   constructor() {
-    afterRender(() => this.updateHiddenChipFlags());
+    afterEveryRender(() => this.updateHiddenChipFlags());
   }
 
   @HostListener('window:resize')

@@ -4,22 +4,16 @@
   "include": [],
   "references": [
     {
-      "path": "../../data-access/url-state"
-    },
-    {
-      "path": "../../data-access/customization-state"
-    },
-    {
-      "path": "../../ui/color-chip-list"
-    },
-    {
-      "path": "../../ui/color-chip"
-    },
-    {
       "path": "./tsconfig.lib.json"
     },
     {
       "path": "./tsconfig.spec.json"
     }
-  ]
+  ],
+  "compilerOptions": {
+    "module": "preserve",
+    "moduleResolution": "bundler",
+    "lib": ["dom", "es2022"],
+    "ignoreDeprecations": "6.0"
+  }
 }

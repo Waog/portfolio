@@ -1,6 +1,6 @@
-import { CommonModule } from '@angular/common';
 import {
   booleanAttribute,
+  ChangeDetectionStrategy,
   Component,
   computed,
   inject,
@@ -18,13 +18,13 @@ import { CustomizableColorChipListUrlService } from './customizable-color-chip-l
 @Component({
   selector: 'lib-customizable-color-chip-list',
   imports: [
-    CommonModule,
     MatButtonModule,
     MatButtonToggleModule,
     MatIconModule,
     ColorChipListComponent,
   ],
   templateUrl: './customizable-color-chip-list.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './customizable-color-chip-list.component.scss',
 })
 export class CustomizableColorChipListComponent {

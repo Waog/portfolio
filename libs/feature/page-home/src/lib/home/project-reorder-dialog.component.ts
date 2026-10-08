@@ -4,7 +4,13 @@ import {
   CdkDropList,
   moveItemInArray,
 } from '@angular/cdk/drag-drop';
-import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DestroyRef,
+  inject,
+  OnInit,
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -22,6 +28,7 @@ import { Project } from '@portfolio/search-engine-domain';
     MatIconModule,
   ],
   templateUrl: './project-reorder-dialog.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './project-reorder-dialog.component.scss',
 })
 export class ProjectReorderDialogComponent implements OnInit {

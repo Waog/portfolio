@@ -2,6 +2,7 @@ import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
 import {
   provideClientHydration,
   withEventReplay,
+  withNoIncrementalHydration,
 } from '@angular/platform-browser';
 import {
   provideRouter,
@@ -9,13 +10,12 @@ import {
   withInMemoryScrolling,
 } from '@angular/router';
 import { WebMetadataTitleStrategy } from '@portfolio/web-metadata';
-import { provideNgxSkeletonLoader } from 'ngx-skeleton-loader';
 
 import { appRoutes } from './app.routes';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideClientHydration(withEventReplay()),
+    provideClientHydration(withEventReplay(), withNoIncrementalHydration()),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(
       appRoutes,
@@ -28,10 +28,5 @@ export const appConfig: ApplicationConfig = {
       provide: TitleStrategy,
       useClass: WebMetadataTitleStrategy,
     },
-    provideNgxSkeletonLoader({
-      theme: {
-        extendsFromRoot: true,
-      },
-    }),
   ],
 };

@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import {
   afterNextRender,
+  ChangeDetectionStrategy,
   Component,
   DestroyRef,
   ElementRef,
@@ -28,6 +29,7 @@ import { LegalTextComponent } from './legal-texts/legal-text.component';
     MatDividerModule,
   ],
   templateUrl: './legal-page.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./legal-page.component.scss'],
 })
 export class LegalPageComponent {

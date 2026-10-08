@@ -1,6 +1,9 @@
 import type { Preview } from '@storybook/angular';
 
 const preview: Preview = {
+  initialGlobals: {
+    viewport: { value: 'desktop', isRotated: false },
+  },
   parameters: {
     layout: 'fullscreen',
     controls: {
@@ -10,7 +13,7 @@ const preview: Preview = {
       },
     },
     viewport: {
-      viewports: {
+      options: {
         mobile: {
           name: 'Mobile',
           styles: {
@@ -33,7 +36,6 @@ const preview: Preview = {
           },
         },
       },
-      defaultViewport: 'desktop',
     },
   },
 };

@@ -1,11 +1,16 @@
-import { CommonModule } from '@angular/common';
-import { booleanAttribute, Component, input } from '@angular/core';
+import {
+  booleanAttribute,
+  ChangeDetectionStrategy,
+  Component,
+  input,
+} from '@angular/core';
 
 @Component({
   selector: 'lib-section',
   host: { '[class.print-mode]': 'printMode()' },
-  imports: [CommonModule],
+  imports: [],
   templateUrl: './section.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './section.component.scss',
 })
 export class SectionComponent {

@@ -9,7 +9,8 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "types": ["jest", "node"],
-    "outDir": "./out-tsc/spec"
+    "outDir": "./out-tsc/spec",
+    "rootDir": "."
   },
   "files": ["src/test-setup.ts"],
   "include": [

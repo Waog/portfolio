@@ -13,7 +13,8 @@
     "composite": false,
     // NOTE: This non-composite config emits no declarations, so declaration maps must be disabled.
     "declarationMap": false,
-    "noEmit": true
+    "noEmit": true,
+    "rootDir": "../.."
   },
   "exclude": [
     "jest.config.ts",

@@ -1,5 +1,9 @@
-import { CommonModule } from '@angular/common';
-import { Component, input, output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  input,
+  output,
+} from '@angular/core';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
 import { Language } from './language.enum';
@@ -7,8 +11,9 @@ import { Language } from './language.enum';
 @Component({
   selector: 'legal-language-switch',
   standalone: true,
-  imports: [CommonModule, MatButtonToggleModule],
+  imports: [MatButtonToggleModule],
   templateUrl: './language-switch.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./language-switch.component.scss'],
 })
 export class LanguageSwitchComponent {

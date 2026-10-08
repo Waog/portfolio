@@ -1,5 +1,4 @@
-import { CommonModule } from '@angular/common';
-import { Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
@@ -14,7 +13,6 @@ import { ProjectItemMetaTilesComponent } from './project-item-meta-tiles.compone
 @Component({
   selector: 'lib-project-item',
   imports: [
-    CommonModule,
     MatButtonModule,
     MatCardModule,
     MatChipsModule,
@@ -25,6 +23,7 @@ import { ProjectItemMetaTilesComponent } from './project-item-meta-tiles.compone
     CustomizableColorChipListComponent,
   ],
   templateUrl: './project-item.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './project-item.component.scss',
 })
 export class ProjectItemComponent {

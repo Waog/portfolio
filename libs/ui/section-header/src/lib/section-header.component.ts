@@ -1,13 +1,18 @@
-import { CommonModule } from '@angular/common';
-import { booleanAttribute, Component, input } from '@angular/core';
+import {
+  booleanAttribute,
+  ChangeDetectionStrategy,
+  Component,
+  input,
+} from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'lib-section-header',
   standalone: true,
   host: { '[class.print-mode]': 'printMode()' },
-  imports: [CommonModule, MatIconModule],
+  imports: [MatIconModule],
   templateUrl: './section-header.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./section-header.component.scss'],
 })
 export class SectionHeaderComponent {

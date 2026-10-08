@@ -1,5 +1,4 @@
-import { DOCUMENT } from '@angular/common';
-import { inject, Injectable } from '@angular/core';
+import { DOCUMENT, inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { WEB_METADATA } from '@portfolio/web-metadata';
 

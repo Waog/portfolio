@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ColorChipComponent } from '@portfolio/color-chip';
 import { CustomizationStateService } from '@portfolio/customization-state';
 import { SearchEngineService } from '@portfolio/search-engine-angular';
@@ -17,6 +17,7 @@ import { map } from 'rxjs';
     NgxSkeletonLoaderModule,
   ],
   templateUrl: './matches-overview.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './matches-overview.component.scss',
 })
 export class MatchesOverviewComponent {

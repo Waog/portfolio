@@ -4,31 +4,16 @@
   "include": [],
   "references": [
     {
-      "path": "../../libs/feature/web-metadata"
-    },
-    {
-      "path": "../../libs/util/shared-styles"
-    },
-    {
-      "path": "../../libs/feature/page-legal"
-    },
-    {
-      "path": "../../libs/feature/page-home"
-    },
-    {
-      "path": "../../libs/feature/navigation"
-    },
-    {
-      "path": "../../libs/feature/footer"
-    },
-    {
-      "path": "../../libs/data-access/customization-state"
-    },
-    {
       "path": "./tsconfig.app.json"
     },
     {
       "path": "./tsconfig.spec.json"
     }
-  ]
+  ],
+  "compilerOptions": {
+    "module": "preserve",
+    "moduleResolution": "bundler",
+    "lib": ["dom", "es2022"],
+    "ignoreDeprecations": "6.0"
+  }
 }

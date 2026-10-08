@@ -1,5 +1,4 @@
-import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
@@ -21,7 +20,6 @@ import { ProjectReorderDialogComponent } from './project-reorder-dialog.componen
 @Component({
   selector: 'lib-customization-sidenav',
   imports: [
-    CommonModule,
     MatSidenavModule,
     MatButtonModule,
     MatCheckboxModule,
@@ -32,6 +30,7 @@ import { ProjectReorderDialogComponent } from './project-reorder-dialog.componen
     MatRadioModule,
   ],
   templateUrl: './customization-sidenav.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './customization-sidenav.component.scss',
 })
 export class CustomizationSidenavComponent {

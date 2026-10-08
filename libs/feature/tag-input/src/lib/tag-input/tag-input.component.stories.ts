@@ -3,8 +3,8 @@ import { SearchEngineService } from '@portfolio/search-engine-angular';
 import { SearchTagService } from '@portfolio/search-tags';
 import type { Meta, StoryObj } from '@storybook/angular';
 import { applicationConfig, moduleMetadata } from '@storybook/angular';
-import { userEvent, within } from '@storybook/testing-library';
 import { BehaviorSubject } from 'rxjs';
+import { userEvent, within } from 'storybook/test';
 
 import { TagInputComponent } from './tag-input.component';
 

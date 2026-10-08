@@ -7,7 +7,7 @@ test.describe('Project List Section', () => {
     const projectList = homePage.projectList();
     await expect(projectList.locator).toBeVisible();
 
-    expect((await projectList.projectItems()).length).toBe(3);
+    expect(await projectList.projectItems()).toHaveLength(3);
     await expect(projectList.topProjectsSection).toBeVisible();
     await expect(projectList.topProjectsSectionTitle).toBeVisible();
     await expect(projectList.otherProjectsSection).toBeHidden();
@@ -150,7 +150,7 @@ test.describe('Project List Section', () => {
 
   test('top matching projects have green border', async ({ homePage }) => {
     const topProjectItems = await homePage.projectList().topProjectItems();
-    expect(topProjectItems.length).toBe(3);
+    expect(topProjectItems).toHaveLength(3);
     for (const item of topProjectItems) {
       expect(await item.hasGreenBorder()).toBe(true);
     }

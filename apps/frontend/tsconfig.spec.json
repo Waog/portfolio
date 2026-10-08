@@ -16,9 +16,12 @@
       "vitest"
     ],
     "outDir": "./out-tsc/spec",
-    // NOTE: The Angular Vitest transformer compiles source directly, without composite builds.
     "composite": false,
-    "declaration": true
+    "declaration": true,
+    "module": "preserve",
+    "moduleResolution": "bundler",
+    "lib": ["dom", "es2022"],
+    "rootDir": "../.."
   },
   "include": [
     "vite.config.ts",
@@ -34,7 +37,6 @@
     "src/**/*.test.jsx",
     "src/**/*.spec.jsx",
     "src/**/*.d.ts",
-    // NOTE: Include library sources so the Angular transformer can compile imported components.
     "../../libs/*/*/src/**/*.ts"
   ],
   "files": ["src/test-setup.ts"],

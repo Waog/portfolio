@@ -1,4 +1,4 @@
-export default {
+module.exports = {
   displayName: 'page-legal',
   preset: '../../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],

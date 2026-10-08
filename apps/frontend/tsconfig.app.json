@@ -10,12 +10,14 @@
     "noFallthroughCasesInSwitch": true,
     "outDir": "./out-tsc/app",
     "types": [],
-    // NOTE: Angular 19 compiles library sources directly and does not support composite builds.
     "composite": false,
-    "declaration": true
+    "declaration": true,
+    "moduleResolution": "bundler",
+    "module": "preserve",
+    "lib": ["dom", "es2022"],
+    "rootDir": "../.."
   },
   "files": ["src/main.ts"],
-  // NOTE: Angular must compile workspace library sources, not just their declarations.
   "include": ["src/**/*.d.ts", "../../libs/*/*/src/**/*.ts"],
   "exclude": [
     "jest.config.ts",
@@ -41,6 +43,12 @@
   ],
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
+    "extendedDiagnostics": {
+      "checks": {
+        "nullishCoalescingNotNullable": "suppress",
+        "optionalChainNotNullable": "suppress"
+      }
+    },
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
     "strictTemplates": true

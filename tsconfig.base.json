@@ -14,6 +14,9 @@
     "composite": true,
     "isolatedModules": true,
     "declarationMap": true,
-    "customConditions": ["@portfolio/source"]
+    "customConditions": ["@portfolio/source"],
+    "strict": false,
+    "noUncheckedSideEffectImports": false,
+    "types": ["*"]
   }
 }

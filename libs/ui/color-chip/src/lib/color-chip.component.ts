@@ -1,5 +1,9 @@
-import { CommonModule } from '@angular/common';
-import { Component, input, output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  input,
+  output,
+} from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 
@@ -8,8 +12,9 @@ export type ChipSpacing = 'small' | 'medium' | 'large';
 
 @Component({
   selector: 'lib-color-chip',
-  imports: [CommonModule, MatIconModule, MatButtonModule],
+  imports: [MatIconModule, MatButtonModule],
   templateUrl: './color-chip.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './color-chip.component.scss',
 })
 export class ColorChipComponent {

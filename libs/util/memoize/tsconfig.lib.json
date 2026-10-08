@@ -12,7 +12,8 @@
     "declarationMap": true,
     "inlineSources": true,
     "types": [],
-    "outDir": "./out-tsc/lib"
+    "outDir": "./out-tsc/lib",
+    "rootDir": "."
   },
   "exclude": [
     "src/**/*.spec.ts",

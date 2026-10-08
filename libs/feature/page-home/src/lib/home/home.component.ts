@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { AboutMeComponent } from '@portfolio/about-me';
 import { ContactSectionComponent } from '@portfolio/contact-section';
 import { CustomizationStateService } from '@portfolio/customization-state';
@@ -27,6 +27,7 @@ import { CustomizationSidenavComponent } from './customization-sidenav.component
     SectionComponent,
   ],
   templateUrl: './home.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './home.component.scss',
 })
 export class HomeComponent {

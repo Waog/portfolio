@@ -12,7 +12,11 @@
     "declarationMap": true,
     "inlineSources": true,
     "types": [],
-    "outDir": "./out-tsc/lib"
+    "outDir": "./out-tsc/lib",
+    "module": "preserve",
+    "moduleResolution": "bundler",
+    "lib": ["dom", "es2022"],
+    "rootDir": "."
   },
   "exclude": [
     "src/**/*.spec.ts",
