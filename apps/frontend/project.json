@@ -87,9 +87,9 @@
     },
     "test": {
       "executor": "@nx/vitest:test",
-      "outputs": ["{options.reportsDirectory}"],
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "reportsDirectory": "../../coverage/apps/frontend"
+        "reportsDirectory": "coverage/apps/frontend"
       }
     },
     "serve-static": {
