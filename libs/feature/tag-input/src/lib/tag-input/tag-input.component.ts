@@ -5,7 +5,12 @@ import {
   moveItemInArray,
 } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnDestroy } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  OnDestroy,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -30,6 +35,7 @@ import { map, Observable, Subject, takeUntil } from 'rxjs';
     CdkDrag,
   ],
   templateUrl: './tag-input.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './tag-input.component.scss',
 })
 export class TagInputComponent implements OnDestroy {

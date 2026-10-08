@@ -1,4 +1,9 @@
-import { Component, effect, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  effect,
+  inject,
+} from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CustomizationStateService } from '@portfolio/customization-state';
 import { FooterComponent } from '@portfolio/footer';
@@ -9,6 +14,8 @@ import { SpacingModeSyncService } from '@portfolio/shared-styles';
   imports: [RouterModule, FooterComponent, NavigationComponent],
   selector: 'app-root',
   templateUrl: './app.component.html',
+  // TODO: use default change detection strategy. also change in other components/modules.
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './app.component.scss',
 })
 export class AppComponent {

@@ -1,5 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, DestroyRef, inject, input, Signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DestroyRef,
+  inject,
+  input,
+  Signal,
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -26,6 +33,7 @@ import { ProjectListCustomOrderService } from './project-list-custom-order.servi
     NgxSkeletonLoaderModule,
   ],
   templateUrl: './project-list.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './project-list.component.scss',
 })
 export class ProjectListComponent {

@@ -1,5 +1,4 @@
-import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { CustomizationStateService } from '@portfolio/customization-state';
 
@@ -13,7 +12,6 @@ import { ProfessionalFocusComponent } from '../professional-focus/professional-f
   selector: 'lib-about-me',
   host: { '[class.print-mode]': 'isPrintMode()' },
   imports: [
-    CommonModule,
     MatCardModule,
     HeroContentComponent,
     CommunityWritingComponent,
@@ -22,6 +20,7 @@ import { ProfessionalFocusComponent } from '../professional-focus/professional-f
     ProfessionalFocusComponent,
   ],
   templateUrl: './about-me.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './about-me.component.scss',
 })
 export class AboutMeComponent {

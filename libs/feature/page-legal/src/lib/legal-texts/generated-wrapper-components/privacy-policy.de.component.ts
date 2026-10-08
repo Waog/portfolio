@@ -1,10 +1,10 @@
-import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
   selector: 'legal-privacy-policy-de',
-  imports: [CommonModule],
+  imports: [],
   templateUrl: '../generated/privacy-policy.de.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './generated-wrapper-components.scss',
 })
 export class PrivacyPolicyDeComponent {}

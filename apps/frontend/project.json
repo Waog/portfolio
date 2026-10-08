@@ -86,10 +86,10 @@
       "executor": "@nx/eslint:lint"
     },
     "test": {
-      "executor": "@nx/vite:test",
-      "outputs": ["{options.reportsDirectory}"],
+      "executor": "@nx/vitest:test",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "reportsDirectory": "../../coverage/apps/frontend"
+        "reportsDirectory": "coverage/apps/frontend"
       }
     },
     "serve-static": {

@@ -3,8 +3,18 @@
   "compilerOptions": {
     "outDir": "./out-tsc/server",
     "types": ["node"],
-    // NOTE: Keep the Angular server build non-composite, like tsconfig.app.json.
-    "composite": false
+    "composite": false,
+    "moduleResolution": "bundler",
+    "module": "preserve",
+    "rootDir": "../.."
   },
-  "files": ["src/main.server.ts", "src/server.ts"]
+  "files": ["src/main.server.ts", "src/server.ts"],
+  "angularCompilerOptions": {
+    "extendedDiagnostics": {
+      "checks": {
+        "nullishCoalescingNotNullable": "suppress",
+        "optionalChainNotNullable": "suppress"
+      }
+    }
+  }
 }

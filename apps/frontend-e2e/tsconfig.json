@@ -10,7 +10,9 @@
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    "target": "es2022"
+    "target": "es2022",
+    "ignoreDeprecations": "6.0",
+    "rootDir": "."
   },
   "include": [
     "**/*.ts",

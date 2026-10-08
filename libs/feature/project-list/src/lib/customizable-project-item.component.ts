@@ -1,5 +1,10 @@
-import { CommonModule } from '@angular/common';
-import { Component, computed, inject, input } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  inject,
+  input,
+} from '@angular/core';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { CustomizationStateService } from '@portfolio/customization-state';
 import { Project } from '@portfolio/search-engine-domain';
@@ -9,8 +14,9 @@ import { ProjectItemComponent } from './project-item.component';
 
 @Component({
   selector: 'lib-customizable-project-item',
-  imports: [CommonModule, MatButtonToggleModule, ProjectItemComponent],
+  imports: [MatButtonToggleModule, ProjectItemComponent],
   templateUrl: './customizable-project-item.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './customizable-project-item.component.scss',
 })
 export class CustomizableProjectItemComponent {

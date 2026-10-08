@@ -21,33 +21,36 @@
         Add
       </button>
     </mat-form-field>
-    <div
-      *ngIf="tags.length > 0"
-      class="tag-list"
-      cdkDropList
-      cdkDropListOrientation="mixed"
-      [cdkDropListData]="tags"
-      (cdkDropListDropped)="reorderTag($event)"
-    >
-      <ng-container *ngFor="let tag of tags">
-        <div cdkDrag class="search-tag">
-          <lib-color-chip
-            [text]="tag"
-            color="green"
-            [showCloseButton]="true"
-            (closeClick)="removeTag(tag)"
-          ></lib-color-chip>
-        </div>
-      </ng-container>
-      @if((loadingProgress$ | async); as progress) { @if(progress < 100) {
-      <mat-progress-spinner
-        class="progress-indicator"
-        mode="determinate"
-        [value]="progress"
-        [diameter]="20"
-        [strokeWidth]="2"
-      />
-      } }
-    </div>
+    @if (tags.length > 0) {
+      <div
+        class="tag-list"
+        cdkDropList
+        cdkDropListOrientation="mixed"
+        [cdkDropListData]="tags"
+        (cdkDropListDropped)="reorderTag($event)"
+      >
+        @for (tag of tags; track tag) {
+          <div cdkDrag class="search-tag">
+            <lib-color-chip
+              [text]="tag"
+              color="green"
+              [showCloseButton]="true"
+              (closeClick)="removeTag(tag)"
+            ></lib-color-chip>
+          </div>
+        }
+        @if (loadingProgress$ | async; as progress) {
+          @if (progress < 100) {
+            <mat-progress-spinner
+              class="progress-indicator"
+              mode="determinate"
+              [value]="progress"
+              [diameter]="20"
+              [strokeWidth]="2"
+            />
+          }
+        }
+      </div>
+    }
   </div>
 </div>

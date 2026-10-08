@@ -1,6 +1,7 @@
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import {
   AfterViewInit,
+  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   ElementRef,
@@ -34,6 +35,7 @@ import { map, Subject, takeUntil } from 'rxjs';
     NgxSkeletonLoaderModule,
   ],
   templateUrl: './skill-section.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './skill-section.component.scss',
 })
 export class SkillSectionComponent implements AfterViewInit, OnDestroy {

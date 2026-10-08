@@ -4,46 +4,16 @@
   "include": [],
   "references": [
     {
-      "path": "../web-metadata"
-    },
-    {
-      "path": "../tag-input"
-    },
-    {
-      "path": "../skill-section"
-    },
-    {
-      "path": "../../ui/section"
-    },
-    {
-      "path": "../../data-access/search-tags"
-    },
-    {
-      "path": "../../data-access/search-engine-domain"
-    },
-    {
-      "path": "../../data-access/search-engine-angular"
-    },
-    {
-      "path": "../project-list"
-    },
-    {
-      "path": "../matches-overview"
-    },
-    {
-      "path": "../../data-access/customization-state"
-    },
-    {
-      "path": "../contact-section"
-    },
-    {
-      "path": "../about-me"
-    },
-    {
       "path": "./tsconfig.lib.json"
     },
     {
       "path": "./tsconfig.spec.json"
     }
-  ]
+  ],
+  "compilerOptions": {
+    "module": "preserve",
+    "moduleResolution": "bundler",
+    "lib": ["dom", "es2022"],
+    "ignoreDeprecations": "6.0"
+  }
 }

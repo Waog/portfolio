@@ -14,7 +14,8 @@
     // NOTE: Angular's worker build compiles source directly, without composite builds.
     "composite": false,
     // NOTE: Declaration maps require declarations or composite mode.
-    "declarationMap": false
+    "declarationMap": false,
+    "rootDir": "../../libs/data-access/search-engine-worker/src/lib"
   },
   "include": ["../../libs/**/*.worker.ts"],
   "angularCompilerOptions": {

@@ -4,28 +4,16 @@
   "include": [],
   "references": [
     {
-      "path": "../../ui/section-header"
-    },
-    {
-      "path": "../../data-access/search-tags"
-    },
-    {
-      "path": "../../data-access/search-engine-domain"
-    },
-    {
-      "path": "../../data-access/search-engine-angular"
-    },
-    {
-      "path": "../../data-access/customization-state"
-    },
-    {
-      "path": "../../ui/color-chip"
-    },
-    {
       "path": "./tsconfig.lib.json"
     },
     {
       "path": "./tsconfig.spec.json"
     }
-  ]
+  ],
+  "compilerOptions": {
+    "module": "preserve",
+    "moduleResolution": "bundler",
+    "lib": ["dom", "es2022"],
+    "ignoreDeprecations": "6.0"
+  }
 }

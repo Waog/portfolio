@@ -1,12 +1,12 @@
 # Portfolio
 
-A personal portfolio website built with Angular 19 and SSR, organized as an Nx monorepo.
+A personal portfolio website built with Angular 22.1 and SSR, organized as an Nx monorepo.
 
 ## Tech Stack
 
-- **Framework:** [Angular 19](https://angular.dev) with Server-Side Rendering (SSR)
+- **Framework:** [Angular 22.1](https://angular.dev) with Server-Side Rendering (SSR)
 - **UI Library:** [Angular Material](https://material.angular.io)
-- **Monorepo:** [Nx](https://nx.dev)
+- **Monorepo:** [Nx 23.2.1](https://nx.dev)
 - **Testing:** [Jest](https://jestjs.io) (unit), [Vitest](https://vitest.dev) (unit), [Playwright](https://playwright.dev) (e2e)
 - **Component Explorer:** [Storybook](https://storybook.js.org)
 - **Linting:** [ESLint](https://eslint.org) with [Prettier](https://prettier.io)

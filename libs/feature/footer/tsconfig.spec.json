@@ -9,7 +9,11 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "types": ["jest", "node"],
-    "outDir": "./out-tsc/spec"
+    "outDir": "./out-tsc/spec",
+    "moduleResolution": "bundler",
+    "module": "preserve",
+    "lib": ["dom", "es2022"],
+    "rootDir": "."
   },
   "files": ["src/test-setup.ts"],
   "include": [

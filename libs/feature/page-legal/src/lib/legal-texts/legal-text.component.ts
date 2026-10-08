@@ -1,5 +1,4 @@
-import { CommonModule } from '@angular/common';
-import { Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 
 import { Language } from '../language-switch/language.enum';
 import { ImprintDeComponent } from './generated-wrapper-components/imprint.de.component';
@@ -10,13 +9,13 @@ import { PrivacyPolicyEnComponent } from './generated-wrapper-components/privacy
 @Component({
   selector: 'legal-text',
   imports: [
-    CommonModule,
     ImprintDeComponent,
     ImprintEnComponent,
     PrivacyPolicyDeComponent,
     PrivacyPolicyEnComponent,
   ],
   templateUrl: './legal-text.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './legal-text.component.scss',
 })
 export class LegalTextComponent {

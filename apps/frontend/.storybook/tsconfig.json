@@ -14,7 +14,9 @@
     // NOTE: This non-composite config emits no declarations, so declaration maps must be disabled.
     "declarationMap": false,
     // Angular's Webpack loader needs JavaScript output for story exports.
-    "noEmit": false
+    "noEmit": false,
+    "ignoreDeprecations": "6.0",
+    "rootDir": "../../.."
   },
   "exclude": [
     "../**/*.spec.ts",

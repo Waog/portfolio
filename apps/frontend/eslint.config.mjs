@@ -8,6 +8,11 @@ export default [
   {
     files: ['**/*.ts'],
     rules: {
+      // Keep existing change detection and injection patterns during the upgrade.
+      // TODO: enable default change detection and injection rules.
+      // also enable in other eslint config files
+      '@angular-eslint/prefer-on-push-component-change-detection': 'off',
+      '@angular-eslint/prefer-inject': 'off',
       '@angular-eslint/directive-selector': [
         'error',
         {

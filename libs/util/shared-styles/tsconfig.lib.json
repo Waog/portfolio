@@ -9,7 +9,11 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "types": [],
-    "outDir": "./out-tsc/lib"
+    "outDir": "./out-tsc/lib",
+    "module": "preserve",
+    "moduleResolution": "bundler",
+    "lib": ["dom", "es2022"],
+    "rootDir": "."
   },
   "include": ["src/**/*.ts"],
   "exclude": ["src/**/*.spec.ts", "src/**/*.test.ts", "src/test-setup.ts"],
