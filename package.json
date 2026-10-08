@@ -6,6 +6,10 @@
     "prepare": "husky"
   },
   "private": true,
+  "workspaces": [
+    "apps/*",
+    "libs/*/*"
+  ],
   "dependencies": {
     "@angular/animations": "~19.2.0",
     "@angular/cdk": "~19.2.0",

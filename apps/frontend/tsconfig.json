@@ -1,34 +1,34 @@
 {
-  "compilerOptions": {
-    "target": "es2022",
-    "forceConsistentCasingInFileNames": true,
-    "strict": true,
-    "noImplicitOverride": true,
-    "noPropertyAccessFromIndexSignature": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true
-  },
+  "extends": "../../tsconfig.base.json",
   "files": [],
   "include": [],
   "references": [
     {
-      "path": "./tsconfig.editor.json"
+      "path": "../../libs/feature/web-metadata"
+    },
+    {
+      "path": "../../libs/util/shared-styles"
+    },
+    {
+      "path": "../../libs/feature/page-legal"
+    },
+    {
+      "path": "../../libs/feature/page-home"
+    },
+    {
+      "path": "../../libs/feature/navigation"
+    },
+    {
+      "path": "../../libs/feature/footer"
+    },
+    {
+      "path": "../../libs/data-access/customization-state"
     },
     {
       "path": "./tsconfig.app.json"
     },
     {
       "path": "./tsconfig.spec.json"
-    },
-    {
-      "path": "./.storybook/tsconfig.json"
     }
-  ],
-  "extends": "../../tsconfig.base.json",
-  "angularCompilerOptions": {
-    "enableI18nLegacyMessageIdFormat": false,
-    "strictInjectionParameters": true,
-    "strictInputAccessModifiers": true,
-    "strictTemplates": true
-  }
+  ]
 }

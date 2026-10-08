@@ -1,5 +1,5 @@
-import RandExp = require('randexp');
-import seedrandom = require('seedrandom');
+import RandExp from 'randexp';
+import seedrandom from 'seedrandom';
 
 describe('randexp Self-Test', () => {
   it('seedrandom self-test', () => {

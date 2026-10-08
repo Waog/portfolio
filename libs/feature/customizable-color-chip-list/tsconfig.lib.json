@@ -1,11 +1,18 @@
 {
-  "extends": "./tsconfig.json",
+  "extends": "../../../tsconfig.base.json",
   "compilerOptions": {
-    "outDir": "../../../dist/out-tsc",
+    "target": "es2022",
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
     "declaration": true,
     "declarationMap": true,
     "inlineSources": true,
-    "types": []
+    "types": [],
+    "outDir": "./out-tsc/lib"
   },
   "exclude": [
     "src/**/*.spec.ts",
@@ -13,5 +20,25 @@
     "jest.config.ts",
     "src/**/*.test.ts"
   ],
-  "include": ["src/**/*.ts"]
+  "include": ["src/**/*.ts"],
+  "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "strictTemplates": true
+  },
+  "references": [
+    {
+      "path": "../../data-access/url-state/tsconfig.lib.json"
+    },
+    {
+      "path": "../../data-access/customization-state/tsconfig.lib.json"
+    },
+    {
+      "path": "../../ui/color-chip-list/tsconfig.lib.json"
+    },
+    {
+      "path": "../../ui/color-chip/tsconfig.lib.json"
+    }
+  ]
 }

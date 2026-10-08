@@ -1,14 +1,24 @@
 {
-  "extends": "./tsconfig.json",
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "outDir": "../../dist/out-tsc",
+    "target": "es2022",
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
     "types": [
       "vitest/globals",
       "vitest/importMeta",
       "vite/client",
       "node",
       "vitest"
-    ]
+    ],
+    "outDir": "./out-tsc/spec",
+    // NOTE: The Angular Vitest transformer compiles source directly, without composite builds.
+    "composite": false,
+    "declaration": true
   },
   "include": [
     "vite.config.ts",
@@ -23,7 +33,21 @@
     "src/**/*.spec.js",
     "src/**/*.test.jsx",
     "src/**/*.spec.jsx",
-    "src/**/*.d.ts"
+    "src/**/*.d.ts",
+    // NOTE: Include library sources so the Angular transformer can compile imported components.
+    "../../libs/*/*/src/**/*.ts"
   ],
-  "files": ["src/test-setup.ts"]
+  "files": ["src/test-setup.ts"],
+  "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "strictTemplates": true
+  },
+  "exclude": [
+    "../../libs/**/*.spec.ts",
+    "../../libs/**/*.test.ts",
+    "../../libs/**/*.stories.ts",
+    "../../libs/**/test-setup.ts"
+  ]
 }

@@ -1,8 +1,13 @@
 import { MemoizeAllArgs } from '@portfolio/memoize';
 
-import { Category, TagName, TAXONOMY, TaxonomyData } from './taxonomy.data';
+import {
+  type Category,
+  type TagName,
+  TAXONOMY,
+  type TaxonomyData,
+} from './taxonomy.data';
 
-export { Category, TagName } from './taxonomy.data';
+export type { Category, TagName } from './taxonomy.data';
 
 export class Tag {
   private readonly taxonomyData: TaxonomyData;

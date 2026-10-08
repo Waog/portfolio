@@ -1,9 +1,10 @@
 import 'jest-expect-message';
 
+import RandExp from 'randexp';
+import seedrandom from 'seedrandom';
+
 import { Tag } from './tag';
 import { TagName, TAXONOMY } from './taxonomy.data';
-import RandExp = require('randexp');
-import seedrandom = require('seedrandom');
 
 describe('Tag', () => {
   describe('static get()', () => {

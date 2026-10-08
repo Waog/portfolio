@@ -1,0 +1,90 @@
+{
+  "extends": "./tsconfig.base.json",
+  "files": [],
+  "references": [
+    {
+      "path": "./libs/feature/customizable-color-chip-list"
+    },
+    {
+      "path": "./libs/data-access/search-engine-angular"
+    },
+    {
+      "path": "./libs/data-access/search-engine-domain"
+    },
+    {
+      "path": "./libs/data-access/search-engine-worker"
+    },
+    {
+      "path": "./libs/data-access/customization-state"
+    },
+    {
+      "path": "./libs/feature/matches-overview"
+    },
+    {
+      "path": "./libs/feature/contact-section"
+    },
+    {
+      "path": "./libs/data-access/search-tags"
+    },
+    {
+      "path": "./libs/feature/skill-section"
+    },
+    {
+      "path": "./libs/data-access/url-state"
+    },
+    {
+      "path": "./libs/feature/project-list"
+    },
+    {
+      "path": "./libs/data-access/projects"
+    },
+    {
+      "path": "./libs/data-access/taxonomy"
+    },
+    {
+      "path": "./libs/feature/web-metadata"
+    },
+    {
+      "path": "./libs/ui/color-chip-list"
+    },
+    {
+      "path": "./libs/feature/navigation"
+    },
+    {
+      "path": "./libs/feature/page-legal"
+    },
+    {
+      "path": "./libs/feature/page-home"
+    },
+    {
+      "path": "./libs/ui/section-header"
+    },
+    {
+      "path": "./libs/feature/tag-input"
+    },
+    {
+      "path": "./libs/feature/about-me"
+    },
+    {
+      "path": "./libs/feature/footer"
+    },
+    {
+      "path": "./libs/ui/color-chip"
+    },
+    {
+      "path": "./apps/frontend-e2e"
+    },
+    {
+      "path": "./libs/util/memoize"
+    },
+    {
+      "path": "./libs/ui/section"
+    },
+    {
+      "path": "./apps/frontend"
+    },
+    {
+      "path": "./libs/util/shared-styles"
+    }
+  ]
+}

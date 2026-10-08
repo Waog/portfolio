@@ -1,7 +1,19 @@
 {
-  "extends": "../tsconfig.json",
+  "extends": "../../../tsconfig.base.json",
   "compilerOptions": {
-    "emitDecoratorMetadata": true
+    "target": "es2022",
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "emitDecoratorMetadata": true,
+    "outDir": "../out-tsc/storybook",
+    "composite": false,
+    // NOTE: This non-composite config emits no declarations, so declaration maps must be disabled.
+    "declarationMap": false,
+    "noEmit": true
   },
   "exclude": ["../**/*.spec.ts"],
   "include": [
@@ -17,5 +29,11 @@
     "../../../libs/**/*.stories.mdx",
     "*.js",
     "*.ts"
-  ]
+  ],
+  "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "strictTemplates": true
+  }
 }
