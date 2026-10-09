@@ -5,11 +5,7 @@ import { join } from 'node:path';
 
 import { APP_BASE_HREF } from '@angular/common';
 import { CommonEngine } from '@angular/ssr/node';
-import express, {
-  type NextFunction,
-  type Request,
-  type Response,
-} from 'express';
+import express, { type Request, type Response } from 'express';
 
 import bootstrap from './main.server';
 
@@ -27,29 +23,27 @@ export function app(): express.Express {
   server.set('views', distFolder);
 
   // Example Express Rest API endpoints
-  // server.get('/api/**', (req, res) => { });
+  // server.get('/api/{*path}', (req, res) => { });
   // Serve static files from /browser
   server.get(
-    '*.*',
+    '/{*file}.{*extension}',
     express.static(distFolder, {
       maxAge: '1y',
     })
   );
 
   // All regular routes use the Angular engine
-  server.get('*', (req: Request, res: Response, next: NextFunction) => {
+  server.get('/{*path}', async (req: Request, res: Response) => {
     const { protocol, originalUrl, baseUrl, headers } = req;
 
-    commonEngine
-      .render({
-        bootstrap,
-        documentFilePath: indexHtml,
-        url: `${protocol}://${headers.host}${originalUrl}`,
-        publicPath: distFolder,
-        providers: [{ provide: APP_BASE_HREF, useValue: baseUrl }],
-      })
-      .then(html => res.send(html))
-      .catch(err => next(err));
+    const html = await commonEngine.render({
+      bootstrap,
+      documentFilePath: indexHtml,
+      url: `${protocol}://${headers.host}${originalUrl}`,
+      publicPath: distFolder,
+      providers: [{ provide: APP_BASE_HREF, useValue: baseUrl }],
+    });
+    res.send(html);
   });
 
   return server;
@@ -60,7 +54,11 @@ function run(): void {
 
   // Start up the Node server
   const server = app();
-  server.listen(port, () => {
+  server.listen(port, error => {
+    if (error) {
+      throw error;
+    }
+
     console.log(`Node Express server listening on http://localhost:${port}`);
   });
 }
