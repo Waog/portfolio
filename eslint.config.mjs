@@ -20,6 +20,8 @@ export default [
     ignores: [
       '**/dist',
       '**/out-tsc',
+      '**/*.gen.*',
+      '**/generated/**',
       '**/vite.config.*.timestamp*',
       '**/vitest.config.*.timestamp*',
     ],

@@ -20,6 +20,8 @@ export default defineConfig(() => ({
     tanstackRouter({
       routesDirectory: resolve(import.meta.dirname, 'src/routes'),
       generatedRouteTree: resolve(import.meta.dirname, 'src/routeTree.gen.ts'),
+      // Keep generation consistent with the committed file and workspace style.
+      semicolons: true,
     }),
     react(),
     tailwindcss(),

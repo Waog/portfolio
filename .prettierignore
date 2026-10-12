@@ -5,4 +5,8 @@
 /.nx/workspace-data
 .angular
 
+# Generated files are formatted by their generators.
+**/*.gen.*
+**/generated/**
+
 .nx/self-healing
