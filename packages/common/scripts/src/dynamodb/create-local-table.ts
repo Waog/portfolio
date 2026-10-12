@@ -196,4 +196,7 @@ const ensureTable = async (
   }
 };
 
-await ensureTable(client, tableName, globalSecondaryIndexes);
+ensureTable(client, tableName, globalSecondaryIndexes).catch(error => {
+  console.error(error);
+  process.exitCode = 1;
+});
