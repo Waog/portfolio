@@ -47,3 +47,5 @@ storybook-static
 .nx/self-healing
 .nx/migrate-runs
 .grit
+runtime-config.json
+.terraform

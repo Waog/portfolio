@@ -1,0 +1,45 @@
+/**
+ * Runs `terraform init` against the remote S3 backend, resolving the
+ * backend config (bucket + region + per-env state key) from the AWS
+ * SDK credential chain. Pass the environment name via the `TF_ENV`
+ * env var (defaults to `dev`).
+ */
+import { execFileSync } from 'node:child_process';
+import { join, resolve } from 'node:path';
+import { resolveAwsConfig } from './aws-config';
+import { pluginCacheEnv } from './env';
+
+const STATE_KEY_PREFIX = 'portfolio-infra';
+
+const projectRootRel = process.argv[2];
+if (!projectRootRel) {
+  throw new Error(
+    'Expected the project root as argv[2] — this script is wired up by the generated `init` nx target and should be invoked through it.'
+  );
+}
+const srcDir = join(resolve(process.cwd(), projectRootRel), 'src');
+
+const main = async () => {
+  const { accountId, region } = await resolveAwsConfig();
+  const env = process.env.TF_ENV ?? 'dev';
+  const bucket = `${accountId}-tf-state-${region}`;
+  const key = `${STATE_KEY_PREFIX}/${env}/terraform.tfstate`;
+
+  execFileSync(
+    'terraform',
+    [
+      'init',
+      '-reconfigure',
+      `-backend-config=region=${region}`,
+      `-backend-config=bucket=${bucket}`,
+      `-backend-config=key=${key}`,
+      ...process.argv.slice(3),
+    ],
+    { cwd: srcDir, stdio: 'inherit', env: pluginCacheEnv(projectRootRel) }
+  );
+};
+
+main().catch(err => {
+  console.error(err);
+  process.exit(1);
+});

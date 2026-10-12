@@ -1,0 +1,25 @@
+{
+  "version": "1.0",
+  "sources": ["src/"],
+  "plugins": {
+    "openapi": {
+      "service": "com.oliverstadie.portfolio#PortfolioApi",
+      "version": "3.1.0",
+      "tags": true,
+      "useIntegerType": true
+    },
+    "typescript-ssdk-codegen": {
+      "package": "@portfolio/portfolio-api-ssdk",
+      "packageVersion": "0.0.1"
+    }
+  },
+  "maven": {
+    "dependencies": [
+      "software.amazon.smithy:smithy-model:1.74.0",
+      "software.amazon.smithy:smithy-aws-traits:1.74.0",
+      "software.amazon.smithy:smithy-validation-model:1.74.0",
+      "software.amazon.smithy:smithy-openapi:1.74.0",
+      "software.amazon.smithy.typescript:smithy-aws-typescript-codegen:0.54.0"
+    ]
+  }
+}

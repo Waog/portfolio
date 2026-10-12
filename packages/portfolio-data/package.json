@@ -1,0 +1,17 @@
+{
+  "name": "@portfolio/portfolio-data",
+  "version": "0.0.1",
+  "private": true,
+  "type": "commonjs",
+  "dependencies": {
+    "@aws-lambda-powertools/parameters": "2.35.0",
+    "@aws-sdk/client-appconfigdata": "3.1146.0",
+    "@aws-sdk/client-dynamodb": "3.1146.0",
+    "electrodb": "3.9.3",
+    "tslib": "^2.3.0"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "8.10.164",
+    "@types/node": "26.6.4"
+  }
+}

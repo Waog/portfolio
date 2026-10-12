@@ -1,0 +1,148 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "6.67.0"
+    }
+    null = {
+      source  = "hashicorp/null"
+      version = "3.3.2"
+    }
+  }
+}
+
+# Variables
+variable "callback_url" {
+  description = "Callback URL to add (e.g., https://d123456789.cloudfront.net)"
+  type        = string
+}
+
+# Read runtime config to get user pool client details
+module "runtime_config_reader" {
+  source = "../../runtime-config/read"
+
+  namespace = "connection"
+}
+
+# Extract cognito details from runtime config
+locals {
+  cognito_props = try(module.runtime_config_reader.config.cognitoProps, null)
+
+  user_pool_id        = local.cognito_props != null ? local.cognito_props.userPoolId : null
+  user_pool_client_id = local.cognito_props != null ? local.cognito_props.userPoolWebClientId : null
+}
+
+# Validation: Ensure cognito props exist in runtime config
+resource "terraform_data" "validate_cognito_props" {
+  lifecycle {
+    precondition {
+      condition     = local.cognito_props != null
+      error_message = "ERROR: cognitoProps not found in runtime config. Ensure user-identity module has been deployed first and has added cognitoProps to the runtime configuration."
+    }
+
+    precondition {
+      condition     = local.user_pool_id != null && local.user_pool_id != ""
+      error_message = "ERROR: cognitoProps.userPoolId is missing or empty in runtime config. Check that user-identity module completed successfully."
+    }
+
+    precondition {
+      condition     = local.user_pool_client_id != null && local.user_pool_client_id != ""
+      error_message = "ERROR: cognitoProps.userPoolWebClientId is missing or empty in runtime config. Check that user-identity module completed successfully."
+    }
+  }
+}
+
+
+# Update the user pool client with additional callback URL
+resource "null_resource" "add_callback_url" {
+  triggers = {
+    callback_url        = var.callback_url
+    user_pool_id        = local.user_pool_id
+    user_pool_client_id = local.user_pool_client_id
+  }
+
+  provisioner "local-exec" {
+    command = <<-EOT
+      uv run --with boto3==1.43.108 python -c "
+import boto3
+import os
+import sys
+import time
+
+# Configuration
+user_pool_id = os.environ['USER_POOL_ID']
+client_id = os.environ['CLIENT_ID']
+new_callback_url = os.environ['NEW_CALLBACK_URL']
+
+# Initialize Cognito client
+cognito = boto3.client('cognito-idp')
+
+# A freshly created user pool / client can take several minutes to become
+# visible to describe_user_pool_client, so retry on ResourceNotFoundException.
+def describe_with_retry():
+    deadline = time.time() + 5 * 60
+    while True:
+        try:
+            return cognito.describe_user_pool_client(
+                UserPoolId=user_pool_id,
+                ClientId=client_id,
+            )
+        except cognito.exceptions.ResourceNotFoundException:
+            if time.time() >= deadline:
+                raise
+            time.sleep(5)
+
+try:
+    # Get current user pool client configuration
+    response = describe_with_retry()
+
+    client_config = response['UserPoolClient']
+    current_callback_urls = client_config.get('CallbackURLs', [])
+    current_logout_urls = client_config.get('LogoutURLs', [])
+
+    # Check if URL already exists
+    if new_callback_url in current_callback_urls:
+        print(f'Callback URL {new_callback_url} already exists')
+    else:
+        # Add new URL to both callback and logout URLs
+        updated_callback_urls = current_callback_urls + [new_callback_url]
+        updated_logout_urls = current_logout_urls + [new_callback_url]
+
+        # Update the user pool client
+        # Only include valid update parameters (exclude read-only fields and ones we're setting)
+        valid_update_params = [
+            'ClientName', 'RefreshTokenValidity', 'AccessTokenValidity', 'IdTokenValidity',
+            'TokenValidityUnits', 'ReadAttributes', 'WriteAttributes', 'ExplicitAuthFlows',
+            'SupportedIdentityProviders', 'DefaultRedirectURI', 'AllowedOAuthFlows',
+            'AllowedOAuthScopes', 'AllowedOAuthFlowsUserPoolClient', 'AnalyticsConfiguration',
+            'PreventUserExistenceErrors', 'EnableTokenRevocation',
+            'EnablePropagateAdditionalUserContextData', 'AuthSessionValidity', 'RefreshTokenRotation'
+        ]
+
+        update_config = {k: v for k, v in client_config.items() if k in valid_update_params}
+
+        cognito.update_user_pool_client(
+            UserPoolId=user_pool_id,
+            ClientId=client_id,
+            CallbackURLs=updated_callback_urls,
+            LogoutURLs=updated_logout_urls,
+            **update_config
+        )
+
+        print(f'Successfully added callback URL: {new_callback_url}')
+
+except Exception as e:
+    print(f'Error updating callback URLs: {e}')
+    sys.exit(1)
+"
+    EOT
+    environment = {
+      USER_POOL_ID     = local.user_pool_id
+      CLIENT_ID        = local.user_pool_client_id
+      NEW_CALLBACK_URL = var.callback_url
+    }
+  }
+
+  depends_on = [terraform_data.validate_cognito_props]
+}
+

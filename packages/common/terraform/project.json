@@ -1,0 +1,156 @@
+{
+  "name": "@portfolio/terraform",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "packages/common/terraform/src",
+  "metadata": {
+    "generator": "terraform#project",
+    "iac": "terraform"
+  },
+  "targets": {
+    "assemble": {
+      "executor": "nx:noop",
+      "dependsOn": [
+        "@portfolio/react-reference:assemble",
+        "@portfolio/portfolio-api:assemble",
+        "generate:portfolio-api-operations",
+        "@portfolio/portfolio-data:assemble"
+      ]
+    },
+    "build": {
+      "dependsOn": [
+        "format",
+        "checkov",
+        "test",
+        "@portfolio/react-reference:build",
+        "@portfolio/portfolio-api:build",
+        "generate:portfolio-api-operations",
+        "@portfolio/portfolio-data:build"
+      ],
+      "outputs": []
+    },
+    "checkov": {
+      "executor": "nx:run-commands",
+      "cache": true,
+      "inputs": ["default", "^production"],
+      "outputs": ["{workspaceRoot}/dist/{projectRoot}/checkov"],
+      "options": {
+        "command": "uvx --from checkov==3.3.22 checkov --config-file ../checkov.yml --directory . -o cli -o json --output-file-path console,../../../../dist/{projectRoot}/checkov/checkov_report.json",
+        "forwardAllArgs": true,
+        "cwd": "{projectRoot}/src"
+      }
+    },
+    "format": {
+      "executor": "nx:run-commands",
+      "cache": true,
+      "inputs": ["default"],
+      "options": {
+        "command": "terraform fmt -check -diff",
+        "forwardAllArgs": true,
+        "cwd": "{projectRoot}/src"
+      },
+      "configurations": {
+        "fix": {
+          "command": "terraform fmt"
+        },
+        "skip-lint": {
+          "command": "node -e \"\""
+        }
+      }
+    },
+    "init": {
+      "executor": "nx:run-commands",
+      "defaultConfiguration": "dev",
+      "dependsOn": ["terraform-init"],
+      "options": {
+        "forwardAllArgs": true,
+        "cwd": "{projectRoot}/src",
+        "parallel": false,
+        "env": {
+          "TF_PLUGIN_CACHE_DIR": "../../../../.terraform/plugin-cache/{projectRoot}"
+        }
+      },
+      "configurations": {
+        "dev": {
+          "commands": [
+            {
+              "command": "shx mkdir -p ../../../../.terraform/plugin-cache/{projectRoot}",
+              "forwardAllArgs": false
+            },
+            "terraform init"
+          ]
+        }
+      }
+    },
+    "lint": {
+      "dependsOn": ["format"]
+    },
+    "terraform-init": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          {
+            "command": "shx mkdir -p ../../../../.terraform/plugin-cache/{projectRoot}",
+            "forwardAllArgs": false
+          },
+          "terraform init -backend=false"
+        ],
+        "forwardAllArgs": true,
+        "cwd": "{projectRoot}/src",
+        "parallel": false,
+        "env": {
+          "TF_DATA_DIR": "../../../../dist/{projectRoot}/terraform-init",
+          "TF_PLUGIN_CACHE_DIR": "../../../../.terraform/plugin-cache/{projectRoot}"
+        }
+      }
+    },
+    "test": {
+      "executor": "nx:run-commands",
+      "cache": true,
+      "inputs": ["default", "^production"],
+      "outputs": [],
+      "dependsOn": ["terraform-init"],
+      "options": {
+        "command": "terraform test",
+        "forwardAllArgs": true,
+        "cwd": "{projectRoot}/src",
+        "env": {
+          "TF_DATA_DIR": "../../../../dist/{projectRoot}/terraform-init"
+        }
+      }
+    },
+    "validate": {
+      "executor": "nx:run-commands",
+      "cache": true,
+      "inputs": ["default", "^production"],
+      "outputs": [],
+      "dependsOn": ["terraform-init"],
+      "options": {
+        "command": "terraform validate",
+        "forwardAllArgs": true,
+        "cwd": "{projectRoot}/src",
+        "env": {
+          "TF_DATA_DIR": "../../../../dist/{projectRoot}/terraform-init"
+        }
+      }
+    },
+    "generate:portfolio-api-operations": {
+      "executor": "@aws/nx-plugin:open-api-codegen",
+      "dependsOn": ["@portfolio/portfolio-api-model:build"],
+      "cache": true,
+      "inputs": [
+        {
+          "dependentTasksOutputFiles": "**/*.json"
+        }
+      ],
+      "outputs": [
+        "{workspaceRoot}/packages/common/terraform/src/generated/portfolio-api"
+      ],
+      "options": {
+        "generator": "json-metadata",
+        "openApiSpecPath": "dist/packages/portfolio-api/model/build/openapi/openapi.json",
+        "outputPath": "packages/common/terraform/src/generated/portfolio-api"
+      }
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "name": "@portfolio/common-scripts",
+  "version": "0.0.1",
+  "private": true,
+  "type": "commonjs",
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "3.1146.0",
+    "tslib": "^2.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "26.6.4"
+  }
+}

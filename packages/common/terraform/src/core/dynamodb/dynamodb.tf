@@ -1,0 +1,195 @@
+terraform {
+  required_version = ">= 1.0"
+
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "6.67.0"
+    }
+  }
+}
+
+variable "name" {
+  description = "Name for the DynamoDB table."
+  type        = string
+}
+
+variable "billing_mode" {
+  description = "Controls how you are charged for read and write throughput."
+  type        = string
+  default     = "PAY_PER_REQUEST"
+}
+
+variable "point_in_time_recovery_enabled" {
+  description = "Whether to enable point-in-time recovery for the table."
+  type        = bool
+  default     = true
+}
+
+variable "deletion_protection_enabled" {
+  description = "Whether to enable deletion protection on the table."
+  type        = bool
+  default     = true
+}
+
+variable "encryption" {
+  description = "Server-side encryption for the table. One of CUSTOMER_MANAGED, AWS_MANAGED or DEFAULT (the AWS owned key, at no cost and with no key to manage). Changing this on an already-deployed table away from CUSTOMER_MANAGED requires a manual step first - see the ts#dynamodb generator's docs."
+  type        = string
+  default     = "CUSTOMER_MANAGED"
+
+  validation {
+    condition     = contains(["CUSTOMER_MANAGED", "AWS_MANAGED", "DEFAULT"], var.encryption)
+    error_message = "encryption must be one of CUSTOMER_MANAGED, AWS_MANAGED or DEFAULT."
+  }
+}
+
+variable "kms_key_arn" {
+  description = "ARN of an existing KMS key used to encrypt the table when encryption is CUSTOMER_MANAGED. When not provided and create_kms_key is true, a new key is created. Note that a customer-supplied key must already grant the DynamoDB service the necessary permissions in its own key policy."
+  type        = string
+  default     = null
+}
+
+variable "create_kms_key" {
+  description = "Whether to create a KMS key for the table. Only applies when encryption is CUSTOMER_MANAGED. Set to false when supplying kms_key_arn."
+  type        = bool
+  default     = true
+}
+
+variable "enable_key_rotation" {
+  description = "Whether to enable automatic key rotation on the KMS key used to encrypt the table. Only applies when encryption is CUSTOMER_MANAGED and create_kms_key is true."
+  type        = bool
+  default     = true
+}
+
+variable "global_secondary_indexes" {
+  description = "Global secondary indexes to create on the table. All key attributes must be of type string."
+  type = list(object({
+    name            = string
+    hash_key        = string
+    range_key       = string
+    projection_type = string
+  }))
+  default = []
+}
+
+locals {
+  gsi_attribute_names = distinct(flatten([
+    for gsi in var.global_secondary_indexes : [gsi.hash_key, gsi.range_key]
+  ]))
+
+  create_table_key = var.encryption == "CUSTOMER_MANAGED" && var.create_kms_key
+  table_kms_key_arn = (
+    var.encryption == "CUSTOMER_MANAGED" ? (local.create_table_key ? aws_kms_key.table[0].arn : var.kms_key_arn) :
+    var.encryption == "AWS_MANAGED" ? "arn:${data.aws_partition.current.partition}:kms:${data.aws_region.current.region}:${data.aws_caller_identity.current.account_id}:alias/aws/dynamodb" :
+    null
+  )
+}
+
+data "aws_caller_identity" "current" {}
+data "aws_partition" "current" {}
+data "aws_region" "current" {}
+
+resource "aws_kms_key" "table" {
+  count = local.create_table_key ? 1 : 0
+
+  description         = "KMS key for DynamoDB table ${var.name}"
+  enable_key_rotation = var.enable_key_rotation
+
+  deletion_window_in_days = 30
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Sid    = "EnableRootAccess"
+        Effect = "Allow"
+        Principal = {
+          AWS = "arn:${data.aws_partition.current.partition}:iam::${data.aws_caller_identity.current.account_id}:root"
+        }
+        Action   = "kms:*"
+        Resource = "*"
+      },
+      {
+        Sid    = "AllowDynamoDBService"
+        Effect = "Allow"
+        Principal = {
+          Service = "dynamodb.amazonaws.com"
+        }
+        Action = [
+          "kms:Encrypt",
+          "kms:Decrypt",
+          "kms:ReEncrypt*",
+          "kms:GenerateDataKey*",
+          "kms:DescribeKey",
+          "kms:CreateGrant"
+        ]
+        Resource = "*"
+      }
+    ]
+  })
+}
+
+resource "aws_dynamodb_table" "table" {
+  #checkov:skip=CKV_AWS_119:Encryption is configurable via var.encryption; checkov cannot resolve the conditional server_side_encryption.enabled expression
+  name                        = var.name
+  billing_mode                = var.billing_mode
+  hash_key                    = "pk"
+  range_key                   = "sk"
+  deletion_protection_enabled = var.deletion_protection_enabled
+
+  attribute {
+    name = "pk"
+    type = "S"
+  }
+
+  attribute {
+    name = "sk"
+    type = "S"
+  }
+
+  dynamic "attribute" {
+    for_each = toset(local.gsi_attribute_names)
+    content {
+      name = attribute.value
+      type = "S"
+    }
+  }
+
+  dynamic "global_secondary_index" {
+    for_each = var.global_secondary_indexes
+    content {
+      name            = global_secondary_index.value.name
+      hash_key        = global_secondary_index.value.hash_key
+      range_key       = global_secondary_index.value.range_key
+      projection_type = global_secondary_index.value.projection_type
+    }
+  }
+
+  point_in_time_recovery {
+    enabled = var.point_in_time_recovery_enabled
+  }
+
+  server_side_encryption {
+    enabled     = var.encryption != "DEFAULT"
+    kms_key_arn = local.table_kms_key_arn
+  }
+
+  lifecycle {
+    prevent_destroy = true
+  }
+}
+
+output "table_name" {
+  description = "Name of the DynamoDB table."
+  value       = aws_dynamodb_table.table.name
+}
+
+output "table_arn" {
+  description = "ARN of the DynamoDB table."
+  value       = aws_dynamodb_table.table.arn
+}
+
+output "kms_key_arn" {
+  description = "ARN of the KMS key used to encrypt the DynamoDB table, or null when using the AWS owned key (encryption = DEFAULT)."
+  value       = local.table_kms_key_arn
+}

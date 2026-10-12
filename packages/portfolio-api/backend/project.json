@@ -1,0 +1,137 @@
+{
+  "name": "@portfolio/portfolio-api",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/portfolio-api/backend/src",
+  "projectType": "library",
+  "tags": [],
+  "metadata": {
+    "generator": "ts#smithy-api",
+    "apiName": "portfolio-api",
+    "auth": "iam",
+    "modelProject": "@portfolio/portfolio-api-model",
+    "iac": "terraform",
+    "ports": [3001],
+    "components": [
+      {
+        "generator": "ts#dynamodb#smithy-connection",
+        "path": "packages/portfolio-data",
+        "name": "@portfolio/portfolio-data"
+      }
+    ]
+  },
+  "targets": {
+    "assemble": {
+      "dependsOn": ["compile", "bundle"]
+    },
+    "build": {
+      "dependsOn": ["lint", "compile", "test", "bundle"]
+    },
+    "compile": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["copy-ssdk"],
+      "outputs": ["{workspaceRoot}/dist/{projectRoot}/tsc"],
+      "options": {
+        "command": "tsc --build tsconfig.lib.json",
+        "cwd": "{projectRoot}"
+      }
+    },
+    "format": {
+      "executor": "nx:run-commands",
+      "cache": true,
+      "inputs": ["biome"],
+      "options": {
+        "command": "biome format {projectRoot}"
+      },
+      "configurations": {
+        "fix": {
+          "command": "biome format --write {projectRoot}"
+        },
+        "skip-lint": {
+          "command": "node -e \"\""
+        }
+      }
+    },
+    "lint": {
+      "executor": "nx:run-commands",
+      "cache": true,
+      "inputs": ["biome"],
+      "dependsOn": ["format"],
+      "options": {
+        "command": "biome lint {projectRoot}"
+      },
+      "configurations": {
+        "fix": {
+          "command": "biome check --write {projectRoot}"
+        },
+        "skip-lint": {
+          "command": "node -e \"\""
+        }
+      }
+    },
+    "bundle": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["compile"],
+      "cache": true,
+      "inputs": ["default"],
+      "outputs": ["{workspaceRoot}/dist/{projectRoot}/bundle"],
+      "options": {
+        "command": "rolldown -c rolldown.config.ts",
+        "cwd": "{projectRoot}"
+      }
+    },
+    "copy-ssdk": {
+      "cache": true,
+      "inputs": [
+        {
+          "dependentTasksOutputFiles": "**/*"
+        }
+      ],
+      "executor": "nx:run-commands",
+      "outputs": ["{projectRoot}/src/generated"],
+      "dependsOn": ["@portfolio/portfolio-api-model:build"],
+      "options": {
+        "commands": [
+          "shx rm -rf {projectRoot}/src/generated",
+          "shx mkdir -p {projectRoot}/src/generated",
+          "shx cp -R dist/packages/portfolio-api/model/build/ssdk/. {projectRoot}/src/generated/ssdk"
+        ],
+        "parallel": false
+      }
+    },
+    "watch-copy-ssdk": {
+      "executor": "nx:run-commands",
+      "continuous": true,
+      "options": {
+        "command": "nx watch --projects=@portfolio/portfolio-api-model --includeDependencies -- nx run @portfolio/portfolio-api:copy-ssdk"
+      }
+    },
+    "serve": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["copy-ssdk", "watch-copy-ssdk"],
+      "continuous": true,
+      "options": {
+        "command": "tsx --watch src/local-server.ts",
+        "cwd": "{projectRoot}"
+      }
+    },
+    "dev": {
+      "executor": "nx:run-commands",
+      "dependsOn": [
+        "copy-ssdk",
+        "watch-copy-ssdk",
+        {
+          "projects": ["@portfolio/portfolio-data"],
+          "target": "dev"
+        }
+      ],
+      "continuous": true,
+      "options": {
+        "command": "tsx --watch src/local-server.ts",
+        "cwd": "{projectRoot}",
+        "env": {
+          "LOCAL_DEV": "true"
+        }
+      }
+    }
+  }
+}

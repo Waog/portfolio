@@ -1,0 +1,194 @@
+terraform {
+  required_version = ">= 1.0"
+
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "6.67.0"
+    }
+    random = {
+      source  = "hashicorp/random"
+      version = "3.9.1"
+    }
+  }
+}
+
+variable "bucket_name_prefix" {
+  description = "Optional prefix to apply to the generated bucket name. Useful when you want a stable, human-recognisable identifier in addition to the account/region/random suffix."
+  type        = string
+  default     = "assets"
+}
+
+variable "tags" {
+  description = "Tags to apply to all resources"
+  type        = map(string)
+  default     = {}
+}
+
+data "aws_caller_identity" "current" {}
+data "aws_region" "current" {}
+
+resource "random_string" "suffix" {
+  length  = 8
+  special = false
+  upper   = false
+}
+
+locals {
+  # Delivery source/destination names have a 60 character maximum. Truncate the
+  # bucket name prefix so the delivery names stay within the limit.
+  access_logs_name_prefix = substr(var.bucket_name_prefix, 0, 16)
+}
+
+# KMS key encrypting the server access logs delivered to CloudWatch Logs.
+resource "aws_kms_key" "access_logs" {
+  description             = "KMS key for ${var.bucket_name_prefix} asset bucket access logs"
+  enable_key_rotation     = true
+  deletion_window_in_days = 7
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Sid       = "EnableIAMUserPermissions"
+        Effect    = "Allow"
+        Principal = { AWS = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root" }
+        Action    = "kms:*"
+        Resource  = "*"
+      },
+      {
+        Sid       = "AllowCloudWatchLogs"
+        Effect    = "Allow"
+        Principal = { Service = "logs.${data.aws_region.current.region}.amazonaws.com" }
+        Action = [
+          "kms:Encrypt",
+          "kms:Decrypt",
+          "kms:ReEncrypt*",
+          "kms:GenerateDataKey*",
+          "kms:DescribeKey"
+        ]
+        Resource = "*"
+        Condition = {
+          ArnLike = {
+            "kms:EncryptionContext:aws:logs:arn" = "arn:aws:logs:${data.aws_region.current.region}:${data.aws_caller_identity.current.account_id}:log-group:*"
+          }
+        }
+      }
+    ]
+  })
+
+  tags = var.tags
+}
+
+# CloudWatch log group receiving the asset bucket server access logs.
+resource "aws_cloudwatch_log_group" "access_logs" {
+  name              = "/aws/s3/${var.bucket_name_prefix}-access-logs-${random_string.suffix.result}"
+  retention_in_days = 365
+  kms_key_id        = aws_kms_key.access_logs.arn
+
+  tags = var.tags
+}
+
+# Shared asset bucket
+resource "aws_s3_bucket" "assets" {
+  #checkov:skip=CKV2_AWS_61:Lifecycle configuration not required for transient build artefacts
+  #checkov:skip=CKV_AWS_144:Cross-region replication not required for asset bucket
+  #checkov:skip=CKV2_AWS_62:Event notifications not required for asset bucket
+  #checkov:skip=CKV_AWS_145:AES256 (S3-managed) encryption is sufficient for build artefacts
+  #checkov:skip=CKV_AWS_18:Server access logs are delivered to CloudWatch Logs (see aws_cloudwatch_log_delivery.assets)
+  bucket        = "${var.bucket_name_prefix}-${data.aws_caller_identity.current.account_id}-${data.aws_region.current.region}-${random_string.suffix.result}"
+  force_destroy = true
+
+  tags = var.tags
+}
+
+resource "aws_s3_bucket_versioning" "assets" {
+  bucket = aws_s3_bucket.assets.id
+  versioning_configuration {
+    status = "Enabled"
+  }
+}
+
+resource "aws_s3_bucket_server_side_encryption_configuration" "assets" {
+  bucket = aws_s3_bucket.assets.id
+
+  rule {
+    apply_server_side_encryption_by_default {
+      sse_algorithm = "AES256"
+    }
+  }
+}
+
+resource "aws_s3_bucket_public_access_block" "assets" {
+  bucket = aws_s3_bucket.assets.id
+
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
+  restrict_public_buckets = true
+}
+
+# Deliver the asset bucket's server access logs to CloudWatch Logs.
+resource "aws_cloudwatch_log_delivery_source" "assets" {
+  name         = "${local.access_logs_name_prefix}-access-logs-source-${random_string.suffix.result}"
+  log_type     = "S3_SERVER_ACCESS_LOGS"
+  resource_arn = aws_s3_bucket.assets.arn
+}
+
+resource "aws_cloudwatch_log_delivery_destination" "assets" {
+  name = "${local.access_logs_name_prefix}-access-logs-dest-${random_string.suffix.result}"
+
+  delivery_destination_configuration {
+    destination_resource_arn = aws_cloudwatch_log_group.access_logs.arn
+  }
+}
+
+resource "aws_cloudwatch_log_delivery" "assets" {
+  delivery_source_name     = aws_cloudwatch_log_delivery_source.assets.name
+  delivery_destination_arn = aws_cloudwatch_log_delivery_destination.assets.arn
+}
+
+resource "aws_s3_bucket_policy" "assets" {
+  bucket = aws_s3_bucket.assets.id
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Sid       = "DenyInsecureConnections"
+        Effect    = "Deny"
+        Principal = "*"
+        Action    = "s3:*"
+        Resource = [
+          aws_s3_bucket.assets.arn,
+          "${aws_s3_bucket.assets.arn}/*"
+        ]
+        Condition = {
+          Bool = {
+            "aws:SecureTransport" = "false"
+          }
+        }
+      }
+    ]
+  })
+}
+
+output "bucket_name" {
+  description = "Name of the shared asset bucket — pass to app modules' `asset_bucket_name` input."
+  value       = aws_s3_bucket.assets.id
+}
+
+output "bucket_arn" {
+  description = "ARN of the shared asset bucket"
+  value       = aws_s3_bucket.assets.arn
+}
+
+output "access_logs_log_group_name" {
+  description = "Name of the CloudWatch log group that receives S3 server access logs for the asset bucket."
+  value       = aws_cloudwatch_log_group.access_logs.name
+}
+
+output "access_logs_log_group_arn" {
+  description = "ARN of the CloudWatch log group that receives S3 server access logs for the asset bucket."
+  value       = aws_cloudwatch_log_group.access_logs.arn
+}

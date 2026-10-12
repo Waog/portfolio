@@ -1,0 +1,24 @@
+{
+  "name": "@portfolio/react-reference",
+  "version": "0.0.1",
+  "private": true,
+  "type": "commonjs",
+  "dependencies": {
+    "@aws-sdk/credential-provider-cognito-identity": "3.972.71",
+    "@portfolio/common-shadcn": "*",
+    "@tanstack/react-query": "5.104.1",
+    "@tanstack/react-query-devtools": "5.104.1",
+    "@tanstack/react-router": "1.170.41",
+    "aws4fetch": "1.0.20",
+    "lucide-react": "1.51.0",
+    "oidc-client-ts": "3.5.0",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "react-oidc-context": "3.3.1",
+    "tailwindcss": "4.3.3"
+  },
+  "devDependencies": {
+    "@smithy/types": "4.19.0",
+    "@types/node": "26.6.4"
+  }
+}

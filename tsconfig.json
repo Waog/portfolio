@@ -85,6 +85,21 @@
     },
     {
       "path": "./libs/util/shared-styles"
+    },
+    {
+      "path": "./packages/react-reference"
+    },
+    {
+      "path": "./packages/common/shadcn"
+    },
+    {
+      "path": "./packages/portfolio-api/backend"
+    },
+    {
+      "path": "./packages/portfolio-data"
+    },
+    {
+      "path": "./packages/common/scripts"
     }
   ],
   "compilerOptions": {

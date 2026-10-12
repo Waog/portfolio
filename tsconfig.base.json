@@ -17,6 +17,16 @@
     "customConditions": ["@portfolio/source"],
     "strict": false,
     "noUncheckedSideEffectImports": false,
-    "types": ["*"]
+    "types": ["*"],
+    "rootDir": ".",
+    "paths": {
+      "@portfolio/react-reference": ["./packages/react-reference/src/index.ts"],
+      "@portfolio/common-shadcn": ["./packages/common/shadcn/src/index.ts"],
+      "@portfolio/portfolio-api": [
+        "./packages/portfolio-api/backend/src/index.ts"
+      ],
+      "@portfolio/portfolio-data": ["./packages/portfolio-data/src/index.ts"],
+      "@portfolio/common-scripts": ["./packages/common/scripts/src/index.ts"]
+    }
   }
 }

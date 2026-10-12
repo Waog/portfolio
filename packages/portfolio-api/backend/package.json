@@ -1,0 +1,21 @@
+{
+  "name": "@portfolio/portfolio-api",
+  "version": "0.0.1",
+  "private": true,
+  "type": "commonjs",
+  "dependencies": {
+    "@aws-lambda-powertools/logger": "2.35.0",
+    "@aws-lambda-powertools/metrics": "2.35.0",
+    "@aws-lambda-powertools/parameters": "2.35.0",
+    "@aws-lambda-powertools/tracer": "2.35.0",
+    "@aws-sdk/client-appconfigdata": "3.1146.0",
+    "@middy/core": "7.9.2",
+    "@smithy/server-apigateway": "0.3.3",
+    "@smithy/server-node": "0.3.3",
+    "tslib": "^2.3.0"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "8.10.164",
+    "@types/node": "26.6.4"
+  }
+}

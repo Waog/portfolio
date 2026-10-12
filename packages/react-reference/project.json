@@ -1,0 +1,150 @@
+{
+  "name": "@portfolio/react-reference",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/react-reference/src",
+  "projectType": "application",
+  "tags": [],
+  "metadata": {
+    "ports": [4200],
+    "generator": "ts#react-website",
+    "ux": "shadcn",
+    "framework": "react",
+    "infra": "cloudfront-s3",
+    "tailwind": true,
+    "tanstackRouter": true,
+    "iac": "terraform",
+    "components": [
+      {
+        "generator": "ts#react-website#runtime-config",
+        "path": "src/components/RuntimeConfig"
+      },
+      {
+        "generator": "ts#react-website#auth",
+        "path": "src/components/CognitoAuth",
+        "iac": "terraform"
+      },
+      {
+        "generator": "smithy#react-connection",
+        "path": "src/components/PortfolioApiProvider",
+        "name": "PortfolioApi"
+      }
+    ]
+  },
+  "targets": {
+    "assemble": {
+      "dependsOn": ["compile", "bundle"]
+    },
+    "build": {
+      "dependsOn": ["lint", "compile", "test", "bundle"]
+    },
+    "bundle": {
+      "dependsOn": ["generate:portfolio-api-client"]
+    },
+    "compile": {
+      "dependsOn": ["^compile", "generate:portfolio-api-client"],
+      "executor": "nx:run-commands",
+      "outputs": ["{workspaceRoot}/dist/{projectRoot}/tsc"],
+      "options": {
+        "command": "tsc --build tsconfig.app.json",
+        "cwd": "{projectRoot}"
+      }
+    },
+    "dev": {
+      "executor": "nx:run-commands",
+      "dependsOn": [
+        {
+          "projects": ["@portfolio/portfolio-api"],
+          "target": "dev"
+        },
+        "generate:portfolio-api-client",
+        "watch-generate:portfolio-api-client"
+      ],
+      "continuous": true,
+      "options": {
+        "command": "vite --mode local-dev",
+        "cwd": "{projectRoot}"
+      }
+    },
+    "format": {
+      "executor": "nx:run-commands",
+      "cache": true,
+      "inputs": ["biome"],
+      "options": {
+        "command": "biome format {projectRoot}"
+      },
+      "configurations": {
+        "fix": {
+          "command": "biome format --write {projectRoot}"
+        },
+        "skip-lint": {
+          "command": "node -e \"\""
+        }
+      }
+    },
+    "generate:portfolio-api-client": {
+      "executor": "@aws/nx-plugin:open-api-codegen",
+      "dependsOn": ["@portfolio/portfolio-api-model:build"],
+      "cache": true,
+      "inputs": [
+        {
+          "dependentTasksOutputFiles": "**/*.json"
+        }
+      ],
+      "outputs": [
+        "{workspaceRoot}/packages/react-reference/src/generated/portfolio-api"
+      ],
+      "options": {
+        "generator": "ts-hooks",
+        "openApiSpecPath": "dist/packages/portfolio-api/model/build/openapi/openapi.json",
+        "outputPath": "packages/react-reference/src/generated/portfolio-api"
+      }
+    },
+    "lint": {
+      "executor": "nx:run-commands",
+      "cache": true,
+      "inputs": ["biome"],
+      "dependsOn": ["format"],
+      "options": {
+        "command": "biome lint {projectRoot}"
+      },
+      "configurations": {
+        "fix": {
+          "command": "biome check --write {projectRoot}"
+        },
+        "skip-lint": {
+          "command": "node -e \"\""
+        }
+      }
+    },
+    "load-runtime-config": {
+      "executor": "nx:run-commands",
+      "metadata": {
+        "description": "Load runtime config from most recently applied terraform env for dev purposes. Copies the runtime config from the Terraform dist directory to the website's public directory."
+      },
+      "options": {
+        "command": "node -e \"const fs=require('fs');fs.mkdirSync(process.env.DEST_DIR,{recursive:true});fs.copyFileSync(process.env.SRC_FILE,process.env.DEST_FILE);\"",
+        "env": {
+          "SRC_FILE": "dist/packages/common/terraform/runtime-config/connection.json",
+          "DEST_DIR": "{projectRoot}/public",
+          "DEST_FILE": "{projectRoot}/public/runtime-config.json"
+        }
+      }
+    },
+    "test": {
+      "executor": "@nx/vitest:test",
+      "outputs": ["{options.reportsDirectory}"],
+      "options": {
+        "reportsDirectory": "coverage/packages/react-reference"
+      }
+    },
+    "watch-generate:portfolio-api-client": {
+      "executor": "nx:run-commands",
+      "continuous": true,
+      "options": {
+        "commands": [
+          "nx watch --projects=@portfolio/portfolio-api-model --includeDependencies -- nx run @portfolio/react-reference:\"generate:portfolio-api-client\""
+        ]
+      }
+    }
+  }
+}

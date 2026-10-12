@@ -1,0 +1,97 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "6.67.0"
+      configuration_aliases = [aws.us_east_1]
+    }
+  }
+}
+
+variable "custom_domain_names" {
+  description = "Custom domain names (aliases) for the CloudFront distribution. Requires acm_certificate_arn."
+  type        = list(string)
+  default     = []
+}
+
+variable "acm_certificate_arn" {
+  description = "ARN of an ACM certificate (in us-east-1) for the custom domain names. When set, viewers are required to use TLS 1.2 or later."
+  type        = string
+  default     = null
+}
+
+variable "enable_waf" {
+  description = "Whether to protect the CloudFront distribution with an AWS WAF Web ACL."
+  type        = bool
+  default     = true
+}
+
+variable "encryption" {
+  description = "Server-side encryption for the website and distribution log buckets. One of KMS or S3_MANAGED."
+  type        = string
+  default     = "KMS"
+
+  validation {
+    condition     = contains(["KMS", "S3_MANAGED"], var.encryption)
+    error_message = "encryption must be one of KMS or S3_MANAGED."
+  }
+}
+
+variable "kms_key_arn" {
+  description = "ARN of an existing KMS key used to encrypt the website and distribution log buckets when encryption is KMS. When not provided and create_kms_key is true, a new key is created. Note that a customer-supplied key must already grant the CloudWatch Logs, S3 and CloudFront service principals the necessary permissions in its own key policy."
+  type        = string
+  default     = null
+}
+
+variable "create_kms_key" {
+  description = "Whether to create a KMS key for the website. Only applies when encryption is KMS. Set to false when supplying kms_key_arn."
+  type        = bool
+  default     = true
+}
+
+variable "enable_key_rotation" {
+  description = "Whether the automatically created KMS key has rotation enabled. Only applies when encryption is KMS and create_kms_key is true."
+  type        = bool
+  default     = true
+}
+
+# Static website module configured for the web package
+module "static_website" {
+  source = "../../../core/static-website"
+
+  website_name      = "react-reference"
+  website_file_path = "${path.module}/../../../../../../../dist/packages/react-reference/bundle"
+
+  custom_domain_names = var.custom_domain_names
+  acm_certificate_arn = var.acm_certificate_arn
+  enable_waf          = var.enable_waf
+  encryption          = var.encryption
+  kms_key_arn         = var.kms_key_arn
+  create_kms_key      = var.create_kms_key
+  enable_key_rotation = var.enable_key_rotation
+
+  providers = {
+    aws.us_east_1 = aws.us_east_1
+  }
+}
+
+# Outputs
+output "website_url" {
+  description = "URL of the deployed website"
+  value       = "https://${module.static_website.cloudfront_domain_name}"
+}
+
+output "website_bucket_name" {
+  description = "Name of the S3 bucket hosting the website"
+  value       = module.static_website.website_bucket_name
+}
+
+output "cloudfront_distribution_id" {
+  description = "ID of the CloudFront distribution"
+  value       = module.static_website.cloudfront_distribution_id
+}
+
+output "cloudfront_domain_name" {
+  description = "Domain name of the CloudFront distribution"
+  value       = module.static_website.cloudfront_domain_name
+}

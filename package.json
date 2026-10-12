@@ -17,7 +17,9 @@
   "workspaces": [
     "apps/*",
     "libs/*/*",
-    "packages/*"
+    "packages/*",
+    "packages/common/*",
+    "packages/portfolio-api/*"
   ],
   "dependencies": {
     "@angular/animations": "22.1.8",
@@ -54,6 +56,9 @@
     "@angular/cli": "22.1.9",
     "@angular/compiler-cli": "22.1.8",
     "@angular/language-service": "22.1.8",
+    "@aws-sdk/client-s3": "3.1146.0",
+    "@aws-sdk/client-sts": "3.1146.0",
+    "@aws-sdk/credential-providers": "3.1146.0",
     "@aws/nx-plugin": "^1.0.6",
     "@aws/nx-plugin-mcp": "^1.0.6",
     "@babel/core": "^7.29.7",
@@ -61,6 +66,7 @@
     "@commitlint/cli": "^19.8.1",
     "@commitlint/config-conventional": "^19.8.1",
     "@eslint/js": "^9.8.0",
+    "@nx-extend/terraform": "10.4.1",
     "@nx/angular": "23.2.1",
     "@nx/devkit": "23.2.1",
     "@nx/eslint": "23.2.1",
@@ -77,21 +83,33 @@
     "@oxc-project/runtime": "^0.153.0",
     "@playwright/test": "^1.64.0",
     "@schematics/angular": "22.1.9",
+    "@smithy/config-resolver": "4.7.2",
+    "@smithy/node-config-provider": "4.6.2",
     "@storybook/addon-docs": "10.6.1",
     "@storybook/angular": "10.6.1",
     "@storybook/test-runner": "^0.26.0",
     "@swc-node/register": "1.12.1",
     "@swc/core": "1.16.2",
     "@swc/helpers": "0.5.23",
+    "@tailwindcss/vite": "4.3.3",
+    "@tanstack/router-generator": "1.167.40",
+    "@tanstack/router-plugin": "1.168.42",
+    "@tanstack/router-utils": "1.162.3",
+    "@tanstack/virtual-file-routes": "1.162.0",
+    "@testing-library/dom": "10.4.0",
+    "@testing-library/react": "16.3.0",
     "@types/express": "^5.0.6",
     "@types/jest": "30.0.0",
     "@types/lodash": "^4.17.24",
-    "@types/node": "^24.0.0",
+    "@types/node": "26.6.4",
     "@types/object-hash": "^3.0.6",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
     "@types/seedrandom": "^3.0.8",
     "@typescript-eslint/utils": "^8.33.1",
-    "@vitest/coverage-v8": "4.1.9",
-    "@vitest/ui": "4.1.9",
+    "@vitejs/plugin-react": "^6.0.0",
+    "@vitest/coverage-v8": "4.1.11",
+    "@vitest/ui": "4.1.11",
     "angular-eslint": "22.5.0",
     "browser-sync": "^3.0.0",
     "eslint": "^9.28.0",
@@ -109,22 +127,26 @@
     "jest-preset-angular": "17.0.2",
     "jest-util": "30.5.1",
     "jiti": "2.4.2",
-    "jsdom": "^26.0.0",
+    "jsdom": "29.1.1",
     "lint-staged": "^16.1.0",
     "nx": "23.2.1",
-    "prettier": "3.4.2",
+    "prettier": "~3.6.2",
     "randexp": "^0.5.3",
+    "rolldown": "1.2.12",
+    "rolldown-plugin-dts": "0.28.6",
     "seedrandom": "^3.0.5",
+    "shx": "0.4.0",
     "storybook": "10.6.1",
     "ts-jest": "29.4.9",
     "ts-jest-mock-import-meta": "^1.3.1",
     "ts-node": "10.9.1",
     "tslib": "^2.3.0",
+    "tsx": "4.23.15",
     "typescript": "6.0.3",
     "typescript-eslint": "^8.33.1",
     "vis-network": "^10.0.1",
     "vite": "8.3.3",
-    "vitest": "4.1.9"
+    "vitest": "4.1.11"
   },
   "lint-staged": {
     "*.{ts,tsx,js,jsx,html,css,scss,json,md,yml,yaml}": [
@@ -143,6 +165,7 @@
   "overrides": {
     "@nx/react": {
       "express": "5.2.1"
-    }
+    },
+    "@nx/devkit": "23.2.1"
   }
 }

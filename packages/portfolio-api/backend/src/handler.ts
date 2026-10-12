@@ -1,0 +1,63 @@
+import {
+  convertEvent,
+  convertVersion1Response,
+} from '@smithy/server-apigateway';
+import type { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
+import middy from '@middy/core';
+import { Tracer } from '@aws-lambda-powertools/tracer';
+import { captureLambdaHandler } from '@aws-lambda-powertools/tracer/middleware';
+import { injectLambdaContext } from '@aws-lambda-powertools/logger/middleware';
+import { Logger } from '@aws-lambda-powertools/logger';
+import { Metrics } from '@aws-lambda-powertools/metrics';
+import { logMetrics } from '@aws-lambda-powertools/metrics/middleware';
+import { Service } from './service';
+import { getPortfolioApiServiceHandler } from './generated/ssdk/index';
+
+process.env.POWERTOOLS_METRICS_NAMESPACE = 'PortfolioApi';
+process.env.POWERTOOLS_SERVICE_NAME = 'PortfolioApi';
+
+const tracer = new Tracer();
+const logger = new Logger();
+const metrics = new Metrics();
+
+const serviceHandler = getPortfolioApiServiceHandler(Service);
+
+export const lambdaHandler = async (
+  event: APIGatewayProxyEvent
+): Promise<APIGatewayProxyResult> => {
+  const httpRequest = convertEvent(event);
+  const httpResponse = await serviceHandler.handle(httpRequest, {
+    tracer,
+    logger,
+    metrics,
+  });
+  const apiGatewayResponse = convertVersion1Response(httpResponse);
+
+  return {
+    ...apiGatewayResponse,
+    headers: {
+      'Access-Control-Allow-Origin': getAllowedOrigin(event),
+      'Access-Control-Allow-Methods': '*',
+      ...apiGatewayResponse.headers,
+    },
+  };
+};
+
+const getAllowedOrigin = (event: APIGatewayProxyEvent) => {
+  const origin = event.headers?.origin ?? event.headers?.Origin;
+  const allowedOrigins = process.env.ALLOWED_ORIGINS?.split(',') ?? [];
+  const isLocalHost =
+    origin && new Set(['localhost', '127.0.0.1']).has(new URL(origin).hostname);
+  const isAllowedOrigin = origin && allowedOrigins.includes(origin);
+  let corsOrigin = '*';
+  if (allowedOrigins.length > 0 && !isLocalHost) {
+    corsOrigin = isAllowedOrigin ? origin : allowedOrigins[0];
+  }
+  return corsOrigin;
+};
+
+export const handler = middy<APIGatewayProxyEvent, APIGatewayProxyResult>()
+  .use(captureLambdaHandler(tracer))
+  .use(injectLambdaContext(logger))
+  .use(logMetrics(metrics))
+  .handler(lambdaHandler);

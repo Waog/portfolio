@@ -1,0 +1,24 @@
+locals {
+  account_id = data.aws_caller_identity.current.account_id
+  aws_region = data.aws_region.current.id
+}
+
+# Include metrics tracking for @aws/nx-plugin usage
+module "metrics" {
+  source = "../../common/terraform/src/metrics"
+}
+
+resource "null_resource" "print_info" {
+  # triggers = {
+  #   always_run = timestamp()
+  # }
+
+  provisioner "local-exec" {
+    command = "echo \"AWS Region: $AWS_REGION, AWS Account: $ACCOUNT_ID, Environment: $ENVIRONMENT\""
+    environment = {
+      AWS_REGION  = local.aws_region
+      ACCOUNT_ID  = local.account_id
+      ENVIRONMENT = var.environment
+    }
+  }
+}

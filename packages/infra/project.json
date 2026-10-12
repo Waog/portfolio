@@ -1,0 +1,193 @@
+{
+  "name": "@portfolio/infra",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "packages/infra/src",
+  "metadata": {
+    "generator": "terraform#project",
+    "iac": "terraform"
+  },
+  "targets": {
+    "apply": {
+      "executor": "nx:run-commands",
+      "defaultConfiguration": "dev",
+      "dependsOn": ["plan"],
+      "options": {
+        "forwardAllArgs": true,
+        "cwd": "{projectRoot}/src"
+      },
+      "configurations": {
+        "dev": {
+          "command": "terraform apply ../../../dist/{projectRoot}/terraform/dev.tfplan"
+        }
+      }
+    },
+    "assemble": {
+      "dependsOn": ["@portfolio/terraform:assemble"]
+    },
+    "bootstrap": {
+      "executor": "nx:run-commands",
+      "options": {
+        "forwardAllArgs": true,
+        "commands": ["tsx {projectRoot}/scripts/bootstrap.ts {projectRoot}"],
+        "cwd": "{workspaceRoot}"
+      }
+    },
+    "bootstrap-destroy": {
+      "executor": "nx:run-commands",
+      "options": {
+        "forwardAllArgs": true,
+        "commands": [
+          "tsx {projectRoot}/scripts/bootstrap-destroy.ts {projectRoot}"
+        ],
+        "cwd": "{workspaceRoot}"
+      }
+    },
+    "build": {
+      "dependsOn": ["format", "checkov", "test", "@portfolio/terraform:build"]
+    },
+    "checkov": {
+      "executor": "nx:run-commands",
+      "cache": true,
+      "inputs": ["default", "^production"],
+      "outputs": ["{workspaceRoot}/dist/{projectRoot}/checkov"],
+      "options": {
+        "command": "uvx --from checkov==3.3.22 checkov --config-file ../checkov.yml --directory . -o cli -o json --output-file-path console,../../../dist/{projectRoot}/checkov/checkov_report.json",
+        "forwardAllArgs": true,
+        "cwd": "{projectRoot}/src"
+      }
+    },
+    "deploy": {
+      "dependsOn": ["apply"]
+    },
+    "destroy": {
+      "executor": "nx:run-commands",
+      "defaultConfiguration": "dev",
+      "dependsOn": ["init"],
+      "options": {
+        "forwardAllArgs": true,
+        "cwd": "{projectRoot}/src"
+      },
+      "configurations": {
+        "dev": {
+          "command": "terraform destroy -var-file=env/dev.tfvars"
+        }
+      }
+    },
+    "format": {
+      "executor": "nx:run-commands",
+      "cache": true,
+      "inputs": ["default"],
+      "options": {
+        "command": "terraform fmt -check -diff",
+        "forwardAllArgs": true,
+        "cwd": "{projectRoot}/src"
+      },
+      "configurations": {
+        "fix": {
+          "command": "terraform fmt"
+        },
+        "skip-lint": {
+          "command": "node -e \"\""
+        }
+      }
+    },
+    "init": {
+      "executor": "nx:run-commands",
+      "defaultConfiguration": "dev",
+      "dependsOn": ["terraform-init", "^init"],
+      "options": {
+        "forwardAllArgs": true,
+        "commands": ["tsx {projectRoot}/scripts/init.ts {projectRoot}"],
+        "cwd": "{workspaceRoot}"
+      },
+      "configurations": {
+        "dev": {
+          "env": {
+            "TF_ENV": "dev"
+          }
+        }
+      }
+    },
+    "lint": {
+      "dependsOn": ["format"]
+    },
+    "output": {
+      "executor": "nx:run-commands",
+      "cache": true,
+      "inputs": ["default"],
+      "options": {
+        "command": "terraform output -json",
+        "forwardAllArgs": true,
+        "cwd": "{projectRoot}/src"
+      }
+    },
+    "plan": {
+      "executor": "nx:run-commands",
+      "defaultConfiguration": "dev",
+      "dependsOn": ["init", "validate", "^validate", "assemble"],
+      "options": {
+        "forwardAllArgs": true,
+        "cwd": "{projectRoot}/src",
+        "parallel": false
+      },
+      "configurations": {
+        "dev": {
+          "commands": [
+            "shx mkdir -p ../../../dist/{projectRoot}/terraform",
+            "terraform plan -var-file=env/dev.tfvars -out=../../../dist/{projectRoot}/terraform/dev.tfplan"
+          ]
+        }
+      }
+    },
+    "terraform-init": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          {
+            "command": "shx mkdir -p ../../../.terraform/plugin-cache/{projectRoot}",
+            "forwardAllArgs": false
+          },
+          "terraform init -backend=false"
+        ],
+        "forwardAllArgs": true,
+        "cwd": "{projectRoot}/src",
+        "parallel": false,
+        "env": {
+          "TF_DATA_DIR": "../../../dist/{projectRoot}/terraform-init",
+          "TF_PLUGIN_CACHE_DIR": "../../../.terraform/plugin-cache/{projectRoot}"
+        }
+      }
+    },
+    "test": {
+      "executor": "nx:run-commands",
+      "cache": true,
+      "inputs": ["default", "^production"],
+      "outputs": [],
+      "dependsOn": ["terraform-init"],
+      "options": {
+        "command": "terraform test",
+        "forwardAllArgs": true,
+        "cwd": "{projectRoot}/src",
+        "env": {
+          "TF_DATA_DIR": "../../../dist/{projectRoot}/terraform-init"
+        }
+      }
+    },
+    "validate": {
+      "executor": "nx:run-commands",
+      "cache": true,
+      "inputs": ["default", "^production"],
+      "outputs": [],
+      "dependsOn": ["terraform-init"],
+      "options": {
+        "command": "terraform validate",
+        "forwardAllArgs": true,
+        "cwd": "{projectRoot}/src",
+        "env": {
+          "TF_DATA_DIR": "../../../dist/{projectRoot}/terraform-init"
+        }
+      }
+    }
+  }
+}
