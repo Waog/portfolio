@@ -1,12 +1,12 @@
-import { AwsClient } from 'aws4fetch';
 import { fromCognitoIdentityPool } from '@aws-sdk/credential-provider-cognito-identity';
-import { useCallback, useRef } from 'react';
-import { useAuth } from 'react-oidc-context';
-import { useRuntimeConfig } from './useRuntimeConfig';
 import {
   AwsCredentialIdentity,
   AwsCredentialIdentityProvider,
 } from '@smithy/types';
+import { AwsClient } from 'aws4fetch';
+import { useCallback, useRef } from 'react';
+import { useAuth } from 'react-oidc-context';
+import { useRuntimeConfig } from './useRuntimeConfig';
 
 // Capture the native fetch before any monkey-patching can occur.
 const nativeFetch = globalThis.fetch.bind(globalThis);

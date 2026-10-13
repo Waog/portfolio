@@ -1,17 +1,17 @@
+import { Logger } from '@aws-lambda-powertools/logger';
+import { injectLambdaContext } from '@aws-lambda-powertools/logger/middleware';
+import { Metrics } from '@aws-lambda-powertools/metrics';
+import { logMetrics } from '@aws-lambda-powertools/metrics/middleware';
+import { Tracer } from '@aws-lambda-powertools/tracer';
+import { captureLambdaHandler } from '@aws-lambda-powertools/tracer/middleware';
+import middy from '@middy/core';
 import {
   convertEvent,
   convertVersion1Response,
 } from '@smithy/server-apigateway';
 import type { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
-import middy from '@middy/core';
-import { Tracer } from '@aws-lambda-powertools/tracer';
-import { captureLambdaHandler } from '@aws-lambda-powertools/tracer/middleware';
-import { injectLambdaContext } from '@aws-lambda-powertools/logger/middleware';
-import { Logger } from '@aws-lambda-powertools/logger';
-import { Metrics } from '@aws-lambda-powertools/metrics';
-import { logMetrics } from '@aws-lambda-powertools/metrics/middleware';
-import { Service } from './service';
 import { getPortfolioApiServiceHandler } from './generated/ssdk/index';
+import { Service } from './service';
 
 process.env.POWERTOOLS_METRICS_NAMESPACE = 'PortfolioApi';
 process.env.POWERTOOLS_SERVICE_NAME = 'PortfolioApi';

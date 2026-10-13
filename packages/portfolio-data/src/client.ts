@@ -1,5 +1,5 @@
-import { DynamoDBClient } from '@aws-sdk/client-dynamodb';
 import { getAppConfig } from '@aws-lambda-powertools/parameters/appconfig';
+import { DynamoDBClient } from '@aws-sdk/client-dynamodb';
 import { readFileSync } from 'fs';
 import { join } from 'path';
 

@@ -10,13 +10,15 @@
 import { execFileSync } from 'node:child_process';
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
+
 import {
-  S3Client,
   GetObjectCommand,
   HeadBucketCommand,
   PutObjectCommand,
+  S3Client,
 } from '@aws-sdk/client-s3';
 import { fromNodeProviderChain } from '@aws-sdk/credential-providers';
+
 import { resolveAwsConfig } from './aws-config';
 
 const projectRootRel = process.argv[2];

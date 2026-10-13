@@ -1,8 +1,8 @@
 import React, { PropsWithChildren, useEffect } from 'react';
 import { AuthProvider, AuthProviderProps, useAuth } from 'react-oidc-context';
+import { useRuntimeConfig } from '../../hooks/useRuntimeConfig';
 import { Alert } from '../alert';
 import { Spinner } from '../spinner';
-import { useRuntimeConfig } from '../../hooks/useRuntimeConfig';
 
 /**
  * Sets up the Cognito auth.

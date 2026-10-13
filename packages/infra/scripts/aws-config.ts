@@ -2,7 +2,7 @@
  * Resolves the current AWS account ID + region using the standard
  * AWS SDK credential + config chain (same chain CDK uses).
  */
-import { STSClient, GetCallerIdentityCommand } from '@aws-sdk/client-sts';
+import { GetCallerIdentityCommand, STSClient } from '@aws-sdk/client-sts';
 import { fromNodeProviderChain } from '@aws-sdk/credential-providers';
 import {
   NODE_REGION_CONFIG_FILE_OPTIONS,

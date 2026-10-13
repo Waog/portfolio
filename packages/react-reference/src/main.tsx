@@ -1,12 +1,12 @@
-import PortfolioApiProvider from './components/PortfolioApiProvider';
-import QueryClientProvider from './components/QueryClientProvider';
-import { useAuth } from 'react-oidc-context';
-import CognitoAuth from './components/CognitoAuth';
-import { useRuntimeConfig } from './hooks/useRuntimeConfig';
-import RuntimeConfigProvider from './components/RuntimeConfig';
+import { createRouter, RouterProvider } from '@tanstack/react-router';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import { RouterProvider, createRouter } from '@tanstack/react-router';
+import { useAuth } from 'react-oidc-context';
+import CognitoAuth from './components/CognitoAuth';
+import PortfolioApiProvider from './components/PortfolioApiProvider';
+import QueryClientProvider from './components/QueryClientProvider';
+import RuntimeConfigProvider from './components/RuntimeConfig';
+import { useRuntimeConfig } from './hooks/useRuntimeConfig';
 import { routeTree } from './routeTree.gen';
 import './styles.css';
 

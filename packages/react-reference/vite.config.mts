@@ -1,9 +1,9 @@
 /// <reference types='vitest' />
 import tailwindcss from '@tailwindcss/vite';
-import { resolve } from 'path';
 import { tanstackRouter } from '@tanstack/router-plugin/vite';
-import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import { resolve } from 'path';
+import { defineConfig } from 'vite';
 
 export default defineConfig(() => ({
   root: import.meta.dirname,

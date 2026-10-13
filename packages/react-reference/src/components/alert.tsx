@@ -1,9 +1,9 @@
-import React from 'react';
 import {
-  Alert as ShadcnAlert,
   AlertDescription,
   AlertTitle,
+  Alert as ShadcnAlert,
 } from '@portfolio/common-shadcn/components/ui/alert';
+import React from 'react';
 
 type AlertType = 'info' | 'error';
 

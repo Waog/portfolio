@@ -1,9 +1,9 @@
-import { ComponentProps, FC, PropsWithChildren, useState } from 'react';
 import {
   QueryClient,
   QueryClientProvider as QueryClientProviderInner,
 } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { ComponentProps, FC, PropsWithChildren, useState } from 'react';
 
 type QueryClientProviderProps = PropsWithChildren & {
   client?: QueryClient;

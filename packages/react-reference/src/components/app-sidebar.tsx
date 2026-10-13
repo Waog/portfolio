@@ -1,5 +1,3 @@
-import { Home } from 'lucide-react';
-
 import {
   Sidebar,
   SidebarContent,
@@ -11,6 +9,7 @@ import {
   SidebarMenuItem,
 } from '@portfolio/common-shadcn/components/ui/sidebar';
 import { Link } from '@tanstack/react-router';
+import { Home } from 'lucide-react';
 
 import Config from '../config';
 

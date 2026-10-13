@@ -1,15 +1,3 @@
-import { useEffect, useRef, useState } from 'react';
-import { useAuth } from 'react-oidc-context';
-import * as React from 'react';
-import {
-  SidebarInset,
-  SidebarProvider,
-  SidebarTrigger,
-} from '@portfolio/common-shadcn/components/ui/sidebar';
-import { Separator } from '@portfolio/common-shadcn/components/ui/separator';
-import Config from '../../config';
-
-import { Link, useLocation, useMatchRoute } from '@tanstack/react-router';
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -18,6 +6,17 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from '@portfolio/common-shadcn/components/ui/breadcrumb';
+import { Separator } from '@portfolio/common-shadcn/components/ui/separator';
+import {
+  SidebarInset,
+  SidebarProvider,
+  SidebarTrigger,
+} from '@portfolio/common-shadcn/components/ui/sidebar';
+import { Link, useLocation, useMatchRoute } from '@tanstack/react-router';
+import * as React from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { useAuth } from 'react-oidc-context';
+import Config from '../../config';
 import { AppSidebar } from '../app-sidebar';
 
 const getBreadcrumbs = (

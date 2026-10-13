@@ -42,8 +42,26 @@
         "{workspaceRoot}/.eslintignore",
         "{workspaceRoot}/eslint.config.mjs",
         "{workspaceRoot}/tools/eslint-rules/**/*"
-      ]
+      ],
+      "configurations": {
+        "fix": {
+          "fix": true
+        }
+      }
     },
+    "lint": [
+      {
+        "filter": {
+          "plugin": "@nx/eslint/plugin",
+          "executor": "nx:run-commands"
+        },
+        "configurations": {
+          "fix": {
+            "command": "eslint . --fix"
+          }
+        }
+      }
+    ],
     "server": {
       "cache": true
     },

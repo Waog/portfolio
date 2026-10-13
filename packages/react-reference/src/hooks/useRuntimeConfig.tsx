@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import {
-  RuntimeConfigContext,
   IRuntimeConfig,
+  RuntimeConfigContext,
 } from '../components/RuntimeConfig';
 
 export const useRuntimeConfig = (): IRuntimeConfig => {

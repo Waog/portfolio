@@ -1,10 +1,10 @@
-import { IncomingMessage, ServerResponse, createServer } from 'http';
-import { convertRequest, writeResponse } from '@smithy/server-node';
 import { Logger } from '@aws-lambda-powertools/logger';
 import { Metrics } from '@aws-lambda-powertools/metrics';
 import { Tracer } from '@aws-lambda-powertools/tracer';
-import { Service } from './service';
+import { convertRequest, writeResponse } from '@smithy/server-node';
+import { createServer, IncomingMessage, ServerResponse } from 'http';
 import { getPortfolioApiServiceHandler } from './generated/ssdk/index';
+import { Service } from './service';
 
 const PORT = 3001;
 

@@ -1,10 +1,10 @@
-import { Spinner } from '../spinner';
 import React, {
   createContext,
   PropsWithChildren,
   useEffect,
   useState,
 } from 'react';
+import { Spinner } from '../spinner';
 
 // Consider specifying types if desired
 export type IRuntimeConfig = any;
